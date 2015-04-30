@@ -45,20 +45,27 @@ app.use(function (req, res, next) {
 });
 
 app.get('/*', function (req, res) {
-    var information;
+//     var information;
 
-    github.user.getFollowingFromUser({
-    // optional:
-    // headers: {
-    //     "cookie": "blahblah"
-    // },
-    user: "carlos-r-mendoza"
-}, function(err, info) {
-    console.log(info);
-    res.json(info);
-});
 
-    
+//     github.authenticate({
+//     type: "basic",
+//     username: '',
+//     password: ''
+// });
+
+//     github.user.get({
+//     // optional:
+//     // headers: {
+//     //     "cookie": "blahblah"
+//     // },
+//     user: "carlos-r-mendoza"
+// }, function(err, info) {
+//     console.log(info);
+//     //res.json(info);
+// });
+
+    res.send('<button><a href="/auth/github/" target="_self">GitHub Login</a></button>');
 
     //res.sendFile(app.get('indexHTMLPath'));
 });
