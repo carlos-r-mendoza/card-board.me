@@ -45,15 +45,21 @@ app.use(function (req, res, next) {
 });
 
 app.get('/*', function (req, res) {
+    var information;
+
     github.user.getFollowingFromUser({
     // optional:
     // headers: {
     //     "cookie": "blahblah"
     // },
-    user: "calboy1898"
-}, function(err, res) {
-    console.log(res);
+    user: "carlos-r-mendoza"
+}, function(err, info) {
+    console.log(info);
+    res.json(info);
 });
+
+    
+
     //res.sendFile(app.get('indexHTMLPath'));
 });
 
