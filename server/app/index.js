@@ -3,6 +3,21 @@ var path = require('path');
 var express = require('express');
 var app = express();
 module.exports = app;
+var GitHubApi = require("github");
+
+var github = new GitHubApi({
+    // required
+    version: "3.0.0",
+    //optional
+    // debug: true,
+    // protocol: "https",
+    // host: "api.github.com", // should be api.github.com for GitHub
+    // pathPrefix: "/api/v3", // for some GHEs; none for GitHub
+    // timeout: 5000,
+    // headers: {
+    //     "user-agent": "My-Cool-GitHub-App" // GitHub is happy with a unique user agent
+    // }
+});
 
 // Pass our express application pipeline into the configuration
 // function located at server/app/configure/index.js
@@ -30,7 +45,16 @@ app.use(function (req, res, next) {
 });
 
 app.get('/*', function (req, res) {
-    res.sendFile(app.get('indexHTMLPath'));
+    github.user.getFollowingFromUser({
+    // optional:
+    // headers: {
+    //     "cookie": "blahblah"
+    // },
+    user: "calboy1898"
+}, function(err, res) {
+    console.log(res);
+});
+    //res.sendFile(app.get('indexHTMLPath'));
 });
 
 // Error catching endware.
