@@ -1,4 +1,4 @@
-<nav class="navbar navbar-static-top">
+<!-- <nav class="navbar navbar-static-top">
     <div class="container">
         <div class="navbar-header">
             <fullstack-logo></fullstack-logo>
@@ -14,4 +14,66 @@
             <a ng-click="logout()">Logout</a>
         </div>
     </div>
-</nav>
+</nav> -->
+
+
+
+<!--   <core-header-panel>
+    <core-toolbar>
+
+    </core-toolbar>
+  </core-header-panel> -->
+
+<core-drawer-panel>
+  <core-header-panel drawer>
+    <core-toolbar>Project Manager</core-toolbar>
+    <div id="drawer-content"> Drawer content... 
+<!-- 
+ <core-selector selected="0">
+  <div>Item 1</div>
+  <div>Item 2</div>
+  <div>Item 3</div>
+</core-selector> -->
+
+<core-menu selected="0">
+  <core-item icon="settings" label="Settings"></core-item>
+  <core-item icon="dialog" label="Dialog"></core-item>
+  <core-item icon="search" label="Search"></core-item>
+    <core-submenu icon="settings" label="Topics">
+    <core-item label="Topic 1"></core-item>
+    <core-item label="Topic 2"></core-item>
+  </core-submenu>
+
+  <core-submenu icon="settings" label="Favorites">
+    <core-item label="Favorite 1"></core-item>
+    <core-item label="Favorite 2"></core-item>
+    <core-item label="Favorite 3"></core-item>
+  </core-submenu>
+</core-menu>
+
+
+
+
+
+
+
+    </div>
+  </core-header-panel>
+  <core-header-panel main>
+    <core-toolbar>      <paper-tabs id="tabs" selected="all" self-end>
+      <paper-tab name="all">All</paper-tab>
+      <paper-tab name="favorites">Favorites</paper-tab>
+      </paper-tabs>
+      <button id="login-btn" class="btn btn-primary text-right">LOGIN</button></core-toolbar>
+    <div> Main content...
+
+        <section id="home">
+ <a href="/auth/github/" target="_self"><core-icon icon="account-circle"></core-icon></a>
+ <paper-fab icon="add" role="button" tabindex="0" aria-label="add"></paper-fab>
+</section>
+
+     </div>
+  </core-header-panel>
+</core-drawer-panel>
+
+ 

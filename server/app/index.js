@@ -65,9 +65,9 @@ app.get('/*', function (req, res) {
 //     //res.json(info);
 // });
 
-    res.send('<button><a href="/auth/github/" target="_self">GitHub Login</a></button>');
+    //res.send();
 
-    //res.sendFile(app.get('indexHTMLPath'));
+    res.sendFile(app.get('indexHTMLPath'));
 });
 
 // Error catching endware.
