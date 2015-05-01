@@ -6,7 +6,9 @@
       </span>
       <input type="text" class="form-control" ng-model="search.text" placeholder="Search Criteria">
       <input type="text" class="form-control" ng-model="search.language" placeholder="Language">
-    <pre>{{searchResults[0].stargazers_count | json}}</pre>
-    </div><!-- /input-group -->
+      <div id="chart_div"></div>
+    <pre>{{searchResults |json}}</pre>
+    </div>
+  </div><!-- /input-group -->
   <!-- /.col-lg-6 -->
 </div><!-- /.row -->
