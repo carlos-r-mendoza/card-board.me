@@ -6,11 +6,12 @@
             </span>
             <input type="text" class="form-control" ng-model="search.text" placeholder="Search Criteria">
             <input type="text" class="form-control" ng-model="search.language" placeholder="Language">
-            <pre>{{searchResults |json}}</pre>
+            <!-- <pre>{{searchResults |json}}</pre> -->
         </div>
         <div ng-controller="BarCtrl">
-            <canvas id="bar" class="chart chart-bar" data="data" labels="labels"></canvas>
+            <canvas id="bar" class="chart chart-bar" data="dataShare.data" labels="dataShare.labels"></canvas>
         </div>
+        <pre>{{searchResults |json}}</pre>
     </div>
     <!-- /input-group -->
     <!-- /.col-lg-6 -->
