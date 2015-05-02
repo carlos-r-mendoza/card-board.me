@@ -60,7 +60,13 @@ app.controller('SearchController', function($scope, SearchFactory, DataShare) {
      //[65, 59, 80, 81, 56, 55, 75]];
      //console.log("DATASHARE", DataShare);
 
-
+     // $scope.myclick=function(points, event){
+     //    console.log(points);
+     //    console.log(event);
+     // };
+     $scope.onClick = function (points, evt) {
+    console.log(points, evt);
+  };
   $scope.dataShare = DataShare
   //$scope.$digest();
 });
