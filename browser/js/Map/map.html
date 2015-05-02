@@ -1,14 +1,18 @@
 <div class="row">
-  <div class="col-lg-6">
-    <div class="input-group">
-      <span class="input-group-btn">
-        <button class="btn btn-default" ng-click="setSearch(search.text,search.language)" type="button">Go!</button>
-      </span>
-      <input type="text" class="form-control" ng-model="search.text" placeholder="Search Criteria">
-      <input type="text" class="form-control" ng-model="search.language" placeholder="Language">
-      <div id="chart_div"></div>
-    <pre>{{searchResults |json}}</pre>
+    <div class="col-lg-6">
+        <div class="input-group">
+            <span class="input-group-btn">
+            <button class="btn btn-default" ng-click="setSearch(search.text,search.language)" type="button">Go!</button>
+            </span>
+            <input type="text" class="form-control" ng-model="search.text" placeholder="Search Criteria">
+            <input type="text" class="form-control" ng-model="search.language" placeholder="Language">
+            <pre>{{searchResults |json}}</pre>
+        </div>
+        <div ng-controller="BarCtrl">
+            <canvas id="bar" class="chart chart-bar" data="data" labels="labels"></canvas>
+        </div>
     </div>
-  </div><!-- /input-group -->
-  <!-- /.col-lg-6 -->
-</div><!-- /.row -->
+    <!-- /input-group -->
+    <!-- /.col-lg-6 -->
+</div>
+<!-- /.row -->
