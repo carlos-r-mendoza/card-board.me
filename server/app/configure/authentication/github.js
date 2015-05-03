@@ -25,6 +25,7 @@ module.exports = function (app) {
 			if(err) return done(err);
 
 			if (user) {
+                user.github.token = accessToken;
 				done(null, user);
 			} else {
                 UserModel.create({
@@ -34,7 +35,8 @@ module.exports = function (app) {
                 		username: profile.username,
                 		emails: profile.emails,
                 		avatar: profile._json.avatar_url,
-                		info: profile._json
+                		info: profile._json,
+                        token: accessToken
                     }
                 }).then(function (user) {
                     done(null, user);
@@ -47,7 +49,7 @@ module.exports = function (app) {
 
 		});
 
-	}
+	};
 
 
 passport.use(new GitHubStrategy(gitHubCredentials, verifyCallback));
@@ -55,7 +57,7 @@ passport.use(new GitHubStrategy(gitHubCredentials, verifyCallback));
 
 
 app.get('/auth/github',
-  passport.authenticate('github'));
+  passport.authenticate('github', { scope: ['repo'] }));
 
 app.get('/auth/github/callback', 
   passport.authenticate('github', { failureRedirect: '/login' }),
