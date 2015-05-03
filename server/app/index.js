@@ -60,15 +60,10 @@ app.get('/github/:query/:language',function(req, res){
         res.json(info);
 // });
 
-<<<<<<< HEAD
-    //res.send();
-
-=======
     });
 });
 
 app.get('/*', function (req, res) {
->>>>>>> 46e5ff4ded64421480be2e6a76115d88ee7cd07e
     res.sendFile(app.get('indexHTMLPath'));
 });
 
