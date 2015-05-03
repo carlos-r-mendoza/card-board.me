@@ -12,22 +12,14 @@ var schema = new mongoose.Schema({
     salt: {
         type: String
     },
-    twitter: {
-        id: String,
-        username: String,
-        token: String,
-        tokenSecret: String
-    },
-    facebook: {
-        id: String
-    },
-    google: {
-        id: String
-    },
     github: {
-        id: String
+        id: String,
+        displayName: String,
+        username: String,
+        emails: Object,
+        avatar: String
     }
-});
+}); 
 
 // generateSalt, encryptPassword and the pre 'save' and 'correctPassword' operations
 // are all used for local authentication security.

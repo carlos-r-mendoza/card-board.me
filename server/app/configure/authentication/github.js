@@ -18,6 +18,8 @@ module.exports = function (app) {
 	};
 
 	var verifyCallback = function(accessToken, refreshToken, profile, done) {
+		console.log("This is the PROFILE", profile);
+		console.log("This is the TOKEN", accessToken);
 
 		UserModel.findOne({ 'github.id': profile.id }, function (err, user) {
 			if(err) return done(err);
@@ -27,7 +29,12 @@ module.exports = function (app) {
 			} else {
                 UserModel.create({
                     github: {
-                        id: profile.id
+                        id: profile.id,
+                		displayName: profile.displayName,
+                		username: profile.username,
+                		emails: profile.emails,
+                		avatar: profile._json.avatar_url,
+                		info: profile._json
                     }
                 }).then(function (user) {
                     done(null, user);
