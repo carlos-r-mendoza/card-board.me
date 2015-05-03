@@ -1,0 +1,43 @@
+<div class="row">
+	<div class="col-md-6">
+
+	<md-content>
+		<md-card id="profile-card">
+			<img src="{{ profile.avatar }}" id="profile-pic" />
+			<md-card-content>
+
+				<h3><em>Name: </em> {{ profile.name }}</h3>
+				<div>GitHub Username: {{ profile.username }}</div>
+				<div>Public Email: {{ profile.email }}</div>
+				<p ng-show="profile.company">Company: </p> {{ profile.company }}
+				<div>Location: {{ profile.location }}</div>
+				<div>GitHub Profile Link: <a src="{{ profile.gitHubProfileLink }}">{{ profile.gitHubProfileLink }}</a></div>
+				<div>Number of Public Repos: {{ profile.publicRepos }}</div>
+			</md-card-content>
+		</md-card>
+	</md-content>
+	<style>
+	#profile-pic {
+		border-radius: 50%;
+		margin-top: 25px;
+		height: 250px;
+		width: 250px;
+	}
+	#profile-card {
+				background-color: #ffffff;
+
+	}
+
+	</style>
+
+	
+	<!-- <p>GitHub Email:</p>{{ profile.email }} -->
+	
+
+
+<!-- 		{{ info }}
+ -->
+
+	</div>
+	<div class="col-md-6"></div>
+</div>

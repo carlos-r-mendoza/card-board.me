@@ -1,8 +1,8 @@
       <core-drawer-panel>
 
   <core-header-panel drawer id="drawer-content">
-    <core-toolbar>
-      <div>Project Manager</div>
+    <core-toolbar horizontal layout center center-justified>
+      <div >Project Manager</div>
       </core-toolbar>
     <div > Drawer content... 
 <!-- 
@@ -13,6 +13,13 @@
 </core-selector> -->
 
     <core-menu selected="0">
+    <div ng-controller="GitHubProfileController">
+     <a ui-sref="github-profile"> <core-item icon="account-circle" label="{{ profile.name }}">
+
+
+
+      </core-item></a>
+    </div>
       <core-item icon="settings" label="Settings"></core-item>
       <core-item icon="dialog" label="Dialog"></core-item>
       <core-item icon="search" label="Search"></core-item>
@@ -29,18 +36,25 @@
   </core-menu>
   </div>
   </core-header-panel>
+
     <core-header-panel main id="main-drawer">
-    <core-toolbar>      
+   
+    <core-toolbar horizontal layout>      
     <paper-tabs id="tabs" selected="all" self-end>
       <paper-tab name="all">All</paper-tab>
       <paper-tab name="favorites">Favorites</paper-tab>
       </paper-tabs>
-      <button id="login-btn" class="btn btn-primary text-right">LOGIN</button>
-      </core-toolbar>
+
+ <div id="account-btn"><a href="/auth/github/" target="_self"><core-icon icon="account-circle"></core-icon></a></div>      
+
+ </core-toolbar>
+
     <div> Main content...
     <div ui-view></div>
      </div>
   </core-header-panel>
+
+
     </core-drawer-panel>
 
 
