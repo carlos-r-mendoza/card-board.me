@@ -23,7 +23,7 @@ module.exports = router;
 router.get('/username', function (req, res){
 	
 	var userGitHub = req.user.github.username;
-		console.log("USER", userGitHub)
+		console.log("USER", userGitHub);
 
 	
 
@@ -34,6 +34,68 @@ router.get('/username', function (req, res){
 		console.log(userInfo);
 		res.json(userInfo);
 	});
+
+	
+});
+
+router.get('/collaborators', function (req, res){
+	
+	var userGitHub = req.user.github.username;
+	var userToken = req.user.github.token;
+	console.log("USER", req.user);
+	console.log("USER TOKEN", userToken);
+
+	github.authenticate({
+    type: "oauth",
+    token: userToken
+	});
+	
+	github.events.getFromUser({
+		user: userGitHub
+	}, function(err, userEvents) {
+		// console.log("GITHUB");
+		// console.log(userInfo);
+		res.send(userEvents);
+	});
+
+	// github.repos.getFromUser({
+	// 	user: userGitHub
+	// }, function(err, userInfo) {
+	// 	// console.log("GITHUB");
+	// 	// console.log(userInfo);
+	// 	res.json(userInfo);
+	// });
+
+	
+});
+
+router.get('/repos', function (req, res){
+	
+	var userGitHub = req.user.github.username;
+	var userToken = req.user.github.token;
+	console.log("USER", req.user);
+	console.log("USER TOKEN", userToken);
+
+	github.authenticate({
+    type: "oauth",
+    token: userToken
+	});
+	
+	github.repos.getFromUser({
+		user: userGitHub
+	}, function(err, userRepos) {
+		// console.log("GITHUB");
+		// console.log(userInfo);
+		res.send(userRepos);
+	});
+
+	// github.repos.getFromUser({
+	// 	user: userGitHub
+	// }, function(err, userInfo) {
+	// 	// console.log("GITHUB");
+	// 	// console.log(userInfo);
+	// 	res.json(userInfo);
+	// });
 
 	
 });

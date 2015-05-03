@@ -17,7 +17,8 @@ var schema = new mongoose.Schema({
         displayName: String,
         username: String,
         emails: Object,
-        avatar: String
+        avatar: String,
+        token: String
     }
 }); 
 

@@ -1,21 +1,79 @@
 <div class="row">
-	<div class="col-md-6">
 
 	<md-content>
-		<md-card id="profile-card">
-			<img src="{{ profile.avatar }}" id="profile-pic" />
-			<md-card-content>
+		<div class="col-md-4">
+			<md-card id="profile-card">
+				<md-card-content>
+					<img src="{{ profile.avatar }}" id="profile-pic" />
+					<h3><em>Name: </em> {{ profile.name }}</h3>
+					<div>GitHub Username: {{ profile.username }}</div>
+					<div>Public Email: {{ profile.email }}</div>
+					<p ng-show="profile.company">Company: </p> {{ profile.company }}
+					<div>Location: {{ profile.location }}</div>
+					<div>GitHub Profile Link: <a src="{{ profile.gitHubProfileLink }}">{{ profile.gitHubProfileLink }}</a></div>
+					<div>Number of Public Repos: {{ profile.publicRepos }}</div>
+				</md-card-content>
+			</md-card>
+		</div>
 
-				<h3><em>Name: </em> {{ profile.name }}</h3>
-				<div>GitHub Username: {{ profile.username }}</div>
-				<div>Public Email: {{ profile.email }}</div>
-				<p ng-show="profile.company">Company: </p> {{ profile.company }}
-				<div>Location: {{ profile.location }}</div>
-				<div>GitHub Profile Link: <a src="{{ profile.gitHubProfileLink }}">{{ profile.gitHubProfileLink }}</a></div>
-				<div>Number of Public Repos: {{ profile.publicRepos }}</div>
-			</md-card-content>
-		</md-card>
+		<div class="col-md-8">
+			<md-card id="profile-repos-card">
+				<md-card-content>
+					<h3><em>User Repos</h3>
+					<div ng-repeat="profileRepo in profileRepos">
+						<div>Repo Name: {{ profileRepo.name }}</div>
+						<div>Language: {{ profileRepo.language }}</div>						
+						<div>Description: {{ profileRepo.description }}</div>
+						<div>Url: {{ profileRepo.url }}</div>
+						<div>Date Created: {{ profileRepo.created }}</div>
+						<div>Date Last Updated: {{ profileRepo.lastUpdated }}</div>
+						<div>Watchers: {{ profileRepo.watchers }}</div>
+						<div>Forks: {{ profileRepo.forks }}</div>
+
+						<hr/>
+					</div>	
+				</md-card-content>
+			</md-card>
+		</div>
+</div>
+
+		<div class="col-md-3" style="float: left;">
+			<md-card id="profile-events-card">
+				<md-card-content>
+					<h3><em>Latest User Events</h3>
+					<div ng-repeat="profileEvent in profileEvents">
+						<div>Event Type: {{ profileEvent.type }}</div>
+						<div>Repo: {{ profileEvent.repo }}</div>
+						<div ng-show="profileEvent.message">Message: {{ profileEvent.message }}</div>
+						<div>Date: {{ profileEvent.date }}</div>
+						<hr/>
+					</div>	
+				</md-card-content>
+			</md-card>
+		</div>
+
 	</md-content>
+		
+<!-- <div class = "row">
+	<md-content>
+		<div class="col-md-4">
+			<md-card id="profile-events-card">
+				<md-card-content>
+					<h3><em>Latest User Events</h3>
+					<div ng-repeat="profileEvent in profileEvents">
+						<div>Event Type: {{ profileEvent.type }}</div>
+						<div>Repo: {{ profileEvent.repo }}</div>
+						<div ng-show="profileEvent.message">Message: {{ profileEvent.message }}</div>
+						<div>Date: {{ profileEvent.date }}</div>
+						<hr/>
+					</div>	
+				</md-card-content>
+			</md-card>
+		</div>
+	</md-content>
+
+</div>
+ -->
 	<style>
 	#profile-pic {
 		border-radius: 50%;
@@ -23,21 +81,9 @@
 		height: 250px;
 		width: 250px;
 	}
-	#profile-card {
+	#profile-card, #profile-events-card, #profile-repos-card {
 				background-color: #ffffff;
 
 	}
 
 	</style>
-
-	
-	<!-- <p>GitHub Email:</p>{{ profile.email }} -->
-	
-
-
-<!-- 		{{ info }}
- -->
-
-	</div>
-	<div class="col-md-6"></div>
-</div>

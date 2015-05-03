@@ -35,7 +35,6 @@ module.exports = function (app) {
                 		username: profile.username,
                 		emails: profile.emails,
                 		avatar: profile._json.avatar_url,
-                		info: profile._json,
                         token: accessToken
                     }
                 }).then(function (user) {
