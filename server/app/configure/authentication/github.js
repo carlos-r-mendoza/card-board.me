@@ -56,7 +56,7 @@ passport.use(new GitHubStrategy(gitHubCredentials, verifyCallback));
 
 
 app.get('/auth/github',
-  passport.authenticate('github', { scope: ['repo'] }));
+  passport.authenticate('github', { scope: ['repo', 'notifications'] }));
 
 app.get('/auth/github/callback', 
   passport.authenticate('github', { failureRedirect: '/login' }),

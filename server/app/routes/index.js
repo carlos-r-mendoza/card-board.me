@@ -4,7 +4,7 @@ module.exports = router;
 
 router.use('/members', require('./members'));
 router.use('/github-profile', require('./github-profile'));
-
+router.use('/repo', require('./repo'));
 // Make sure this is after all of
 // the registered routes!
 router.use(function (req, res) {

@@ -1,5 +1,67 @@
 <div class="row">
-<p>HELLLO {{ name }}</p>
+<md-content>
+	<div class="col-md-4">
+		<md-card id="profile-card">
+			<md-card-content>
+				<h1>{{ repoInfo.data.name }}</h1>
+				<div>Language: {{ repoInfo.data.language }}</div>				
+				<div>Owner: {{ repoInfo.data.owner.login }}</div>
+				<div>Url: {{ repoInfo.data.html_url }}</div>
+				<div>Clone Url: {{ repoInfo.data.clone_url }}</div>
+				<div>Homepage Url: {{ repoInfo.data.homepage }}</div>
+				<div>Creation Date: {{ repoInfo.data.created_at | date:'medium' }}</div>
+				<div>Last Updated Date: {{ repoInfo.data.updated_at | date:'medium' }}</div>				
+				<div>Forks Count: {{ repoInfo.data.forks_count }}</div>
+				<div>Watchers Count: {{ repoInfo.data.watchers_count }}</div>
+				<div>Subscribers Count: {{ repoInfo.data.subscribers_count }}</div>
+				<div>Description: {{ repoInfo.data.description }}</div>
+			</md-card-content>
+		</md-card>
 	</div>
 
-	<button ng-click="update($index)"></button>
+	<div class="col-md-4">
+		<md-card id="profile-card">
+			<md-card-content>
+				<h1>Collaborators</h1>
+				<div ng-repeat="collaborator in collaborators.data">
+				<img src="{{ collaborator.avatar_url }}" id="profile-pic" />
+				<div>Name: {{ collaborator.login }}</div>
+				<div>GitHub Profile Link: <a href="{{ collaborator.html_url }}">{{ collaborator.html_url }}</a></div>
+				</div>
+			</md-card-content>
+		</md-card>
+	</div>
+
+	<div class="col-md-7">
+		<md-card id="profile-card">
+			<md-card-content>
+				<h1>Commits</h1>
+ 				<div ng-repeat="commit in commits.data">
+				 	<div>Name: {{ commit.commit.author.name }}</div>
+				 	<div>Date: {{ commit.commit.author.date | date:'medium' }}</div>
+				 	<div>Message: {{ commit.commit.message }}</div>
+ 				</div>
+			</md-card-content>
+		</md-card>
+	</div>
+				repoInfo
+				statsCodeFrequency: {{ stats }}
+				statsCommitActivity: {{ statsCommit }} 
+				statsContributors: {{ statsContributors }}
+				statsParticipation: {{ statsParticipation }}
+				commits: {{ commits }}
+				{{ collaborators }}
+				adsf
+					{{ hello }}
+					<h1>{{ name }}</h1>
+					<h3><em>Name: </em> {{ profile.name }}</h3>
+					<div>GitHub Username: {{ profile.username }}</div>
+					<div>Public Email: {{ profile.email }}</div>
+					<p ng-show="profile.company">Company: </p> {{ profile.company }}
+					<div>Location: {{ profile.location }}</div>
+					<div>GitHub Profile Link: <a href="{{ profile.gitHubProfileLink }}">{{ profile.gitHubProfileLink }}</a></div>
+					<div>Number of Public Repos: {{ profile.publicRepos }}</div>
+				</md-card-content>
+			</md-card>
+		</div>
+</div>

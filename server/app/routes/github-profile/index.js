@@ -20,9 +20,18 @@ version: "3.0.0"
 // }
 });
 
+
+
 router.get('/username', function (req, res){
 	
 	var userGitHub = req.user.github.username;
+	var userToken = req.user.github.token;
+
+	console.log("ATEARER")
+	github.authenticate({
+    type: "oauth",
+    token: userToken
+	});
 
 	github.user.getFrom({
 		user: userGitHub
@@ -114,6 +123,7 @@ router.get('/repos', function (req, res){
 	});
 	
 });
+
 
 
 // router.get('/repos/collaborators', function (req, res){
