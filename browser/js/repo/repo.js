@@ -289,7 +289,8 @@ app.controller('RepoShowController', function($scope, $stateParams, $state, Repo
 		}
 
 		function statsCommitActivityFulfilled(statsCommitActivity) {
-			$scope.statsCommit = statsCommitActivity;
+			console.log("STATTS", statsCommitActivity )
+			$scope.statsCommit = statsCommitActivity.data[statsCommitActivity.data.length-1];
 		}
 
 		function statsContributorsFulfilled(statsContributors) {

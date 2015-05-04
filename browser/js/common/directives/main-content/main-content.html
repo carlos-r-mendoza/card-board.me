@@ -2,9 +2,9 @@
 
   <core-header-panel drawer id="drawer-content">
     <core-toolbar horizontal layout center center-justified>
-      <div >Project Manager</div>
+      <div>Project Manager</div>
       </core-toolbar>
-    <div > Drawer content... 
+    <div >
 <!-- 
  <core-selector selected="0">
   <div>Item 1</div>
@@ -13,6 +13,7 @@
 </core-selector> -->
 
     <core-menu selected="0">
+     <div id="account-btn"><a href="/auth/github/" target="_self"><core-icon icon="account-circle"></core-icon></a></div> 
     <div ng-controller="GitHubProfileController">
      <a ui-sref="github-profile"> <core-item icon="account-circle" label="{{ profile.name }}">
 
@@ -45,7 +46,7 @@
       <paper-tab name="favorites">Favorites</paper-tab>
       </paper-tabs>
 
- <div id="account-btn"><a href="/auth/github/" target="_self"><core-icon icon="account-circle"></core-icon></a></div>      
+     
 
  </core-toolbar>
 

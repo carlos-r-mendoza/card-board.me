@@ -44,24 +44,29 @@
 			</md-card-content>
 		</md-card>
 	</div>
-				repoInfo
-				statsCodeFrequency: {{ stats }}
-				statsCommitActivity: {{ statsCommit }} 
-				statsContributors: {{ statsContributors }}
-				statsParticipation: {{ statsParticipation }}
-				commits: {{ commits }}
-				{{ collaborators }}
-				adsf
-					{{ hello }}
-					<h1>{{ name }}</h1>
-					<h3><em>Name: </em> {{ profile.name }}</h3>
-					<div>GitHub Username: {{ profile.username }}</div>
-					<div>Public Email: {{ profile.email }}</div>
-					<p ng-show="profile.company">Company: </p> {{ profile.company }}
-					<div>Location: {{ profile.location }}</div>
-					<div>GitHub Profile Link: <a href="{{ profile.gitHubProfileLink }}">{{ profile.gitHubProfileLink }}</a></div>
-					<div>Number of Public Repos: {{ profile.publicRepos }}</div>
-				</md-card-content>
-			</md-card>
-		</div>
+	<div class="col-md-7">
+		<md-card id="profile-card">
+			<md-card-content>
+				<h1>Commits in Last Week</h1>
+				<div>Saturday: {{ statsCommit.days[0]}} </div>
+				<div>Sunday: {{ statsCommit.days[1]}} </div>
+				<div>Monday: {{ statsCommit.days[2]}} </div>
+				<div>Tuesday: {{ statsCommit.days[3]}} </div>
+				<div>Wednesday: {{ statsCommit.days[4]}} </div>
+				<div>Thursday: {{ statsCommit.days[5]}} </div>
+				<div>Friday: {{ statsCommit.days[6]}} </div>
+				<div>Toral: {{ statsCommit.total }} </div>
+
+
+			<!-- 	 	<div>Name: {{ statsCommit.total }}</div>
+				}
+				} -->
+		<!-- 		 	<div>Date: {{ commit.commit.author.date | date:'medium' }}</div>
+				 	<div>Message: {{ commit.commit.message }}</div> -->
+ 				</div>
+			</md-card-content>
+		</md-card>
+	</div>
+				
+	
 </div>
