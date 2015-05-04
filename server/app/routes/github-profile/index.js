@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 var router = require('express').Router();
 var GitHubApi=require('github');
@@ -35,23 +35,23 @@ router.get('/username', function (req, res){
 	
 });
 
-// router.get('/collaborators', function (req, res){
+router.get('/collaborators', function (req, res){
 	
-// 	var userGitHub = req.user.github.username;
-// 	var userToken = req.user.github.token;
+	var userGitHub = req.user.github.username;
+	var userToken = req.user.github.token;
 
-// 	github.authenticate({
-//     type: "oauth",
-//     token: userToken
-// 	});
+	github.authenticate({
+    type: "oauth",
+    token: userToken
+	});
 	
-// 	github.events.getFromUser({
-// 		user: userGitHub
-// 	}, function(err, userEvents) {
-// 		res.send(userEvents);
-// 	});
+	github.events.getFromUser({
+		user: userGitHub
+	}, function(err, userEvents) {
+		res.send(userEvents);
+	});
 
-// });
+});
 
 router.get('/repos', function (req, res){
 	
@@ -66,49 +66,47 @@ router.get('/repos', function (req, res){
 	github.misc.rateLimit({}, function(err, limit){ console.log("LIMIT", limit);});
 	
 	github.repos.getFromUser({
-		user: userGitHub
+		user: userGitHub,
+		type: "all"
 	}, function(err, userRepos) {
 
+		res.json(userRepos);
 
-		console.log(userRepos[0].name);
-		//res.send(userRepos);
+		// console.log(userRepos[0].name);
 		
-		userRepos.map(function(repo, index){
+		// userRepos.map(function(repo, index){
 
 
 
-			var repoName = repo.name;
-			repo.collaborators = [];
+		// 	var repoName = repo.name;
+		// 	repo.collaborators = [];
 
-			console.log(repoName);
+		// 	console.log(repoName);
 
-			github.repos.getCollaborators({
+		// 	github.repos.getCollaborators({
 			
-			user: userGitHub,
-			repo: repoName
+		// 	user: userGitHub,
+		// 	repo: repoName
 			
-			}, function(err, repoCollaborators) {
-				var collaboratorsUserName = [];
-				//console.log("Collabs", repoCollaborators);
+		// 	}, function(err, repoCollaborators) {
+		// 		var collaboratorsUserName = [];
 
-				repoCollaborators.map(function(collaborator){
-					repo.collaborators.push(collaborator.login);
-					//console.log("Collabs", collaborator.login);
+		// 		repoCollaborators.map(function(collaborator){
+		// 			repo.collaborators.push(collaborator.login);
 			
-					if(index === userRepos.length-1) {
-					console.log(req.headers);
-					res.json(userRepos);
-			//res.send(collaborators);
-					}
+		// 			if(index === userRepos.length-1) {
+		// 			console.log(req.headers);
+		// 			res.json(userRepos);
+		// 			}
 
-				});
+		// 		});
 
 			
 			
-			});
+		// 	});
 		
 
-		});
+		// });
 
 
 

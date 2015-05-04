@@ -1,3 +1,4 @@
+ </span>
       <core-drawer-panel>
 
   <core-header-panel drawer id="drawer-content">
@@ -57,14 +58,39 @@
 
     </core-drawer-panel>
 
-<div>
-<section id="home">
+  
 
- <paper-fab icon="add" id="fab-add-btn" role="button" tabindex="0" aria-label="add"></paper-fab>
-</section>
 
+
+<div class="dropup" id="dropdown" ng-controller="RepoShowController">
+  <!-- <button class="btn btn-default dropdown-toggle" type="button" > -->
+         <paper-fab icon="add" id="trigger" role="button" aria-label="add" id="dropdownMenu2" data-toggle="dropdown" aria-expanded="true"></paper-fab>
+
+  
+  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2" id="repo-menu">
+    <li role="presentation"><a role="menuitem" tabindex="-1" href="#" ng-repeat="profileRepo in profileRepos">{{ profileRepo.name }}</a></li>
+  </ul>
 </div>
 
+<span>
+
+<style>
+
+  /* manually position the dropdown below the trigger */
+ #dropdown, #trigger {
+    position: absolute;
+    right: 10px;
+    bottom: 20px;
+    z-index: 100;
+    /*background-color: #ffffff;*/
+  }
+
+  #repo-menu {
+    position: relative;
+    bottom: 100px;
+  }
+
+</style>
 
 
   <!--CODE CONTINUES IN main.html-->

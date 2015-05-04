@@ -56,7 +56,7 @@ app.controller('GitHubProfileController', function($scope, GitHubProfileFactory,
 	$scope.profile = {};
 	$scope.profileEvents = [];
 	$scope.profileRepos = [];
-$scope.collaborators = "";
+	$scope.collaborators = "";
 	//$scope.searchResults=[];
 
 
