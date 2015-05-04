@@ -63,6 +63,7 @@ app.controller('GitHubProfileController', function($scope, GitHubProfileFactory,
 		function profileFulfilled(profileData) {
 			$scope.info = profileData;
 			$scope.profile.name = profileData.data.name;
+			$scope.profile.name = profileData.data.name;
 			$scope.profile.username = profileData.data.login;
 			$scope.profile.avatar = profileData.data.avatar_url;
 			$scope.profile.email = profileData.data.email;
@@ -97,6 +98,7 @@ app.controller('GitHubProfileController', function($scope, GitHubProfileFactory,
 			profileRepos.data.forEach(function(repo){
 				var repoObj = {};
 				repoObj.name = repo.name;
+				repoObj.full_name = repo.full_name;
 				repoObj.language = repo.language;
 				repoObj.description = repo.description;
 				repoObj.url = repo.html_url;

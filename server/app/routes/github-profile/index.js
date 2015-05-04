@@ -23,7 +23,7 @@ version: "3.0.0"
 
 
 router.get('/username', function (req, res){
-	
+	console.log(req.user);
 	var userGitHub = req.user.github.username;
 	var userToken = req.user.github.token;
 

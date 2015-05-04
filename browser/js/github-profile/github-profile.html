@@ -3,34 +3,37 @@
 	<md-content>
 		<div class="col-md-4">
 			<md-card id="profile-card">
+			<core-toolbar id="profile-card-toolbar"><div flex>Profile Information</div></core-toolbar>
 				<md-card-content>
+					<div class="text-center">
 					<img src="{{ profile.avatar }}" id="profile-pic" />
-					<h3><em>Name: </em> {{ profile.name }}</h3>
-					<div>GitHub Username: {{ profile.username }}</div>
-					<div>Public Email: {{ profile.email }}</div>
-					<p ng-show="profile.company">Company: </p> {{ profile.company }}
-					<div>Location: {{ profile.location }}</div>
-					<div>GitHub Profile Link: <a href="{{ profile.gitHubProfileLink }}">{{ profile.gitHubProfileLink }}</a></div>
-					<div>Number of Public Repos: {{ profile.publicRepos }}</div>
+					</div>
+					<h3>Name: {{ profile.name }}</h3>
+					<div><strong>GitHub Username:</strong> {{ profile.username }}</div>
+					<div><strong>Public Email:</strong> {{ profile.email }}</div>
+					<p ng-show="profile.company">Company:</strong> </p> {{ profile.company }}
+					<div><strong>Location:</strong> {{ profile.location }}</div>
+					<div><strong>GitHub Profile Link:</strong> <a href="{{ profile.gitHubProfileLink }}">{{ profile.gitHubProfileLink }}</a></div>
+					<div><strong>Number of Public Repos:</strong> {{ profile.publicRepos }}</div>
 				</md-card-content>
 			</md-card>
 		</div>
-
-		<div class="col-md-8 pull-right">
+<!-- 		<div class="inner-div"></div>
+ -->		<div class="col-md-8 pull-right">
 			<md-card id="profile-repos-card">
+				<core-toolbar id="profile-repos-card-toolbar"><div flex>User Repos</div></core-toolbar>
 				<md-card-content>
-					<h3><em>User Repos</h3>
 					<div ng-repeat="profileRepo in profileRepos">
-						<div>Repo Name: {{ profileRepo.name }}</div>
-						<div>Language: {{ profileRepo.language }}</div>						
-						<div>Description: {{ profileRepo.description }}</div>
-						<div>Url: {{ profileRepo.url }}</div>
-						<div>Date Created: {{ profileRepo.created }}</div>
-						<div>Date Last Updated: {{ profileRepo.lastUpdated }}</div>
-						<div>Watchers: {{ profileRepo.watchers }}</div>
-						<div>Forks: {{ profileRepo.forks }}</div>
+						<div><strong>Repo Name:</strong> {{ profileRepo.name }}</div>
+						<div><strong>Language:</strong> {{ profileRepo.language }}</div>						
+						<div><strong>Description:</strong> {{ profileRepo.description }}</div>
+						<div><strong>Url:</strong> {{ profileRepo.url }}</div>
+						<div><strong>Date Created:</strong> {{ profileRepo.created }}</div>
+						<div><strong>Date Last Updated:</strong> {{ profileRepo.lastUpdated }}</div>
+						<div><strong>Watchers:</strong> {{ profileRepo.watchers }}</div>
+						<div><strong>Forks:</strong> {{ profileRepo.forks }}</div>
 
-						<hr/>
+						<md-divider></md-divider>
 					</div>	
 				</md-card-content>
 			</md-card>
@@ -38,14 +41,14 @@
 
 		<div class="col-md-4" style="float: left;">
 			<md-card id="profile-events-card">
+				<core-toolbar id="profile-events-card-toolbar"><div flex>Latest User Events</div></core-toolbar>
 				<md-card-content>
-					<h3><em>Latest User Events</h3>
 					<div ng-repeat="profileEvent in profileEvents">
-						<div>Event Type: {{ profileEvent.type }}</div>
-						<div>Repo: {{ profileEvent.repo }}</div>
-						<div ng-show="profileEvent.message">Message: {{ profileEvent.message }}</div>
-						<div>Date: {{ profileEvent.date }}</div>
-						<hr/>
+						<div><strong>Event Type:</strong> {{ profileEvent.type }}</div>
+						<div><strong>Repo:</strong> {{ profileEvent.repo }}</div>
+						<div ng-show="profileEvent.message"><strong>Message:</strong> {{ profileEvent.message }}</div>
+						<div><strong>Date:</strong> {{ profileEvent.date }}</div>
+						<md-divider></md-divider>
 					</div>	
 				</md-card-content>
 			</md-card>
@@ -53,27 +56,7 @@
 
 	</md-content>
 </div>
-{{ collaborators }}
-<!-- <div class = "row">
-	<md-content>
-		<div class="col-md-4">
-			<md-card id="profile-events-card">
-				<md-card-content>
-					<h3><em>Latest User Events</h3>
-					<div ng-repeat="profileEvent in profileEvents">
-						<div>Event Type: {{ profileEvent.type }}</div>
-						<div>Repo: {{ profileEvent.repo }}</div>
-						<div ng-show="profileEvent.message">Message: {{ profileEvent.message }}</div>
-						<div>Date: {{ profileEvent.date }}</div>
-						<hr/>
-					</div>	
-				</md-card-content>
-			</md-card>
-		</div>
-	</md-content>
 
-</div>
- -->
 	<style>
 	#profile-pic {
 		border-radius: 50%;
@@ -81,9 +64,24 @@
 		height: 250px;
 		width: 250px;
 	}
+	#profile-card-toolbar {
+		background-color: #F44336;
+	} 
+	#profile-repos-card-toolbar {
+		background-color: #673AB7
+	}
+	#profile-events-card-toolbar {
+		background-color: #00BCD4
+	}
 	#profile-card, #profile-events-card, #profile-repos-card {
 				background-color: #ffffff;
 
+	}
+	md-divider {
+		color: #CFD8DC;
+	}
+	.inner-div {
+		padding-left: 50px;
 	}
 
 	</style>

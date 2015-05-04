@@ -1,61 +1,65 @@
 <div class="row">
 <md-content>
-	<div class="col-md-4">
+	<div class="col-md-8">
 		<md-card id="profile-card">
-			<md-card-content>
-				<h1>{{ repoInfo.data.name }}</h1>
-				<div>Language: {{ repoInfo.data.language }}</div>				
-				<div>Owner: {{ repoInfo.data.owner.login }}</div>
-				<div>Url: {{ repoInfo.data.html_url }}</div>
-				<div>Clone Url: {{ repoInfo.data.clone_url }}</div>
-				<div>Homepage Url: {{ repoInfo.data.homepage }}</div>
-				<div>Creation Date: {{ repoInfo.data.created_at | date:'medium' }}</div>
-				<div>Last Updated Date: {{ repoInfo.data.updated_at | date:'medium' }}</div>				
-				<div>Forks Count: {{ repoInfo.data.forks_count }}</div>
-				<div>Watchers Count: {{ repoInfo.data.watchers_count }}</div>
-				<div>Subscribers Count: {{ repoInfo.data.subscribers_count }}</div>
-				<div>Description: {{ repoInfo.data.description }}</div>
+		<core-toolbar id="profile-card1">{{ repoInfo.data.name }}</core-toolbar>
+			<md-card-content class="paper-card">
+				<div><strong>Language:</strong> {{ repoInfo.data.language }}</div>				
+				<div><strong>Owner:</strong>  {{ repoInfo.data.owner.login }}</div>
+				<div><strong>Url:</strong>  {{ repoInfo.data.html_url }}</div>
+				<div><strong>Clone Url:</strong>  {{ repoInfo.data.clone_url }}</div>
+				<div><strong>Homepage Url:</strong>  {{ repoInfo.data.homepage }}</div>
+				<div><strong>Creation Date:</strong>  {{ repoInfo.data.created_at | date:'medium' }}</div>
+				<div><strong>Last Updated Date:</strong>  {{ repoInfo.data.updated_at | date:'medium' }}</div>				
+				<div><strong>Forks Count:</strong>  {{ repoInfo.data.forks_count }}</div>
+				<div><strong>Watchers Count:</strong>  {{ repoInfo.data.watchers_count }}</div>
+				<div><strong>Subscribers Count:</strong>  {{ repoInfo.data.subscribers_count }}</div>
+				<div><strong>Description:</strong>  {{ repoInfo.data.description }}</div>
 			</md-card-content>
 		</md-card>
 	</div>
 
-	<div class="col-md-4">
+	<div class="col-md-4 pull-right">
 		<md-card id="profile-card">
-			<md-card-content>
-				<h1>Collaborators</h1>
+		<core-toolbar id="profile-card2">Collaborators</core-toolbar>
+			<md-card-content class="paper-card">
 				<div ng-repeat="collaborator in collaborators.data">
-				<img src="{{ collaborator.avatar_url }}" id="profile-pic" />
-				<div>Name: {{ collaborator.login }}</div>
-				<div>GitHub Profile Link: <a href="{{ collaborator.html_url }}">{{ collaborator.html_url }}</a></div>
+				<div class="text-center">
+				<img src="{{ collaborator.avatar_url }}" class="pic" />
+				</div>
+				<div><strong>Name:</strong> {{ collaborator.login }}</div>
+				<div><strong>GitHub Profile Link:</strong> <a href="{{ collaborator.html_url }}">{{ collaborator.html_url }}</a></div>
+				<md-divider></md-divider>
 				</div>
 			</md-card-content>
 		</md-card>
 	</div>
 
-	<div class="col-md-7">
+	<div class="col-md-8">
 		<md-card id="profile-card">
-			<md-card-content>
-				<h1>Commits</h1>
+		<core-toolbar id="profile-card3">Commits</core-toolbar>
+			<md-card-content class="paper-card">
  				<div ng-repeat="commit in commits.data">
-				 	<div>Name: {{ commit.commit.author.name }}</div>
-				 	<div>Date: {{ commit.commit.author.date | date:'medium' }}</div>
-				 	<div>Message: {{ commit.commit.message }}</div>
+				 	<div><strong>Name:</strong> {{ commit.commit.author.name }}</div>
+				 	<div><strong>Date:</strong>  {{ commit.commit.author.date | date:'medium' }}</div>
+				 	<div><strong>Message:</strong>  {{ commit.commit.message }}</div>
+					<md-divider></md-divider>
  				</div>
 			</md-card-content>
 		</md-card>
 	</div>
-	<div class="col-md-7">
+	<div class="col-md-4">
 		<md-card id="profile-card">
-			<md-card-content>
-				<h1>Commits in Last Week</h1>
-				<div>Saturday: {{ statsCommit.days[0]}} </div>
-				<div>Sunday: {{ statsCommit.days[1]}} </div>
-				<div>Monday: {{ statsCommit.days[2]}} </div>
-				<div>Tuesday: {{ statsCommit.days[3]}} </div>
-				<div>Wednesday: {{ statsCommit.days[4]}} </div>
-				<div>Thursday: {{ statsCommit.days[5]}} </div>
-				<div>Friday: {{ statsCommit.days[6]}} </div>
-				<div>Toral: {{ statsCommit.total }} </div>
+		<core-toolbar id="profile-card4">Commits in Last Week</core-toolbar>
+			<md-card-content class="paper-card">
+				<div><strong>Saturday:</strong> {{ statsCommit.days[0]}} </div>
+				<div><strong>Sunday:</strong> {{ statsCommit.days[1]}} </div>
+				<div><strong>Monday:</strong> {{ statsCommit.days[2]}} </div>
+				<div><strong>Tuesday:</strong> {{ statsCommit.days[3]}} </div>
+				<div><strong>Wednesday:</strong> {{ statsCommit.days[4]}} </div>
+				<div><strong>Thursday:</strong> {{ statsCommit.days[5]}} </div>
+				<div><strong>Friday:</strong> {{ statsCommit.days[6]}} </div>
+				<div><strong>Toral:</strong> {{ statsCommit.total }} </div>
 
 
 			<!-- 	 	<div>Name: {{ statsCommit.total }}</div>
@@ -70,3 +74,31 @@
 				
 	
 </div>
+
+<style>
+	.paper-card {
+		background-color: #ffffff;
+	}
+	.pic {
+		border-radius: 50%;
+		margin-top: 25px;
+		height: 250px;
+		width: 250px;
+	}
+	md-divider {
+		color: #CFD8DC;
+	}
+	#profile-card1 {
+		background-color: #009688;
+	}
+		#profile-card2 {
+		background-color: #9C27B0; 
+	}
+		#profile-card3 {
+		background-color: #E91E63;
+	}
+		#profile-card4 {
+		background-color: #FF9800;
+	}
+
+</style>
