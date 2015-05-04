@@ -1,9 +1,9 @@
 'use strict';
 app.config(function ($stateProvider) {
     $stateProvider.state('repo', {
-        url: '/repo',
+        url: '/repo/:number',
         templateUrl: 'js/repo/repo.html',
-        controller: 'GitHubProfileController'
+        controller: 'RepoController'
     });
 });
 
@@ -51,47 +51,74 @@ app.factory('GitHubProfileRepoCollaboratorsFactory', function($http){
 
 });
 
-app.controller('RepoController', function($scope, GitHubProfileFactory, GitHubProfileEventsFactory, GitHubProfileReposFactory, GitHubProfileRepoCollaboratorsFactory) {
-
-	$scope.profile = {};
-	$scope.profileEvents = [];
+app.controller('RepoController', function($scope, $stateParams, $state, GitHubProfileFactory, GitHubProfileEventsFactory, GitHubProfileReposFactory, GitHubProfileRepoCollaboratorsFactory) {
+	
+	// if($scope.index) {
+	// $scope.name = $scope.profileRepos[$scope.index].name;
+	// }
+	// $scope.profile = {};
+	// $scope.profileEvents = [];
 	$scope.profileRepos = [];
-	$scope.collaborators = "";
+	$scope.name = "";
+	// $scope.collaborators = "";
+
+
+
+	$scope.update = function (index) {
+				
+
+		//$state.current.data.index = index;
+
+		console.log("PARAMS", $stateParams);
+		console.log("State", $state.params);
+		$scope.name = $scope.profileRepos[$stateParams.number];
+		//	console.log($scope.profileRepos[index].name);
+		//$scope.name.push($scope.profileRepos[index].name);
+		
+			
+
+		//$state.go("repo");
+
+	};
+
+	$scope.news = function () {
+		return "repo";
+	};
 	//$scope.searchResults=[];
 
 
-		function profileFulfilled(profileData) {
-			$scope.info = profileData;
-			$scope.profile.name = profileData.data.name;
-			$scope.profile.username = profileData.data.login;
-			$scope.profile.avatar = profileData.data.avatar_url;
-			$scope.profile.email = profileData.data.email;
-			$scope.profile.company = profileData.data.company;
-			$scope.profile.location = profileData.data.location;
-			$scope.profile.gitHubProfileLink = profileData.data.html_url;
-			$scope.profile.publicRepos = profileData.data.public_repos;
+		// function profileFulfilled(profileData) {
+		// 	$scope.info = profileData;
+		// 	$scope.profile.name = profileData.data.name;
+		// 	$scope.profile.username = profileData.data.login;
+		// 	$scope.profile.avatar = profileData.data.avatar_url;
+		// 	$scope.profile.email = profileData.data.email;
+		// 	$scope.profile.company = profileData.data.company;
+		// 	$scope.profile.location = profileData.data.location;
+		// 	$scope.profile.gitHubProfileLink = profileData.data.html_url;
+		// 	$scope.profile.publicRepos = profileData.data.public_repos;
 
-		}
+		// }
 		function rejected(error){
 			console.log(error);
 		}
 	
-		function profileEventsFulfilled(profileEvents) {
+		// function profileEventsFulfilled(profileEvents) {
 
-			profileEvents.data.forEach(function(event){
-				var eventObj = {};
+		// 	profileEvents.data.forEach(function(event){
+		// 		var eventObj = {};
 
-				eventObj.type = event.type;
-				eventObj.repo = event.repo.name;
-				eventObj.date = event.created_at;
-				if(eventObj.type === "PushEvent") {
-					eventObj.message = event.payload.commits[0].message;
-				} else { eventObj.message = ""; }
+		// 		eventObj.type = event.type;
+		// 		eventObj.repo = event.repo.name;
+		// 		eventObj.date = event.created_at;
+		// 		if(eventObj.type === "PushEvent") {
+		// 			eventObj.message = event.payload.commits[0].message;
+		// 		} else { eventObj.message = ""; }
 			
-			$scope.profileEvents.push(eventObj);
+		// 	$scope.profileEvents.push(eventObj);
 			
-			});
-		}
+		// 	});
+		// }
 	
 		function profileReposFulfilled(profileRepos) {
 			profileRepos.data.forEach(function(repo){
@@ -111,18 +138,18 @@ app.controller('RepoController', function($scope, GitHubProfileFactory, GitHubPr
 			
 		}
 
-				function profileReposCollaboratorsFulfilled(profileRepos) {
+		// 		function profileReposCollaboratorsFulfilled(profileRepos) {
 
-							$scope.collaborators = profileRepos;
+		// 					$scope.collaborators = profileRepos;
 
-		}
+		// }
 
 
 
-		GitHubProfileFactory.getUserInfo().then(profileFulfilled, rejected);
-		GitHubProfileEventsFactory.getUserEvents().then(profileEventsFulfilled, rejected);
+		// GitHubProfileFactory.getUserInfo().then(profileFulfilled, rejected);
+		// GitHubProfileEventsFactory.getUserEvents().then(profileEventsFulfilled, rejected);
 		GitHubProfileReposFactory.getUserRepos().then(profileReposFulfilled, rejected);
-		GitHubProfileRepoCollaboratorsFactory.getUserRepos().then(profileReposCollaboratorsFulfilled, rejected);
+		// GitHubProfileRepoCollaboratorsFactory.getUserRepos().then(profileReposCollaboratorsFulfilled, rejected);
 
 
 
