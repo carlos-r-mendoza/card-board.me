@@ -9,7 +9,7 @@
             <!-- <pre>{{searchResults |json}}</pre> -->
         </div>
         <div ng-controller="BarCtrl">
-            <canvas id="bar" class="chart chart-bar" data="dataShare.data" labels="dataShare.labels"></canvas>
+            <a ng-href="{{searchResults[0].html_url}}" target="_blank"><canvas id="bar" class="chart chart-bar" data="dataShare.data" labels="dataShare.labels"></canvas></a>
         </div>
         <!-- <pre>{{searchResults |json}}</pre> -->
     </div>
