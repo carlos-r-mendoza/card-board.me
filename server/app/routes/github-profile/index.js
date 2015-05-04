@@ -30,26 +30,28 @@ router.get('/username', function (req, res){
 		res.json(userInfo);
 	});
 
+
+
 	
 });
 
-router.get('/collaborators', function (req, res){
+// router.get('/collaborators', function (req, res){
 	
-	var userGitHub = req.user.github.username;
-	var userToken = req.user.github.token;
+// 	var userGitHub = req.user.github.username;
+// 	var userToken = req.user.github.token;
 
-	github.authenticate({
-    type: "oauth",
-    token: userToken
-	});
+// 	github.authenticate({
+//     type: "oauth",
+//     token: userToken
+// 	});
 	
-	github.events.getFromUser({
-		user: userGitHub
-	}, function(err, userEvents) {
-		res.send(userEvents);
-	});
+// 	github.events.getFromUser({
+// 		user: userGitHub
+// 	}, function(err, userEvents) {
+// 		res.send(userEvents);
+// 	});
 
-});
+// });
 
 router.get('/repos', function (req, res){
 	
@@ -60,33 +62,79 @@ router.get('/repos', function (req, res){
     type: "oauth",
     token: userToken
 	});
+
+	github.misc.rateLimit({}, function(err, limit){ console.log("LIMIT", limit);});
 	
 	github.repos.getFromUser({
 		user: userGitHub
 	}, function(err, userRepos) {
-		res.send(userRepos);
+
+
+		console.log(userRepos[0].name);
+		//res.send(userRepos);
+		
+		userRepos.map(function(repo, index){
+
+
+
+			var repoName = repo.name;
+			repo.collaborators = [];
+
+			console.log(repoName);
+
+			github.repos.getCollaborators({
+			
+			user: userGitHub,
+			repo: repoName
+			
+			}, function(err, repoCollaborators) {
+				var collaboratorsUserName = [];
+				//console.log("Collabs", repoCollaborators);
+
+				repoCollaborators.map(function(collaborator){
+					repo.collaborators.push(collaborator.login);
+					//console.log("Collabs", collaborator.login);
+			
+					if(index === userRepos.length-1) {
+					console.log(req.headers);
+					res.json(userRepos);
+			//res.send(collaborators);
+					}
+
+				});
+
+			
+			
+			});
+		
+
+		});
+
+
+
+
 	});
 	
 });
 
 
-router.get('/repos/collaborators', function (req, res){
+// router.get('/repos/collaborators', function (req, res){
 	
-	var userGitHub = req.user.github.username;
-	var userToken = req.user.github.token;
+// 	var userGitHub = req.user.github.username;
+// 	var userToken = req.user.github.token;
 
-	github.authenticate({
-    type: "oauth",
-    token: userToken
-	});
+// 	github.authenticate({
+//     type: "oauth",
+//     token: userToken
+// 	});
 	
-	github.repos.getCollaborators({
-		user: userGitHub,
-		repo: "project_management_tool"
-	}, function(err, collaborators) {
-		res.send(collaborators);
-	});
+// 	github.repos.getCollaborators({
+// 		user: userGitHub,
+// 		repo: "project_management_tool"
+// 	}, function(err, collaborators) {
+// 		res.send(collaborators);
+// 	});
 	
-});
+// });
 
 
