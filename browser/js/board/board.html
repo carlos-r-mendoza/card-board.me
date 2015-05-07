@@ -1,0 +1,34 @@
+<h1>BOARD</h1>
+<table>
+	<tr>
+		<td>Feature</td>
+		<td>Task</td>
+		<td>Owner</td>
+		<td>In Progress</td>
+		<td>Complete</td>
+		<td>Due Date</td>
+		<td>% Complete</td>
+		<td># Open</td>
+		<td># Closed</td>
+	</tr>
+	<tr ng-repeat="feature in features">
+		<td>{{featureName}}
+		<tr ng-repeat="task in feature.tasks">
+			<td></td>
+			<td>{{task.toDO}}</td>
+			<td>{{task.owner}}}</td>
+			<td>{{task.status}}</td>
+		</tr>
+		<td>{{feature.dueDate}}</td>
+		</td>
+		<td>{{tasks completed / total tasks}}</td>
+		<td># Open</td>
+		<td># Closed</td>
+	</tr>
+</table>
+
+<ul data-as-sortable="board.dragControlListeners" data-ng-model="items">
+   <li data-ng-repeat="item in items" data-as-sortable-item>
+      <div data-as-sortable-item-handle></div>
+   </li>
+</ul>
