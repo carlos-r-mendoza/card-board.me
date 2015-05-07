@@ -1,34 +1,34 @@
-<h1>BOARD</h1>
+<div ng-model="board">
+	<h1>BOARD</h1>
 <table>
+	<thead>
 	<tr>
-		<td>Feature</td>
-		<td>Task</td>
-		<td>Owner</td>
-		<td>In Progress</td>
-		<td>Complete</td>
-		<td>Due Date</td>
-		<td>% Complete</td>
-		<td># Open</td>
-		<td># Closed</td>
+		<th>Feature</th>
+		<th>Task</th>
+		<th>Owner</th>
+		<th>In Progress</th>
+		<th>Complete</th>
+		<th>Due Date</th>
+		<th>% Complete</th>
+		<th># Open</th>
+		<th># Closed</th>
 	</tr>
+	</thead>
+	<tbody>
 	<tr ng-repeat="feature in features">
-		<td>{{featureName}}
-		<tr ng-repeat="task in feature.tasks">
-			<td></td>
-			<td>{{task.toDO}}</td>
-			<td>{{task.owner}}}</td>
-			<td>{{task.status}}</td>
-		</tr>
-		<td>{{feature.dueDate}}</td>
+		<th>
+		<div class="story card sortable-item">
+			<div class='row'>{{feature.name}}</div>
+		</div>
+		</th>
+		<td as-sortabe='sprintSortOptions' ng-repeat="status in feature.status" ng-model="status.cards">
+			<div class='card' ng-repeat='card in status.cards' as-sortabble-item ng-include="'/card.html'">
+			</div>
 		</td>
+		<td>{{feature.dueDate}}</td>
 		<td>{{tasks completed / total tasks}}</td>
 		<td># Open</td>
 		<td># Closed</td>
 	</tr>
+	</tbody>
 </table>
-
-<ul data-as-sortable="board.dragControlListeners" data-ng-model="items">
-   <li data-ng-repeat="item in items" data-as-sortable-item>
-      <div data-as-sortable-item-handle></div>
-   </li>
-</ul>
