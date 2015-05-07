@@ -19,7 +19,7 @@ app.factory('BoardFactory', function($http){
 
 app.controller('BoardController', function($scope, $stateParams, $state, RepoInfoFactory){
 	$scope.dragControlListeners = {
-		accept: functoin(sourceItemHandleScope, destSortableScope){
+		accept: function(sourceItemHandleScope, destSortableScope){
 			return true
 		},
 		itemMoved: function(event){ return SOMETHING},
@@ -43,6 +43,6 @@ app.controller('BoardController', function($scope, $stateParams, $state, RepoInf
 		}
 
 		],
-		dueDate: {'May 30'}
+		//dueDate: {'May 30'}
 	}
 });
