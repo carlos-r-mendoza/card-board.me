@@ -224,4 +224,55 @@ router.get('/repo/:repoName/statsParticipation', function (req, res) {
 });
 
 
+/***GETS ISSUES FOR A PARTICULAR REPO***/
+/*More info: http://mikedeboer.github.io/node-github/#issues.prototype.getRepoIssue*/
+router.get('/:repoName/repo-issues', function (req, res) {
+
+	var userGitHub = req.user.github.username;
+	var userToken = req.user.github.token;
+
+	github.authenticate({
+	    type: "oauth",
+	    token: userToken
+	});
+
+	github.issues.repoIssues({
+		user: userGitHub,
+		repo: req.params.repoName
+	}, function(err, repoIssues) {
+		res.json(repoIssues);
+	});
+});
+
+/***CREATES/POSTS AN ISSUE***/
+/*More info: http://mikedeboer.github.io/node-github/#issues.prototype.create*/
+router.post('/:repoName/create-repo-issue', function (req, res) {
+
+	console.log("AT route/create-repo-issue", req.body);
+
+	var userGitHub = req.user.github.username;
+	var userToken = req.user.github.token;
+	var issueTitle = req.body.title;
+	var issueBody = req.body.body;
+	var issueAssignee;
+	var issueMilestone;
+	var issueLabels;
+
+	github.authenticate({
+	    type: "oauth",
+	    token: userToken
+	});
+
+	github.issues.create({
+		user: userGitHub,
+		repo: req.params.repoName,
+		title: issueTitle,
+		body: issueBody
+	}, function(err, createdRepoIssue) {
+		res.json(createdRepoIssue);
+	});
+});
+
+
+
 

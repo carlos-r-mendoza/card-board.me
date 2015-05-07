@@ -40,18 +40,8 @@ app.factory('GitHubProfileReposFactory', function($http){
 
 });
 
-app.factory('GitHubProfileRepoCollaboratorsFactory', function($http){
-	return {
-		getUserRepos: function (){
-			return $http.get('api/github-profile/repos/collaborators').then(function(profileRepoCollaborators){
-				return profileRepoCollaborators;
-			});
-		}
-	};
 
-});
-
-app.controller('GitHubProfileController', function($scope, GitHubProfileFactory, GitHubProfileEventsFactory, GitHubProfileReposFactory, GitHubProfileRepoCollaboratorsFactory) {
+app.controller('GitHubProfileController', function($scope, GitHubProfileFactory, GitHubProfileEventsFactory, GitHubProfileReposFactory) {
 
 	$scope.profile = {};
 	$scope.profileEvents = [];
@@ -124,10 +114,5 @@ app.controller('GitHubProfileController', function($scope, GitHubProfileFactory,
 		GitHubProfileFactory.getUserInfo().then(profileFulfilled, rejected);
 		GitHubProfileEventsFactory.getUserEvents().then(profileEventsFulfilled, rejected);
 		GitHubProfileReposFactory.getUserRepos().then(profileReposFulfilled, rejected);
-		GitHubProfileRepoCollaboratorsFactory.getUserRepos().then(profileReposCollaboratorsFulfilled, rejected);
-
-
-
-
 
 	});
