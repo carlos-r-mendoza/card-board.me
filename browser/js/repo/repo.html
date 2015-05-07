@@ -18,6 +18,30 @@
 			</md-card-content>
 		</md-card>
 	</div>
+	{{ hello }}
+
+	<div class="col-md-4 pull-right">
+		<md-card id="profile-card">
+		<core-toolbar id="profile-card2">Create Issue</core-toolbar>
+			<md-card-content class="paper-card">
+				<form name="createIssue" ng-submit="createIssue(issue)">
+					<div class="form-group">
+						<label for="issueTitle">Title</label>
+						<input for="issueTitle" class="form-control" ng-model="issue.title" type="text" />
+					</div>
+					<div class="form-group">
+						<label for="issueBody">Message</label>
+						<input for="issueBody" class="form-control" ng-model="issue.body" type="text" />
+					</div>
+					<input type="submit" class="btn btn-success" value="Submit Issue" />		
+				</form>
+			</md-card-content>
+		</md-card>
+	</div>
+
+
+
+
 
 	<div class="col-md-4 pull-right">
 		<md-card id="profile-card">
