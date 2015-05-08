@@ -226,7 +226,7 @@ router.get('/repo/:repoName/statsParticipation', function (req, res) {
 
 /***GETS ISSUES FOR A PARTICULAR REPO***/
 /*More info: http://mikedeboer.github.io/node-github/#issues.prototype.getRepoIssue*/
-router.get('/:repoName/repo-issues', function (req, res) {
+router.get('/:repoOwner/:repoName/repo-issues', function (req, res) {
 
 	var userGitHub = req.user.github.username;
 	var userToken = req.user.github.token;
@@ -237,7 +237,7 @@ router.get('/:repoName/repo-issues', function (req, res) {
 	});
 
 	github.issues.repoIssues({
-		user: userGitHub,
+		user: req.params.repoOwner,
 		repo: req.params.repoName
 	}, function(err, repoIssues) {
 		res.json(repoIssues);
@@ -246,7 +246,7 @@ router.get('/:repoName/repo-issues', function (req, res) {
 
 /***CREATES/POSTS AN ISSUE***/
 /*More info: http://mikedeboer.github.io/node-github/#issues.prototype.create*/
-router.post('/:repoName/create-repo-issue', function (req, res) {
+router.post('/:repoOwner/:repoName/create-repo-issue', function (req, res) {
 
 	console.log("AT route/create-repo-issue", req.body);
 
@@ -264,7 +264,7 @@ router.post('/:repoName/create-repo-issue', function (req, res) {
 	});
 
 	github.issues.create({
-		user: userGitHub,
+		user: req.params.repoOwner,
 		repo: req.params.repoName,
 		title: issueTitle,
 		body: issueBody

@@ -85,6 +85,7 @@ app.controller('GitHubProfileController', function($scope, GitHubProfileFactory,
 		}
 	
 		function profileReposFulfilled(profileRepos) {
+			console.log("REPO INFO", profileRepos);
 			profileRepos.data.forEach(function(repo){
 				var repoObj = {};
 				repoObj.name = repo.name;
@@ -96,6 +97,7 @@ app.controller('GitHubProfileController', function($scope, GitHubProfileFactory,
 				repoObj.lastUpdated = repo.updated_at;
 				repoObj.watchers = repo.watchers_count;
 				repoObj.forks = repo.forks_count;
+				repoObj.owner = repo.owner.login;
 
 				$scope.profileRepos.push(repoObj);
 			
