@@ -50,6 +50,11 @@ app.factory('RepoInfoFactory', function($http){
 			return $http.get('api/repo/' + repoInfo.owner + "/" + repoInfo.name + "/repo-labels").then(function(repoLabels){
 				return repoLabels;
 			});
+		},
+		getRepoMilestones: function (repoInfo) {
+			return $http.get('api/repo/' + repoInfo.owner + "/" + repoInfo.name + "/repo-milestones").then(function(repoMilestones){
+				return repoMilestones;
+			});
 		}
 	};
 })
@@ -83,7 +88,7 @@ app.controller('RepoShowController', function($scope, $stateParams, $state, Repo
 	console.log("I am state params",$stateParams);
 	$scope.hello = "Welcomes";
 	$scope.issue = {};
-	$scope.issue.labels = [];
+	$scope.issue.tempLabels = [];
 
 	// issue = { body: "mytext"}
 
@@ -92,14 +97,20 @@ app.controller('RepoShowController', function($scope, $stateParams, $state, Repo
 // }
 
   $scope.createIssue = function(issue) {
-  	//issue.labels.push(issue.label); 
-  	issue.assignee = "carlos-r-mendoza";
+  	$scope.issue.labels = [];
 
-      console.log("This is the issue", issue);
-       console.log("STATEPARAMAS", $stateParams.name);
-      // console.log("NEWISSUE", newIssue);
-		RepoIssuesFactory.createRepoIssue($stateParams, issue).then(createdRepoIssueFulfilled, rejected);
-    }
+  	$scope.issue.tempLabels.forEach(function (tempLabelObj) {
+
+  		for (var label in tempLabelObj) {
+  			if(tempLabelObj[label]) {
+  				$scope.issue.labels.push(label);
+  			}
+  		}
+  	});
+
+    console.log("NEWISSUE", issue);
+	RepoIssuesFactory.createRepoIssue($stateParams, issue).then(createdRepoIssueFulfilled, rejected);
+  };
 
 
 		function repoInfoFulfilled(repoInfo) {
@@ -124,7 +135,7 @@ app.controller('RepoShowController', function($scope, $stateParams, $state, Repo
 
 
 		function repoCollaboratorsFulfilled(repoCollaborators) {
-		 $scope.collaborators = repoCollaborators;
+		 $scope.collaborators = repoCollaborators.data;
 		}
 
 		function repoCommitsFulfilled(repoCommits) {
@@ -161,7 +172,9 @@ app.controller('RepoShowController', function($scope, $stateParams, $state, Repo
 			$scope.repoLabels = repoLabels.data;
 		}
 
-
+		function repoMilestonesFulfilled(repoMilestones){
+			$scope.repoMilestones = repoMilestones.data;
+		}
 
 		function rejected(error){
 			console.log(error);
@@ -176,6 +189,7 @@ app.controller('RepoShowController', function($scope, $stateParams, $state, Repo
 		RepoInfoFactory.getStatsParticipation($stateParams.name).then(statsParticipationFulfilled, rejected);
 		RepoIssuesFactory.getRepoIssues($stateParams).then(repoIssuesFulfilled, rejected);
 		RepoInfoFactory.getRepoLabels($stateParams).then(repoLabelsFulfilled, rejected);
+		RepoInfoFactory.getRepoMilestones($stateParams).then(repoMilestonesFulfilled, rejected);
 
 
 });
