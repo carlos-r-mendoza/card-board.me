@@ -1,57 +1,50 @@
-<div ng-model="board" id="board">
-	<h1>BOARD</h1>
-	<md-card>
-	<md-card-content class="paper-card">
-<table id="boardTable" class="table table-bordered">
-	<thead>
-	<tr id="boardHeader">
-		<th>Feature</th>
-		<th>Task</th>
-		<th>Owner</th>
-		<th>In Progress</th>
-		<th>Complete</th>
-		<th>Due Date</th>
-		<th>% Complete</th>
-		<th># Open</th>
-		<th># Closed</th>
-	</tr>
-	</thead>
-	<tbody>
-	
-	<tr ng-repeat="feature in features">
-		
-		<th>
-			{{feature.task}}
-		<div class="story card sortable-item">
-			<div class='row'><span class="card-title">{{feature.featureName}}</span></div>
-		</div>
-		</th>
-		
-		<td as-sortable="dragOptions" ng-repeat="task in feature.task" ng-model="feature.task">
-			<div class='card'  as-sortable-item>
-				<div as-sortable-item-handle>
-				    <div class="row">
-				        <div class="col-sm-10">
-				            <span class="card-title">{{task.title}}</span>
-				        </div>
-				        <div class="col-sm-2">
-				            <a data-no-drag class="removeCard pull-right btn btn-xs">
-				            	<span class="glyphicon glyphicon-remove"></span>
-				            </a>
-				        </div>
-				    </div>
-				</div>
-			</div>
-		</td>
-		<td></td>
-		<td></td>
-		<td></td>
-		<td>{{feature.dueDate}}</td>
-		<td># Open</td>
-		<td># Closed</td>
-	</tr>
-	</tbody>
-</table>
-</md-card-content>
-</md-card>
+<div ng-model="sprintBoard" id="board" ng-controller="SprintController">
+
+    <table id="boardTable" class="table table-bordered">
+        <thead>
+        <tr id="boardHeader">
+            <th style="width:22%; text-align: left;">
+                <span>User stories</span>
+            </th>
+            <th class="addStory" style="width:3%;">
+            </th>
+            <th ng-repeat="column in sprintBoard.columns" style="width:25%;">
+                <div>
+                    <span>{{column.name}}</span>
+                </div>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="backlog in sprintBoard.backlogs">
+            <th style="width:22%">
+                <div class="story card sortable-item">
+                    <div class="row">
+                        <span class="card-title">{{backlog.name}}</span>
+                    </div>
+                </div>
+            </th>
+            <td class="addTask">
+                <a title="Add card to column" ng-click="addNewCard(column)"><i
+                        class="glyphicon glyphicon-plus addNewCard"></i></a>
+            </td>
+            <td as-sortable="sprintSortOptions" ng-repeat="phase in backlog.phases" ng-model="phase.cards">
+                <div class="card" ng-repeat="card in phase.cards" as-sortable-item>
+                     <div as-sortable-item-handle>
+                        <div class="row">
+                            <div class="col-sm-10">
+                                <!--<span class="btn-link"><a data-no-drag target=_top href="https://github.com/a5hik/ng-sortable">test no-drag href</a></span>-->
+                                <span class="card-title">{{card.title}}</span>
+                            </div>
+                            <div class="col-sm-2">
+                                <a data-no-drag class=" removeCard pull-right btn btn-xs" ng-click="removeCard(column, card)"><span
+                                        class="glyphicon glyphicon-remove"></span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
