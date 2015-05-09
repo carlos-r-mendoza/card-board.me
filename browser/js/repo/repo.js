@@ -79,6 +79,8 @@ app.controller('RepoShowController', function($scope, $stateParams, $state, Repo
 	$scope.hello = "Welcomes";
 	$scope.issue = {};
 
+	// issue = { body: "mytext"}
+
   $scope.createIssue = function(issue) {
       console.log("This is the issue", issue);
        console.log("STATEPARAMAS", $stateParams.name);

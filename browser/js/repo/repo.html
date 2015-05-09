@@ -40,6 +40,23 @@
 		</md-card>
 	</div>
 
+
+	<div class="col-md-4">
+		<md-card id="profile-card">
+		<core-toolbar id="profile-card2">Issues</core-toolbar>
+			<md-card-content class="paper-card">
+				<div ng-repeat="repoIssue in repoIssues.data">
+
+				<div>{{ repoIssue.login }}</div>
+				<div>{{ repoIssue.login }}</div>
+
+
+
+				</div>
+			</md-card-content>
+		</md-card>
+	</div>
+
 	<div class="col-md-4 pull-right">
 		<md-card id="profile-card">
 		<core-toolbar id="profile-card2">Collaborators</core-toolbar>
