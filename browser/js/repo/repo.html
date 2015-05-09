@@ -30,27 +30,64 @@
 						<label for="issueTitle">Title</label>
 						<input for="issueTitle" class="form-control" ng-model="issue.title" type="text" />
 					</div>
+
 					<div class="form-group">
-						<label for="bodyIssue">Body</label>
-						<textarea for="bodyIssue" class="form-control" rows="5" ng-model="issue.body"></textarea>
+						<label for="issueBody">Comment</label>
+						<textarea for="issueBody" class="form-control" rows="5" ng-model="issue.body"></textarea>
+					</div>
+
+					<div class="form-group">
+						<label for="issueLabels">Labels</label>
+						<div for="issueLabels" ng-repeat="label in repoLabels" >
+							
+							<span style="background-color: #{{ label.color }}">{{ label.name }}:  </span>
+
+							<input type="checkbox" name="{{ label.name }}" value="{{ label.name }}" ng-model="issue.tempLabels[$index][label.name]" />		
+
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="issueAssignee">Assignee</label>
+						<select for="issueAssignee" ng-model="issue.assignee">
+							<option ng-repeat="assignee in collaborators" value = "{{ assignee.login }}">{{ assignee.login }}</option>
+						</select>
+					</div>
+
+					<div class="form-group">
+						<label for="issueMilestones">Milestones</label>
+						<select for="issueMilestones" ng-model="issue.milestone">
+							<option ng-repeat="milestone in repoMilestones" value = "{{ milestone.number }}">{{ milestone.title }} {{ milestone.due_on }} {{ milestone.open_issues }} {{ milestone.closed_issues }}</option>
+						</select>
 					</div>
 					<input type="submit" class="btn btn-success" value="Submit Issue" />
+					</div>
 				</form>
 			</md-card-content>
 		</md-card>
 	</div>
 
 
-	<div class="col-md-4">
+	<div class="col-md-8">
 		<md-card id="profile-card">
 		<core-toolbar id="profile-card2">Issues</core-toolbar>
 			<md-card-content class="paper-card">
 				<div ng-repeat="repoIssue in repoIssues.data">
-
-				<div>{{ repoIssue.login }}</div>
-				<div>{{ repoIssue.login }}</div>
-
-
+				<div>Author: {{ repoIssue.user.login }}</div>
+				<div>Title: {{ repoIssue.title }}</div>
+				<div>Body: {{ repoIssue.body }}</div>
+				<div ng-repeat="label in repoIssue.labels">
+					<div style="background-color: #{{ label.color }}">Label: {{ label.name }}</div>
+				</div>
+				<div>State: {{ repoIssue.state }}</div>
+				<div>Assignee: {{ repoIssue.assignee.login }}</div>
+				<div>Assignee Avatar: {{ repoIssue.assignee.avatar_url }}</div>
+				<div>Milestone: {{ repoIssue.milestone.title }}</div>
+				<div>Milestone Open Issues: {{ repoIssue.milestone.open_issues }}</div>
+				<div>Milestone Closed Issues: {{ repoIssue.milestone.closed_issues }}</div>
+				<div>Milestone Due Date: {{ repoIssue.milestone.due_on }}</div>
+				<div>Number of Comments: {{ repoIssue.comments }}</div>
+				<md-divider></md-divider>
 
 				</div>
 			</md-card-content>
@@ -61,7 +98,7 @@
 		<md-card id="profile-card">
 		<core-toolbar id="profile-card2">Collaborators</core-toolbar>
 			<md-card-content class="paper-card">
-				<div ng-repeat="collaborator in collaborators.data">
+				<div ng-repeat="collaborator in collaborators">
 				<div class="text-center">
 				<img src="{{ collaborator.avatar_url }}" class="pic" />
 				</div>
