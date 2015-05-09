@@ -27,10 +27,10 @@ app.factory('BoardFactory', function($http, $stateParams){
 				});
 			});
 		},
-		removeCardFromColumn: function(board, column, task){
-			angular.forEach(board.columns, function(col){
-				col.splice(col.indexOf(task), 1);
-				});
+		removeCardFromColumn: function(column, task){
+			// angular.forEach(columns, function(col){
+			// 	col.splice(col.indexOf(task), 1);
+			// 	});
 		},
 		addFeature: function(board, newFeature){
 			board.features.push(newFeature);
@@ -53,7 +53,7 @@ app.factory('BoardFactory', function($http, $stateParams){
 				}
 			});
 		}
-	}
+	};
 });
 
 
@@ -77,12 +77,12 @@ app.controller('BoardController', function($scope, $stateParams, $state, $modal,
 		containment: '#board'
 	};
 
-	$scope.removeCard = function(column, card){
-		BoardFactory.removeCard($scope.board, column, card);
+	$scope.removeCard = function(column, task){
+		BoardFactory.removeCard(column, task);
 	};	
 
 	$scope.addNewCard = function(column){
-		BoardFactory.addNewCard($scope.board, column);
+		BoardFactory.addNewCard($scope, column);
 	};
 
 	$scope.features = [{

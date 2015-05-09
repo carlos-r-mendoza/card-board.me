@@ -21,10 +21,12 @@
 	<tr ng-repeat="feature in features">
 		
 		<th>
+			{{feature.task}}
 		<div class="story card sortable-item">
 			<div class='row'><span class="card-title">{{feature.featureName}}</span></div>
 		</div>
 		</th>
+		
 		<td as-sortable="dragOptions" ng-repeat="task in feature.task" ng-model="feature.task">
 			<div class='card'  as-sortable-item>
 				<div as-sortable-item-handle>
@@ -33,7 +35,7 @@
 				            <span class="card-title">{{task.title}}</span>
 				        </div>
 				        <div class="col-sm-2">
-				            <a data-no-drag class="removeCard pull-right btn btn-xs" ng-click="removeCard(column, card)">
+				            <a data-no-drag class="removeCard pull-right btn btn-xs">
 				            	<span class="glyphicon glyphicon-remove"></span>
 				            </a>
 				        </div>
