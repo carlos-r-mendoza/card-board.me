@@ -2,30 +2,20 @@
 var crypto = require('crypto');
 var mongoose = require('mongoose');
 
-var repoSchema = new mongoose.Schema({
-  // owner: {type: String},
-  // collaborators: [String],
-  // repoName: {type: String},
-  // description: {type: String},
-  // forks_count: {type: Number},
-  // size: {type: Number},
-  // open_issues_count: {type: Number},
-  // pushed_at: {type: String},
-  // created_at: {type: String},
-  // updated_at: {type: String},
-  feature: {
-    featureName: String,
+var featureSchema = new mongoose.Schema({
+    title: {required: true, type: String},
     task: [{
-        toDo: {type: String},
-        owner:{type: String},
-        status:{type: String} 
-    }],
-    dueDate: {type: String}
-  }
-  
+      title: {type: String},
+      body: {type: String},
+      comments: {type: String},
+      assignee:{type: String},
+      status: {required: true, type: String, default: 'Open'},
+      label: [{String}],
+      dueDate: {type: String}
+    }]
 }); 
 
 
 
 
-mongoose.model('Repo', repoSchema);
+mongoose.model('Feature', featureSchema);
