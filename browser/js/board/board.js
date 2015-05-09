@@ -1,62 +1,71 @@
 'use strict';
 app.config(function ($stateProvider) {
     $stateProvider.state('board', {
-        url: '/board',
+        url: '/board/:repoName',
         templateUrl: 'js/board/board.html',
         controller: 'BoardController'
     });
 });
 
-app.factory('BoardFactory', function($http){
+app.factory('BoardFactory', function($http, $stateParams){
 	return{
-		getFeatures: function(repo){
-			return $http.get('api/board/'+repoName).then(function(repo){
-				return repo; 
-			})
-		},
-		addCardtoColumn: function(board, column, cardTitle, details){
-			angular.forEach(board.columns, function(col){
-				if(col.name === column.name){
-					col.cards.push(new Card(cardTitle, column.name, details));
-				}
+		getFeatures: function(feature){
+			return $http.get('api/board/' + $stateParams.repoName).then(function(feature){
+				return feature; 
 			});
 		},
-		removeCardFromColumn: function(board, column, card){
-			angular.forEach(board.columns, function(col){
-				if(col.name === column.name){
-					col.cards.splice(col.cards.indexOf(card), 1);
-				}
+		addTasktoColumn: function(board, col, task){
+			angular.forEach(board.columns, function(task){
+				board.col.push({
+					title: task.title,
+					body: task.body,
+					comments: task.comments,
+					assignee: task.assignee,
+					status: col,
+					label: task.label,
+					dueDate: task.dueDate
+				});
 			});
+		},
+		removeCardFromColumn: function(board, column, task){
+			angular.forEach(board.columns, function(col){
+				col.splice(col.indexOf(task), 1);
+				});
 		},
 		addFeature: function(board, newFeature){
-			board.features.push(new Feature(newFeature));
+			board.features.push(newFeature);
 		},
 		addStatus: function(board, featureName, status){
 			angular.forEach(board.features, function(feature){
-				if(feature.name === featureName){
-					feature.statuss.push(new Status(status.name));
+				if(feature.title === featureName){
+					feature.task.status.push(status);
 				}
 			});
 		},
-		addCardToFeature: function(board, featureName, statusName, task){
+		addTaskToFeature: function(board, featureName, statusName, task){
 			angular.forEach(board.features, function(feature){
-				if(feature.name === featureName){
-					angular.forEach(feature.status, function (status){
-						if (status.name === statusName){
-							status.cards.push(new Card(task.title, task.status, task.details));
+				if(feature.title === featureName){
+					angular.forEach(feature.task, function (status){
+						if (task.title === task){
+							feature.task.push(task);
 						}
 					});
 				}
 			});
 		}
 	}
-})
+});
+
 
 app.controller('BoardController', function($scope, $stateParams, $state, $modal, RepoInfoFactory, BoardFactory){
 	
-	$scope.board = 'SOMETHING'
+	$scope.columns = {};
+	
 
-	$scope.dragControlListeners = {
+	$scope.boardFeatures = BoardFactory.getFeatures();
+
+
+	$scope.dragOptions = {
 
 		accept: function(sourceItemHandleScope, destSortableScope, destItemScope){
 			return sourceItemHandleScope.itemScope.sortableScope.$parent.$parent.backlog.$$hashKey === destSortableScope.$parent.$parent.backlog.$$hashKey;
@@ -70,26 +79,41 @@ app.controller('BoardController', function($scope, $stateParams, $state, $modal,
 
 	$scope.removeCard = function(column, card){
 		BoardFactory.removeCard($scope.board, column, card);
-	}	
+	};	
 
 	$scope.addNewCard = function(column){
 		BoardFactory.addNewCard($scope.board, column);
-	}
+	};
 
-	// $scope.features = {
-	// 	featureName: 'User',
-	// 	task: [
-	// 	{
-	// 		toDo: "Schema",
-	// 		owner: 'Katrina',
-	// 		status: 'In Progress'
-	// 	},{
-	// 		toDo: "HTML",
-	// 		owner: 'Ryan',
-	// 		status: 'In Progress'
-	// 	}
+	$scope.features = [{
+		featureName: 'User',
+		task: [
+		{
+			title: "Schema",
+			owner: 'Katrina',
+			status: 'In Progress'
+		},{
+			title: "HTML",
+			owner: 'Ryan',
+			status: 'In Progress'
+		}
 
-	// 	],
-	// 	dueDate: 'May 30'
-	// }
+		],
+		dueDate: 'May 30'
+	},
+	{featureName: 'Product',
+		task: [
+		{
+			title: "Schema",
+			owner: 'Katrina',
+			status: 'In Progress'
+		},{
+			title: "HTML",
+			owner: 'Ryan',
+			status: 'In Progress'
+		}
+
+		],
+		dueDate: 'May 20'
+	}];
 });
