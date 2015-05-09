@@ -34,6 +34,12 @@
 						<label for="bodyIssue">Body</label>
 						<textarea for="bodyIssue" class="form-control" rows="5" ng-model="issue.body"></textarea>
 					</div>
+					<div class="form-group">
+						<!-- {{repoLabels}} -->
+						<select ng-model="issue.labels">
+							<option ng-repeat="labelName in repoLabels" value = "{{ labelName.name }}" style="color: #{{ labelName.color }}">{{labelName.name}}</option>
+						</select>
+					</div>
 					<input type="submit" class="btn btn-success" value="Submit Issue" />
 				</form>
 			</md-card-content>
@@ -41,16 +47,26 @@
 	</div>
 
 
-	<div class="col-md-4">
+	<div class="col-md-8">
 		<md-card id="profile-card">
 		<core-toolbar id="profile-card2">Issues</core-toolbar>
 			<md-card-content class="paper-card">
 				<div ng-repeat="repoIssue in repoIssues.data">
-
-				<div>{{ repoIssue.login }}</div>
-				<div>{{ repoIssue.login }}</div>
-
-
+				<div>Author: {{ repoIssue.user.login }}</div>
+				<div>Title: {{ repoIssue.title }}</div>
+				<div>Body: {{ repoIssue.body }}</div>
+				<div ng-repeat="label in repoIssue.labels">
+					<div style="background-color: #{{ label.color}}">Label: {{ label.name }}</div>
+				</div>
+				<div>State: {{ repoIssue.state }}</div>
+				<div>Assignee: {{ repoIssue.assignee.login }}</div>
+				<div>Assignee Avatar: {{ repoIssue.assignee.avatar_url }}</div>
+				<div>Milestone: {{ repoIssue.milestone.title }}</div>
+				<div>Milestone Open Issues: {{ repoIssue.milestone.open_issues }}</div>
+				<div>Milestone Closed Issues: {{ repoIssue.milestone.closed_issues }}</div>
+				<div>Milestone Due Date: {{ repoIssue.milestone.due_on }}</div>
+				<div>Number of Comments: {{ repoIssue.comments }}</div>
+				<md-divider></md-divider>
 
 				</div>
 			</md-card-content>

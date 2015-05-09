@@ -244,6 +244,27 @@ router.get('/:repoOwner/:repoName/repo-issues', function (req, res) {
 	});
 });
 
+/***GETS LABELS FOR A PARTICULAR REPO***/
+/*More info: http://mikedeboer.github.io/node-github/#issues.prototype.getLabels*/
+
+router.get('/:repoOwner/:repoName/repo-labels', function (req, res) {
+
+	var userGitHub = req.user.github.username;
+	var userToken = req.user.github.token;
+
+	github.authenticate({
+	    type: "oauth",
+	    token: userToken
+	});
+
+	github.issues.getLabels({
+		user: req.params.repoOwner,
+		repo: req.params.repoName
+	}, function(err, repoLabels) {
+		res.json(repoLabels);
+	});
+});
+
 /***CREATES/POSTS AN ISSUE***/
 /*More info: http://mikedeboer.github.io/node-github/#issues.prototype.create*/
 router.post('/:repoOwner/:repoName/create-repo-issue', function (req, res) {
@@ -254,9 +275,9 @@ router.post('/:repoOwner/:repoName/create-repo-issue', function (req, res) {
 	var userToken = req.user.github.token;
 	var issueTitle = req.body.title;
 	var issueBody = req.body.body;
-	var issueAssignee;
+	var issueAssignee = req.body.assignee;
 	var issueMilestone;
-	var issueLabels;
+	var issueLabels = req.body.labels; 
 
 	github.authenticate({
 	    type: "oauth",
@@ -267,7 +288,9 @@ router.post('/:repoOwner/:repoName/create-repo-issue', function (req, res) {
 		user: req.params.repoOwner,
 		repo: req.params.repoName,
 		title: issueTitle,
-		body: issueBody
+		body: issueBody,
+		assignee: issueAssignee,
+		labels: issueLabels
 	}, function(err, createdRepoIssue) {
 		res.json(createdRepoIssue);
 	});
