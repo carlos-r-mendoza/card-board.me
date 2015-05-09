@@ -10,7 +10,7 @@ var featureSchema = new mongoose.Schema({
       comments: {type: String},
       assignee:{type: String},
       status: {required: true, type: String, default: 'Open'},
-      label: [{String}],
+      label: [{type: String}],
       dueDate: {type: String}
     }]
 }); 
