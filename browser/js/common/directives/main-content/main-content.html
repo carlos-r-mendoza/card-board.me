@@ -75,7 +75,7 @@
 
   
   <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu2" id="repo-menu">
-    <li role="presentation" ng-repeat="profileRepo in profileRepos"><a ui-sref="repo({name: profileRepo.name})" role="menuitem" tabindex="-1" >{{ profileRepo.full_name }} </a></li>
+    <li role="presentation" ng-repeat="profileRepo in profileRepos"><a ui-sref="repo({ name: profileRepo.name, owner: profileRepo.owner })" role="menuitem" tabindex="-1" >{{ profileRepo.full_name }} </a></li>
   </ul>
 </div>
 

@@ -64,7 +64,9 @@ app.controller('BoardController', function($scope, $stateParams, $state, $modal,
 
 	$scope.boardFeatures = BoardFactory.getFeatures();
 
+
 	$scope.dragOptions = {
+
 		accept: function(sourceItemHandleScope, destSortableScope, destItemScope){
 			return sourceItemHandleScope.itemScope.sortableScope.$parent.$parent.backlog.$$hashKey === destSortableScope.$parent.$parent.backlog.$$hashKey;
 		},

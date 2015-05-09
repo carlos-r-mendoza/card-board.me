@@ -1,7 +1,7 @@
 'use strict';
 app.config(function ($stateProvider) {
     $stateProvider.state('repo', {
-        url: '/repo/:name',
+        url: '/repo/:owner/:name',
         templateUrl: 'js/repo/repo.html',
         controller: 'RepoShowController'
     });
@@ -51,8 +51,41 @@ app.factory('RepoInfoFactory', function($http){
 
 
 
-app.controller('RepoShowController', function($scope, $stateParams, $state, RepoInfoFactory){
+app.factory('RepoIssuesFactory', function($http){
+				
+	return {
+		getRepoIssues: function (repoInfo){
+			console.log("ETAFAESG");
+			return $http.get('api/repo/' +repoInfo.owner + "/" + repoInfo.name +"/repo-issues").then(function(repoIssues){
+				return repoIssues;
+			});
+		},
+		createRepoIssue: function (repoInfo, issue) {
+			return $http.post('api/repo/' + repoInfo.owner + "/" + repoInfo.name +"/create-repo-issue", issue).then(function(createdRepoIssue){
+				console.log("Inside angular post", createdRepoIssue);
+				return createdRepoIssue;
+			});
+		}
+	};
+});
+
+
+
+
+
+
+app.controller('RepoShowController', function($scope, $stateParams, $state, RepoInfoFactory, RepoIssuesFactory){
+	console.log("I am state params",$stateParams);
 	$scope.hello = "Welcomes";
+	$scope.issue = {};
+
+  $scope.createIssue = function(issue) {
+      console.log("This is the issue", issue);
+       console.log("STATEPARAMAS", $stateParams.name);
+      // console.log("NEWISSUE", newIssue);
+		RepoIssuesFactory.createRepoIssue($stateParams, issue).then(repoIssuesFulfilled, rejected);
+    }
+
 
 		function repoInfoFulfilled(repoInfo) {
 		
@@ -71,6 +104,9 @@ app.controller('RepoShowController', function($scope, $stateParams, $state, Repo
 
 		// 	$scope.profileRepos.push(repoObj);
 		}
+
+
+
 
 		function repoCollaboratorsFulfilled(repoCollaborators) {
 		 $scope.collaborators = repoCollaborators;
@@ -97,10 +133,19 @@ app.controller('RepoShowController', function($scope, $stateParams, $state, Repo
 		}
 
 
+		function repoIssuesFulfilled(repoIssues) {
+			$scope.repoIssues = repoIssues;
+		}
+
+		function createRepoIssueFulfilled(createdRepoIssue) {
+			$scope.createdRepoIssue;
+		}
+
+
+
 		function rejected(error){
 			console.log(error);
 		}
-			console.log("YO")
 		
 		RepoInfoFactory.getRepoInfo($stateParams.name).then(repoInfoFulfilled, rejected);
 		RepoInfoFactory.getRepoCollaborators($stateParams.name).then(repoCollaboratorsFulfilled, rejected);
@@ -109,6 +154,7 @@ app.controller('RepoShowController', function($scope, $stateParams, $state, Repo
 		RepoInfoFactory.getStatsCommitActivity($stateParams.name).then(statsCommitActivityFulfilled, rejected);
 		RepoInfoFactory.getStatsContributors($stateParams.name).then(statsContributorsFulfilled, rejected);
 		RepoInfoFactory.getStatsParticipation($stateParams.name).then(statsParticipationFulfilled, rejected);
+		RepoIssuesFactory.getRepoIssues($stateParams).then(repoIssuesFulfilled, rejected);
 
 
 

@@ -22,7 +22,11 @@ router.get('/', function (req, res, next){
 });
 
 router.get('/:repoName', function (req, res) {
+<<<<<<< HEAD
 	Feature.findOne(req.params.featureId)
+=======
+	Repo.findOne(req.params.featureId)
+>>>>>>> master
 		.exec(function(err, feature){
 			res.send(500);
 		});
