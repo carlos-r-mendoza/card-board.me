@@ -20,31 +20,9 @@ version: "3.0.0"
 // }
 });
 
-router.get('/repos/collaborators', function (req, res){
-    
- var userGitHub = req.user.github.username;
- var userToken = req.user.github.token;
 
- github.authenticate({
-    type: "oauth",
-    token: userToken
- });
-    
- github.repos.getCollaborators({
-     user: userGitHub,
-     repo: "project_management_tool"
- }, function(err, collaborators) {
-     res.send(collaborators);
- });
-    
-});
+router.get('/:repoOwner/:repoName', function (req, res) {
 
-
-
-
-router.get('/repo/:repoName', function (req, res) {
-
-	var userGitHub = req.user.github.username;
 	var userToken = req.user.github.token;
 
 	github.authenticate({
@@ -53,8 +31,8 @@ router.get('/repo/:repoName', function (req, res) {
 	});
 
 	github.repos.get({
-		 	user: userGitHub,
-	 		repo: req.params.repoName
+		user: req.params.repoOwner,
+		repo: req.params.repoName,
 	}, function(err, repoInfo){
 		res.json(repoInfo);
 	})
@@ -109,9 +87,8 @@ router.get('/repo/:repoName', function (req, res) {
 	
 });
 
-router.get('/repo/:repoName/collaborators', function (req, res) {
+router.get('/:repoOwner/:repoName/collaborators', function (req, res) {
 
-	var userGitHub = req.user.github.username;
 	var userToken = req.user.github.token;
 
 	github.authenticate({
@@ -120,7 +97,7 @@ router.get('/repo/:repoName/collaborators', function (req, res) {
 	});
 
 	github.repos.getCollaborators({
-		user: userGitHub,
+		user: req.params.repoOwner,
 		repo: req.params.repoName
 	}, function(err, repoCollaborators) {
 		res.json(repoCollaborators);
@@ -128,9 +105,8 @@ router.get('/repo/:repoName/collaborators', function (req, res) {
 
 });
 
-router.get('/repo/:repoName/commits', function (req, res) {
+router.get('/:repoOwner/:repoName/commits', function (req, res) {
 
-	var userGitHub = req.user.github.username;
 	var userToken = req.user.github.token;
 
 	github.authenticate({
@@ -139,7 +115,7 @@ router.get('/repo/:repoName/commits', function (req, res) {
 	});
 
 	github.repos.getCommits({
-		user: userGitHub,
+		user: req.params.repoOwner,
 		repo: req.params.repoName
 	}, function(err, repoCommits) {
 		res.json(repoCommits);
@@ -147,9 +123,8 @@ router.get('/repo/:repoName/commits', function (req, res) {
 
 });
 
-router.get('/repo/:repoName/statsCodeFrequency', function (req, res) {
+router.get('/:repoOwner/:repoName/statsCodeFrequency', function (req, res) {
 
-	var userGitHub = req.user.github.username;
 	var userToken = req.user.github.token;
 
 	github.authenticate({
@@ -158,7 +133,7 @@ router.get('/repo/:repoName/statsCodeFrequency', function (req, res) {
 	});
 
 	github.repos.getStatsCodeFrequency({
-		user: userGitHub,
+		user: req.params.repoOwner,
 		repo: req.params.repoName
 	}, function(err, statsCodeFrequency) {
 		res.json(statsCodeFrequency);
@@ -166,9 +141,8 @@ router.get('/repo/:repoName/statsCodeFrequency', function (req, res) {
 
 });
 
-router.get('/repo/:repoName/statsCommitActivity', function (req, res) {
+router.get('/:repoOwner/:repoName/statsCommitActivity', function (req, res) {
 
-	var userGitHub = req.user.github.username;
 	var userToken = req.user.github.token;
 
 	github.authenticate({
@@ -177,7 +151,7 @@ router.get('/repo/:repoName/statsCommitActivity', function (req, res) {
 	});
 
 	github.repos.getStatsCommitActivity({
-		user: userGitHub,
+		user: req.params.repoOwner,
 		repo: req.params.repoName
 	}, function(err, statsCommitActivity) {
 		res.json(statsCommitActivity);
@@ -185,9 +159,8 @@ router.get('/repo/:repoName/statsCommitActivity', function (req, res) {
 
 });
 
-router.get('/repo/:repoName/statsContributors', function (req, res) {
+router.get('/:repoOwner/:repoName/statsContributors', function (req, res) {
 
-	var userGitHub = req.user.github.username;
 	var userToken = req.user.github.token;
 
 	github.authenticate({
@@ -196,7 +169,7 @@ router.get('/repo/:repoName/statsContributors', function (req, res) {
 	});
 
 	github.repos.getStatsContributors({
-		user: userGitHub,
+		user: req.params.repoOwner,
 		repo: req.params.repoName
 	}, function(err, statsContributors) {
 		res.json(statsContributors);
@@ -204,9 +177,8 @@ router.get('/repo/:repoName/statsContributors', function (req, res) {
 
 });
 
-router.get('/repo/:repoName/statsParticipation', function (req, res) {
+router.get('/:repoOwner/:repoName/statsParticipation', function (req, res) {
 
-	var userGitHub = req.user.github.username;
 	var userToken = req.user.github.token;
 
 	github.authenticate({
@@ -215,7 +187,7 @@ router.get('/repo/:repoName/statsParticipation', function (req, res) {
 	});
 
 	github.repos.getStatsParticipation({
-		user: userGitHub,
+		user: req.params.repoOwner,
 		repo: req.params.repoName
 	}, function(err, statsParticipation) {
 		res.json(statsParticipation);
@@ -228,7 +200,6 @@ router.get('/repo/:repoName/statsParticipation', function (req, res) {
 /*More info: http://mikedeboer.github.io/node-github/#issues.prototype.getRepoIssue*/
 router.get('/:repoOwner/:repoName/repo-issues', function (req, res) {
 
-	var userGitHub = req.user.github.username;
 	var userToken = req.user.github.token;
 
 	github.authenticate({
@@ -249,7 +220,6 @@ router.get('/:repoOwner/:repoName/repo-issues', function (req, res) {
 
 router.get('/:repoOwner/:repoName/repo-labels', function (req, res) {
 
-	var userGitHub = req.user.github.username;
 	var userToken = req.user.github.token;
 
 	github.authenticate({
@@ -270,7 +240,6 @@ router.get('/:repoOwner/:repoName/repo-labels', function (req, res) {
 
 router.get('/:repoOwner/:repoName/repo-milestones', function (req, res) {
 
-	var userGitHub = req.user.github.username;
 	var userToken = req.user.github.token;
 
 	github.authenticate({
@@ -292,7 +261,6 @@ router.post('/:repoOwner/:repoName/create-repo-issue', function (req, res) {
 
 	console.log("AT route/create-repo-issue", req.body);
 
-	var userGitHub = req.user.github.username;
 	var userToken = req.user.github.token;
 	var issueTitle = req.body.title;
 	var issueBody = req.body.body;
