@@ -11,38 +11,38 @@ app.factory('RepoInfoFactory', function($http){
 				
 
 	return {
-		getRepoInfo: function (repoName){
-			return $http.get('api/repo/repo/' + repoName).then(function(repoInfo){
+		getRepoInfo: function (repoInfo){
+			return $http.get('api/repo/' + repoInfo.owner + "/" + repoInfo.name).then(function(repoInfo){
 				return repoInfo;
 			});
 		},
-		getRepoCollaborators: function (repoName){
-			return $http.get('api/repo/repo/' + repoName +"/collaborators").then(function(repoCollaborators){
+		getRepoCollaborators: function (repoInfo){
+			return $http.get('api/repo/' + repoInfo.owner + "/" + repoInfo.name + "/collaborators").then(function(repoCollaborators){
 				return repoCollaborators;
 			});
 		},
-		getRepoCommits: function (repoName){
-			return $http.get('api/repo/repo/' + repoName +"/commits").then(function(repoCommits){
+		getRepoCommits: function (repoInfo){
+			return $http.get('api/repo/'  + repoInfo.owner + "/" + repoInfo.name + "/commits").then(function(repoCommits){
 				return repoCommits;
 			});
 		},
-		getStatsCodeFrequency: function (repoName){
-			return $http.get('api/repo/repo/' + repoName +"/statsCodeFrequency").then(function(statsCodeFrequency){
+		getStatsCodeFrequency: function (repoInfo){
+			return $http.get('api/repo/' + repoInfo.owner + "/" + repoInfo.name + "/statsCodeFrequency").then(function(statsCodeFrequency){
 				return statsCodeFrequency;
 			});
 		},
-		getStatsCommitActivity: function (repoName){
-			return $http.get('api/repo/repo/' + repoName +"/statsCommitActivity").then(function(statsCommitActivity){
+		getStatsCommitActivity: function (repoInfo){
+			return $http.get('api/repo/' + repoInfo.owner + "/" + repoInfo.name + "/statsCommitActivity").then(function(statsCommitActivity){
 				return statsCommitActivity;
 			});
 		},
-		getStatsContributors: function (repoName){
-			return $http.get('api/repo/repo/' + repoName +"/statsContributors").then(function(statsContributors){
+		getStatsContributors: function (repoInfo){
+			return $http.get('api/repo/' + repoInfo.owner + "/" + repoInfo.name + "/statsContributors").then(function(statsContributors){
 				return statsContributors;
 			});
 		},
-		getStatsParticipation: function (repoName){
-			return $http.get('api/repo/repo/' + repoName +"/statsParticipation").then(function(statsParticipation){
+		getStatsParticipation: function (repoInfo){
+			return $http.get('api/repo/' + repoInfo.owner + "/" + repoInfo.name + "/statsParticipation").then(function(statsParticipation){
 				return statsParticipation;
 			});
 		},
@@ -180,13 +180,13 @@ app.controller('RepoShowController', function($scope, $stateParams, $state, Repo
 			console.log(error);
 		}
 		
-		RepoInfoFactory.getRepoInfo($stateParams.name).then(repoInfoFulfilled, rejected);
-		RepoInfoFactory.getRepoCollaborators($stateParams.name).then(repoCollaboratorsFulfilled, rejected);
-		RepoInfoFactory.getRepoCommits($stateParams.name).then(repoCommitsFulfilled, rejected);
-		RepoInfoFactory.getStatsCodeFrequency($stateParams.name).then(statsCodeFrequencyFulfilled, rejected);
-		RepoInfoFactory.getStatsCommitActivity($stateParams.name).then(statsCommitActivityFulfilled, rejected);
-		RepoInfoFactory.getStatsContributors($stateParams.name).then(statsContributorsFulfilled, rejected);
-		RepoInfoFactory.getStatsParticipation($stateParams.name).then(statsParticipationFulfilled, rejected);
+		RepoInfoFactory.getRepoInfo($stateParams).then(repoInfoFulfilled, rejected);
+		RepoInfoFactory.getRepoCollaborators($stateParams).then(repoCollaboratorsFulfilled, rejected);
+		RepoInfoFactory.getRepoCommits($stateParams).then(repoCommitsFulfilled, rejected);
+		RepoInfoFactory.getStatsCodeFrequency($stateParams).then(statsCodeFrequencyFulfilled, rejected);
+		RepoInfoFactory.getStatsCommitActivity($stateParams).then(statsCommitActivityFulfilled, rejected);
+		RepoInfoFactory.getStatsContributors($stateParams).then(statsContributorsFulfilled, rejected);
+		RepoInfoFactory.getStatsParticipation($stateParams).then(statsParticipationFulfilled, rejected);
 		RepoIssuesFactory.getRepoIssues($stateParams).then(repoIssuesFulfilled, rejected);
 		RepoInfoFactory.getRepoLabels($stateParams).then(repoLabelsFulfilled, rejected);
 		RepoInfoFactory.getRepoMilestones($stateParams).then(repoMilestonesFulfilled, rejected);
