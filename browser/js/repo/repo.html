@@ -4,19 +4,19 @@
 <md-content>
 	<div class="col-md-8">
 		<md-card id="profile-card">
-		<core-toolbar id="profile-card1">{{ repoInfo.data.name }}</core-toolbar>
+		<core-toolbar id="profile-card1">{{ repoInfo.name }}</core-toolbar>
 			<md-card-content class="paper-card">
-				<div><strong>Language:</strong> {{ repoInfo.data.language }}</div>				
-				<div><strong>Owner:</strong>  {{ repoInfo.data.owner.login }}</div>
-				<div><strong>Url:</strong>  {{ repoInfo.data.html_url }}</div>
-				<div><strong>Clone Url:</strong>  {{ repoInfo.data.clone_url }}</div>
-				<div><strong>Homepage Url:</strong>  {{ repoInfo.data.homepage }}</div>
-				<div><strong>Creation Date:</strong>  {{ repoInfo.data.created_at | date:'medium' }}</div>
-				<div><strong>Last Updated Date:</strong>  {{ repoInfo.data.updated_at | date:'medium' }}</div>				
-				<div><strong>Forks Count:</strong>  {{ repoInfo.data.forks_count }}</div>
-				<div><strong>Watchers Count:</strong>  {{ repoInfo.data.watchers_count }}</div>
-				<div><strong>Subscribers Count:</strong>  {{ repoInfo.data.subscribers_count }}</div>
-				<div><strong>Description:</strong>  {{ repoInfo.data.description }}</div>
+				<div><strong>Language:</strong> {{ repoInfo.language }}</div>				
+				<div><strong>Owner:</strong>  {{ repoInfo.owner.login }}</div>
+				<div><strong>Url:</strong>  {{ repoInfo.html_url }}</div>
+				<div><strong>Clone Url:</strong>  {{ repoInfo.clone_url }}</div>
+				<div><strong>Homepage Url:</strong>  {{ repoInfo.homepage }}</div>
+				<div><strong>Creation Date:</strong>  {{ repoInfo.created_at | date:'medium' }}</div>
+				<div><strong>Last Updated Date:</strong>  {{ repoInfo.updated_at | date:'medium' }}</div>				
+				<div><strong>Forks Count:</strong>  {{ repoInfo.forks_count }}</div>
+				<div><strong>Watchers Count:</strong>  {{ repoInfo.watchers_count }}</div>
+				<div><strong>Subscribers Count:</strong>  {{ repoInfo.subscribers_count }}</div>
+				<div><strong>Description:</strong>  {{ repoInfo.description }}</div>
 			</md-card-content>
 		</md-card>
 	</div>
@@ -72,21 +72,56 @@
 		<md-card id="profile-card">
 		<core-toolbar id="profile-card2">Issues</core-toolbar>
 			<md-card-content class="paper-card">
-				<div ng-repeat="repoIssue in repoIssues.data">
-				<div>Author: {{ repoIssue.user.login }}</div>
-				<div>Title: {{ repoIssue.title }}</div>
-				<div>Body: {{ repoIssue.body }}</div>
-				<div ng-repeat="label in repoIssue.labels">
-					<div style="background-color: #{{ label.color }}">Label: {{ label.name }}</div>
+				<div ng-repeat="issue in repoIssues">
+				<div>Author: {{ issue.user.login }}</div>
+				
+				<!-- ISSUE TITLE -->
+				<div ng-hide="titleEditor">
+					Title: {{ issue.title }}
+					<button ng-click="titleEditor = !titleEditor">Edit Title</button>
 				</div>
-				<div>State: {{ repoIssue.state }}</div>
-				<div>Assignee: {{ repoIssue.assignee.login }}</div>
-				<div>Assignee Avatar: {{ repoIssue.assignee.avatar_url }}</div>
-				<div>Milestone: {{ repoIssue.milestone.title }}</div>
-				<div>Milestone Open Issues: {{ repoIssue.milestone.open_issues }}</div>
-				<div>Milestone Closed Issues: {{ repoIssue.milestone.closed_issues }}</div>
-				<div>Milestone Due Date: {{ repoIssue.milestone.due_on }}</div>
-				<div>Number of Comments: {{ repoIssue.comments }}</div>
+				<div ng-show="titleEditor">
+					<input ng-model="issue.title">
+					<span ng-click="editIssue(issue)">
+						<button ng-click="titleEditor = !titleEditor">Confirm Edit</button>
+					</span>
+				</div>
+		
+				<!-- ISSUE BODY -->
+				<div ng-hide="bodyEditor">
+					Body: {{ issue.body }}
+					<button ng-click="bodyEditor = !bodyEditor">Edit Title</button>
+				</div>
+				<div ng-show="bodyEditor">
+					<input ng-model="issue.body">
+					<button ng-click="bodyEditor = !bodyEditor">Confirm Edit</button>
+				</div>
+
+				<div>Number: {{ issue.number }}</div>
+
+
+				<!-- ISSUE LABELS -->
+
+
+<!-- 				<div ng-hide="issuesEditor">
+				<div ng-repeat="label in issue.labels">
+					<div style="background-color: #{{ label.color }}">
+						Label: {{ label.name }}
+						<button ng-click="issuesEditor = !issuesEditor">Edit Issue</button>
+					</div>
+				</div>
+				</div> -->
+
+
+
+				<div>State: {{ issue.state }}</div>
+				<div>Assignee: {{ issue.assignee.login }}</div>
+				<div>Assignee Avatar: {{ issue.assignee.avatar_url }}</div>
+				<div>Milestone: {{ issue.milestone.title }}</div>
+				<div>Milestone Open Issues: {{ issue.milestone.open_issues }}</div>
+				<div>Milestone Closed Issues: {{ issue.milestone.closed_issues }}</div>
+				<div>Milestone Due Date: {{ issue.milestone.due_on }}</div>
+				<div>Number of Comments: {{ issue.comments }}</div>
 				<md-divider></md-divider>
 
 				</div>
@@ -114,7 +149,7 @@
 		<md-card id="profile-card">
 		<core-toolbar id="profile-card3">Commits</core-toolbar>
 			<md-card-content class="paper-card">
- 				<div ng-repeat="commit in commits.data">
+ 				<div ng-repeat="commit in commits">
 				 	<div><strong>Name:</strong> {{ commit.commit.author.name }}</div>
 				 	<div><strong>Date:</strong>  {{ commit.commit.author.date | date:'medium' }}</div>
 				 	<div><strong>Message:</strong>  {{ commit.commit.message }}</div>

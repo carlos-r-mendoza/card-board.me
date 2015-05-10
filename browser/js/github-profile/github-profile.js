@@ -85,7 +85,6 @@ app.controller('GitHubProfileController', function($scope, GitHubProfileFactory,
 		}
 	
 		function profileReposFulfilled(profileRepos) {
-			console.log("REPO INFO", profileRepos);
 			profileRepos.data.forEach(function(repo){
 				var repoObj = {};
 				repoObj.name = repo.name;
