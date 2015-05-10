@@ -5,7 +5,7 @@ function Board(name, numberOfColumns) {
     name: name,
     numberOfColumns: numberOfColumns,
     columns: [],
-    backlogs: []
+    features: []
   };
 }
 
@@ -16,7 +16,7 @@ function Column(name) {
   };
 }
 
-function Backlog(name) {
+function Feature(name) {
   return {
     name: name,
     phases: []
@@ -30,86 +30,40 @@ function Phase(name) {
   };
 }
 
-function Card(title, status, details) {
+function Card(title, status, details, assignee, label, dueDate) {
   this.title = title;
   this.status = status;
   this.details = details;
+  this.assignee = assignee;
+  this.label = label;
+  this.dueDate = dueDate;
   return this;
 }
 
-app.config(function ($stateProvider) {
-    $stateProvider.state('board', {
-        url: '/board',
-        templateUrl: 'js/board/board.html',
-        controller: 'SprintController'
-    });
-});
-
-app.controller('SprintController', ['$scope', 'BoardService', 'BoardDataFactory', function ($scope, BoardService, BoardDataFactory) {
-
-  $scope.sprintBoard = BoardService.sprintBoard(BoardDataFactory.sprint);
-
-  $scope.sprintSortOptions = {
-
-    //restrict move across backlogs. move only within backlog.
-    accept: function (sourceItemHandleScope, destSortableScope, destItemScope) {
-      return sourceItemHandleScope.itemScope.sortableScope.$parent.$parent.backlog.$$hashKey === destSortableScope.$parent.$parent.backlog.$$hashKey;
-    },
-    itemMoved: function (event) {
-    },
-    orderChanged: function (event) {
-    },
-    containment: '#board'
-  };
-}]);
-
-app.controller('NewCardController', ['$scope', '$modalInstance', 'column', function ($scope, $modalInstance, column) {
-
-  function initScope(scope) {
-    scope.columnName = column.name;
-    scope.column = column;
-    scope.title = '';
-    scope.details = '';
-  }
-
-  $scope.addNewCard = function () {
-    if (!this.newCardForm.$valid) {
-      return false;
-    }
-    $modalInstance.close({title: this.title, column: column, details: this.details});
-  };
-
-  $scope.close = function () {
-    $modalInstance.close();
-  };
-
-  initScope($scope);
-
-}]);
 
 app.service('BoardDataFactory', function () {
-
+//THIS SHOULD BE MONGO DB
   return {
     sprint: {
       "name": "Sprint Board",
       "numberOfColumns": 3,
       "columns": [
-        {"name": "Not started"},
+        {"name": "Open"},
         {"name": "In progress"},
-        {"name": "Done"}
+        {"name": "Closed"}
       ],
-      "backlogs": [
+      "features": [
         {"title": "Come up with a POC for new Project",
-          "details": "backlog id 1",
+          "details": "Feature 1",
           "phases": [
-            {"name": "Not started",
+            {"name": "Open",
               "cards": [
                 {"title": "Explore new IDE for Development",
                   "details": "Testing Card Details",
-                  "status": "Not started"},
+                  "status": "Open"},
                 {"title": "Get new resource for new Project",
                   "details": "Testing Card Details",
-                  "status": "Not started"}
+                  "status": "Open"}
               ]},
             {"name": "In progress",
               "cards": [
@@ -123,29 +77,29 @@ app.service('BoardDataFactory', function () {
                   "details": "Testing Card Details",
                   "status": "In progress"}
               ]},
-            {"name": "Done",
+            {"name": "Closed",
               "cards": [
                 {"title": "End to End Testing for user group module",
                   "details": "Testing Card Details",
-                  "status": "Done"},
+                  "status": "Closed"},
                 {"title": "CI for user module",
                   "details": "Testing Card Details",
-                  "status": "Done"}
+                  "status": "Closed"}
               ]}
           ]
         },
         {
           "title": "Design new framework for reporting module",
-          "details": "backlog id 2",
+          "details": "Feature 2",
           "phases": [
-            {"name": "Not started",
+            {"name": "Open",
               "cards": [
                 {"title": "Explore new Framework",
                   "details": "Testing Card Details",
-                  "status": "Not started"},
+                  "status": "Open"},
                 {"title": "Get new Testing License",
                   "details": "Testing Card Details",
-                  "status": "Not started"}
+                  "status": "Open"}
               ]},
             {"name": "In progress",
               "cards": [
@@ -156,11 +110,11 @@ app.service('BoardDataFactory', function () {
                   "details": "Testing Card Details",
                   "status": "In progress"}
               ]},
-            {"name": "Done",
+            {"name": "Closed",
               "cards": [
                 {"title": "Explore High charts",
                   "details": "Testing Card Details",
-                  "status": "Done"}
+                  "status": "Closed"}
               ]}
           ]
         }
@@ -190,22 +144,22 @@ app.factory('BoardManipulator', function () {
         }
       });
     },
-    addBacklog: function (board, backlogName) {
-      board.backlogs.push(new Backlog(backlogName));
+    addFeature: function (board, featureName) {
+      board.features.push(new Feature(featureName));
     },
 
-    addPhaseToBacklog: function (board, backlogName, phase) {
-      angular.forEach(board.backlogs, function (backlog) {
-        if (backlog.name === backlogName) {
-          backlog.phases.push(new Phase(phase.name));
+    addPhaseToFeature: function (board, featureName, phase) {
+      angular.forEach(board.features, function (feature) {
+        if (feature.name === featureName) {
+          feature.phases.push(new Phase(phase.name));
         }
       });
     },
 
-    addCardToBacklog: function (board, backlogName, phaseName, task) {
-      angular.forEach(board.backlogs, function (backlog) {
-        if (backlog.name === backlogName) {
-          angular.forEach(backlog.phases, function (phase) {
+    addCardToFeature: function (board, featureName, phaseName, task) {
+      angular.forEach(board.features, function (feature) {
+        if (feature.name === featureName) {
+          angular.forEach(feature.phases, function (phase) {
             if (phase.name === phaseName) {
               phase.cards.push(new Card(task.title, task.status, task.details));
             }
@@ -217,50 +171,4 @@ app.factory('BoardManipulator', function () {
 });
 
 
-
-app.service('BoardService', ['$modal', 'BoardManipulator', function ($modal, BoardManipulator) {
-
-  return {
-    removeCard: function (board, column, card) {
-      if (console.log('Are You sure to Delete?')) {
-        BoardManipulator.removeCardFromColumn(board, column, card);
-      }
-    },
-
-    addNewCard: function (board, column) {
-      var modalInstance = $modal.open({
-        templateUrl: '/newCard.html',
-        controller: 'NewCardController',
-        backdrop: 'static',
-        resolve: {
-          column: function () {
-            return column;
-          }
-        }
-      });
-      modalInstance.result.then(function (cardDetails) {
-        if (cardDetails) {
-          BoardManipulator.addCardToColumn(board, cardDetails.column, cardDetails.title, cardDetails.details);
-        }
-      });
-    },
-    sprintBoard: function (board) {
-      var sprintBoard = new Board(board.name, board.numberOfColumns);
-      angular.forEach(board.columns, function (column) {
-        BoardManipulator.addColumn(sprintBoard, column.name);
-      });
-      angular.forEach(board.backlogs, function (backlog) {
-        BoardManipulator.addBacklog(sprintBoard, backlog.title);
-        angular.forEach(backlog.phases, function (phase) {
-          BoardManipulator.addPhaseToBacklog(sprintBoard, backlog.title, phase);
-          angular.forEach(phase.cards, function (card) {
-            BoardManipulator.addCardToBacklog(sprintBoard, backlog.title, phase.name, card);
-          });
-        });
-
-      });
-      return sprintBoard;
-    }
-  };
-}]);
 
