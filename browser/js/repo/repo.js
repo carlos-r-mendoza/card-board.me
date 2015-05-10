@@ -3,13 +3,12 @@ app.config(function ($stateProvider) {
     $stateProvider.state('repo', {
         url: '/repo/:owner/:name',
         templateUrl: 'js/repo/repo.html',
-        controller: 'RepoShowController'
+        controller: 'RepoController'
     });
 });
 
-app.factory('RepoInfoFactory', function($http){
-				
 
+app.factory('RepoFactory', function($http){		
 	return {
 		getRepoInfo: function (repoInfo){
 			return $http.get('api/repo/' + repoInfo.owner + "/" + repoInfo.name).then(function(repoInfo){
@@ -46,24 +45,6 @@ app.factory('RepoInfoFactory', function($http){
 				return statsParticipation;
 			});
 		},
-		getRepoLabels: function (repoInfo) {
-			return $http.get('api/repo/' + repoInfo.owner + "/" + repoInfo.name + "/repo-labels").then(function(repoLabels){
-				return repoLabels;
-			});
-		},
-		getRepoMilestones: function (repoInfo) {
-			return $http.get('api/repo/' + repoInfo.owner + "/" + repoInfo.name + "/repo-milestones").then(function(repoMilestones){
-				return repoMilestones;
-			});
-		}
-	};
-})
-
-
-
-app.factory('RepoIssuesFactory', function($http){
-				
-	return {
 		getRepoIssues: function (repoInfo){
 			console.log("ETAFAESG");
 			return $http.get('api/repo/' +repoInfo.owner + "/" + repoInfo.name +"/repo-issues").then(function(repoIssues){
@@ -75,121 +56,111 @@ app.factory('RepoIssuesFactory', function($http){
 				console.log("Inside angular post", createdRepoIssue);
 				return createdRepoIssue;
 			});
+		},
+		getRepoLabels: function (repoInfo) {
+			return $http.get('api/repo/' + repoInfo.owner + "/" + repoInfo.name + "/repo-labels").then(function(repoLabels){
+				return repoLabels;
+			});
+		},
+		getRepoMilestones: function (repoInfo) {
+			return $http.get('api/repo/' + repoInfo.owner + "/" + repoInfo.name + "/repo-milestones").then(function(repoMilestones){
+				return repoMilestones;
+			});
+		},
+		editRepoIssue: function(repoInfo, issue) {
+			console.log("REPO INFO", repoInfo);
+			console.log("ISSUE INFO", issue);
+			return $http.post('api/repo/' + repoInfo.owner + "/" + repoInfo.name + "/repo-issues/" + issue.number, issue).then(function(editedRepoIssue){
+				return editedRepoIssue;
+			});
 		}
 	};
 });
 
 
+app.controller('RepoController', function($scope, $stateParams, RepoFactory){
 
-
-
-
-app.controller('RepoShowController', function($scope, $stateParams, $state, RepoInfoFactory, RepoIssuesFactory){
-	console.log("I am state params",$stateParams);
-	$scope.hello = "Welcomes";
 	$scope.issue = {};
 	$scope.issue.tempLabels = [];
 
-	// issue = { body: "mytext"}
+	$scope.createIssue = function(issue) {
+		$scope.issue.labels = [];
+		$scope.issue.tempLabels.forEach(function (tempLabelObj) {
+			for (var label in tempLabelObj) {
+				if(tempLabelObj[label]) { $scope.issue.labels.push(label); }
+			}
+		});
+		RepoFactory.createRepoIssue($stateParams, issue).then(createdRepoIssueFulfilled, rejected);
+	};
 
-// $scope.createLabels = function(labels) {
-// 	$scope.issues.labels.push(labels);
-// }
+	$scope.editIssue = function(issue) {
+		console.log("ISSUE IN SCOPE ", issue);
+		//make things editable
+		RepoFactory.editRepoIssue($stateParams, issue).then(editedRepoIssueFulfilled, rejected);
 
-  $scope.createIssue = function(issue) {
-  	$scope.issue.labels = [];
+	};
 
-  	$scope.issue.tempLabels.forEach(function (tempLabelObj) {
+	function repoInfoFulfilled(repoInfo) {
+		$scope.repoInfo = repoInfo.data;
+	}
+	
+	function repoCollaboratorsFulfilled(repoCollaborators) {
+	 	$scope.collaborators = repoCollaborators.data;
+	}
 
-  		for (var label in tempLabelObj) {
-  			if(tempLabelObj[label]) {
-  				$scope.issue.labels.push(label);
-  			}
-  		}
-  	});
+	function repoCommitsFulfilled(repoCommits) {
+		$scope.commits = repoCommits.data;
+	}
 
-    console.log("NEWISSUE", issue);
-	RepoIssuesFactory.createRepoIssue($stateParams, issue).then(createdRepoIssueFulfilled, rejected);
-  };
+	function statsCodeFrequencyFulfilled(statsCodeFrequency) {
+		$scope.stats = statsCodeFrequency.data;
+	}
 
+	function statsCommitActivityFulfilled(statsCommitActivity) {
+		$scope.statsCommit = statsCommitActivity.data[statsCommitActivity.data.length-1];
+	}
 
-		function repoInfoFulfilled(repoInfo) {
-		
-		$scope.repoInfo = repoInfo;
+	function statsContributorsFulfilled(statsContributors) {
+		$scope.statsContributors = statsContributors.data;
+	}
 
-		// profileRepos.data.forEach(function(repo){
-		// 	var repoObj = {};
-		// 	repoObj.name = repo.name;
-		// 	repoObj.language = repo.language;
-		// 	repoObj.description = repo.description;
-		// 	repoObj.url = repo.html_url;
-		// 	repoObj.created = repo.created_at;
-		// 	repoObj.lastUpdated = repo.updated_at;
-		// 	repoObj.watchers = repo.watchers_count;
-		// 	repoObj.forks = repo.forks_count;
+	function statsParticipationFulfilled(statsParticipation) {
+		$scope.statsParticipation = statsParticipation.data;
+	}
+	
+	function repoIssuesFulfilled(repoIssues) {
+		 $scope.repoIssues = repoIssues.data;
+	}
 
-		// 	$scope.profileRepos.push(repoObj);
-		}
+	function createdRepoIssueFulfilled(createdRepoIssue) {
+		RepoFactory.getRepoIssues($stateParams).then(repoIssuesFulfilled, rejected);
+	}
 
+	function repoLabelsFulfilled(repoLabels){
+		$scope.repoLabels = repoLabels.data;
+	}
 
+	function repoMilestonesFulfilled(repoMilestones){
+		$scope.repoMilestones = repoMilestones.data;
+	}
 
+	function editedRepoIssueFulfilled(editedRepoIssue) {
+		RepoFactory.getRepoIssues($stateParams).then(repoIssuesFulfilled, rejected);		
+	}
 
-		function repoCollaboratorsFulfilled(repoCollaborators) {
-		 $scope.collaborators = repoCollaborators.data;
-		}
+	function rejected(error){
+		console.log(error);
+	}
 
-		function repoCommitsFulfilled(repoCommits) {
-		 $scope.commits = repoCommits;
-		}
-
-		function statsCodeFrequencyFulfilled(statsCodeFrequency) {
-			$scope.stats = statsCodeFrequency;
-		}
-
-		function statsCommitActivityFulfilled(statsCommitActivity) {
-			$scope.statsCommit = statsCommitActivity.data[statsCommitActivity.data.length-1];
-		}
-
-		function statsContributorsFulfilled(statsContributors) {
-			$scope.statsContributors = statsContributors;
-		}
-
-		function statsParticipationFulfilled(statsParticipation) {
-			$scope.statsParticipation = statsParticipation;
-		}
-
-
-		function repoIssuesFulfilled(repoIssues) {
-			 $scope.repoIssues = repoIssues;
-
-		}
-
-		function createdRepoIssueFulfilled(createdRepoIssue) {
-			RepoIssuesFactory.getRepoIssues($stateParams).then(repoIssuesFulfilled, rejected);
-		}
-
-		function repoLabelsFulfilled(repoLabels){
-			$scope.repoLabels = repoLabels.data;
-		}
-
-		function repoMilestonesFulfilled(repoMilestones){
-			$scope.repoMilestones = repoMilestones.data;
-		}
-
-		function rejected(error){
-			console.log(error);
-		}
-		
-		RepoInfoFactory.getRepoInfo($stateParams).then(repoInfoFulfilled, rejected);
-		RepoInfoFactory.getRepoCollaborators($stateParams).then(repoCollaboratorsFulfilled, rejected);
-		RepoInfoFactory.getRepoCommits($stateParams).then(repoCommitsFulfilled, rejected);
-		RepoInfoFactory.getStatsCodeFrequency($stateParams).then(statsCodeFrequencyFulfilled, rejected);
-		RepoInfoFactory.getStatsCommitActivity($stateParams).then(statsCommitActivityFulfilled, rejected);
-		RepoInfoFactory.getStatsContributors($stateParams).then(statsContributorsFulfilled, rejected);
-		RepoInfoFactory.getStatsParticipation($stateParams).then(statsParticipationFulfilled, rejected);
-		RepoIssuesFactory.getRepoIssues($stateParams).then(repoIssuesFulfilled, rejected);
-		RepoInfoFactory.getRepoLabels($stateParams).then(repoLabelsFulfilled, rejected);
-		RepoInfoFactory.getRepoMilestones($stateParams).then(repoMilestonesFulfilled, rejected);
-
+	RepoFactory.getRepoInfo($stateParams).then(repoInfoFulfilled, rejected);
+	RepoFactory.getRepoCollaborators($stateParams).then(repoCollaboratorsFulfilled, rejected);
+	RepoFactory.getRepoCommits($stateParams).then(repoCommitsFulfilled, rejected);
+	RepoFactory.getStatsCodeFrequency($stateParams).then(statsCodeFrequencyFulfilled, rejected);
+	RepoFactory.getStatsCommitActivity($stateParams).then(statsCommitActivityFulfilled, rejected);
+	RepoFactory.getStatsContributors($stateParams).then(statsContributorsFulfilled, rejected);
+	RepoFactory.getStatsParticipation($stateParams).then(statsParticipationFulfilled, rejected);
+	RepoFactory.getRepoIssues($stateParams).then(repoIssuesFulfilled, rejected);
+	RepoFactory.getRepoLabels($stateParams).then(repoLabelsFulfilled, rejected);
+	RepoFactory.getRepoMilestones($stateParams).then(repoMilestonesFulfilled, rejected);
 
 });
