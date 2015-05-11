@@ -382,6 +382,25 @@ router.post('/:repoOwner/:repoName/create-repo-milestone/:milestoneTitle', funct
 	});
 });
 
+/***GET COMMENTS ON AN ISSUE***/
+/*More info: http://mikedeboer.github.io/node-github/#issues.prototype.getComments*/
+router.get('/:repoOwner/:repoName/repo-issue-comments/:issueNumber', function (req, res) {
+
+	var userToken = req.user.github.token;
+
+	github.authenticate({
+	    type: "oauth",
+	    token: userToken
+	});
+
+	github.issues.getComments({
+		user: req.params.repoOwner,
+		repo: req.params.repoName,
+		number: req.params.issueNumber
+	}, function(err, issueComments) {
+		res.json(issueComments);
+	});
+});
 
 
 

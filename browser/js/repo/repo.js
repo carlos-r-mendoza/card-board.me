@@ -46,13 +46,17 @@ app.factory('RepoFactory', function($http){
 			});
 		},
 		getRepoIssues: function (repoInfo){
-			console.log("ETAFAESG");
-			return $http.get('api/repo/' +repoInfo.owner + "/" + repoInfo.name +"/repo-issues").then(function(repoIssues){
+			return $http.get('api/repo/' +repoInfo.owner + "/" + repoInfo.name + "/repo-issues").then(function(repoIssues){
+				return repoIssues;
+			});
+		},
+		getIssueComments: function (repoInfo, issueNumber) {
+			return $http.get('api/repo/' +repoInfo.owner + "/" + repoInfo.name + "/repo-issue-comments/" + issueNumber).then(function(repoIssues){
 				return repoIssues;
 			});
 		},
 		createRepoIssue: function (repoInfo, issue) {
-			return $http.post('api/repo/' + repoInfo.owner + "/" + repoInfo.name +"/create-repo-issue", issue).then(function(createdRepoIssue){
+			return $http.post('api/repo/' + repoInfo.owner + "/" + repoInfo.name + "/create-repo-issue", issue).then(function(createdRepoIssue){
 				console.log("Inside angular post", createdRepoIssue);
 				return createdRepoIssue;
 			});
@@ -141,6 +145,12 @@ app.controller('RepoController', function($scope, $stateParams, RepoFactory){
 		}
 	};
 
+	function issueComments(issueNumber) {
+		console.log("GERE", issueNumber);
+		return RepoFactory.getIssueComments($stateParams, issueNumber).then(issueCommentsFulfilled, rejected);
+	}
+
+
 	function repoInfoFulfilled(repoInfo) {
 		$scope.repoInfo = repoInfo.data;
 	}
@@ -170,7 +180,17 @@ app.controller('RepoController', function($scope, $stateParams, RepoFactory){
 	}
 	
 	function repoIssuesFulfilled(repoIssues) {
+
+		repoIssues.data.forEach(function(issue){
+			issueComments(issue.number).then(function (issueCommentsData){
+				issue.comments_info = issueCommentsData;
+			}, rejected);
+		});
 		$scope.repoIssues = repoIssues.data;
+	}
+
+	function issueCommentsFulfilled(repoIssue) {
+		return repoIssue.data;
 	}
 
 	function createdRepoIssueFulfilled(createdRepoIssue) {
