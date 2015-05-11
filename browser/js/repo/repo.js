@@ -92,11 +92,10 @@ app.controller('RepoController', function($scope, $stateParams, RepoFactory){
 				if(tempLabelObj[label]) { $scope.issue.labels.push(label); }
 			}
 		});
-		//RepoFactory.createRepoIssue($stateParams, issue).then(createdRepoIssueFulfilled, rejected);
+		RepoFactory.createRepoIssue($stateParams, issue).then(createdRepoIssueFulfilled, rejected);
 	};
 
 	$scope.editIssue = function(issue) {
-
 
 			for (var obj in issue.tempLabels) {
 				console.log("obj", issue.tempLabels[obj]);
@@ -113,9 +112,6 @@ app.controller('RepoController', function($scope, $stateParams, RepoFactory){
 				if(issue.tempLabels[obj][label]) { issue.labels.push({ name: label}); }
 				}
 			}
-	
-							console.log("ISSUE", issue);
-
 
 		 RepoFactory.editRepoIssue($stateParams, issue).then(editedRepoIssueFulfilled, rejected);
 	};
