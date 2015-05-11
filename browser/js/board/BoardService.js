@@ -8,8 +8,6 @@ app.factory('BoardService', function ($modal, BoardManipulator, BoardModel) {
     },
 
     addNewCard: function (board, column, featureName) {
-      console.log('FEATURE NAME ', featureName);
-      console.log('SPRINT BOARD ', board);
       var modalInstance = $modal.open({
         templateUrl: '/js/board/newCard.html',
         controller: 'NewCardController',
@@ -24,12 +22,27 @@ app.factory('BoardService', function ($modal, BoardManipulator, BoardModel) {
         }
       });
       modalInstance.result.then(function (cardDetails) {
-        console.log('inside modalInstance');
         if (cardDetails) {
           BoardManipulator.addCardToColumn(board, cardDetails.column, cardDetails.title, cardDetails.details);
         }
       });
     },
+
+    // addNewFeature: function(board, featureName){
+    //   var modalFeature = $modal.open({
+    //     templateUrl: '/js/board/newFeature.html',
+    //     controller: 'NewFeatureController',
+    //     backdrop: 'static',
+    //     resolve: {
+    //       sprintBoard: function(){
+    //         return board;
+    //       }
+    //     }
+    //   });
+    //   modalFeature.result.then(function (board, featureName) {
+    //       BoardManipulator.addFeature(board, featureName);
+    //   });
+    // },
 
     sprintBoard: function (board) {
       var sprintBoard = new BoardModel.Board(board.name, board.numberOfColumns);

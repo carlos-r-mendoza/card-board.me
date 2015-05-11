@@ -21,9 +21,7 @@ app.controller('NewCardController', function ($scope, $modal, $modalInstance, Bo
  $scope.board = sprintBoard;
 
   $scope.addCard = function(newCard, featureName){ 
-    console.log('called');
     BoardManipulator.addCardToFeature($scope.board, featureName, 'Open', newCard);
-    console.log('TO ADD TO DB & BOARD');
     $modalInstance.close();
   };
 
