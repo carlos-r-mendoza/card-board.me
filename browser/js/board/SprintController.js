@@ -16,7 +16,7 @@ app.config(function ($stateProvider) {
 app.controller('SprintController', function ($scope, BoardService, BoardDataFactory, BoardManipulator, $rootScope) {
 
   $scope.sprintBoard = BoardService.sprintBoard(BoardDataFactory.sprint);
-  // $rootScope.$emit('savesprintBoard', $scope.sprintBoard);
+
   console.log('thing', $scope.sprintBoard);
 
   $scope.sprintSortOptions = {

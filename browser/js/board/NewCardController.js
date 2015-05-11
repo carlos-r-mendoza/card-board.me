@@ -1,4 +1,4 @@
-app.controller('NewCardController', function ($scope, $modal, $modalInstance, BoardService, BoardManipulator, featureName, $rootScope) {
+app.controller('NewCardController', function ($scope, $modal, $modalInstance, BoardService, BoardManipulator, featureName, $rootScope, sprintBoard) {
 
   $scope.featureName = featureName;
 
@@ -18,15 +18,13 @@ app.controller('NewCardController', function ($scope, $modal, $modalInstance, Bo
     $modalInstance.close();
   };
 
-  // $rootScope.$on('savesprintBoard', function(event, data){
-  //   $scope.board=data
-  //   console.log(data);
-  // })
+ $scope.board = sprintBoard;
 
   $scope.addCard = function(newCard, featureName){ 
     console.log('called');
     BoardManipulator.addCardToFeature($scope.board, featureName, 'Open', newCard);
     console.log('TO ADD TO DB & BOARD');
+    $modalInstance.close();
   };
 
 });

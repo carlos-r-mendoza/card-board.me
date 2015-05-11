@@ -9,11 +9,15 @@ app.factory('BoardService', function ($modal, BoardManipulator, BoardModel) {
 
     addNewCard: function (board, column, featureName) {
       console.log('FEATURE NAME ', featureName);
+      console.log('SPRINT BOARD ', board);
       var modalInstance = $modal.open({
         templateUrl: '/js/board/newCard.html',
         controller: 'NewCardController',
         backdrop: 'static',
         resolve: {
+          sprintBoard: function(){
+            return board;
+          },
           featureName: function () {
             return featureName;
           }
