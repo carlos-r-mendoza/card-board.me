@@ -296,10 +296,11 @@ router.post('/:repoOwner/:repoName/repo-issues/:issueNumber', function (req, res
 	var issueTitle = req.body.title;
 		console.log("Title ", issueTitle);
 
-	// var issueBody = req.body.body;
-	// var issueAssignee = req.body.assignee;
-	// var issueMilestone = req.body.milestone;
-	// var issueLabels = req.body.labels; 
+	var issueBody = req.body.body;
+	var issueAssignee = req.body.assignee;
+	var issueState = req.body.state;
+	var issueMilestone = req.body.milestone;
+	var issueLabels = req.body.labels; 
 
 	github.authenticate({
 	    type: "oauth",
@@ -310,11 +311,12 @@ router.post('/:repoOwner/:repoName/repo-issues/:issueNumber', function (req, res
 		user: req.params.repoOwner,
 		repo: req.params.repoName,
 		number: req.params.issueNumber,
-		title: issueTitle
-		// body: issueBody,
-		// assignee: issueAssignee,
-		// milestone: issueMilestone,
-		// labels: issueLabels
+		title: issueTitle,
+		body: issueBody,
+		assignee: issueAssignee,
+		state: issueState,
+		milestone: issueMilestone,
+		labels: issueLabels
 	}, function(err, editedRepoIssue) {
 		res.json(editedRepoIssue);
 	});
