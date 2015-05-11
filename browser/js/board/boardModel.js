@@ -162,7 +162,6 @@ app.factory('BoardManipulator', function (BoardModel) {
     },
 
     addCardToFeature: function (board, featureName, phaseName, task) {
-      console.log('BOARD: ', board);
       angular.forEach(board.features, function (feature) {
         if (feature.name === featureName) {
           angular.forEach(feature.phases, function (phase) {
