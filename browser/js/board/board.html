@@ -25,7 +25,7 @@
                 </div>
             </th>
             <td class="addTask">
-                <button title="Add card to column" ng-click="addNewCard()"><i
+                <button title="Add card to column" ng-click="addNewCard(sprintBoard, column, feature.name)"><i
                         class="glyphicon glyphicon-plus addNewCard"></i></button>
             </td>
             <td as-sortable="sprintSortOptions" ng-repeat="phase in feature.phases" ng-model="phase.cards">

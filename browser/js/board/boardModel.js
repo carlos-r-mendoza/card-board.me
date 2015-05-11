@@ -1,44 +1,47 @@
 'use strict';
+app.factory('BoardModel', function(){
+    return{
+        Board: function (name, numberOfColumns) {
+        return {
+          name: name,
+          numberOfColumns: numberOfColumns,
+          columns: [],
+          features: []
+        };
+      },
 
-function Board(name, numberOfColumns) {
-  return {
-    name: name,
-    numberOfColumns: numberOfColumns,
-    columns: [],
-    features: []
-  };
-}
+      Column: function (name) {
+        return {
+          name: name,
+          cards: []
+        };
+      },
 
-function Column(name) {
-  return {
-    name: name,
-    cards: []
-  };
-}
+      Feature: function (name) {
+        return {
+          name: name,
+          phases: []
+        };
+      },
 
-function Feature(name) {
-  return {
-    name: name,
-    phases: []
-  };
-}
-
-function Phase(name) {
-  return {
-    name: name,
-    cards: []
-  };
-}
-
-function Card(title, status, details, assignee, label, dueDate) {
-  this.title = title;
-  this.status = status;
-  this.details = details;
-  this.assignee = assignee;
-  this.label = label;
-  this.dueDate = dueDate;
-  return this;
-}
+      Phase: function (name) {
+        return {
+          name: name,
+          cards: []
+        };
+      },
+      
+      Card: function (title, status, details, assignee, label, dueDate) {
+        this.title = title;
+        this.status = status;
+        this.details = details;
+        this.assignee = assignee;
+        this.label = label;
+        this.dueDate = dueDate;
+        return this;
+      }
+  }
+});
 
 
 app.factory('BoardDataFactory', function () {
@@ -123,17 +126,19 @@ app.factory('BoardDataFactory', function () {
   };
 });
 
-app.factory('BoardManipulator', function () {
+app.factory('BoardManipulator', function (BoardModel) {
+
+
   return {
 
     addColumn: function (board, columnName) {
-      board.columns.push(new Column(columnName));
+      board.columns.push(new BoardModel.Column(columnName));
     },
 
     addCardToColumn: function (board, column, cardTitle, details) {
       angular.forEach(board.columns, function (col) {
         if (col.name === column.name) {
-          col.cards.push(new Card(cardTitle, column.name, details));
+          col.cards.push(new BoardModel.Card(cardTitle, column.name, details));
         }
       });
     },
@@ -145,23 +150,24 @@ app.factory('BoardManipulator', function () {
       });
     },
     addFeature: function (board, featureName) {
-      board.features.push(new Feature(featureName));
+      board.features.push(new BoardModel.Feature(featureName));
     },
 
     addPhaseToFeature: function (board, featureName, phase) {
       angular.forEach(board.features, function (feature) {
         if (feature.name === featureName) {
-          feature.phases.push(new Phase(phase.name));
+          feature.phases.push(new BoardModel.Phase(phase.name));
         }
       });
     },
 
     addCardToFeature: function (board, featureName, phaseName, task) {
+      console.log('BOARD: ', board);
       angular.forEach(board.features, function (feature) {
         if (feature.name === featureName) {
           angular.forEach(feature.phases, function (phase) {
             if (phase.name === phaseName) {
-              phase.cards.push(new Card(task.title, task.status, task.details));
+              phase.cards.push(new BoardModel.Card(task.title, task.details, task.status, task.comments, task.assignee, task.label, task.dueDate));
             }
           });
         }

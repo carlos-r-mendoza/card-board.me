@@ -1,48 +1,32 @@
-app.controller('NewCardController', function ($scope, $modal, $modalInstance, column) {
+app.controller('NewCardController', function ($scope, $modal, $modalInstance, BoardService, BoardManipulator, featureName, $rootScope) {
 
-  function initScope(scope) {
-    // scope.columnName = column.name;
-    // scope.column = column;
-    scope.title = '';
-    scope.details = '';
-  }
+  $scope.featureName = featureName;
 
-  $scope.animationsEnabled = true;
+  console.log($scope.featureName);
 
-  $scope.addCard = function () {    
-    console.log('inside add card');
-    var modalInstance = $modal.open({
-      animation: $scope.animationsEnabled,
-      templateUrl: 'newCard.html',
-      controller: 'NewCardController',
-      resolve:{
-        newCard: function(){
-        return {
-          title: this.title, 
-          column: column, 
-          details: this.details
-          }
-        }
-      }
-    });
-
-    modalInstance.result.then(function(item){
-      $scope.selected = item;
-    }, function(){
-      console.log('working??');
-    })
+  $scope.newCard = {
+      title: '',
+      details: '',
+      status: 'Open',
+      comments: '',
+      assignee: '',
+      label: '',
+      dueDate: ''
   };
 
   $scope.close = function () {
     $modalInstance.close();
   };
 
-  $scope.cancel = function(){
-    $modalInstance.dismiss('cancel');
-  }
+  // $rootScope.$on('savesprintBoard', function(event, data){
+  //   $scope.board=data
+  //   console.log(data);
+  // })
 
-  $scope.addCard = function(){ console.log('TO ADD TO DB & BOARD');};
-
-  initScope($scope);
+  $scope.addCard = function(newCard, featureName){ 
+    console.log('called');
+    BoardManipulator.addCardToFeature($scope.board, featureName, 'Open', newCard);
+    console.log('TO ADD TO DB & BOARD');
+  };
 
 });
