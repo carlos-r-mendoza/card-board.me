@@ -286,7 +286,7 @@ router.post('/:repoOwner/:repoName/create-repo-issue', function (req, res) {
 
 /***CREATES/POSTS AN ISSUE***/
 /*More info: http://mikedeboer.github.io/node-github/#issues.prototype.create*/
-router.post('/:repoOwner/:repoName/repo-issues/:issueNumber', function (req, res) {
+router.post('/:repoOwner/:repoName/edit-repo-issue/:issueNumber', function (req, res) {
 	//console.log("ISSSUE ", req.body);
 		console.log("PARAMS ", req.params);
 	// console.log("Number ",req.params.issueNumber);
@@ -331,5 +331,29 @@ router.post('/:repoOwner/:repoName/repo-issues/:issueNumber', function (req, res
 		res.json(editedRepoIssue);
 	});
 });
+
+/***CREATES/POSTS AN ISSUE***/
+/*More info: http://mikedeboer.github.io/node-github/#issues.prototype.create*/
+router.post('/:repoOwner/:repoName/create-repo-label/:labelName', function (req, res) {
+
+	var userToken = req.user.github.token;
+	var labelName = req.body.name;
+	var labelColor = req.body.color;
+
+	github.authenticate({
+	    type: "oauth",
+	    token: userToken
+	});
+
+	github.issues.createLabel({
+		user: req.params.repoOwner,
+		repo: req.params.repoName,
+		name: labelName,
+		color: labelColor
+	}, function(err, createdRepoLabel) {
+		res.json(createdRepoLabel);
+	});
+});
+
 
 

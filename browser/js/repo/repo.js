@@ -70,8 +70,13 @@ app.factory('RepoFactory', function($http){
 		editRepoIssue: function(repoInfo, issue) {
 			console.log("REPO INFO", repoInfo);
 			console.log("ISSUE INFO", issue);
-			return $http.post('api/repo/' + repoInfo.owner + "/" + repoInfo.name + "/repo-issues/" + issue.number, issue).then(function(editedRepoIssue){
+			return $http.post('api/repo/' + repoInfo.owner + "/" + repoInfo.name + "/edit-repo-issue/" + issue.number, issue).then(function(editedRepoIssue){
 				return editedRepoIssue;
+			});
+		},
+		createRepoLabel: function(repoInfo, labelInfo) {
+			return $http.post('api/repo/' + repoInfo.owner + "/" + repoInfo.name + "/create-repo-label/" + labelInfo.name, labelInfo).then(function(createdLabel){
+				return createdLabel;
 			});
 		}
 	};
@@ -79,9 +84,10 @@ app.factory('RepoFactory', function($http){
 
 
 app.controller('RepoController', function($scope, $stateParams, RepoFactory){
-	$scope.hello = "HELLOP";
+
 	$scope.issue = {};
 	$scope.issue.tempLabels = [];
+	$scope.label = {};
 
 	$scope.createIssue = function(issue) {
 		$scope.issue.labels = [];
@@ -115,6 +121,10 @@ app.controller('RepoController', function($scope, $stateParams, RepoFactory){
 
 		 RepoFactory.editRepoIssue($stateParams, issue).then(editedRepoIssueFulfilled, rejected);
 	};
+
+	$scope.createLabel = function(label) {
+		RepoFactory.createRepoLabel($stateParams, label).then(createdRepoLabelFulfilled, rejected);
+	}
 
 	$scope.checkAssignedLabels = function(repoLabel, labelsInIssue) {
 		for (var i = 0; i <= labelsInIssue.length-1; i++) {
@@ -168,6 +178,10 @@ app.controller('RepoController', function($scope, $stateParams, RepoFactory){
 
 	function editedRepoIssueFulfilled(editedRepoIssue) {
 		RepoFactory.getRepoIssues($stateParams).then(repoIssuesFulfilled, rejected);		
+	}
+
+	function createdRepoLabelFulfilled(editedRepoIssue) {
+		RepoFactory.getRepoLabels($stateParams).then(repoLabelsFulfilled, rejected);
 	}
 
 	function rejected(error){

@@ -137,6 +137,57 @@
 		</md-card>
 	</div>
 
+	<div class="col-md-4">
+		<md-card id="profile-card">
+		<core-toolbar id="profile-card2">Create Label</core-toolbar>
+			<md-card-content class="paper-card">
+				<form name="createTheLabel" ng-submit="createLabel(label)">
+					
+					<div class="form-group">
+						<label for="labelName">Name</label>
+						<input for="labelName" class="form-control" ng-model="label.name" type="text" />
+					</div>
+
+					<div class="form-group">
+						<label for="labelColor">Color</label>
+						<input for="labelColor" placeholder="6 character hex code, without the #." class="form-control" ng-model="label.color" />
+					</div>
+
+					<div>
+					<input type="submit" class="btn btn-success" value="Submit Label" />
+					</div>
+
+				</form>
+			</md-card-content>
+		</md-card>
+	</div>
+
+	<div class="col-md-4">
+		<md-card id="profile-card">
+		<core-toolbar id="profile-card2">Create A Milestone</core-toolbar>
+			<md-card-content class="paper-card">
+				<form name="createTheLabel" ng-submit="createLabel(label)">
+					
+					<div class="form-group">
+						<label for="labelName">Name</label>
+						<input for="labelName" class="form-control" ng-model="label.name" type="text" />
+					</div>
+
+					<div class="form-group">
+						<label for="labelColor">Color</label>
+						<input for="labelColor" placeholder="6 character hex code, without the #." class="form-control" ng-model="label.color" />
+					</div>
+
+					<div>
+					<input type="submit" class="btn btn-success" value="Submit Label" />
+					</div>
+					
+				</form>
+			</md-card-content>
+		</md-card>
+	</div>
+
+
 	<div class="col-md-4 pull-right">
 		<md-card id="profile-card">
 		<core-toolbar id="profile-card2">Collaborators</core-toolbar>
