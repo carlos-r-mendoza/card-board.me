@@ -145,12 +145,12 @@
 					
 					<div class="form-group">
 						<label for="labelName">Name</label>
-						<input for="labelName" class="form-control" ng-model="label.name" type="text" />
+						<input for="labelName" type="text" class="form-control" ng-model="label.name" type="text" />
 					</div>
 
 					<div class="form-group">
 						<label for="labelColor">Color</label>
-						<input for="labelColor" placeholder="6 character hex code, without the #." class="form-control" ng-model="label.color" />
+						<input for="labelColor" type="text" placeholder="6 character hex code, without the #." class="form-control" ng-model="label.color" />
 					</div>
 
 					<div>
@@ -166,20 +166,30 @@
 		<md-card id="profile-card">
 		<core-toolbar id="profile-card2">Create A Milestone</core-toolbar>
 			<md-card-content class="paper-card">
-				<form name="createTheLabel" ng-submit="createLabel(label)">
+				<form name="createTheMilestone" ng-submit="createMilestone(milestone)">
 					
 					<div class="form-group">
-						<label for="labelName">Name</label>
-						<input for="labelName" class="form-control" ng-model="label.name" type="text" />
+						<label for="milestoneTitle">Title</label>
+						<input for="milestoneTitle" type="text" class="form-control" ng-model="milestone.title" type="text" />
 					</div>
 
 					<div class="form-group">
-						<label for="labelColor">Color</label>
-						<input for="labelColor" placeholder="6 character hex code, without the #." class="form-control" ng-model="label.color" />
+						<label for="milestoneState">State</label>
+						<input for="milestoneState" type="text" placeholder="open or closed" class="form-control" ng-model="milestone.state" />
+					</div>
+
+					<div class="form-group">
+						<label for="milestoneDescription">Description</label>
+						<textarea for="milestoneDescription" class="form-control" rows="5" ng-model="milestone.description"></textarea>
+					</div>
+
+					<div class="form-group">
+						<label for="milestoneDueDate">Due Date</label>
+						<input for="milestoneDueDate" type="date" class="form-control" ng-model="milestone.due_on" />
 					</div>
 
 					<div>
-					<input type="submit" class="btn btn-success" value="Submit Label" />
+					<input type="submit" class="btn btn-success" value="Submit Milestone" />
 					</div>
 					
 				</form>

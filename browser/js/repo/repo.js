@@ -78,6 +78,11 @@ app.factory('RepoFactory', function($http){
 			return $http.post('api/repo/' + repoInfo.owner + "/" + repoInfo.name + "/create-repo-label/" + labelInfo.name, labelInfo).then(function(createdLabel){
 				return createdLabel;
 			});
+		},
+		createRepoMilestone: function(repoInfo, milestoneInfo) {
+			return $http.post('api/repo/' + repoInfo.owner + "/" + repoInfo.name + "/create-repo-milestone/" + milestoneInfo.title, milestoneInfo).then(function(createdMilestone){
+				return createdMilestone;
+			});
 		}
 	};
 });
@@ -124,6 +129,10 @@ app.controller('RepoController', function($scope, $stateParams, RepoFactory){
 
 	$scope.createLabel = function(label) {
 		RepoFactory.createRepoLabel($stateParams, label).then(createdRepoLabelFulfilled, rejected);
+	}
+
+	$scope.createMilestone = function(milestone) {
+		RepoFactory.createRepoMilestone($stateParams, milestone).then(createdRepoMilestoneFulfilled, rejected);
 	}
 
 	$scope.checkAssignedLabels = function(repoLabel, labelsInIssue) {
@@ -182,6 +191,10 @@ app.controller('RepoController', function($scope, $stateParams, RepoFactory){
 
 	function createdRepoLabelFulfilled(editedRepoIssue) {
 		RepoFactory.getRepoLabels($stateParams).then(repoLabelsFulfilled, rejected);
+	}
+
+	function createdRepoMilestoneFulfilled(editedRepoIssue) {
+		RepoFactory.getRepoMilestones($stateParams).then(repoMilestonesFulfilled, rejected);
 	}
 
 	function rejected(error){

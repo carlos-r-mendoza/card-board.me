@@ -355,5 +355,33 @@ router.post('/:repoOwner/:repoName/create-repo-label/:labelName', function (req,
 	});
 });
 
+/***CREATES/POSTS AN ISSUE***/
+/*More info: http://mikedeboer.github.io/node-github/#issues.prototype.create*/
+router.post('/:repoOwner/:repoName/create-repo-milestone/:milestoneTitle', function (req, res) {
+
+	var userToken = req.user.github.token;
+	var milestoneTitle = req.body.title;
+	var milestoneState = req.body.state;
+	var milestoneDescription = req.body.description;
+	var milestoneDueDate = req.body.due_on;
+
+	github.authenticate({
+	    type: "oauth",
+	    token: userToken
+	});
+
+	github.issues.createMilestone({
+		user: req.params.repoOwner,
+		repo: req.params.repoName,
+		title: milestoneTitle,
+		state: milestoneState,
+		description: milestoneDescription,
+		due_on: milestoneDueDate
+	}, function(err, createdRepoMilestone) {
+		res.json(createdRepoMilestone);
+	});
+});
+
+
 
 
