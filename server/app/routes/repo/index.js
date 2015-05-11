@@ -287,25 +287,34 @@ router.post('/:repoOwner/:repoName/create-repo-issue', function (req, res) {
 /***CREATES/POSTS AN ISSUE***/
 /*More info: http://mikedeboer.github.io/node-github/#issues.prototype.create*/
 router.post('/:repoOwner/:repoName/repo-issues/:issueNumber', function (req, res) {
-	console.log("Owner ", req.params.repoOwner);
-		console.log("Name ", req.params.repoName);
-	console.log("Number ",req.params.issueNumber);
+	//console.log("ISSSUE ", req.body);
+		console.log("PARAMS ", req.params);
+	// console.log("Number ",req.params.issueNumber);
 
 
 	var userToken = req.user.github.token;
 	var issueTitle = req.body.title;
-		console.log("Title ", issueTitle);
-
 	var issueBody = req.body.body;
-	var issueAssignee = req.body.assignee;
-	var issueState = req.body.state;
-	var issueMilestone = req.body.milestone;
-	var issueLabels = req.body.labels; 
+	var issueAssignee;
+	var issueState;
+	var issueMilestone;
+	var issueLabels = [];
+	if (typeof req.body.assignee === 'string') { issueAssignee = req.body.assignee; }
+	if (typeof req.body.state === 'string') { issueState = req.body.state; }
+	if (typeof req.body.milestone === 'number') { issueMilestone = req.body.milestone; }
+
+	console.log("ISSSSMilestone", issueMilestone);
+
+	req.body.labels.forEach(function(objLabel) {
+		issueLabels.push(objLabel.name);
+	});
 
 	github.authenticate({
 	    type: "oauth",
 	    token: userToken
 	});
+
+	console.log("issue labels", issueLabels	)
 
 	github.issues.edit({
 		user: req.params.repoOwner,
@@ -314,10 +323,11 @@ router.post('/:repoOwner/:repoName/repo-issues/:issueNumber', function (req, res
 		title: issueTitle,
 		body: issueBody,
 		assignee: issueAssignee,
+		milestone: issueMilestone,	
 		state: issueState,
-		milestone: issueMilestone,
 		labels: issueLabels
 	}, function(err, editedRepoIssue) {
+		console.log("RESPONSE", editedRepoIssue)
 		res.json(editedRepoIssue);
 	});
 });
