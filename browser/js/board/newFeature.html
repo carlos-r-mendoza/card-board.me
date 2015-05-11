@@ -7,7 +7,7 @@
     </div>
     <div class="modal-body">
         <div class="form-group">
-            <label class="control-label" for="newFeatureTitle">Feature title</label>
+            <label class="control-label" for="newFeatureTitle">Feature Title</label>
 
             <div>
                 <input type="text" id="newFeatureTitle" placeholder="Title on a card" ng-model="newFeature.title" required
@@ -15,12 +15,22 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label" for="newFeatureDetails">More details
+            <label class="control-label" for="newFeatureDetails">More Details
                 <small>(optional)</small>
             </label>
 
             <div>
                 <textarea id="newFeatureDetails" ng-model="newFeature.details" class="cardInputs form-control" rows="7">
+                </textarea>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label" for="newFeatureTasks">Add Tasks <!-- ADD TASKS HERE!!! -->
+            </label>
+
+            <div>
+                <textarea id="newFeatureTasks" ng-model="newFeature.tasks" class="cardInputs form-control" rows="7">
                 </textarea>
             </div>
         </div>

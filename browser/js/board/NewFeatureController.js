@@ -3,7 +3,17 @@ app.controller('NewFeatureController', function ($scope, $modal, BoardService, B
   $scope.newFeature = {
       title: '',
       details: '',
-      phases:[]
+      phases:[
+        { name: 'Open',
+          cards: []
+        },
+        { name: 'In progress',
+          cards: []
+        },
+        { name: 'Closed',
+          cards: []
+        }
+      ]
   };
   
   $scope.addNewFeature = function(board){
