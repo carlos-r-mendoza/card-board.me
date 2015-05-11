@@ -1,5 +1,3 @@
-{{ hello }}
-<button ng-click="createIssue()">Click me</button>
 <div class="row">
 <md-content>
 	<div class="col-md-8">
@@ -126,6 +124,15 @@
 				<div>Milestone Closed Issues: {{ issue.milestone.closed_issues }}</div>
 				<div>Milestone Due Date: {{ issue.milestone.due_on }}</div>
 				<div>Number of Comments: {{ issue.comments }}</div>
+
+				<div><h4>Comments:</h4></div>
+				<div ng-repeat="comment in issue.comments_info">
+				<div>Comment: {{ comment.body }}</div>
+				<div>Creator: {{ comment.user.login }}</div>
+				<div>Creation Date: {{ comment.created_at | date:'medium' }}</div>
+				</div>
+
+
 				<button ng-hide="issueEditor" ng-click="issueEditor = !issueEditor">Edit Issue</button>
 				<input type="submit" class="btn btn-success" value="Update Issue" ng-show="issueEditor" ng-click="editIssue(issue)" />
 				<button ng-show="issueEditor" ng-click="issueEditor = !issueEditor">Cancel</button>
