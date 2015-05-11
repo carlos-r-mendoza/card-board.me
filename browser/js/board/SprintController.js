@@ -22,4 +22,8 @@ app.controller('SprintController', ['$scope', 'BoardService', 'BoardDataFactory'
     },
     containment: '#board'
   };
+
+  $scope.addNewCard = BoardService.addNewCard;
+
+
 }]);

@@ -41,8 +41,8 @@ function Card(title, status, details, assignee, label, dueDate) {
 }
 
 
-app.service('BoardDataFactory', function () {
-//THIS SHOULD BE MONGO DB
+app.factory('BoardDataFactory', function () {
+//THIS SHOULD BE MONGO DB GET REQUEST: $scope.sprintBoard = getBoard();
   return {
     sprint: {
       "name": "Sprint Board",
