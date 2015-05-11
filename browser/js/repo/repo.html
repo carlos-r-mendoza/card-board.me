@@ -39,11 +39,8 @@
 					<div class="form-group">
 						<label for="issueLabels">Labels</label>
 						<div for="issueLabels" ng-repeat="label in repoLabels" >
-							
 							<span style="background-color: #{{ label.color }}">{{ label.name }}:  </span>
-
-							<input type="checkbox" name="{{ label.name }}" value="{{ label.name }}" ng-model="issue.tempLabels[$index][label.name]" />		
-
+							<input type="checkbox" value="{{ label.name }}" ng-model="issue.tempLabels[$index][label.name]" />		
 						</div>
 					</div>
 
@@ -73,57 +70,65 @@
 		<core-toolbar id="profile-card2">Issues</core-toolbar>
 			<md-card-content class="paper-card">
 				<div ng-repeat="issue in repoIssues">
+				<!-- ISSUE AUTHOR -->				
 				<div>Author: {{ issue.user.login }}</div>
-				
 				<!-- ISSUE TITLE -->
-				<div ng-hide="titleEditor">
-					Title: {{ issue.title }}
-					<button ng-click="titleEditor = !titleEditor">Edit Title</button>
+				<div>
+					Title: <span ng-hide="issueEditor">{{ issue.title }}</span><input type="text" ng-show="issueEditor" ng-model="issue.title">
 				</div>
-				<div ng-show="titleEditor">
-					<input ng-model="issue.title">
-					<span ng-click="editIssue(issue)">
-						<button ng-click="titleEditor = !titleEditor">Confirm Edit</button>
-					</span>
-				</div>
-		
 				<!-- ISSUE BODY -->
-				<div ng-hide="bodyEditor">
-					Body: {{ issue.body }}
-					<button ng-click="bodyEditor = !bodyEditor">Edit Title</button>
+				<div>
+					Body: <span ng-hide="issueEditor">{{ issue.body }}</span><input type="text" ng-show="issueEditor" ng-model="issue.body">
 				</div>
-				<div ng-show="bodyEditor">
-					<input ng-model="issue.body">
-					<button ng-click="bodyEditor = !bodyEditor">Confirm Edit</button>
-				</div>
+				<!-- ISSUE NUMBER -->
+				<div>Temp {{ issue.tempLabels }}</div>
 
 				<div>Number: {{ issue.number }}</div>
-
-
 				<!-- ISSUE LABELS -->
-
-
-<!-- 				<div ng-hide="issuesEditor">
+				{{ hello }}
 				<div ng-repeat="label in issue.labels">
-					<div style="background-color: #{{ label.color }}">
+					<div style="background-color: #{{ label.color }}" ng-hide="issueEditor">
 						Label: {{ label.name }}
-						<button ng-click="issuesEditor = !issuesEditor">Edit Issue</button>
 					</div>
 				</div>
-				</div> -->
+				<div ng-show="issueEditor" ng-repeat="repoLabel in repoLabels">
+						<span style="background-color: #{{ repoLabel.color }}">{{ repoLabel.name }}:  </span>
+						<input type="checkbox" ng-true-value="true" ng-checked="checkAssignedLabels(repoLabel.name, issue.labels)" ng-model="issue.tempLabels[$index][repoLabel.name]" />	
+				</div>
+				<!-- ISSUE STATE -->
+				<div>
+					State: <span ng-hide="issueEditor">{{ issue.state }}</span>
+					<select ng-show="issueEditor" ng-model="issue.state">
+						<option value="open">Open</option>
+						<option value="closed">Closed</option>
+					</select>
+				</div>
+				<!-- ISSUE ASSIGNEE -->
+				<div>Assignee: <span ng-hide="issueEditor">{{ issue.assignee.login }}</span>			
+					<select ng-show="issueEditor" ng-model="issue.assignee">
+						<option ng-repeat="assignee in collaborators" value="{{ assignee.login }}">{{ assignee.login }}</option>
+					</select>
+				</div>
 
 
-
-				<div>State: {{ issue.state }}</div>
-				<div>Assignee: {{ issue.assignee.login }}</div>
 				<div>Assignee Avatar: {{ issue.assignee.avatar_url }}</div>
-				<div>Milestone: {{ issue.milestone.title }}</div>
+
+				<!-- ISSUE MILESTONE -->
+				<div>Milestone: <span ng-hide="issueEditor">{{ issue.milestone.title }}</span>
+					<select ng-show="issueEditor" ng-model="issue.milestone">
+						<option ng-repeat="milestone in repoMilestones" value = "{{ milestone.number }}">{{ milestone.title }} {{ milestone.due_on }} {{ milestone.open_issues }} {{ milestone.closed_issues }}</option>
+					</select>
+				</div>
+
 				<div>Milestone Open Issues: {{ issue.milestone.open_issues }}</div>
 				<div>Milestone Closed Issues: {{ issue.milestone.closed_issues }}</div>
 				<div>Milestone Due Date: {{ issue.milestone.due_on }}</div>
 				<div>Number of Comments: {{ issue.comments }}</div>
+				<button ng-hide="issueEditor" ng-click="issueEditor = !issueEditor">Edit Issue</button>
+				<button ng-show="issueEditor" ng-click="editIssue(issue)">Update Issue</button>
+				<button ng-show="issueEditor" ng-click="issueEditor = !issueEditor">Cancel</button>
 				<md-divider></md-divider>
-
+				<br>
 				</div>
 			</md-card-content>
 		</md-card>

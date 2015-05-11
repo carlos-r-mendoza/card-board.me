@@ -79,25 +79,48 @@ app.factory('RepoFactory', function($http){
 
 
 app.controller('RepoController', function($scope, $stateParams, RepoFactory){
-
+	$scope.hello = "HELLOP";
 	$scope.issue = {};
 	$scope.issue.tempLabels = [];
 
 	$scope.createIssue = function(issue) {
 		$scope.issue.labels = [];
+						console.log("cISSUE", issue);
+
 		$scope.issue.tempLabels.forEach(function (tempLabelObj) {
 			for (var label in tempLabelObj) {
 				if(tempLabelObj[label]) { $scope.issue.labels.push(label); }
 			}
 		});
-		RepoFactory.createRepoIssue($stateParams, issue).then(createdRepoIssueFulfilled, rejected);
+		//RepoFactory.createRepoIssue($stateParams, issue).then(createdRepoIssueFulfilled, rejected);
 	};
 
 	$scope.editIssue = function(issue) {
-		console.log("ISSUE IN SCOPE ", issue);
-		//make things editable
-		RepoFactory.editRepoIssue($stateParams, issue).then(editedRepoIssueFulfilled, rejected);
+			for (var obj in issue.tempLabels) {
+				console.log("obj", issue.tempLabels[obj]);
+				for (var label in issue.tempLabels[obj]) {
+											console.log("LA", label);
 
+					for (var i = 0; i <= issue.labels.length-1; i++) {
+						//console.log("inside", issue.labels[i].name)
+						if(label === issue.labels[i].name) {
+							console.log("FADSF",issue.labels[i] )
+							 issue.tempLabels[obj][label] = false;
+						}
+					}
+				if(issue.tempLabels[obj][label]) { issue.labels.push({ name: label}); }
+				}
+			}
+	
+				console.log("ISSUE", issue);
+
+		// RepoFactory.editRepoIssue($stateParams, issue).then(editedRepoIssueFulfilled, rejected);
+	};
+
+	$scope.checkAssignedLabels = function(repoLabel, labelsInIssue) {
+		for (var i = 0; i <= labelsInIssue.length-1; i++) {
+			if (repoLabel === labelsInIssue[i].name) { return true; }
+		}
 	};
 
 	function repoInfoFulfilled(repoInfo) {
@@ -129,7 +152,7 @@ app.controller('RepoController', function($scope, $stateParams, RepoFactory){
 	}
 	
 	function repoIssuesFulfilled(repoIssues) {
-		 $scope.repoIssues = repoIssues.data;
+		$scope.repoIssues = repoIssues.data;
 	}
 
 	function createdRepoIssueFulfilled(createdRepoIssue) {
