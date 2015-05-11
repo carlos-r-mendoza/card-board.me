@@ -6,7 +6,9 @@
             <th style="width:22%; text-align: left;">
                 <span>Features</span>
             </th>
-            <th class="addStory" style="width:3%;">
+            <th class="addStory" style="width:3%;" ng-controller="NewFeatureController">
+                <a title="Add Feature" ng-click="addNewFeature(sprintBoard)"><i
+                        class="glyphicon glyphicon-plus addNewCard"></i></a>
             </th>
             <th ng-repeat="column in sprintBoard.columns" style="width:25%;">
                 <div>
@@ -25,8 +27,8 @@
                 </div>
             </th>
             <td class="addTask">
-                <button title="Add card to column" ng-click="addNewCard(sprintBoard, column, feature.name)"><i
-                        class="glyphicon glyphicon-plus addNewCard"></i></button>
+                <a title="Add card to column" ng-click="addNewCard(sprintBoard, column, feature.name)"><i
+                        class="glyphicon glyphicon-plus addNewCard"></i></a>
             </td>
             <td as-sortable="sprintSortOptions" ng-repeat="phase in feature.phases" ng-model="phase.cards">
                 <div class="card" ng-repeat="card in phase.cards" as-sortable-item>
