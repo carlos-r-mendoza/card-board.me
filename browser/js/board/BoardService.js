@@ -1,4 +1,4 @@
-app.service('BoardService', ['$modal', 'BoardManipulator', function ($modal, BoardManipulator) {
+app.factory('BoardService', function ($modal, BoardManipulator) {
 
   return {
     removeCard: function (board, column, card) {
@@ -8,8 +8,9 @@ app.service('BoardService', ['$modal', 'BoardManipulator', function ($modal, Boa
     },
 
     addNewCard: function (board, column) {
+      console.log('add new card??');
       var modalInstance = $modal.open({
-        templateUrl: '/newCard.html',
+        templateUrl: '/js/board/newCard.html',
         controller: 'NewCardController',
         backdrop: 'static',
         resolve: {
@@ -19,11 +20,13 @@ app.service('BoardService', ['$modal', 'BoardManipulator', function ($modal, Boa
         }
       });
       modalInstance.result.then(function (cardDetails) {
+        console.log('inside modalInstance');
         if (cardDetails) {
           BoardManipulator.addCardToColumn(board, cardDetails.column, cardDetails.title, cardDetails.details);
         }
       });
     },
+
     sprintBoard: function (board) {
       var sprintBoard = new Board(board.name, board.numberOfColumns);
       angular.forEach(board.columns, function (column) {
@@ -42,5 +45,5 @@ app.service('BoardService', ['$modal', 'BoardManipulator', function ($modal, Boa
       return sprintBoard;
     }
   };
-}]);
+});
 

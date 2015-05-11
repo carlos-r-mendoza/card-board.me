@@ -6,12 +6,12 @@ var featureSchema = new mongoose.Schema({
     title: {required: true, type: String},
     details: {required: true, type: String},
     phases: [{
-      name: {required: true, type: String default: 'Open'},
+      name: {required: true, type: String, default:'Open'},
       cards: [
         {
           title: {required: true, type: String},
           details: {required: true, type: String},
-          status: status: {required: true, type: String, default: 'Open'},
+          status: {required: true, type: String, default: 'Open'},
           comments: {type: String},
           assignee:{type: String},
           label: [{type: String}],
