@@ -3,12 +3,21 @@ app.config(function ($stateProvider) {
         url: '/board',
         templateUrl: 'js/board/board.html',
         controller: 'SprintController'
+        // resolve:{
+        //   return: {
+        //     sprintBoard: function(){
+        //       return sprintBoard;
+        //     }
+        //   }
+        // }
     });
 });
 
-app.controller('SprintController', ['$scope', 'BoardService', 'BoardDataFactory', function ($scope, BoardService, BoardDataFactory) {
+app.controller('SprintController', function ($scope, BoardService, BoardDataFactory, BoardManipulator, $rootScope) {
 
   $scope.sprintBoard = BoardService.sprintBoard(BoardDataFactory.sprint);
+  // $rootScope.$emit('savesprintBoard', $scope.sprintBoard);
+  console.log('thing', $scope.sprintBoard);
 
   $scope.sprintSortOptions = {
 
@@ -25,5 +34,4 @@ app.controller('SprintController', ['$scope', 'BoardService', 'BoardDataFactory'
 
   $scope.addNewCard = BoardService.addNewCard;
 
-
-}]);
+});
