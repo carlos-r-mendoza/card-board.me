@@ -69,16 +69,18 @@
 		<md-card id="profile-card">
 		<core-toolbar id="profile-card2">Issues</core-toolbar>
 			<md-card-content class="paper-card">
+				<form name="editTheIssue" >
+
 				<div ng-repeat="issue in repoIssues">
 				<!-- ISSUE AUTHOR -->				
 				<div>Author: {{ issue.user.login }}</div>
 				<!-- ISSUE TITLE -->
 				<div>
-					Title: <span ng-hide="issueEditor">{{ issue.title }}</span><input type="text" ng-show="issueEditor" ng-model="issue.title">
+					Title: <span ng-hide="issueEditor">{{ issue.title }}</span><input type="text" ng-show="issueEditor" ng-model="issue.title" />
 				</div>
 				<!-- ISSUE BODY -->
 				<div>
-					Body: <span ng-hide="issueEditor">{{ issue.body }}</span><input type="text" ng-show="issueEditor" ng-model="issue.body">
+					Body: <span ng-hide="issueEditor">{{ issue.body }}</span><input type="text" ng-show="issueEditor" ng-model="issue.body" />
 				</div>
 				<!-- ISSUE NUMBER -->
 				<div>Temp {{ issue.tempLabels }}</div>
@@ -125,11 +127,12 @@
 				<div>Milestone Due Date: {{ issue.milestone.due_on }}</div>
 				<div>Number of Comments: {{ issue.comments }}</div>
 				<button ng-hide="issueEditor" ng-click="issueEditor = !issueEditor">Edit Issue</button>
-				<button ng-show="issueEditor" ng-click="editIssue(issue)">Update Issue</button>
+				<input type="submit" class="btn btn-success" value="Update Issue" ng-show="issueEditor" ng-click="editIssue(issue)" />
 				<button ng-show="issueEditor" ng-click="issueEditor = !issueEditor">Cancel</button>
 				<md-divider></md-divider>
 				<br>
 				</div>
+				</form>
 			</md-card-content>
 		</md-card>
 	</div>

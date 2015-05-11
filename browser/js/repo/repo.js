@@ -96,6 +96,8 @@ app.controller('RepoController', function($scope, $stateParams, RepoFactory){
 	};
 
 	$scope.editIssue = function(issue) {
+
+
 			for (var obj in issue.tempLabels) {
 				console.log("obj", issue.tempLabels[obj]);
 				for (var label in issue.tempLabels[obj]) {
@@ -112,9 +114,10 @@ app.controller('RepoController', function($scope, $stateParams, RepoFactory){
 				}
 			}
 	
-				console.log("ISSUE", issue);
+							console.log("ISSUE", issue);
 
-		// RepoFactory.editRepoIssue($stateParams, issue).then(editedRepoIssueFulfilled, rejected);
+
+		 RepoFactory.editRepoIssue($stateParams, issue).then(editedRepoIssueFulfilled, rejected);
 	};
 
 	$scope.checkAssignedLabels = function(repoLabel, labelsInIssue) {
