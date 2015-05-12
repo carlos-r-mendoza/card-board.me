@@ -47,7 +47,12 @@ app.controller('GitHubProfileController', function($scope, GitHubProfileFactory,
 	$scope.profileEvents = [];
 	$scope.profileRepos = [];
 	$scope.collaborators = "";
+	$scope.repoNameOnNavbar = "Hello";
 	//$scope.searchResults=[];
+
+	$scope.placeRepoNameOnNavbar = function(repoName) {
+		$scope.repoNameOnNavbar = repoName;
+	}
 
 
 		function profileFulfilled(profileData) {

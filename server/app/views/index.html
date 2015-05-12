@@ -48,12 +48,22 @@
 
     <link rel="import" href="/paper-fab/paper-fab.html">
     <link rel="import" href="/core-item/core-item.html">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="/materialize/dist/css/materialize.min.css"  media="screen,projection"/>
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+
     <script type="text/javascript" src="/ng-sortable/dist/ng-sortable.js"></script>
     <script type="text/javascript" src="/ng-sortable/dist/ng-sortable.min.js"></script>
+      <!--Import jQuery before materialize.js-->
+<!--     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+ -->    <script type="text/javascript" src="/materialize/dist/js/materialize.min.js"></script>
     <script src="/main.js"></script>
 </head>
 <body ng-app="FullstackGeneratedApp">
     <main-content></main-content>
+        <div ui-view></div>
+
     <!-- <div id="chart_div"></div> -->
 </body>
 </html>
