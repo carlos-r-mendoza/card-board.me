@@ -13,7 +13,7 @@
 	  <ul id="slide-out" class="side-nav">
 	  	<div ng-controller="GitHubProfileController">
 	    	<li role="presentation" ng-repeat="profileRepo in profileRepos">
-	    		<a ui-sref="repo({ name: profileRepo.name, owner: profileRepo.owner })" role="menuitem" tabindex="-1">{{ profileRepo.full_name }}</a>
+	    		<a ui-sref="board({ name: profileRepo.name, owner: profileRepo.owner })" role="menuitem" tabindex="-1">{{ profileRepo.full_name }}</a>
 	    	</li>
 	    </div>
 	  </ul>

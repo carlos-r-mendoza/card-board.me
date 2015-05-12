@@ -20,9 +20,9 @@
         <tbody>
         <tr ng-repeat="feature in sprintBoard.features">
             <th style="width:22%">
-                <div class="story card sortable-item">
+                <div class="story card sortable-item black-text">
                     <div class="row">
-                        <span class="card-title">{{feature.name}}</span>
+                        <span class="card-title black-text">{{feature.name}}</span>
                     </div>
                 </div>
             </th>
@@ -31,11 +31,11 @@
                         class="glyphicon glyphicon-plus addNewCard"></i></a>
             </td>
             <td as-sortable="sprintSortOptions" ng-repeat="phase in feature.phases" ng-model="phase.cards">
-                <div class="card" ng-repeat="card in phase.cards" as-sortable-item>
+                <div class="card black-text" ng-repeat="card in phase.cards" as-sortable-item>
                      <div as-sortable-item-handle>
                         <div class="row">
                             <div class="col-sm-10">
-                                <span class="card-title">{{card.title}}</span>
+                                <span class="card-title black-text">{{card.title}}</span>
                             </div>
                             <div class="col-sm-2">
                                 <a data-no-drag class=" removeCard pull-right btn btn-xs" ng-click="removeCard(sprintBoard, feature.name, phase.name, card)"><span

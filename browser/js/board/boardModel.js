@@ -44,87 +44,110 @@ app.factory('BoardModel', function(){
 });
 
 
-app.factory('BoardDataFactory', function () {
-//THIS SHOULD BE MONGO DB GET REQUEST: $scope.sprintBoard = getBoard();
-  return {
-    sprint: {
-      "name": "Sprint Board",
-      "numberOfColumns": 3,
-      "columns": [
-        {"name": "Open"},
-        {"name": "In progress"},
-        {"name": "Closed"}
-      ],
-      "features": [
-        {"title": "Come up with a POC for new Project",
-          "details": "Feature 1",
-          "phases": [
-            {"name": "Open",
-              "cards": [
-                {"title": "Explore new IDE for Development",
-                  "details": "Testing Card Details",
-                  "status": "Open"},
-                {"title": "Get new resource for new Project",
-                  "details": "Testing Card Details",
-                  "status": "Open"}
-              ]},
-            {"name": "In progress",
-              "cards": [
-                {"title": "Develop ui for tracker module",
-                  "details": "Testing Card Details",
-                  "status": "In progress"},
-                {"title": "Develop backend for plan module",
-                  "details": "Testing Card Details",
-                  "status": "In progress"},
-                {"title": "Test user module",
-                  "details": "Testing Card Details",
-                  "status": "In progress"}
-              ]},
-            {"name": "Closed",
-              "cards": [
-                {"title": "End to End Testing for user group module",
-                  "details": "Testing Card Details",
-                  "status": "Closed"},
-                {"title": "CI for user module",
-                  "details": "Testing Card Details",
-                  "status": "Closed"}
-              ]}
-          ]
-        },
-        {
-          "title": "Design new framework for reporting module",
-          "details": "Feature 2",
-          "phases": [
-            {"name": "Open",
-              "cards": [
-                {"title": "Explore new Framework",
-                  "details": "Testing Card Details",
-                  "status": "Open"},
-                {"title": "Get new Testing License",
-                  "details": "Testing Card Details",
-                  "status": "Open"}
-              ]},
-            {"name": "In progress",
-              "cards": [
-                {"title": "Develop ui using app",
-                  "details": "Testing Card Details",
-                  "status": "In progress"},
-                {"title": "Develop backend with NodeJS",
-                  "details": "Testing Card Details",
-                  "status": "In progress"}
-              ]},
-            {"name": "Closed",
-              "cards": [
-                {"title": "Explore High charts",
-                  "details": "Testing Card Details",
-                  "status": "Closed"}
-              ]}
-          ]
-        }
-      ]
-    }
-  };
-});
+// app.factory('BoardDataFactory', function (RepoFactory) {
+// //THIS SHOULD BE MONGO DB GET REQUEST: $scope.sprintBoard = getBoard();
+// // var Issues;
+// // console.log("STATE", $stateParams.name);
+// //   function repoIssuesFulfilled(repoIssues) {
+// //     Issues = repoIssues.data;
+// //     console.log("repoissues", repoIssues.data);
+//     //$scope.repoIssues.forEach(function(issue){
+
+
+// return {
+
+//     sprint: {
+//       "name": "Sprint Board",
+//       "numberOfColumns": 3,
+//       "columns": [
+//         {"name": "Open"},
+//         {"name": "In progress"},
+//         {"name": "Closed"}
+//       ],
+//       "features": [
+//         {"title": "Hi", //label
+//           "details": "Feature 1",  //can delete
+//           "phases": [
+//             {"name": "Open", //Status Open
+//               "cards": [
+//                 {"title": "Hello", //issue name
+//                   "details": "Testing Card Details", //issue body
+//                   "status": "Open"}, //issue status
+//                 {"title": "Get new resource for new Project",
+//                   "details": "Testing Card Details",
+//                   "status": "Open"}
+//               ]},
+//             {"name": "In progress",
+//               "cards": [
+//                 {"title": "Develop ui for tracker module",
+//                   "details": "Testing Card Details",
+//                   "status": "In progress"},
+//                 {"title": "Develop backend for plan module",
+//                   "details": "Testing Card Details",
+//                   "status": "In progress"},
+//                 {"title": "Test user module",
+//                   "details": "Testing Card Details",
+//                   "status": "In progress"}
+//               ]},
+//             {"name": "Closed",
+//               "cards": [
+//                 {"title": "End to End Testing for user group module",
+//                   "details": "Testing Card Details",
+//                   "status": "Closed"},
+//                 {"title": "CI for user module",
+//                   "details": "Testing Card Details",
+//                   "status": "Closed"}
+//               ]}
+//           ]
+//         },
+//         {
+//           "title": "Design new framework for reporting module",
+//           "details": "Feature 2",
+//           "phases": [
+//             {"name": "Open",
+//               "cards": [
+//                 {"title": "Explore new Framework",
+//                   "details": "Testing Card Details",
+//                   "status": "Open"},
+//                 {"title": "Get new Testing License",
+//                   "details": "Testing Card Details",
+//                   "status": "Open"}
+//               ]},
+//             {"name": "In progress",
+//               "cards": [
+//                 {"title": "Develop ui using app",
+//                   "details": "Testing Card Details",
+//                   "status": "In progress"},
+//                 {"title": "Develop backend with NodeJS",
+//                   "details": "Testing Card Details",
+//                   "status": "In progress"}
+//               ]},
+//             {"name": "Closed",
+//               "cards": [
+//                 {"title": "Explore High charts",
+//                   "details": "Testing Card Details",
+//                   "status": "Closed"}
+//               ]}
+//           ]
+//         }
+//       ]
+//     }
+//   }
+// };
+
+
+
+
+
+
+
+
+
+    //})
+  
+
+  
+
 
 app.factory('BoardManipulator', function (BoardModel) {
 
