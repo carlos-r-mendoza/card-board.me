@@ -31,18 +31,22 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
   function rejected(error){
     console.log(error);
   }
-  RepoFactory.getRepoIssues($stateParams).then(repoIssuesFulfilled, rejected);
-console.log("Issues", Issues);
+//   RepoFactory.getRepoIssues($stateParams).then(repoIssuesFulfilled, rejected);
+// console.log("Issues", Issues);
 
 
-var Issues;
-console.log("STATE", $stateParams.name);
-  function repoIssuesFulfilled(repoIssues) {
-    Issues = repoIssues.data;
-    console.log("repoissues", repoIssues.data);
-    //$scope.repoIssues.forEach(function(issue){
-
-    sprint["features"]["cards"].pus
+// var Issues;
+// console.log("STATE", $stateParams.name);
+//   function repoIssuesFulfilled(repoIssues) {
+//     Issues = repoIssues.data;
+//     console.log("repoissues", repoIssues.data);
+//     //$scope.repoIssues.forEach(function(issue){
+//     repoIssues.data.forEach(function(issue){
+//       push( {"title": issue.name, //issue name
+//                   "details": "Testing Card Details", //issue body
+//                   "status": "Open"}]
+//     })
+    //sprint["features"]["cards"].pus
     var sprint={
       "name": "Sprint Board",
       "numberOfColumns": 3,
@@ -120,6 +124,6 @@ console.log("STATE", $stateParams.name);
       ]
     }
       $scope.sprintBoard = BoardService.sprintBoard(sprint);
-}
+
 
 });
