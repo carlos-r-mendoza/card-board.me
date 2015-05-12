@@ -42,7 +42,7 @@ console.log("STATE", $stateParams.name);
     console.log("repoissues", repoIssues.data);
     //$scope.repoIssues.forEach(function(issue){
 
-
+    sprint["features"]["cards"].pus
     var sprint={
       "name": "Sprint Board",
       "numberOfColumns": 3,
@@ -57,7 +57,7 @@ console.log("STATE", $stateParams.name);
           "phases": [
             {"name": "Open", //Status Open
               "cards": [
-                {"title": Issues[0].title, //issue name
+                {"title": "", //issue name
                   "details": "Testing Card Details", //issue body
                   "status": "Open"}, //issue status
                 {"title": "Get new resource for new Project",
