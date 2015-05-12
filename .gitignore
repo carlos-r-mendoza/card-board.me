@@ -4,4 +4,4 @@ bower_components
 npm-debug.log
 public
 .DS_Store
-server/env
+server/env/
