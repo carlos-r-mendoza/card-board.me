@@ -209,7 +209,8 @@ router.get('/:repoOwner/:repoName/repo-issues', function (req, res) {
 
 	github.issues.repoIssues({
 		user: req.params.repoOwner,
-		repo: req.params.repoName
+		repo: req.params.repoName,
+		state: "all"
 	}, function(err, repoIssues) {
 		res.json(repoIssues);
 	});
