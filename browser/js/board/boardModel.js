@@ -166,6 +166,7 @@ app.factory('BoardManipulator', function (BoardModel) {
         if (feature.name === featureName) {
           angular.forEach(feature.phases, function (phase) {
             if (phase.name === phaseName) {
+              console.log('PHASE MATCH? ', phase.name === phaseName);
               phase.cards.push(new BoardModel.Card(task.title, task.details, task.status, task.comments, task.assignee, task.label, task.dueDate));
             }
           });

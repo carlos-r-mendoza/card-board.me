@@ -2,8 +2,6 @@ app.controller('NewCardController', function ($scope, $modal, $modalInstance, Bo
 
   $scope.featureName = featureName;
 
-  console.log($scope.featureName);
-
   $scope.newCard = {
       title: '',
       details: '',

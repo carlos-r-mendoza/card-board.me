@@ -5,17 +5,39 @@ app.controller('NewFeatureController', function ($scope, $modal, BoardService, B
       details: '',
       phases:[
         { name: 'Open',
-          cards: []
+          cards: [{
+            title: 'Add new card',
+            details: '',
+            status: 'Open',
+            assignee: '',
+            label: '',
+            dueDate: ''
+          }]
         },
         { name: 'In progress',
-          cards: []
+          cards: [{
+            title: '',
+            details: '',
+            status: 'Open',
+            assignee: '',
+            label: '',
+            dueDate: ''
+          }]
         },
         { name: 'Closed',
-          cards: []
+          cards: [{
+            title: '',
+            details: '',
+            status: 'Open',
+            assignee: '',
+            label: '',
+            dueDate: ''
+          }]
         }
       ]
   };
   
+
   $scope.addNewFeature = function(board){
       $scope.modalFeature = $modal.open({
         templateUrl: '/js/board/newFeature.html',
@@ -30,10 +52,11 @@ app.controller('NewFeatureController', function ($scope, $modal, BoardService, B
           $scope.close = function(){
             $modalInstance.close();
           };
-          $scope.ok = function(featureTitle){
-              console.log('SCOPE.BOARD ', board);
+          $scope.ok = function(featureTitle, featureDetails){
               BoardManipulator.addFeature($scope.board, featureTitle);
-              console.log(featureTitle);
+              BoardManipulator.addPhaseToFeature($scope.board, featureTitle, {name: 'Open'});
+              BoardManipulator.addPhaseToFeature($scope.board, featureTitle, {name: 'In progress'});
+              BoardManipulator.addPhaseToFeature($scope.board, featureTitle, {name: 'Closed'});
               $modalInstance.close();
             };
         }
