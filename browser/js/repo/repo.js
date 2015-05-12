@@ -66,6 +66,16 @@ app.factory('RepoFactory', function($http){
 				return repoLabels;
 			});
 		},
+		createRepoLabel: function(repoInfo, labelInfo) {
+			return $http.post('api/repo/' + repoInfo.owner + "/" + repoInfo.name + "/create-repo-label/" + labelInfo.name, labelInfo).then(function(createdLabel){
+				return createdLabel;
+			});
+		},
+		editRepoLabel: function (repoInfo, label) {
+			return $http.post('api/repo/' + repoInfo.owner + "/" + repoInfo.name + "/edit-repo-label/" + label, label).then(function(editedRepoLabel){
+				return editedRepoLabel;
+			});
+		},
 		getRepoMilestones: function (repoInfo) {
 			return $http.get('api/repo/' + repoInfo.owner + "/" + repoInfo.name + "/repo-milestones").then(function(repoMilestones){
 				return repoMilestones;
@@ -76,11 +86,6 @@ app.factory('RepoFactory', function($http){
 			console.log("ISSUE INFO", issue);
 			return $http.post('api/repo/' + repoInfo.owner + "/" + repoInfo.name + "/edit-repo-issue/" + issue.number, issue).then(function(editedRepoIssue){
 				return editedRepoIssue;
-			});
-		},
-		createRepoLabel: function(repoInfo, labelInfo) {
-			return $http.post('api/repo/' + repoInfo.owner + "/" + repoInfo.name + "/create-repo-label/" + labelInfo.name, labelInfo).then(function(createdLabel){
-				return createdLabel;
 			});
 		},
 		createRepoMilestone: function(repoInfo, milestoneInfo) {
@@ -100,7 +105,6 @@ app.controller('RepoController', function($scope, $stateParams, RepoFactory){
 
 	$scope.createIssue = function(issue) {
 		$scope.issue.labels = [];
-						console.log("cISSUE", issue);
 
 		$scope.issue.tempLabels.forEach(function (tempLabelObj) {
 			for (var label in tempLabelObj) {
@@ -133,11 +137,16 @@ app.controller('RepoController', function($scope, $stateParams, RepoFactory){
 
 	$scope.createLabel = function(label) {
 		RepoFactory.createRepoLabel($stateParams, label).then(createdRepoLabelFulfilled, rejected);
-	}
+	};
+
+	$scope.editLabel = function(label) {
+		console.log(label)
+		RepoFactory.editRepoLabel($stateParams, label).then(editedRepoLabelFulfilled, rejected);
+	};
 
 	$scope.createMilestone = function(milestone) {
 		RepoFactory.createRepoMilestone($stateParams, milestone).then(createdRepoMilestoneFulfilled, rejected);
-	}
+	};
 
 	$scope.checkAssignedLabels = function(repoLabel, labelsInIssue) {
 		for (var i = 0; i <= labelsInIssue.length-1; i++) {
@@ -199,6 +208,10 @@ app.controller('RepoController', function($scope, $stateParams, RepoFactory){
 
 	function repoLabelsFulfilled(repoLabels){
 		$scope.repoLabels = repoLabels.data;
+	}
+
+	function editedRepoLabelFulfilled(editedRepoLabel) {
+		RepoFactory.getRepoLabels($stateParams).then(repoLabelsFulfilled, rejected);
 	}
 
 	function repoMilestonesFulfilled(repoMilestones){

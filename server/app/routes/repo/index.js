@@ -332,8 +332,8 @@ router.post('/:repoOwner/:repoName/edit-repo-issue/:issueNumber', function (req,
 	});
 });
 
-/***CREATES/POSTS AN ISSUE***/
-/*More info: http://mikedeboer.github.io/node-github/#issues.prototype.create*/
+/***CREATES/POSTS A REPO LABEL***/
+/*More info: http://mikedeboer.github.io/node-github/#issues.prototype.createLabel*/
 router.post('/:repoOwner/:repoName/create-repo-label/:labelName', function (req, res) {
 
 	var userToken = req.user.github.token;
@@ -352,6 +352,44 @@ router.post('/:repoOwner/:repoName/create-repo-label/:labelName', function (req,
 		color: labelColor
 	}, function(err, createdRepoLabel) {
 		res.json(createdRepoLabel);
+	});
+});
+
+/***EDIT REPO LABEL***/
+/*More info: http://mikedeboer.github.io/node-github/#issues.prototype.updateLabel*/
+router.post('/:repoOwner/:repoName/edit-repo-label/:labelName', function (req, res) {
+    
+	var userToken = req.user.github.token;
+	var labelName = req.body.name;
+	var labelColor = req.body.color;
+
+	var github = new GitHubApi({
+	// required
+	version: "3.0.0"
+	//optional
+	// debug: true,
+	// protocol: "https",
+	// host: "api.github.com", // should be api.github.com for GitHub
+	// pathPrefix: "/api/v3", // for some GHEs; none for GitHub
+	// timeout: 5000,
+	// headers: {
+	//     "user-agent": "My-Cool-GitHub-App" // GitHub is happy with a unique user agent
+	// }
+	});
+
+	github.authenticate({
+	    type: "oauth",
+	    token: userToken
+	});
+
+	github.issues.updateLabel({
+		user: req.params.repoOwner,
+		repo: req.params.repoName,
+		name: labelName,
+		color: labelColor
+	}, function(err, updatedRepoLabel) {
+		console.log(updatedRepoLabel)
+		res.json(updatedRepoLabel);
 	});
 });
 

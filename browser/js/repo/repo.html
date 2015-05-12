@@ -133,7 +133,7 @@
 				</div>
 
 
-				<button ng-hide="issueEditor" ng-click="issueEditor = !issueEditor">Edit Issue</button>
+				<button ng-hide="issueEditor" ng-click="issueEditor = !issueEditor" class="btn btn-success">Edit Issue</button>
 				<input type="submit" class="btn btn-success" value="Update Issue" ng-show="issueEditor" ng-click="editIssue(issue)" />
 				<button ng-show="issueEditor" ng-click="issueEditor = !issueEditor">Cancel</button>
 				<md-divider></md-divider>
@@ -165,6 +165,39 @@
 					</div>
 
 				</form>
+			</md-card-content>
+		</md-card>
+	</div>
+
+	<div class="col-md-4">
+		<md-card id="profile-card">
+		<core-toolbar id="profile-card2">Edit Label</core-toolbar>
+			<md-card-content class="paper-card">
+				<div ng-repeat="repoLabel in repoLabels">
+				{{ repoLabel.name }} 
+					<span style="background-color: #{{ repoLabel.color }}">{{ repoLabel.color }}</span>
+					<button class="btn btn-warning" ng-click="editLabel = !editLabel">Edit</button>
+					
+					<form name="editTheLabel" ng-submit="editLabel(repoLabel)" ng-show="editLabel">
+						
+						<div class="form-group">
+							<label for="labelName">Name</label>
+							<input for="labelName" type="text" class="form-control" ng-model="repoLabel.name" value="{{ repoLabel.name }}" />
+						</div>
+
+						<div class="form-group">
+							<label for="labelColor">Color</label>
+							<input for="labelColor" type="text" class="form-control" ng-model="repoLabel.color" value="{{ repoLabel.color }}"/>
+						</div>
+
+						<div>
+						<input type="submit" class="btn btn-success" value="Submit Update" />
+						</div>
+
+					</form>
+
+				</div>
+
 			</md-card-content>
 		</md-card>
 	</div>
