@@ -1,10 +1,13 @@
 app.factory('BoardService', function ($modal, BoardManipulator, BoardModel) {
 
   return {
-    removeCard: function (board, column, card) {
-      if (console.log('Are You sure to Delete?')) {
-        BoardManipulator.removeCardFromColumn(board, column, card);
-      }
+    removeCard: function (board, feature, phase, card) {
+      console.log("board: ", board);
+      //console.log("column: ", column);
+      console.log('card: ', card);
+      
+        BoardManipulator.removeCardFromColumn(board, feature, phase, card);
+      
     },
 
     addNewCard: function (board, column, featureName) {

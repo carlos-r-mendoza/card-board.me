@@ -26,5 +26,6 @@ app.controller('SprintController', function ($scope, BoardService, BoardDataFact
   $scope.addNewCard = BoardService.addNewCard;
 
   $scope.addNewFeature = BoardService.addNewFeature;
+  $scope.removeCard=BoardService.removeCard;
 
 });
