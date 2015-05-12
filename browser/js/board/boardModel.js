@@ -142,11 +142,20 @@ app.factory('BoardManipulator', function (BoardModel) {
         }
       });
     },
-    removeCardFromColumn: function (board, column, card) {
-      angular.forEach(board.columns, function (col) {
-        if (col.name === column.name) {
-          col.cards.splice(col.cards.indexOf(card), 1);
-        }
+    removeCardFromColumn: function (board, featureName, phaseName, task) {
+      angular.forEach(board.features, function (feature) {
+        if (feature.name === featureName) {
+          angular.forEach(feature.phases, function (phase) {
+            if (phase.name === phaseName) {
+        // console.log("feature.phases.name: ", feature.phases.name);
+        // console.log("column: ", column);
+        // console.log("equals", col.name===column);
+        //if (col.name === column) {
+              console.log("phase.cards", phase.cards);
+              phase.cards.splice(phase.cards.indexOf(task), 1);
+            }
+          });
+        };
       });
     },
     addFeature: function (board, featureName) {
@@ -166,6 +175,7 @@ app.factory('BoardManipulator', function (BoardModel) {
         if (feature.name === featureName) {
           angular.forEach(feature.phases, function (phase) {
             if (phase.name === phaseName) {
+              console.log('PHASE MATCH? ', phase.name === phaseName);
               phase.cards.push(new BoardModel.Card(task.title, task.details, task.status, task.comments, task.assignee, task.label, task.dueDate));
             }
           });
