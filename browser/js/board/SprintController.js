@@ -127,20 +127,22 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
 
 
           sprint.features.push(
-        {"title": featureSplit[1], //label
-          "details": "Feature 1",  //can delete
-          "phases": [
-            {"name": "Open", //Status Open
-              "cards": [
-              ]},
-            {"name": "In progress",
-              "cards": [
-              ]},
-            {"name": "Closed",
-              "cards": [
+            {"title": featureSplit[1], //label
+              "details": "Feature 1",  //can delete
+              "phases": [
+                {"name": "Open", //Status Open
+                  "cards": [
+                  ]},
+                {"name": "In progress",
+                  "cards": [
+                  ]},
+                {"name": "Closed",
+                  "cards": [
+                  ]}
               ]}
-          ]
-        });
+          );
+
+
 
 
 
