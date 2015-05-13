@@ -111,44 +111,83 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
         }
       ]
     }
-  
 
 
-    function repoIssuesFulfilled(repoIssues) {
-          repoIssues.data.forEach(function(issue){
-            
-            if(issue.state === "closed") {
-            
-              sprint["features"][0].phases[0].cards.push({"title": issue.title, //issue name
-                  "details": "Testing Card Details", //issue body
-                  "status": "Open"})
-              }
-            
-           
-            })
-            //console.log("SPRINT", sprint["features"][0].phases[0].cards)
-            $scope.sprintBoard = BoardService.sprintBoard(sprint);
-  
-          }
+    var featureLabelsArr = [];
 
-
-    RepoFactory.getRepoIssues($stateParams).then(repoIssuesFulfilled, rejected);
-
+    RepoFactory.getRepoLabels($stateParams).then(getFeatures, rejected);
 
     function getFeatures(repoLabels) {
-      var featureLabelsArr = [];
+      featureLabelsArr = [];
       var featureLabels = repoLabels.data.forEach(function(label) {
         var featureSplit = label.name.split(" - ");
-
         if(featureSplit[0] === "Feature") {
           console.log("label_name", featureSplit[1])
           featureLabelsArr.push(featureSplit[1]);
+
+
+          sprint.features.push(
+        {"title": featureSplit[1], //label
+          "details": "Feature 1",  //can delete
+          "phases": [
+            {"name": "Open", //Status Open
+              "cards": [
+              ]},
+            {"name": "In progress",
+              "cards": [
+              ]},
+            {"name": "Closed",
+              "cards": [
+              ]}
+          ]
+        });
+
+
+
+
+
+
         }
       });
-      return featureLabelsArr;
+            //$scope.sprintBoard = BoardService.sprintBoard(sprint);  
+
+      
+
+
+
+
+
+
+
+
+
+
+
+
+      RepoFactory.getRepoIssues($stateParams).then(getIssuesWithFeatures, rejected);
     } 
 
 
-      RepoFactory.getRepoLabels($stateParams).then(getFeatures, rejected);
+    function getIssuesWithFeatures(repoIssues) {
+          repoIssues.data.forEach(function(issue){
+            issue.labels.forEach(function(label){
+              featureLabelsArr.forEach(function(featureLabel) {
+                if(label.name === "Feature - " + featureLabel) {
+                  sprint["features"][0].phases[0].cards.push({"title": issue.title, //issue name
+                      "details": "Testing Card Details", //issue body
+                      "status": "Open"})
+                  }
+              });
+            });
+          })
+      $scope.sprintBoard = BoardService.sprintBoard(sprint);  
+    }
+
+
+
     
+
+
+
+
 });
