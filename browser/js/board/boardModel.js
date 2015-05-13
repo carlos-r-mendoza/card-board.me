@@ -178,7 +178,7 @@ app.factory('BoardManipulator', function (BoardModel) {
               phase.cards.splice(phase.cards.indexOf(task), 1);
             }
           });
-        };
+        }
       });
     },
     addFeature: function (board, featureName) {
