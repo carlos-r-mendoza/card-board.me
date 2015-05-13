@@ -134,22 +134,10 @@ app.factory('BoardModel', function(){
 //     }
 //   }
 // };
-
-
-
-
-
-
-
-
-
     //})
   
 
-  
-
-
-app.factory('BoardManipulator', function (BoardModel) {
+app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams) {
 
 
   return {
@@ -170,10 +158,6 @@ app.factory('BoardManipulator', function (BoardModel) {
         if (feature.name === featureName) {
           angular.forEach(feature.phases, function (phase) {
             if (phase.name === phaseName) {
-        // console.log("feature.phases.name: ", feature.phases.name);
-        // console.log("column: ", column);
-        // console.log("equals", col.name===column);
-        //if (col.name === column) {
               console.log("phase.cards", phase.cards);
               phase.cards.splice(phase.cards.indexOf(task), 1);
             }
@@ -183,6 +167,8 @@ app.factory('BoardManipulator', function (BoardModel) {
     },
     addFeature: function (board, featureName) {
       board.features.push(new BoardModel.Feature(featureName));
+      var label = {name: 'Feature - '+featureName, color: 'FFFFFF'};
+      RepoFactory.createRepoLabel($stateParams, label);
     },
 
     addPhaseToFeature: function (board, featureName, phase) {
@@ -198,7 +184,6 @@ app.factory('BoardManipulator', function (BoardModel) {
         if (feature.name === featureName) {
           angular.forEach(feature.phases, function (phase) {
             if (phase.name === phaseName) {
-              console.log('PHASE MATCH? ', phase.name === phaseName);
               phase.cards.push(new BoardModel.Card(task.title, task.details, task.status, task.comments, task.assignee, task.label, task.dueDate));
             }
           });
