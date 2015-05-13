@@ -31,22 +31,10 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
   function rejected(error){
     console.log(error);
   }
-//   RepoFactory.getRepoIssues($stateParams).then(repoIssuesFulfilled, rejected);
-// console.log("Issues", Issues);
+  
 
 
-// var Issues;
-// console.log("STATE", $stateParams.name);
-//   function repoIssuesFulfilled(repoIssues) {
-//     Issues = repoIssues.data;
-//     console.log("repoissues", repoIssues.data);
-//     //$scope.repoIssues.forEach(function(issue){
-//     repoIssues.data.forEach(function(issue){
-//       push( {"title": issue.name, //issue name
-//                   "details": "Testing Card Details", //issue body
-//                   "status": "Open"}]
-//     })
-    //sprint["features"]["cards"].pus
+
     var sprint={
       "name": "Sprint Board",
       "numberOfColumns": 3,
@@ -123,7 +111,44 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
         }
       ]
     }
-      $scope.sprintBoard = BoardService.sprintBoard(sprint);
+  
 
 
+    function repoIssuesFulfilled(repoIssues) {
+          repoIssues.data.forEach(function(issue){
+            
+            if(issue.state === "closed") {
+            
+              sprint["features"][0].phases[0].cards.push({"title": issue.title, //issue name
+                  "details": "Testing Card Details", //issue body
+                  "status": "Open"})
+              }
+            
+           
+            })
+            //console.log("SPRINT", sprint["features"][0].phases[0].cards)
+            $scope.sprintBoard = BoardService.sprintBoard(sprint);
+  
+          }
+
+
+    RepoFactory.getRepoIssues($stateParams).then(repoIssuesFulfilled, rejected);
+
+
+    function getFeatures(repoLabels) {
+      var featureLabelsArr = [];
+      var featureLabels = repoLabels.data.forEach(function(label) {
+        var featureSplit = label.name.split(" - ");
+
+        if(featureSplit[0] === "Feature") {
+          console.log("label_name", featureSplit[1])
+          featureLabelsArr.push(featureSplit[1]);
+        }
+      });
+      return featureLabelsArr;
+    } 
+
+
+      RepoFactory.getRepoLabels($stateParams).then(getFeatures, rejected);
+    
 });
