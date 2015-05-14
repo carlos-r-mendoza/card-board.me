@@ -229,14 +229,14 @@ router.post('/:repoOwner/:repoName/create-repo-issue', function (req, res) {
 
 /***CREATES/POSTS AN ISSUE***/
 router.post('/:repoOwner/:repoName/edit-repo-issue/:issueNumber', function (req, res) {
-
+	console.log('IN BACKEND!');
 	var userToken = req.user.github.token;
-	var issueTitle = req.body.title;
-	var issueBody = req.body.body;
-	var issueAssignee;
-	var issueState;
-	var issueMilestone;
-	var issueLabels = [];
+	// var issueTitle = req.body.title;
+	// var issueBody = req.body.body;
+	// var issueAssignee;
+	// var issueState;
+	// var issueMilestone;
+	// var issueLabels = [];
 	// if (typeof req.body.assignee === 'string') { issueAssignee = req.body.assignee; }
 	// if (typeof req.body.state === 'string') { issueState = req.body.state; }
 	// if (typeof req.body.milestone === 'number') { issueMilestone = req.body.milestone; }
@@ -254,12 +254,12 @@ router.post('/:repoOwner/:repoName/edit-repo-issue/:issueNumber', function (req,
 		user: req.params.repoOwner,
 		repo: req.params.repoName,
 		number: req.params.issueNumber,
-		title: issueTitle,
-		body: issueBody,
-		assignee: issueAssignee,
-		milestone: issueMilestone,	
-		state: issueState,
-		labels: issueLabels
+		title: req.body.title,
+		body: req.body.body,
+		assignee: req.body.assignee,
+		// milestone: issueMilestone,	
+		state: req.body.state,
+		labels: req.body.labels
 	}, function(err, editedRepoIssue) {
 		console.log("RESPONSE", editedRepoIssue)
 		res.json(editedRepoIssue);
