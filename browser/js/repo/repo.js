@@ -73,10 +73,13 @@ app.factory('RepoFactory', function($http){
 				return createdLabel;
 			});
 		},
-		editRepoLabel: function (repoInfo, label) {
-			return $http.post('api/repo/' + repoInfo.owner + "/" + repoInfo.name + "/edit-repo-label/" + label, label).then(function(editedRepoLabel){
+		editRepoLabel: function (repoInfo, oldlabel, label) {
+			console.log('old', oldlabel);
+			return $http.post('api/repo/' + repoInfo.owner + "/" + repoInfo.name + "/labels", label).then(function(editedRepoLabel){
 				return editedRepoLabel;
 			});
+			
+			// return $http.post('/api/repo', {name: 'asdf', color: 'asdf'});
 		},
 		getRepoMilestones: function (repoInfo) {
 			return $http.get('api/repo/' + repoInfo.owner + "/" + repoInfo.name + "/repo-milestones").then(function(repoMilestones){
