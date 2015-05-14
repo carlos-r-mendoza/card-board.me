@@ -149,7 +149,7 @@ app.factory('BoardModel', function(){
   
 
 
-app.factory('BoardManipulator', function (BoardModel) {
+app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams) {
 
 
   return {
@@ -191,6 +191,18 @@ app.factory('BoardManipulator', function (BoardModel) {
           feature.phases.push(new BoardModel.Phase(phase.name));
         }
       });
+    },
+
+    addPhaseToAll: function (board, phase) {
+      //console.log("board",board);
+      board.columns.push(new BoardModel.Phase(phase));
+      console.log(board);
+      var phaseInfo={name:phase,color:'FFFFFF'};
+      RepoFactory.createRepoLabel($stateParams,phaseInfo);
+      // angular.forEach(board.columns, function (column) {
+      //     feature.phases.push(new BoardModel.Phase(phase.name));
+      // });
+      //console.log(board.features);
     },
 
     addCardToFeature: function (board, featureName, phaseName, task) {
