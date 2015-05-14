@@ -54,7 +54,7 @@ app.controller('NewFeatureController', function ($scope, $modal, BoardService, B
           };
           $scope.ok = function(featureTitle, featureDetails){
               BoardManipulator.addFeature($scope.board, featureTitle);
-              BoardManipulator.addPhaseToFeature($scope.board, featureTitle, {name: 'Open'});
+              BoardManipulator.addPhaseToFeature($scope.board, featureTitle, {name: 'Open'}); //NEED TO AUTOMATE BY COULMN NAME
               BoardManipulator.addPhaseToFeature($scope.board, featureTitle, {name: 'In progress'});
               BoardManipulator.addPhaseToFeature($scope.board, featureTitle, {name: 'Closed'});
               $modalInstance.close();

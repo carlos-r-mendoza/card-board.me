@@ -110,7 +110,7 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
           ]
         }
       ]
-    }
+    };
 
 
     var featureLabelsArr = [];
@@ -122,7 +122,7 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
       var featureLabels = repoLabels.data.forEach(function(label) {
         var featureSplit = label.name.split(" - ");
         if(featureSplit[0] === "Feature") {
-          console.log("label_name", featureSplit[1])
+          console.log("label_name", featureSplit[1]);
           featureLabelsArr.push(featureSplit[1]);
 
 
@@ -144,27 +144,9 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
 
 
 
-
-
-
-
-
         }
       });
             //$scope.sprintBoard = BoardService.sprintBoard(sprint);  
-
-      
-
-
-
-
-
-
-
-
-
-
-
 
       RepoFactory.getRepoIssues($stateParams).then(getIssuesWithFeatures, rejected);
     } 
@@ -184,12 +166,6 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
           })
       $scope.sprintBoard = BoardService.sprintBoard(sprint);  
     }
-
-
-
-    
-
-
 
 
 });

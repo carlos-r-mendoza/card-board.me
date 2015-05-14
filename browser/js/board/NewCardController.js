@@ -1,4 +1,4 @@
-app.controller('NewCardController', function ($scope, $modal, $modalInstance, BoardService, BoardManipulator, featureName, $rootScope, sprintBoard) {
+app.controller('NewCardController', function ($scope, $modal, $modalInstance, BoardService, BoardManipulator, RepoFactory, featureName, $rootScope, $stateParams, sprintBoard) {
 
   $scope.featureName = featureName;
 
@@ -8,7 +8,7 @@ app.controller('NewCardController', function ($scope, $modal, $modalInstance, Bo
       status: 'Open',
       comments: '',
       assignee: '',
-      label: '',
+      label: 'Feature - '+featureName,
       dueDate: ''
   };
 
@@ -18,8 +18,22 @@ app.controller('NewCardController', function ($scope, $modal, $modalInstance, Bo
 
  $scope.board = sprintBoard;
 
+ function rejected(error){
+  console.log(error)
+ }
+
   $scope.addCard = function(newCard, featureName){ 
+    var taskInfo = {
+                user: $stateParams.owner,
+                repo: $stateParams.name,
+                title: newCard.title, 
+                body: newCard.details, 
+                assignee: newCard.assignee, 
+                milestone:''.to,
+                labels: [newCard.status, newCard.label]
+              };
     BoardManipulator.addCardToFeature($scope.board, featureName, 'Open', newCard);
+    RepoFactory.createRepoIssue($stateParams, taskInfo);
     $modalInstance.close();
   };
 
