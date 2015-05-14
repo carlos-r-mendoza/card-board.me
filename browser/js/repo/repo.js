@@ -113,6 +113,8 @@ app.controller('RepoController', function($scope, $stateParams, RepoFactory){
 				if(tempLabelObj[label]) { $scope.issue.labels.push(label); }
 			}
 		});
+		issue.labels.push("Feature - Testing")
+		console.log("ADFASDF", issue)
 		RepoFactory.createRepoIssue($stateParams, issue).then(createdRepoIssueFulfilled, rejected);
 	};
 
@@ -205,7 +207,7 @@ app.controller('RepoController', function($scope, $stateParams, RepoFactory){
 	}
 
 	function createdRepoIssueFulfilled(createdRepoIssue) {
-		RepoFactory.getRepoIssues($stateParams).then(repoIssuesFulfilled, rejected);
+		//RepoFactory.getRepoIssues($stateParams).then(repoIssuesFulfilled, rejected);
 	}
 
 	function repoLabelsFulfilled(repoLabels){
