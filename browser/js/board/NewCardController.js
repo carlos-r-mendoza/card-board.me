@@ -19,7 +19,7 @@ app.controller('NewCardController', function ($scope, $modal, $modalInstance, Bo
  $scope.board = sprintBoard;
 
  function rejected(error){
-  console.log(error)
+  console.log(error);
  }
 
   $scope.addCard = function(newCard, featureName){ 

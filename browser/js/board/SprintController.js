@@ -24,9 +24,8 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
   };
 
   $scope.addNewCard = BoardService.addNewCard;
-
   $scope.addNewFeature = BoardService.addNewFeature;
-  $scope.removeCard=BoardService.removeCard;
+  $scope.removeCard = BoardService.removeCard;
 
   function rejected(error){
     console.log(error);

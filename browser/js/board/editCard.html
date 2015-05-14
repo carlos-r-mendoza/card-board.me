@@ -1,0 +1,61 @@
+<!-- New Card template -->
+
+<form ng-submit="ok(editedCard, featureName, cardPhase, newCard)" class="noMargin" name="editedCardForm">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="close()">&times;</button>
+        <h4 class="modal-title" ng-model="columnName">Edit Card in '{{featureName}}'</h4>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label class="control-label" for="editedCardTitle">Card title</label>
+
+            <div>
+                <input type="text" id="editedCardTitle" placeholder="Title on a card" ng-model="editedCard.title" required
+                       focus-me class="cardInputs form-control"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="editedCardDetails">More details
+                <small>(optional)</small>
+            </label>
+
+            <div>
+                <textarea id="editedCardDetails" ng-model="editedCard.details" class="cardInputs form-control" rows="7">
+                </textarea>
+            </div>
+        </div>
+
+         <div class='form-group'>
+            <label class="control-label" for="editedCardDetails">Assignee
+                <small>(optional)</small>
+            </label>
+            <div>
+                <textarea id="editedCardDetails" ng-model="editedCard.assignee" class="cardInputs form-control" rows="7">
+                </textarea>
+            </div>
+        </div>
+        <div class='form-group'>
+            <label class="control-label" for="editedCardDetails">Comments
+                <small>(optional)</small>
+            </label>
+            <div>
+                <textarea id="editedCardDetails" ng-model="editedCard.comments" class="cardInputs form-control" rows="7">
+                </textarea>
+            </div>
+        </div>
+        <div class='form-group'>
+            <label class="control-label" for="editedCardDetails">Status
+                <small>(optional)</small>
+            </label>
+            <div>
+                <textarea id="editedCardDetails" ng-model="editedCard.status" class="cardInputs form-control" rows="7">
+                </textarea>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="close()">Close</button>
+        <button type="submit" class="btn btn-primary">Submit Changes</button>
+    </div>
+</form>
