@@ -40,7 +40,7 @@ app.factory('BoardModel', function(){
         this.dueDate = dueDate;
         return this;
       }
-  }
+  };
 });
 
 
