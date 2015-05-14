@@ -44,73 +44,7 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
         {"name": "Closed"},
         {"name": "Milestone"}
       ],
-      "features": [
-        {"title": $stateParams.name, //label
-          "details": "Feature 1",  //can delete
-          "phases": [
-            {"name": "Open", //Status Open
-              "cards": [
-                {"title": "", //issue name
-                  "details": "Testing Card Details", //issue body
-                  "status": "Open"}, //issue status
-                {"title": "Get new resource for new Project",
-                  "details": "Testing Card Details",
-                  "status": "Open"}
-              ]},
-            {"name": "In Progress",
-              "cards": [
-                {"title": "Develop ui for tracker module",
-                  "details": "Testing Card Details",
-                  "status": "In progress"},
-                {"title": "Develop backend for plan module",
-                  "details": "Testing Card Details",
-                  "status": "In progress"},
-                {"title": "Test user module",
-                  "details": "Testing Card Details",
-                  "status": "In progress"}
-              ]},
-            {"name": "Closed",
-              "cards": [
-                {"title": "End to End Testing for user group module",
-                  "details": "Testing Card Details",
-                  "status": "Closed"},
-                {"title": "CI for user module",
-                  "details": "Testing Card Details",
-                  "status": "Closed"}
-              ]}
-          ]
-        },
-        {
-          "title": "Design new framework for reporting module",
-          "details": "Feature 2",
-          "phases": [
-            {"name": "Open",
-              "cards": [
-                {"title": "Explore new Framework",
-                  "details": "Testing Card Details",
-                  "status": "Open"},
-                {"title": "Get new Testing License",
-                  "details": "Testing Card Details",
-                  "status": "Open"}
-              ]},
-            {"name": "In progress",
-              "cards": [
-                {"title": "Develop ui using app",
-                  "details": "Testing Card Details",
-                  "status": "In progress"},
-                {"tie": "Develop backend with NodeJS",
-                  "details": "Testing Card Details",
-                  "status": "In progress"}
-              ]},
-            {"name": "Closed",
-              "cards": [
-                {"title": "Explore High charts",
-                  "details": "Testing Card Details",
-                  "status": "Closed"}
-              ]}
-          ]
-        }
-      ]
+      "features": []
     };
 
     $scope.sprintBoard = BoardService.sprintBoard(sprint);  
@@ -132,16 +66,26 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
           createPhaseColumn(featureName[1]);
         }
       });
-      $scope.sprintBoard = BoardService.sprintBoard(sprint);  
+      // $scope.sprintBoard = BoardService.sprintBoard(sprint);  
 
       RepoFactory.getRepoIssues($stateParams).then(addIssuesToPhases, rejected);
+
+      $scope.sprintBoard = BoardService.sprintBoard(sprint);  
+
     } 
 
     function populateFeaturesColumn(featuresTitle) {
       sprint.features.push(
         {"title": featuresTitle, //label
           "details": "Feature",  //can delete
-          "phases": []}
+          "phases": [
+            {"name": "Open",
+              "cards": []},
+            {"name": "In progress",
+              "cards": []},
+            {"name": "Closed",
+              "cards": []}
+          ]}
       );
     }
 
@@ -159,64 +103,50 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
           feature.phases.push({"name": column, //Status Open
               "cards": []});
           });
-        addIssuesToPhases();
         });
       }
     
     function addIssuesToPhases(repoIssues) {
+      repoIssues.data.forEach(function(issue) {
+      if(issue.labels.length > 0) {
+        // console.log(issue)
+      //var labels = issue.labels.sort();
+      
+        for (var i = 0; i < issue.labels.length-1; i++) {
+          sprint.features.forEach(function(feature) {
+            // console.log("FEA", feature)
+            if(issue.labels[i].name === "Feature - " + feature.title) {
+              // console.log(labels);
+
+                feature.phases.forEach(function(phase){
+                              // console.log("LABEL", issue.labels[1], issue.title, phase.name.name)
+
+                  issue.labels.forEach(function(label){
+
+                    if(label.name === "Phase - " + phase.name.name) {
+                      console.log("AT PHASE")
+                    
+                      phase.cards.push({"title": issue.title, //issue name
+                      "details": "Testing Card Details", //issue body
+                      "status": "Open"});
+
+                    }
+                    $scope.sprintBoard = BoardService.sprintBoard(sprint);  
+
+
+
+                  });
+
+                });
+   
+            }
+          });
+        }
+
 
     }
 
-    // function getIssuesWithFeatures(repoIssues) {
-
-    //   sprint.features.forEach(function(feature) { //loop through each feature on sprint board
-    //     repoIssues.data.forEach(function(issue){ //loop throough each issue
-    //       issue.labels.forEach(function(label) { //loop through each label in issue
-    //         if(label.name === "Feature - " + feature.title) {
-    //           populatePhaseColumns(issue, feature);
-    //         }
-    //       });
-    //     });
-    //   }); 
-    //         $scope.sprintBoard = BoardService.sprintBoard(sprint);  
-    // }
-
-    // function populatePhaseColumns(issue, feature) {
-    //   console.log("Inside phasecolpop-issue",issue); 
-    //   sprint.columns.forEach(function(column){
-    //     issue.labels.forEach(function(label){
-
-    //     var phaseName = label.name.split(" - ");
-
-    //     sprint
-
-    //     if(label.name === "Phase - " + column) {
-                   
-
-
-
-    //     } 
-    //   });  
-    // });
-    // }
-
-
-    //   feature.phases.forEach(function(phase) {
-    //     if(phase.name === "In progress" && issue.state === "open") {
-    //         phase.cards.push({"title": issue.title, //issue name
-    //         "details": issue.body, //issue body
-    //         "status": "Open"});
-    //     } else if(phase.name === "Open" && issue.state === "open") {
-    //         phase.cards.push({"title": issue.title, //issue name
-    //           "details": issue.body, //issue body
-    //           "status": "Open"});
-    //     } else if(phase.name === "Closed" && issue.state === "closed") {
-    //         phase.cards.push({"title": issue.title, //issue name
-    //           "details": issue.body, //issue body
-    //           "status": "Open"});
-    //     }
-    //   }); 
-    // }
-
+    });
+  } 
 
 });
