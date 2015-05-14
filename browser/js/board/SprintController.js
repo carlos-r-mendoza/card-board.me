@@ -122,12 +122,14 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
     function getLabelFeatures(repoLabels) {
       // console.log("RE")
       repoLabels.data.forEach(function(label) {
-        var featureSplit = label.name.split(" - ");
+        var featureName = label.name.split(" - ");
               // console.log("HERE", featureSplit);
 
-        if(featureSplit[0] === "Feature") {
+        if(featureName[0] === "Feature") {
           featureLabelsArr.push(repoLabels);
-          populateFeaturesColumn(featureSplit[1]);
+          populateFeaturesColumn(featureName[1]);
+        } else if (featureName[0] === "Phase") {
+          createPhaseColumn(featureName[1]);
         }
       });
       $scope.sprintBoard = BoardService.sprintBoard(sprint);  
@@ -154,11 +156,12 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
     }
 
     function getIssuesWithFeatures(repoIssues) {
+
       sprint.features.forEach(function(feature) { //loop through each feature on sprint board
         repoIssues.data.forEach(function(issue){ //loop throough each issue
           issue.labels.forEach(function(label) { //loop through each label in issue
             if(label.name === "Feature - " + feature.title) {
-              populateIssuesColumns(issue, feature);
+              populatePhaseColumns(issue, feature);
             }
           });
         });
@@ -166,22 +169,45 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
             $scope.sprintBoard = BoardService.sprintBoard(sprint);  
     }
 
-    function populateIssuesColumns(issue, feature) { 
-      feature.phases.forEach(function(phase) {
-        if(phase.name === "In progress" && issue.state === "open") {
-            phase.cards.push({"title": issue.title, //issue name
-            "details": issue.body, //issue body
-            "status": "Open"});
-        } else if(phase.name === "Open" && issue.state === "open") {
-            phase.cards.push({"title": issue.title, //issue name
-              "details": issue.body, //issue body
-              "status": "Open"});
-        } else if(phase.name === "Closed" && issue.state === "closed") {
-            phase.cards.push({"title": issue.title, //issue name
-              "details": issue.body, //issue body
-              "status": "Open"});
-        }
-      }); 
+    // function populatePhaseColumns(issue, feature) {
+    //   console.log("Inside phasecolpop-issue",issue); 
+    //   issue.labels.forEach(function(label){
+    //     var phaseName = label.name.split(" - ");
+
+    //     if(phaseName[0] === "Phase") {
+    //       createPhaseColumn(phaseName[1]);
+
+
+                   
+
+
+
+    //     } 
+    //   })
+    // }
+
+
+    //   feature.phases.forEach(function(phase) {
+    //     if(phase.name === "In progress" && issue.state === "open") {
+    //         phase.cards.push({"title": issue.title, //issue name
+    //         "details": issue.body, //issue body
+    //         "status": "Open"});
+    //     } else if(phase.name === "Open" && issue.state === "open") {
+    //         phase.cards.push({"title": issue.title, //issue name
+    //           "details": issue.body, //issue body
+    //           "status": "Open"});
+    //     } else if(phase.name === "Closed" && issue.state === "closed") {
+    //         phase.cards.push({"title": issue.title, //issue name
+    //           "details": issue.body, //issue body
+    //           "status": "Open"});
+    //     }
+    //   }); 
+    // }
+
+    function createPhaseColumn(phase) {
+      console.log("sprintfeatures",sprint.features.phases);
+      console.log(phase);
+      sprint.columns.push(
+        {"name": phase});
     }
-    
 });
