@@ -37,7 +37,7 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
 
     var sprint={
       "name": "Sprint Board",
-      "numberOfColumns": 3,
+      "numberOfColumns": 4,
       "columns": [
         {"name": "Open"},
         {"name": "In progress"},

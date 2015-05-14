@@ -1,0 +1,33 @@
+<!-- new phase template -->
+
+<form class="noMargin" name="newPhaseForm" ng-controller="NewPhaseController">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="close()">&times;</button>
+        <h4 class="modal-title" ng-model="newPhase.name">Add New Phase</h4>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label class="control-label" for="newPhaseName">Phase Name</label>
+
+            <div>
+                <input type="text" id="newPhaseName" placeholder="Title on a card" ng-model="newPhase.name" required
+                       focus-me class="cardInputs form-control"/>
+            </div>
+        </div>
+       <!--  <div class="form-group">
+            <label class="control-label" for="newFeatureDetails">More Details
+                <small>(optional)</small>
+            </label>
+
+            <div>
+                <textarea id="newFeatureDetails" ng-model="newFeature.details" class="cardInputs form-control" rows="7">
+                </textarea>
+            </div>
+        </div> -->
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="close()">Close</button>
+        <button type="submit" class="btn btn-primary" ng-click="ok(newPhase.name)">Add</button>
+    </div>
+</form>

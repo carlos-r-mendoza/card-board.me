@@ -15,6 +15,10 @@
                     <span>{{column.name}}</span>
                 </div>
             </th>
+            <th class="addPhase" style="width:3%;" ng-controller="NewPhaseController">
+                <a title="Add Phase" ng-click="addNewPhase(sprintBoard)"><i
+                        class="glyphicon glyphicon-plus addNewCard"></i></a>
+            </th>
         </tr>
         </thead>
         <tbody>
