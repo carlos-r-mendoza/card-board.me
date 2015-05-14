@@ -210,7 +210,8 @@ router.get('/:repoOwner/:repoName/repo-issues', function (req, res) {
 	github.issues.repoIssues({
 		user: req.params.repoOwner,
 		repo: req.params.repoName,
-		state: "all"
+		state: "all",
+		per_page: 100
 	}, function(err, repoIssues) {
 		res.json(repoIssues);
 	});
@@ -230,7 +231,7 @@ router.get('/:repoOwner/:repoName/repo-labels', function (req, res) {
 
 	github.issues.getLabels({
 		user: req.params.repoOwner,
-		repo: req.params.repoName
+		repo: req.params.repoName,
 	}, function(err, repoLabels) {
 		res.json(repoLabels);
 	});

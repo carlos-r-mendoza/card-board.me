@@ -40,8 +40,9 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
       "numberOfColumns": 3,
       "columns": [
         {"name": "Open"},
-        {"name": "In progress"},
-        {"name": "Closed"}
+        {"name": "In Progress"},
+        {"name": "Closed"},
+        {"name": "Milestone"}
       ],
       "features": [
         {"title": $stateParams.name, //label
@@ -56,7 +57,7 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
                   "details": "Testing Card Details",
                   "status": "Open"}
               ]},
-            {"name": "In progress",
+            {"name": "In Progress",
               "cards": [
                 {"title": "Develop ui for tracker module",
                   "details": "Testing Card Details",
@@ -112,22 +113,34 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
       ]
     }
 
+    $scope.sprintBoard = BoardService.sprintBoard(sprint);  
 
+    //$scope.sprintBoard = BoardService.sprintBoard(sprint); 
     var featureLabelsArr = [];
 
-    RepoFactory.getRepoLabels($stateParams).then(getFeatures, rejected);
+    RepoFactory.getRepoLabels($stateParams).then(getLabelFeatures, rejected);
 
-    function getFeatures(repoLabels) {
-      featureLabelsArr = [];
-      var featureLabels = repoLabels.data.forEach(function(label) {
+
+
+    function getLabelFeatures(repoLabels) {
+      // console.log("RE")
+      repoLabels.data.forEach(function(label) {
         var featureSplit = label.name.split(" - ");
+              // console.log("HERE", featureSplit);
+
         if(featureSplit[0] === "Feature") {
-          console.log("label_name", featureSplit[1])
-          featureLabelsArr.push(featureSplit[1]);
+          featureLabelsArr.push(repoLabels);
+          populateFeaturesColumn(featureSplit[1]);
+        }
+      });
+      $scope.sprintBoard = BoardService.sprintBoard(sprint);  
 
+      RepoFactory.getRepoIssues($stateParams).then(getIssuesWithFeatures, rejected);
+    } 
 
+    function populateFeaturesColumn(columnTitle) {
           sprint.features.push(
-            {"title": featureSplit[1], //label
+            {"title": columnTitle, //label
               "details": "Feature 1",  //can delete
               "phases": [
                 {"name": "Open", //Status Open
@@ -141,54 +154,121 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
                   ]}
               ]}
           );
-
-
-
-
-
-
-
-
-        }
-      });
-            //$scope.sprintBoard = BoardService.sprintBoard(sprint);  
-
-      
-
-
-
-
-
-
-
-
-
-
-
-
-      RepoFactory.getRepoIssues($stateParams).then(getIssuesWithFeatures, rejected);
-    } 
-
-
-    function getIssuesWithFeatures(repoIssues) {
-          repoIssues.data.forEach(function(issue){
-            issue.labels.forEach(function(label){
-              featureLabelsArr.forEach(function(featureLabel) {
-                if(label.name === "Feature - " + featureLabel) {
-                  sprint["features"][0].phases[0].cards.push({"title": issue.title, //issue name
-                      "details": "Testing Card Details", //issue body
-                      "status": "Open"})
-                  }
-              });
-            });
-          })
-      $scope.sprintBoard = BoardService.sprintBoard(sprint);  
     }
 
 
+    function getIssuesWithFeatures(repoIssues) {
+      sprint.features.forEach(function(feature) { //loop through each feature on sprint board
+        repoIssues.data.forEach(function(issue){ //loop throough each issue
+          issue.labels.forEach(function(label) { //loop through each label in issue
+            if(label.name === "Feature - " + feature.title) {
+              populateIssuesColumns(issue, feature);
+            }
+          });
+        });
+      }); 
+            $scope.sprintBoard = BoardService.sprintBoard(sprint);  
+   
+    }
 
+    function populateIssuesColumns(issue, feature) {
+    console.log("POP", issue);
+    console.log("FE", feature);  
+      feature.phases.forEach(function(phase) {
+        if(phase.name === "In progress" && issue.state === "open") {
+            phase.cards.push({"title": issue.title, //issue name
+            "details": issue.body, //issue body
+            "status": "Open"});
+        } else if(phase.name === "Open" && issue.state === "open") {
+            phase.cards.push({"title": issue.title, //issue name
+              "details": issue.body, //issue body
+              "status": "Open"});
+        } else if(phase.name === "Closed" && issue.state === "closed") {
+            phase.cards.push({"title": issue.title, //issue name
+              "details": issue.body, //issue body
+              "status": "Open"});
+        }
+      }); 
+    }
     
 
+
+    //       repoIssues.data.forEach(function(issue){ //get each issue
+    //              console.log("ADFADSFASDFASD", issue)
+
+    //       if(issue.labels) {
+    //         console.log("ADFASD")
+    //         issue.labels.forEach(function(label){ //get each label of issue
+    //           console.log("GEA", featureLabelsArr)
+    //           featureLabelsArr.forEach(function(featureLabel) { //get feature labels
+    //             console.log("LAF", featureLabel)
+    //             if(label.name === "Feature - " + featureLabel) { 
+    //               console.log("HERERE")
+    //               sprint.features.forEach(function(feature){
+                    
+    //                 if(feature.title === featureLabel) {  
+                      
+    //                   feature.phases.forEach(function(phase){ //each column name
+
+    //                     console.log("PHASEewrerW", phase)
+
+
+    //                     if(phase.name === "In progress" && issue.state === "open") {
+                         
+    //                       console.log("HERE", phase)
+    //                       issue.labels.forEach(function(label){
+    //                         console.log("KKKADSF", label)
+    //                         if(label.name === "in progress") {
+
+    //                         phase.cards.push({"title": issue.title, //issue name
+    //                           "details": issue.body, //issue body
+    //                           "status": "Open"});
+
+    //                         }
+
+    //                     });
+
+    //                     }
+
+    //                     if(phase.name === "Open" && issue.state === "open") {
+    //                       phase.cards.push({"title": issue.title, //issue name
+    //                         "details": issue.body, //issue body
+    //                         "status": "Open"});
+    //                     }
+
+    //                     if(phase.name === "Closed" && issue.state === "closed") {
+    //                       phase.cards.push({"title": issue.title, //issue name
+    //                         "details": issue.body, //issue body
+    //                         "status": "Open"});
+    //                     }
+
+    //                   });
+                    
+
+
+
+    //                 }
+
+
+    //               });
+
+    //               // sprint["features"][0].phases[0].cards.push({"title": issue.title, //issue name
+    //               //     "details": "Testing Card Details", //issue body
+    //               //     "status": "Open"})
+    //               // }
+    //           }
+    //         });
+    //       });
+    
+    //   }
+    // });
+
+  
+  
+  //}
+    
+
+  
 
 
 
