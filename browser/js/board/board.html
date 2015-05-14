@@ -15,6 +15,10 @@
                     <span>{{column.name}}</span>
                 </div>
             </th>
+            <th class="addPhase" style="width:3%;" ng-controller="NewPhaseController">
+                <a title="Add Phase" ng-click="addNewPhase(sprintBoard)"><i
+                        class="glyphicon glyphicon-plus addNewCard"></i></a>
+            </th>
         </tr>
         </thead>
         <tbody>
@@ -38,8 +42,7 @@
                                 <span class="card-title black-text">{{card.title}}</span>
                             </div>
                             <div class="col-sm-2">
-                                <a data-no-drag class=" removeCard pull-right btn btn-xs" ng-click="removeCard(sprintBoard, feature.name, phase.name, card)"><span
-                                        class="glyphicon glyphicon-remove"></span></a>
+                                <a data-no-drag class=" removeCard pull-right btn btn-xs" ng-click="removeCard(sprintBoard, feature.name, phase.name, card)"><span class="glyphicon glyphicon-remove"></span></a>
                             </div>
                         </div>
                     </div>

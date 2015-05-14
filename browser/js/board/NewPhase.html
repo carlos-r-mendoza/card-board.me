@@ -1,20 +1,20 @@
-<!-- New Card template -->
+<!-- new phase template -->
 
-<form class="noMargin" name="newFeatureForm" ng-controller="NewFeatureController">
+<form class="noMargin" name="newPhaseForm" ng-controller="NewPhaseController">
     <div class="modal-header">
         <button type="button" class="close" ng-click="close()">&times;</button>
-        <h4 class="modal-title" ng-model="newFeature.title">Add New Feature</h4>
+        <h4 class="modal-title" ng-model="newPhase.name">Add New Phase</h4>
     </div>
     <div class="modal-body">
         <div class="form-group">
-            <label class="control-label" for="newFeatureTitle">Feature Title</label>
+            <label class="control-label" for="newPhaseName">Phase Name</label>
 
             <div>
-                <input type="text" id="newFeatureTitle" placeholder="Feature title" ng-model="newFeature.title" required
+                <input type="text" id="newPhaseName" placeholder="Title on a card" ng-model="newPhase.name" required
                        focus-me class="cardInputs form-control"/>
             </div>
         </div>
-        <div class="form-group">
+       <!--  <div class="form-group">
             <label class="control-label" for="newFeatureDetails">More Details
                 <small>(optional)</small>
             </label>
@@ -23,11 +23,11 @@
                 <textarea id="newFeatureDetails" ng-model="newFeature.details" class="cardInputs form-control" rows="7">
                 </textarea>
             </div>
-        </div>
+        </div> -->
 
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" ng-click="close()">Close</button>
-        <button type="submit" class="btn btn-primary" ng-click="ok(newFeature.title)">Add</button>
+        <button type="submit" class="btn btn-primary" ng-click="ok(newPhase.name)">Add</button>
     </div>
 </form>

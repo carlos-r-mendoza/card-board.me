@@ -31,22 +31,6 @@ app.factory('BoardService', function ($modal, BoardManipulator, BoardModel) {
       });
     },
 
-    // addNewFeature: function(board, featureName){
-    //   var modalFeature = $modal.open({
-    //     templateUrl: '/js/board/newFeature.html',
-    //     controller: 'NewFeatureController',
-    //     backdrop: 'static',
-    //     resolve: {
-    //       sprintBoard: function(){
-    //         return board;
-    //       }
-    //     }
-    //   });
-    //   modalFeature.result.then(function (board, featureName) {
-    //       BoardManipulator.addFeature(board, featureName);
-    //   });
-    // },
-
     sprintBoard: function (board) {
       var sprintBoard = new BoardModel.Board(board.name, board.numberOfColumns);
       angular.forEach(board.columns, function (column) {

@@ -261,6 +261,8 @@ router.get('/:repoOwner/:repoName/repo-milestones', function (req, res) {
 /*More info: http://mikedeboer.github.io/node-github/#issues.prototype.create*/
 router.post('/:repoOwner/:repoName/create-repo-issue', function (req, res) {
 
+
+
 	var userToken = req.user.github.token;
 	var issueTitle = req.body.title;
 	var issueBody = req.body.body;
@@ -268,10 +270,19 @@ router.post('/:repoOwner/:repoName/create-repo-issue', function (req, res) {
 	var issueMilestone = req.body.milestone;
 	var issueLabels = req.body.labels; 
 
+	console.log('ISSUE TITLE', issueTitle);
+	console.log('ISSUE BODY', issueBody);
+	console.log('ISSUE OWNER', issueAssignee);
+	console.log('ISSUE LABEL', issueLabels);
+	console.log("ISSUE MILESTONE", issueMilestone)
+
 	github.authenticate({
 	    type: "oauth",
 	    token: userToken
 	});
+
+	console.log('REPO OWNER', req.params.repoOwner);
+	console.log('REPO NAME', req.params.repoName);
 
 	github.issues.create({
 		user: req.params.repoOwner,
@@ -279,8 +290,8 @@ router.post('/:repoOwner/:repoName/create-repo-issue', function (req, res) {
 		title: issueTitle,
 		body: issueBody,
 		assignee: issueAssignee,
-		milestone: issueMilestone,
-		labels: issueLabels
+		milestone: issueMilestone
+		// labels: issueLabels
 	}, function(err, createdRepoIssue) {
 		res.json(createdRepoIssue);
 	});

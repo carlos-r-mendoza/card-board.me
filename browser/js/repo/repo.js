@@ -56,8 +56,10 @@ app.factory('RepoFactory', function($http){
 			});
 		},
 		createRepoIssue: function (repoInfo, issue) {
+			console.log('REPO INFO: ', repoInfo);
 			return $http.post('api/repo/' + repoInfo.owner + "/" + repoInfo.name + "/create-repo-issue", issue).then(function(createdRepoIssue){
 				console.log("Inside angular post", createdRepoIssue);
+				console.log('ISSUE: ', issue);
 				return createdRepoIssue;
 			});
 		},
@@ -67,7 +69,7 @@ app.factory('RepoFactory', function($http){
 			});
 		},
 		createRepoLabel: function(repoInfo, labelInfo) {
-			return $http.post('api/repo/' + repoInfo.owner + "/" + repoInfo.name + "/create-repo-label/" + labelInfo.name, labelInfo).then(function(createdLabel){
+			return $http.post('api/repo/' + repoInfo.owner + "/" + repoInfo.name + "/create-repo-label/" + labelInfo, labelInfo).then(function(createdLabel){
 				return createdLabel;
 			});
 		},
@@ -124,7 +126,7 @@ app.controller('RepoController', function($scope, $stateParams, RepoFactory){
 					for (var i = 0; i <= issue.labels.length-1; i++) {
 						//console.log("inside", issue.labels[i].name)
 						if(label === issue.labels[i].name) {
-							console.log("FADSF",issue.labels[i] )
+							console.log("FADSF",issue.labels[i] );
 							 issue.tempLabels[obj][label] = false;
 						}
 					}
@@ -140,7 +142,7 @@ app.controller('RepoController', function($scope, $stateParams, RepoFactory){
 	};
 
 	$scope.editLabel = function(label) {
-		console.log(label)
+		console.log(label);
 		RepoFactory.editRepoLabel($stateParams, label).then(editedRepoLabelFulfilled, rejected);
 	};
 
