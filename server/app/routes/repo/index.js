@@ -273,7 +273,7 @@ router.post('/:repoOwner/:repoName/create-repo-issue', function (req, res) {
 		title: req.body.title,
 		body: req.body.body,
 		assignee: req.body.assignee,
-		milestone: req.body.milestone,
+		// milestone: req.body.milestone,
 		labels: req.body.labels
 	}, function(err, createdRepoIssue) {
 		console.log("CREATED", createdRepoIssue);
