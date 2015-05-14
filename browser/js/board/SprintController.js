@@ -40,8 +40,7 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
       "columns": [
         {"name": "Open"},
         {"name": "In Progress"},
-        {"name": "Closed"},
-        {"name": "Milestone"}
+        {"name": "Closed"}
       ],
       "features": []
     };
@@ -113,7 +112,7 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
       
         for (var i = 0; i < issue.labels.length-1; i++) {
           sprint.features.forEach(function(feature) {
-            // console.log("FEA", feature)
+             //console.log("FEA", feature)
             if(issue.labels[i].name === "Feature - " + feature.title) {
               // console.log(labels);
 
@@ -123,14 +122,15 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
                   issue.labels.forEach(function(label){
 
                     if(label.name === "Phase - " + phase.name.name) {
-                      console.log("AT PHASE")
+                      //console.log("AT PHASE",phase);
                     
                       phase.cards.push({"title": issue.title, //issue name
                       "details": "Testing Card Details", //issue body
                       "status": "Open"});
+                      console.log(phase.name);
 
                     }
-                    $scope.sprintBoard = BoardService.sprintBoard(sprint);  
+            //         $scope.sprintBoard = BoardService.sprintBoard(sprint);  
 
 
 
@@ -146,6 +146,7 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
     }
 
     });
+    $scope.sprintBoard = BoardService.sprintBoard(sprint); 
   } 
 
 });
