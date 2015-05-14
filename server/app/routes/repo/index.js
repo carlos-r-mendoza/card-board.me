@@ -36,54 +36,6 @@ router.get('/:repoOwner/:repoName', function (req, res) {
 	}, function(err, repoInfo){
 		res.json(repoInfo);
 	})
-
-// github.repos.getFromUser({
-// 		user: userGitHub,
-// 		type: "all"
-// 	}, function(err, userRepos) {
-
-// 		//res.json(userRepos);
-
-// 		// console.log(userRepos[0].name);
-		
-// 		userRepos.map(function(repo, index){
-
-
-
-// 			//var repoName = repo.name;
-// 			repo.collaborators = [];
-
-
-// 			github.repos.getCollaborators({
-			
-// 			user: userGitHub,
-// 			repo: req.params.repoName
-			
-// 			}, function(err, repoCollaborators) {
-// 				var collaboratorsUserName = [];
-
-// 				repoCollaborators.map(function(collaborator){
-// 					repo.collaborators.push(collaborator.login);
-			
-	
-
-// 				});
-				
-// 				if(index === userRepos.length-1) {
-
-// 					res.json(userRepos);
-// 				}
-			
-			
-// 			});
-		
-
-// 		});
-
-
-
-
-// 	});
 	
 });
 
@@ -197,7 +149,6 @@ router.get('/:repoOwner/:repoName/statsParticipation', function (req, res) {
 
 
 /***GETS ISSUES FOR A PARTICULAR REPO***/
-/*More info: http://mikedeboer.github.io/node-github/#issues.prototype.getRepoIssue*/
 router.get('/:repoOwner/:repoName/repo-issues', function (req, res) {
 
 	var userToken = req.user.github.token;
@@ -218,8 +169,6 @@ router.get('/:repoOwner/:repoName/repo-issues', function (req, res) {
 });
 
 /***GETS LABELS FOR A PARTICULAR REPO***/
-/*More info: http://mikedeboer.github.io/node-github/#issues.prototype.getLabels*/
-
 router.get('/:repoOwner/:repoName/repo-labels', function (req, res) {
 
 	var userToken = req.user.github.token;
@@ -238,8 +187,6 @@ router.get('/:repoOwner/:repoName/repo-labels', function (req, res) {
 });
 
 /***GETS MILESTONES FOR A PARTICULAR REPO***/
-/*More info: http://mikedeboer.github.io/node-github/#issues.prototype.getAllMilestones*/
-
 router.get('/:repoOwner/:repoName/repo-milestones', function (req, res) {
 
 	var userToken = req.user.github.token;
@@ -258,7 +205,6 @@ router.get('/:repoOwner/:repoName/repo-milestones', function (req, res) {
 });
 
 /***CREATES/POSTS AN ISSUE***/
-/*More info: http://mikedeboer.github.io/node-github/#issues.prototype.create*/
 router.post('/:repoOwner/:repoName/create-repo-issue', function (req, res) {
 
 	github.authenticate({
@@ -276,18 +222,12 @@ router.post('/:repoOwner/:repoName/create-repo-issue', function (req, res) {
 		milestone: req.body.milestone,
 		labels: req.body.labels
 	}, function(err, createdRepoIssue) {
-		console.log("CREATED", createdRepoIssue);
 		res.json(createdRepoIssue);
 	});
 });
 
 /***CREATES/POSTS AN ISSUE***/
-/*More info: http://mikedeboer.github.io/node-github/#issues.prototype.create*/
 router.post('/:repoOwner/:repoName/edit-repo-issue/:issueNumber', function (req, res) {
-	//console.log("ISSSUE ", req.body);
-		console.log("PARAMS ", req.params);
-	// console.log("Number ",req.params.issueNumber);
-
 
 	var userToken = req.user.github.token;
 	var issueTitle = req.body.title;
@@ -296,22 +236,18 @@ router.post('/:repoOwner/:repoName/edit-repo-issue/:issueNumber', function (req,
 	var issueState;
 	var issueMilestone;
 	var issueLabels = [];
-	if (typeof req.body.assignee === 'string') { issueAssignee = req.body.assignee; }
-	if (typeof req.body.state === 'string') { issueState = req.body.state; }
-	if (typeof req.body.milestone === 'number') { issueMilestone = req.body.milestone; }
+	// if (typeof req.body.assignee === 'string') { issueAssignee = req.body.assignee; }
+	// if (typeof req.body.state === 'string') { issueState = req.body.state; }
+	// if (typeof req.body.milestone === 'number') { issueMilestone = req.body.milestone; }
 
-	console.log("ISSSSMilestone", issueMilestone);
-
-	req.body.labels.forEach(function(objLabel) {
-		issueLabels.push(objLabel.name);
-	});
+	// req.body.labels.forEach(function(objLabel) {
+	// 	issueLabels.push(objLabel.name);
+	// });
 
 	github.authenticate({
 	    type: "oauth",
 	    token: userToken
 	});
-
-	console.log("issue labels", issueLabels	)
 
 	github.issues.edit({
 		user: req.params.repoOwner,
@@ -330,7 +266,6 @@ router.post('/:repoOwner/:repoName/edit-repo-issue/:issueNumber', function (req,
 });
 
 /***CREATES/POSTS A REPO LABEL***/
-/*More info: http://mikedeboer.github.io/node-github/#issues.prototype.createLabel*/
 router.post('/:repoOwner/:repoName/create-repo-label/:labelName', function (req, res) {
 
 	var userToken = req.user.github.token;
@@ -353,7 +288,6 @@ router.post('/:repoOwner/:repoName/create-repo-label/:labelName', function (req,
 });
 
 /***EDIT REPO LABEL***/
-/*More info: http://mikedeboer.github.io/node-github/#issues.prototype.updateLabel*/
 router.post('/:repoOwner/:repoName/edit-repo-label/:labelName', function (req, res) {
     
 	var userToken = req.user.github.token;
@@ -391,7 +325,6 @@ router.post('/:repoOwner/:repoName/edit-repo-label/:labelName', function (req, r
 });
 
 /***CREATES/POSTS AN ISSUE***/
-/*More info: http://mikedeboer.github.io/node-github/#issues.prototype.create*/
 router.post('/:repoOwner/:repoName/create-repo-milestone/:milestoneTitle', function (req, res) {
 
 	var userToken = req.user.github.token;
@@ -418,7 +351,6 @@ router.post('/:repoOwner/:repoName/create-repo-milestone/:milestoneTitle', funct
 });
 
 /***GET COMMENTS ON AN ISSUE***/
-/*More info: http://mikedeboer.github.io/node-github/#issues.prototype.getComments*/
 router.get('/:repoOwner/:repoName/repo-issue-comments/:issueNumber', function (req, res) {
 
 	var userToken = req.user.github.token;

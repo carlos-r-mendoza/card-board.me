@@ -166,6 +166,28 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams)
         }
       });
     },
+
+    editCard: function(board, featureName, phaseName, currentTask, newTask){
+      angular.forEach(board.features, function(feature){
+        if(feature.name ===featureName){
+          angular.forEach(feature.phases, function(phase){
+            if(phase.name === phase.name){
+              angular.forEach(phase.card, function(card){
+                if(card.title === currentTask.title){
+                  card.title = newTask.title;
+                  card.details = newTask.details;
+                  card.status = newTask.status;
+                  card.comments = newTask.comments;
+                  card.assignee = newTask.assignee;
+                  card.labels = newTask.labels;
+                }
+              });    
+            }            
+          });
+        }
+      });
+    },
+
     addFeature: function (board, featureName) {
       board.features.push(new BoardModel.Feature(featureName));
       var label = {name: 'Feature - '+featureName, color: 'FFFFFF'};

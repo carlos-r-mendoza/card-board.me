@@ -44,6 +44,10 @@
                             <div class="col-sm-2">
                                 <a data-no-drag class=" removeCard pull-right btn btn-xs" ng-click="removeCard(sprintBoard, feature.name, phase.name, card)"><span class="glyphicon glyphicon-remove"></span></a>
                             </div>
+                            <!-- EDIT CARD -->
+                            <div class="col-sm-2" ng-controller="EditCardController">
+                                <a data-no-drag class=" removeCard pull-right btn btn-xs" ng-click="editCard(sprintBoard, feature.name, phase.name, card)"><span class="mdi-editor-mode-edit"></span></a>
+                            </div>
                         </div>
                     </div>
                 </div>
