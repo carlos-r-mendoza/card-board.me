@@ -1,24 +1,24 @@
-<form class="noMargin" name="newFeatureForm" ng-controller="NewFeatureController">
+<form class="noMargin" name="editFeatureForm" ng-controller="EditFeatureController">
     <div class="modal-header">
         <button type="button" class="close" ng-click="close()">&times;</button>
-        <h4 class="modal-title" ng-model="newFeature.title">Add New Feature</h4>
+        <h4 class="modal-title" ng-model="editFeature.title">Edit Feature</h4>
     </div>
     <div class="modal-body">
         <div class="form-group">
-            <label class="control-label" for="newFeatureTitle">Feature Title</label>
+            <label class="control-label" for="editFeatureTitle">Feature Title</label>
 
             <div>
-                <input type="text" id="newFeatureTitle" placeholder="Feature title" ng-model="newFeature.title" required
+                <input type="text" id="editFeatureTitle" placeholder="Feature title" ng-model="editFeature.title" required
                        focus-me class="cardInputs form-control"/>
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label" for="newFeatureDetails">More Details
+            <label class="control-label" for="editFeatureDetails">More Details
                 <small>(optional)</small>
             </label>
 
             <div>
-                <textarea id="newFeatureDetails" ng-model="newFeature.details" class="cardInputs form-control" rows="7">
+                <textarea id="editFeatureDetails" ng-model="editFeature.details" class="cardInputs form-control" rows="7">
                 </textarea>
             </div>
         </div>
@@ -26,13 +26,13 @@
         <div class='form-group'>
             <label class="control-label" for="newCardDetails">Due Date</label>
             <div>
-             <input for="newFeatureDetails" type="date" class='form-control' ng-model='newFeature.dueDate'/>
+             <input for="editFeatureDetails" type="date" class='form-control' ng-model='editFeature.dueDate'/>
             </div>
         </div>
 
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" ng-click="close()">Close</button>
-        <button type="submit" class="btn btn-primary" ng-click="ok(newFeature.title)">Add</button>
+        <button type="submit" class="btn btn-primary" ng-click="ok(editFeature)">Submit Changes</button>
     </div>
 </form>
