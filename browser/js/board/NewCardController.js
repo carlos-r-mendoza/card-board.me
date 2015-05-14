@@ -23,15 +23,17 @@ app.controller('NewCardController', function ($scope, $modal, $modalInstance, Bo
  }
 
   $scope.addCard = function(newCard, featureName){ 
+    
     var taskInfo = {
                 user: $stateParams.owner,
                 repo: $stateParams.name,
                 title: newCard.title, 
                 body: newCard.details, 
                 assignee: newCard.assignee, 
-                milestone:''.to,
-                labels: [newCard.status, newCard.label]
+                // milestone:1,
+                labels: [newCard.label]
               };
+    //taskInfo.push("Feature - Testing");
     BoardManipulator.addCardToFeature($scope.board, featureName, 'Open', newCard);
     RepoFactory.createRepoIssue($stateParams, taskInfo);
     $modalInstance.close();

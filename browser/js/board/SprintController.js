@@ -134,56 +134,70 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
       });
       $scope.sprintBoard = BoardService.sprintBoard(sprint);  
 
-      RepoFactory.getRepoIssues($stateParams).then(getIssuesWithFeatures, rejected);
+      RepoFactory.getRepoIssues($stateParams).then(addIssuesToPhases, rejected);
     } 
 
-    function populateFeaturesColumn(columnTitle) {
+    function populateFeaturesColumn(featuresTitle) {
       sprint.features.push(
-        {"title": columnTitle, //label
-          "details": "Feature 1",  //can delete
-          "phases": [
-            {"name": "Open", //Status Open
-              "cards": [
-              ]},
-            {"name": "In progress",
-              "cards": [
-              ]},
-            {"name": "Closed",
-              "cards": [
-              ]}
-          ]}
+        {"title": featuresTitle, //label
+          "details": "Feature",  //can delete
+          "phases": []}
       );
     }
 
-    function getIssuesWithFeatures(repoIssues) {
-
-      sprint.features.forEach(function(feature) { //loop through each feature on sprint board
-        repoIssues.data.forEach(function(issue){ //loop throough each issue
-          issue.labels.forEach(function(label) { //loop through each label in issue
-            if(label.name === "Feature - " + feature.title) {
-              populatePhaseColumns(issue, feature);
-            }
-          });
-        });
-      }); 
-            $scope.sprintBoard = BoardService.sprintBoard(sprint);  
+    function createPhaseColumn(phase) {
+      console.log("sprintfeatures",sprint.features.phases);
+      console.log(phase);
+      sprint.columns.push(
+        {"name": phase});
+      addPhasesToFeatures();
     }
+
+    function addPhasesToFeatures() {
+      sprint.columns.forEach(function(column) {
+        sprint.features.forEach(function(feature){
+          feature.phases.push({"name": column, //Status Open
+              "cards": []});
+          });
+        addIssuesToPhases();
+        });
+      }
+    
+    function addIssuesToPhases(repoIssues) {
+
+    }
+
+    // function getIssuesWithFeatures(repoIssues) {
+
+    //   sprint.features.forEach(function(feature) { //loop through each feature on sprint board
+    //     repoIssues.data.forEach(function(issue){ //loop throough each issue
+    //       issue.labels.forEach(function(label) { //loop through each label in issue
+    //         if(label.name === "Feature - " + feature.title) {
+    //           populatePhaseColumns(issue, feature);
+    //         }
+    //       });
+    //     });
+    //   }); 
+    //         $scope.sprintBoard = BoardService.sprintBoard(sprint);  
+    // }
 
     // function populatePhaseColumns(issue, feature) {
     //   console.log("Inside phasecolpop-issue",issue); 
-    //   issue.labels.forEach(function(label){
+    //   sprint.columns.forEach(function(column){
+    //     issue.labels.forEach(function(label){
+
     //     var phaseName = label.name.split(" - ");
 
-    //     if(phaseName[0] === "Phase") {
-    //       createPhaseColumn(phaseName[1]);
+    //     sprint
 
-
+    //     if(label.name === "Phase - " + column) {
                    
 
 
 
     //     } 
-    //   })
+    //   });  
+    // });
     // }
 
 
@@ -204,10 +218,5 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
     //   }); 
     // }
 
-    function createPhaseColumn(phase) {
-      console.log("sprintfeatures",sprint.features.phases);
-      console.log(phase);
-      sprint.columns.push(
-        {"name": phase});
-    }
+
 });
