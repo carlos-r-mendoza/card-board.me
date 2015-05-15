@@ -44,7 +44,7 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
 
 
 
-    var sprint={
+    var sprint= { //board data structure
       "name": "Sprint Board",
       "numberOfColumns": 3, //change this number to match number of hardcoded columns 
       "columns": [
@@ -60,12 +60,10 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
     function getLabelFeatures(repoLabels) {
       repoLabels.data.forEach(function(label) {
         var labelName = label.name.split(" - ");
-        console.log("LAB", labelName[0])
          if(labelName[0] === "Feature") {
           populateFeaturesColumn(labelName[1]);
         }  
         if (labelName[0] === "Phase" && labelName[1] !== "In Progress") {
-          console.log("HERE", labelName[1])
           createPhaseColumn(labelName[1]);
         }
       });
@@ -101,52 +99,73 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
           });
          }
       }
-    
+
     function addIssuesToPhases(repoIssues) {
-      repoIssues.data.forEach(function(issue) {
-      if(issue.labels.length > 0) {
-        issue.labels.sort();
-        for (var i = 0; i <= issue.labels.length-1; i++) {
-          sprint.features.forEach(function(feature) {
-            if(issue.labels[i].name === "Feature - " + feature.title) {
-                for (var j = sprint.numberOfColumns; j <= feature.phases.length-1; j++) {
-                  for (var k = i; k <= issue.labels.length-1; k++) {
-                    if(issue.labels[k].name === "Phase - " + "In Progress") {
-                     feature.phases[1].cards.push({"title": issue.title, //issue name
-                      "details": "Testing Card Details", //issue body
-                      "status": "Open"});
-                      break;
+      for (var i = 0; i <= sprint.features.length-1; i++) {
+        var feature = sprint.features[i];
+        var phases = feature.phases; //a feature's phase
+
+          for (var k = 0; k <= repoIssues.data.length-1; k++) {
+            var issue = repoIssues.data[k]; //an issue
+            issue.labels.sort();
+
+              for (var l = 0; l <= issue.labels.length-1; l++) {
+                var label = issue.labels[l]; //a label
+
+                if(label.name === "Feature - " + feature.title) {
+                  issue.feature = feature.title;
+
+                  for (var m = l+1; m <= issue.labels.length-1; m++) { //checking for phase label
+                    label = issue.labels[l+1]
+                    
+                    for (var j = sprint.numberOfColumns-1; j <= phases.length-1; j++) {
+                      var phase = phases[j]; //a phase 
+                        if(label.name === "Phase - " + "In Progress") {
+                          issue.hasPhase = true;
+                          issue.phase = "In Progress";
+                          createCard(feature.phases[1], issue);
+                          break;
+                        }                      
+                      if(label.name === "Phase - " + phase.name && issue.state === "open") {  
+                        issue.hasPhase = true; 
+                        issue.phase = phase.name;
+                        createCard(feature.phases[j], issue);                
+                        break;
+                      }                
                     }
-                    if(issue.labels[k].name === "Phase - " + feature.phases[j].name) {                   
-                     feature.phases[j].cards.push({"title": issue.title, //issue name
-                      "details": "Testing Card Details", //issue body
-                      "status": "Open"});
-                      break;
-                    }
-                    if(k === issue.labels.length-1) {
-                      if(issue.state === "open") {
-                        console.log("AF", issue)
-                       feature.phases[0].cards.push({"title": issue.title, //issue name
-                        "details": "Testing Card Details", //issue body
-                        "status": "Open"});
+
+                    if(m === issue.labels.length-1) {
+                      if(issue.state === "open" && issue.hasPhase !== true) {
+                      issue.hasPhase = false;
+                      issue.phase = ""; 
+                      createCard(feature.phases[0], issue);                
                       }
-                    }
-                    if(k === issue.labels.length-1) {
                       if(issue.state === "closed") {
-                        console.log("AF", issue)
-                       feature.phases[2].cards.push({"title": issue.title, //issue name
-                        "details": "Testing Card Details", //issue body
-                        "status": "Open"});
+                      issue.hasPhase = false;     
+                      issue.phase = "";  
+                      createCard(feature.phases[2], issue);          
                       }
-                    }
-                  }  
-                  break;
+                    } 
+                  }
+                }
               }
             }
-          });
-        }
-      }
-    });
-    $scope.sprintBoard = BoardService.sprintBoard(sprint); 
-  } 
+          }
+      $scope.sprintBoard = BoardService.sprintBoard(sprint); 
+    }
+
+    function createCard(phase, issue) {
+      phase.cards.push({"title": issue.title, //issue name
+                        "details": issue.body, //issue body
+                        "state": issue.state,
+                        "number": issue.number,
+                        "comments_number": issue.comments,
+                        "assignee": issue.assignee,
+                        "labels": issue.labels,
+                        "hasPhase": issue.hasPhase,
+                        "milestone": issue.milestone,
+                        "feature": issue.feature,
+                        "phase": issue.phase}); }
+
+
 });
