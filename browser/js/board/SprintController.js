@@ -11,6 +11,7 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
   //$scope.sprintBoard = ""; 
 
   $scope.isCollapsed = false;
+  $scope.sprintBoard = "";
 
   // $scope.collapse = function(isCollapsed, feature){
   //   $scope.collapsed = !(isCollapsed);
@@ -55,9 +56,8 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
       "features": []
     };
 
-    $scope.sprintBoard = BoardService.sprintBoard(sprint); 
+ 
 
-    console.log("FADS", $scope.sprintBoard)
 
     RepoFactory.getRepoLabels($stateParams).then(getLabelFeatures, rejected);
 
