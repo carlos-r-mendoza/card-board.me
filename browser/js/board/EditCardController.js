@@ -63,7 +63,7 @@ app.controller('EditCardController', function($scope, $modal, BoardService, Boar
           
 
           $scope.editedIssue = {
-            title: $scope.editedCard.title;
+            title: $scope.editedCard.title,
             body: $scope.editedCard.details,
             assignee: $scope.editedCard.assignee,
             state: $scope.editedCard.status,
