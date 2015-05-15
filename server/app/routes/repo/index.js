@@ -182,6 +182,7 @@ router.get('/:repoOwner/:repoName/repo-labels', function (req, res) {
 	github.issues.getLabels({
 		user: req.params.repoOwner,
 		repo: req.params.repoName,
+		per_page: 100
 	}, function(err, repoLabels) {
 		res.json(repoLabels);
 	});

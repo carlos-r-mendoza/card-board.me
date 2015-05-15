@@ -1,5 +1,4 @@
 <div ng-model="sprintBoard" id="board">
-
     <table id="boardTable" class="table table-bordered">
         <thead>
         <tr id="boardHeader">
@@ -62,3 +61,24 @@
         </tbody>
     </table>
 </div>
+    <div class="preloader-wrapper big active" id="loader" ng-show="!sprintBoard">
+    <div class="preloader-wrapper big active">
+        <div class="spinner-layer spinner-blue-only">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div><div class="gap-patch">
+            <div class="circle"></div>
+          </div><div class="circle-clipper right">
+            <div class="circle"></div>
+          </div>
+        </div>
+    </div>
+     </div>
+
+  <style type="text/css">
+    #loader {
+        position: absolute;
+        top: 50%;
+        right: 50%;
+    }
+  </style>
