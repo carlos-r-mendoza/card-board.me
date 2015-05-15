@@ -23,6 +23,8 @@ app.controller('NewCardController', function ($scope, $modal, $modalInstance, Bo
  }
 
   $scope.addCard = function(newCard, featureName){ 
+
+    console.log(newCard);
     
     var taskInfo = {
                 user: $stateParams.owner,

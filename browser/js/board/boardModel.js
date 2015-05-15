@@ -32,6 +32,7 @@ app.factory('BoardModel', function(){
       },
       
       Card: function (title, status, details, assignee, label, dueDate) {
+        console.log("ASD", title);
         this.title = title;
         this.status = status;
         this.details = details;
