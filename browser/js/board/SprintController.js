@@ -8,7 +8,7 @@ app.config(function ($stateProvider) {
 
 app.controller('SprintController', function ($scope, $stateParams, BoardService, BoardManipulator, $rootScope, RepoFactory) {
 
-  $scope.sprintBoard; 
+  //$scope.sprintBoard = ""; 
 
   $scope.isCollapsed = false;
 
@@ -54,6 +54,10 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
       ],
       "features": []
     };
+
+    $scope.sprintBoard = BoardService.sprintBoard(sprint); 
+
+    console.log("FADS", $scope.sprintBoard)
 
     RepoFactory.getRepoLabels($stateParams).then(getLabelFeatures, rejected);
 
@@ -115,8 +119,8 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
                 if(label.name === "Feature - " + feature.title) {
                   issue.feature = feature.title;
 
-                  for (var m = l+1; m <= issue.labels.length-1; m++) { //checking for phase label
-                    label = issue.labels[l+1]
+                  for (var m = l; m <= issue.labels.length-1; m++) { //checking for phase label
+                    label = issue.labels[m]
                     
                     for (var j = sprint.numberOfColumns-1; j <= phases.length-1; j++) {
                       var phase = phases[j]; //a phase 
@@ -165,7 +169,18 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
                         "hasPhase": issue.hasPhase,
                         "milestone": issue.milestone,
                         "feature": issue.feature,
-                        "phase": issue.phase}); }
+                        "phase": issue.phase}); 
+            //console.log("PHASECARDS", phase.cards)
+      
+                if(issue.status === "HELLO") {
+          console.log("BOARD", issue)
+    }
+
+
+    }
+
+
+
 
 
 });

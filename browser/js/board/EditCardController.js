@@ -1,6 +1,7 @@
 app.controller('EditCardController', function($scope, $modal, BoardService, BoardManipulator, $rootScope, RepoFactory, $stateParams){
 	   
 	   $scope.editCard = function(board, featureName, cardStatus, card){
+      console.log("CARD", card);
         $scope.modalEdit = $modal.open({
         templateUrl: '/js/board/editCard.html',
         backdrop: 'static',
