@@ -119,8 +119,8 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams)
 
     addPhaseToAll: function (board, phase) {
       board.columns.push(new BoardModel.Phase(phase));
-      console.log(board);
-      var phaseInfo={name:phase,color:'FFFFFF'};
+      var phaseName = "Phase - " + phase;
+      var phaseInfo={name: phaseName, color:'FFFFFF'};
       RepoFactory.createRepoLabel($stateParams,phaseInfo);
     },
 
