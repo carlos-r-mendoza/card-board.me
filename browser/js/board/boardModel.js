@@ -23,13 +23,16 @@ app.factory('BoardModel', function(){
           this.cards = [];
       },
       
-      Card: function (title, status, details, assignee, label, dueDate) {
+      Card: function (title, details, state, number, assignee, labels, dueDate, feature, phase) {
         this.title = title;
-        this.status = status;
         this.details = details;
+        this.state = state;
+        this.number = number;
         this.assignee = assignee;
-        this.label = label;
-        this.dueDate = dueDate;
+        this.labels = labels;
+        this.milestone = dueDate;
+        this.feature = feature;
+        this.phase = phase;
         return this;
       }
   };
@@ -47,7 +50,7 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams)
     addCardToColumn: function (board, column, cardTitle, details) {
       angular.forEach(board.columns, function (col) {
         if (col.name === column.name) {
-          col.cards.push(new BoardModel.Card(cardTitle, column.name, details));
+          col.cards.push(new BoardModel.Card(cardTitle, details, column.name));
         }
       });
     },

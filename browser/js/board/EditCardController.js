@@ -61,15 +61,6 @@ app.controller('EditCardController', function($scope, $modal, BoardService, Boar
             });
           }
             // console.log('SCOPEREPO!!:', $scope.repoIssues);
-          
-
-          $scope.editedIssue = {
-            title: $scope.editedCard.title,
-            body: $scope.editedCard.details,
-            assignee: $scope.editedCard.assignee,
-            state: $scope.editedCard.state,
-            labels: $scope.editedCard.labels
-          }
            
           //TO DO !!!
           // $scope.getRepoNum = function(currentCard){ //NEED TO GET REPO ISSUE AND FIND MATCHING NUMBER TO BE ABLE TO UPDATE THE ISSUE IN GITHUB
@@ -77,10 +68,31 @@ app.controller('EditCardController', function($scope, $modal, BoardService, Boar
           // };
 
           // $scope.getRepoNum(currentCard);
-          
+
           console.log('currentCARD', currentCard);
 
-          $scope.ok = function(editedCard){  
+          $scope.ok = function(editedCard){
+            
+            $scope.editedIssue = {
+                title: editedCard.title,
+                labels: [editedCard.labels]
+              };
+
+            var filterIssue = function(){
+              
+              if(editedCard.details){
+                $scope.editedIssue.body = editedCard.details;
+              }
+              if(editedCard.assignee){
+                $scope.editedIssue.assignee = editedCard.assignee;
+              }
+              if(editedCard.state){
+                $scope.editedIssue.state = editedCard.state;
+              }
+            };
+              
+          console.log('EDITED ISSUE: ', $scope.editedIssue); 
+
             BoardManipulator.editCard($scope.board, currentFeature, currentStatus, currentCard, editedCard);
             RepoFactory.getRepoIssues($stateParams).then(editIssue, err).then(RepoFactory.editRepoIssue($stateParams, $scope.issueNum, $scope.editedIssue));
             $modalInstance.close();
