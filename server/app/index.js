@@ -2,7 +2,7 @@
 var path = require('path');
 var express = require('express');
 var app = express();
-var GitHubApi=require('github');
+var github = require('./routes/repo/gitHubAPI');
 module.exports = app;
 
 // Pass our express application pipeline into the configuration
@@ -13,19 +13,6 @@ require('./configure')(app);
 // /api so they are isolated from our GET /* wildcard.
 app.use('/api', require('./routes'));
 
-var github = new GitHubApi({
-    // required
-    version: "3.0.0",
-    //optional
-    // debug: true,
-    // protocol: "https",
-    // host: "api.github.com", // should be api.github.com for GitHub
-    // pathPrefix: "/api/v3", // for some GHEs; none for GitHub
-    // timeout: 5000,
-    // headers: {
-    //     "user-agent": "My-Cool-GitHub-App" // GitHub is happy with a unique user agent
-    // }
-});
 /*
     This middleware will catch any URLs resembling a file extension
     for example: .js, .html, .css
@@ -69,7 +56,7 @@ app.get('/*', function (req, res) {
 
 // Error catching endware.
 app.use(function (err, req, res) {
-    // console.error(err);
+    console.error("ERROR IN ROUTE:", err);
     res.status(err.status || 500).send(err.message || 'Internal server error.');
 });
 
