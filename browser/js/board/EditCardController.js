@@ -19,6 +19,7 @@ app.controller('EditCardController', function($scope, $modal, BoardService, Boar
           }
         },
         controller: function($scope, $modalInstance, sprintBoard, currentFeature, currentCard, currentStatus){
+
           $scope.board = sprintBoard;
           $scope.close = function(){
             $modalInstance.close();
