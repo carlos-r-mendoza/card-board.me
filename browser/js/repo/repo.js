@@ -75,7 +75,7 @@ app.factory('RepoFactory', function($http){
 		},
 		editRepoLabel: function (repoInfo, oldlabel, label) {
 			console.log('old', oldlabel);
-			return $http.post('api/repo/' + repoInfo.owner + "/" + repoInfo.name + "/labels", label).then(function(editedRepoLabel){
+			return $http.post('api/repo/' + repoInfo.owner + "/" + repoInfo.name + "/labels/"+ oldlabel, label).then(function(editedRepoLabel){
 				return editedRepoLabel;
 			});
 			
@@ -89,7 +89,8 @@ app.factory('RepoFactory', function($http){
 		editRepoIssue: function(repoInfo, issue) {
 			console.log("REPO INFO", repoInfo);
 			console.log("ISSUE INFO", issue);
-			return $http.post('api/repo/' + repoInfo.owner + "/" + repoInfo.name + "/edit-repo-issue/" + issue.number, issue).then(function(editedRepoIssue){
+			return $http.post('api/repo/' + repoInfo.owner + "/" + repoInfo.name + "/edit-repo-issue", issue).then(function(editedRepoIssue){
+				console.log('IM IN!');
 				return editedRepoIssue;
 			});
 		},

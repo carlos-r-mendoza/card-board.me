@@ -19,7 +19,8 @@ app.controller('EditCardController', function($scope, $modal, BoardService, Boar
             return card;
           }
         },
-        controller: function($scope, $modalInstance, sprintBoard, currentFeature){
+        controller: function($scope, $modalInstance, sprintBoard, currentFeature, currentCard, currentStatus){
+          
           $scope.board = sprintBoard;
           $scope.close = function(){
             $modalInstance.close();
@@ -34,10 +35,8 @@ app.controller('EditCardController', function($scope, $modal, BoardService, Boar
             dueDate: ''
            };
 
-          $scope.ok = function(editedCard, currentFeature, currentStatus, currentCard){
-            console.log('EDITED CARD: ',editedCard);
+          $scope.ok = function(editedCard){
             BoardManipulator.editCard($scope.board, currentFeature, currentStatus, currentCard, editedCard);
-            console.log('EDITED CARD: ',editedCard);
             RepoFactory.editRepoIssue($stateParams, editedCard);
             $modalInstance.close();
           };

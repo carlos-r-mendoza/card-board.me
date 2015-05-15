@@ -77,7 +77,7 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams)
         if(feature.name ===featureName){
           angular.forEach(feature.phases, function(phase){
             if(phase.name === phase.name){
-              angular.forEach(phase.card, function(card){
+              angular.forEach(phase.cards, function(card){
                 if(card.title === currentTask.title){
                   card.title = newTask.title;
                   card.details = newTask.details;
