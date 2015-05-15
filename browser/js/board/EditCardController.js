@@ -29,12 +29,13 @@ app.controller('EditCardController', function($scope, $modal, BoardService, Boar
           $scope.editedCard = {
             title: currentCard.title,
             details: currentCard.details,
-            status: currentCard.status,
+            phase: currentCard.phase,
             comments: currentCard.comments,
             assignee: currentCard.assignee,
             labels: ['Feature - '+featureName],
             dueDate: currentCard.dueDate,
             number: currentCard.number,
+            feature: currentCard.feature
            };
 
 
@@ -66,7 +67,7 @@ app.controller('EditCardController', function($scope, $modal, BoardService, Boar
             title: $scope.editedCard.title,
             body: $scope.editedCard.details,
             assignee: $scope.editedCard.assignee,
-            state: $scope.editedCard.status,
+            state: $scope.editedCard.state,
             labels: $scope.editedCard.labels
           }
            

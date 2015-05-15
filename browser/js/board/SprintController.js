@@ -155,6 +155,7 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
     }
 
     function createCard(phase, issue) {
+      console.log('ISSUE STATE', issue.state);
       phase.cards.push({"title": issue.title, //issue name
                         "details": issue.body, //issue body
                         "state": issue.state,

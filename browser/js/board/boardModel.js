@@ -1,34 +1,26 @@
 'use strict';
 app.factory('BoardModel', function(){
     return{
-        Board: function (name, numberOfColumns) {
-        return {
-          name: name,
-          numberOfColumns: numberOfColumns,
-          columns: [],
-          features: []
-        };
+      Board: function (name, numberOfColumns) {
+          this.name = name;
+          this.numberOfColumns = numberOfColumns;
+          this.columns = [];
+          this.features = [];
       },
 
       Column: function (name) {
-        return {
-          name: name,
-          cards: []
-        };
+          this.name = name;
+          this.cards = [];
       },
 
       Feature: function (name) {
-        return {
-          name: name,
-          phases: []
-        };
+          this.name = name;
+          this.phases = [];
       },
 
       Phase: function (name) {
-        return {
-          name: name,
-          cards: []
-        };
+          this.name = name;
+          this.cards = [];
       },
       
       Card: function (title, status, details, assignee, label, dueDate) {
@@ -81,10 +73,13 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams)
                 if(card.title === currentTask.title){
                   card.title = newTask.title;
                   card.details = newTask.details;
-                  card.status = newTask.status;
+                  card.state = newTask.state;
+                  card.number = currentTask.number;
                   card.comments = newTask.comments;
                   card.assignee = newTask.assignee;
                   card.labels = newTask.labels;
+                  card.feature = newTask.feature;
+                  card.phase = newTask.phase;
                 }
               });    
             }            
@@ -103,8 +98,6 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams)
       angular.forEach(board.features, function(feature){
         if(feature.name === currentFeature){
           feature.name = editFeature;
-          console.log('EDIT FEATURE TITLE: ', editFeature);
-          console.log('FEATURE.NAME: ' , feature.name);
         }
       });
     },
@@ -129,7 +122,7 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams)
         if (feature.name === featureName) {
           angular.forEach(feature.phases, function (phase) {
             if (phase.name === phaseName) {
-              phase.cards.push(new BoardModel.Card(task.title, task.details, task.status, task.comments, task.assignee, task.label, task.dueDate));
+              phase.cards.push(new BoardModel.Card(task.title, task.details, task.state, task.number, task.comments, task.assignee, task.labels, task.feature, task.phase));
             }
           });
         }
