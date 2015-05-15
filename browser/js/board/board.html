@@ -21,12 +21,15 @@
             </th>
         </tr>
         </thead>
-        <tbody>
-        <tr ng-repeat="feature in sprintBoard.features">
+        <tbody ng-repeat="feature in sprintBoard.features">
+        <tr>
+            <th class="black-text" ng-click='isCollapsed=!isCollapsed'>{{feature.name}}</th>
+        </tr>
+        <tr collapse='isCollapsed'>
             <th style="width:22%">
                 <div class="story card sortable-item black-text">
                     <div class="row">
-                        <span class="card-title black-text">{{feature.name}}</span>
+                        <span class="card-title black-text" ng-click="isCollapsed=!isCollapsed">{{feature.name}}</span>
                     </div>
              <!--       <div class="col-sm-2" ng-controller="EditFeatureController">
                         <a data-no-drag class="addNewCard" ng-click="editingFeature(sprintBoard, feature.name)"><span class="mdi-editor-mode-edit"></span></a>
