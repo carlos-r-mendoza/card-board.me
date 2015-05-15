@@ -86,10 +86,10 @@ app.factory('RepoFactory', function($http){
 				return repoMilestones;
 			});
 		},
-		editRepoIssue: function(repoInfo, issue) {
+		editRepoIssue: function(repoInfo, num, issue) {
 			console.log("REPO INFO", repoInfo);
 			console.log("ISSUE INFO", issue);
-			return $http.post('api/repo/' + repoInfo.owner + "/" + repoInfo.name + "/edit-repo-issue", issue).then(function(editedRepoIssue){
+			return $http.post('api/repo/' + repoInfo.owner + "/" + repoInfo.name + "/edit-repo-issue/"+ num, issue).then(function(editedRepoIssue){
 				console.log('IM IN!');
 				return editedRepoIssue;
 			});
