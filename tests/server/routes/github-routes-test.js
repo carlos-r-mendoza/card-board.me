@@ -12,4 +12,17 @@ describe('http requests', function() {
 		});
 
 	});
+
+	describe('GET repo/:repoOwner/:repoName', function() {
+		xit('should get 200 on page that does exist', function() {
+			agent.get('/repo/carlos-r-mendoza/project_management_tool').expect(200, done);
+		})
+	})
+
+	describe('GET repo/:repoOwner/:repoName/collaborators', function() {
+		xit('should get 200 on page that does exist', function() {
+			agent.get('/repo/carlos-r-mendoza/project_management_tool/collaborators').expect(200, done);
+		})
+	})
+
 });
