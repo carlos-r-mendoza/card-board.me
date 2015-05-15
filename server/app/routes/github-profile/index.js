@@ -1,29 +1,15 @@
 'use strict';
 
 var router = require('express').Router();
-var GitHubApi=require('github');
-
+var github = require('../repo/gitHubAPI');
 
 module.exports = router;
 
+var errGitHub = function(err) {
+	console.log("Error with GitHub API: ", err);
+}
 
-var github = new GitHubApi({
-// required
-version: "3.0.0"
-//optional
-// debug: true,
-// protocol: "https",
-// host: "api.github.com", // should be api.github.com for GitHub
-// pathPrefix: "/api/v3", // for some GHEs; none for GitHub
-// timeout: 5000,
-// headers: {
-//     "user-agent": "My-Cool-GitHub-App" // GitHub is happy with a unique user agent
-// }
-});
-
-
-
-router.get('/username', function (req, res){
+router.get('/username', function (req, res, next){
 	console.log(req.user);
 	var userGitHub = req.user.github.username;
 	var userToken = req.user.github.token;
@@ -37,6 +23,7 @@ router.get('/username', function (req, res){
 	github.user.getFrom({
 		user: userGitHub
 	}, function(err, userInfo) {
+		if(err) { errGitHub(err); }
 		res.json(userInfo);
 	});
 
@@ -58,6 +45,7 @@ router.get('/collaborators', function (req, res){
 	github.events.getFromUser({
 		user: userGitHub
 	}, function(err, userEvents) {
+		if(err) { errGitHub(err); }
 		res.send(userEvents);
 	});
 
@@ -79,71 +67,10 @@ router.get('/repos', function (req, res){
 		user: userGitHub,
 		type: "all"
 	}, function(err, userRepos) {
-
+		if(err) { errGitHub(err); }
 		res.json(userRepos);
-
-		// console.log(userRepos[0].name);
-		
-		// userRepos.map(function(repo, index){
-
-
-
-		// 	var repoName = repo.name;
-		// 	repo.collaborators = [];
-
-		// 	console.log(repoName);
-
-		// 	github.repos.getCollaborators({
-			
-		// 	user: userGitHub,
-		// 	repo: repoName
-			
-		// 	}, function(err, repoCollaborators) {
-		// 		var collaboratorsUserName = [];
-
-		// 		repoCollaborators.map(function(collaborator){
-		// 			repo.collaborators.push(collaborator.login);
-			
-		// 			if(index === userRepos.length-1) {
-		// 			console.log(req.headers);
-		// 			res.json(userRepos);
-		// 			}
-
-		// 		});
-
-			
-			
-		// 	});
-		
-
-		// });
-
-
-
-
 	});
 	
 });
-
-
-
-// router.get('/repos/collaborators', function (req, res){
-	
-// 	var userGitHub = req.user.github.username;
-// 	var userToken = req.user.github.token;
-
-// 	github.authenticate({
-//     type: "oauth",
-//     token: userToken
-// 	});
-	
-// 	github.repos.getCollaborators({
-// 		user: userGitHub,
-// 		repo: "project_management_tool"
-// 	}, function(err, collaborators) {
-// 		res.send(collaborators);
-// 	});
-	
-// });
 
 

@@ -1,26 +1,12 @@
 'use strict';
-
 var router = require('express').Router();
-var GitHubApi=require('github');
-
+var github = require('./gitHubAPI');
 
 module.exports = router;
 
-var github = new GitHubApi({
-// required
-version: "3.0.0"
-//optional
-// debug: true,
-// protocol: "https",
-// host: "api.github.com", // should be api.github.com for GitHub
-// pathPrefix: "/api/v3", // for some GHEs; none for GitHub
-// timeout: 5000,
-// headers: {
-//     "user-agent": "My-Cool-GitHub-App" // GitHub is happy with a unique user agent
-// }
-});
-
-
+var errGitHub = function(err) {
+	console.log("Error with GitHub API: ", err);
+}
 
 router.get('/:repoOwner/:repoName', function (req, res) {
 
@@ -35,6 +21,7 @@ router.get('/:repoOwner/:repoName', function (req, res) {
 		user: req.params.repoOwner,
 		repo: req.params.repoName,
 	}, function(err, repoInfo){
+		if(err) { errGitHub(err); }
 		res.json(repoInfo);
 	})
 	
@@ -53,6 +40,7 @@ router.get('/:repoOwner/:repoName/collaborators', function (req, res) {
 		user: req.params.repoOwner,
 		repo: req.params.repoName
 	}, function(err, repoCollaborators) {
+		if(err) { errGitHub(err); }
 		res.json(repoCollaborators);
 	});
 
@@ -71,6 +59,7 @@ router.get('/:repoOwner/:repoName/commits', function (req, res) {
 		user: req.params.repoOwner,
 		repo: req.params.repoName
 	}, function(err, repoCommits) {
+		if(err) { errGitHub(err); }
 		res.json(repoCommits);
 	});
 
@@ -89,6 +78,7 @@ router.get('/:repoOwner/:repoName/statsCodeFrequency', function (req, res) {
 		user: req.params.repoOwner,
 		repo: req.params.repoName
 	}, function(err, statsCodeFrequency) {
+		if(err) { errGitHub(err); }
 		res.json(statsCodeFrequency);
 	});
 
@@ -107,6 +97,7 @@ router.get('/:repoOwner/:repoName/statsCommitActivity', function (req, res) {
 		user: req.params.repoOwner,
 		repo: req.params.repoName
 	}, function(err, statsCommitActivity) {
+		if(err) { errGitHub(err); }		
 		res.json(statsCommitActivity);
 	});
 
@@ -125,6 +116,7 @@ router.get('/:repoOwner/:repoName/statsContributors', function (req, res) {
 		user: req.params.repoOwner,
 		repo: req.params.repoName
 	}, function(err, statsContributors) {
+		if(err) { errGitHub(err); }		
 		res.json(statsContributors);
 	});
 
@@ -143,6 +135,7 @@ router.get('/:repoOwner/:repoName/statsParticipation', function (req, res) {
 		user: req.params.repoOwner,
 		repo: req.params.repoName
 	}, function(err, statsParticipation) {
+		if(err) { errGitHub(err); }
 		res.json(statsParticipation);
 	});
 
@@ -165,6 +158,7 @@ router.get('/:repoOwner/:repoName/repo-issues', function (req, res) {
 		state: "all",
 		per_page: 100
 	}, function(err, repoIssues) {
+		if(err) { errGitHub(err); }
 		res.json(repoIssues);
 	});
 });
@@ -184,6 +178,7 @@ router.get('/:repoOwner/:repoName/repo-labels', function (req, res) {
 		repo: req.params.repoName,
 		per_page: 100
 	}, function(err, repoLabels) {
+		if(err) { errGitHub(err); }
 		res.json(repoLabels);
 	});
 });
@@ -202,13 +197,14 @@ router.get('/:repoOwner/:repoName/repo-milestones', function (req, res) {
 		user: req.params.repoOwner,
 		repo: req.params.repoName
 	}, function(err, repoMilestones) {
+		if(err) { errGitHub(err); }
 		res.json(repoMilestones);
 	});
 });
 
 /***CREATES/POSTS AN ISSUE***/
 router.post('/:repoOwner/:repoName/create-repo-issue', function (req, res) {
-	
+
 	github.authenticate({
 	    type: "oauth",
 	    token: req.user.github.token
@@ -224,13 +220,14 @@ router.post('/:repoOwner/:repoName/create-repo-issue', function (req, res) {
 		// milestone: req.body.milestone,
 		labels: req.body.labels
 	}, function(err, createdRepoIssue) {
+		if(err) { errGitHub(err); }		
 		res.json(createdRepoIssue);
 	});
 });
 
 /***CREATES/POSTS AN ISSUE***/
 router.post('/:repoOwner/:repoName/edit-repo-issue/:issueNumber', function (req, res) {
-	console.log('IN BACKEND!');
+
 	var userToken = req.user.github.token;
 	// var issueTitle = req.body.title;
 	// var issueBody = req.body.body;
@@ -245,7 +242,6 @@ router.post('/:repoOwner/:repoName/edit-repo-issue/:issueNumber', function (req,
 	// req.body.labels.forEach(function(objLabel) {
 	// 	issueLabels.push(objLabel.name);
 	// });
-
 	github.authenticate({
 	    type: "oauth",
 	    token: userToken
@@ -262,7 +258,7 @@ router.post('/:repoOwner/:repoName/edit-repo-issue/:issueNumber', function (req,
 		state: req.body.state,
 		labels: req.body.labels
 	}, function(err, editedRepoIssue) {
-		console.log("RESPONSE", editedRepoIssue)
+		if(err) { errGitHub(err); }
 		res.json(editedRepoIssue);
 	});
 });
@@ -287,28 +283,15 @@ router.post('/:repoOwner/:repoName/create-repo-label/:labelName', function (req,
 		name: labelName,
 		color: labelColor
 	}, function(err, createdRepoLabel) {
+		if(err) { errGitHub(err); }		
 		res.json(createdRepoLabel);
 	});
 });
 
 /***EDIT REPO LABEL***/
 router.post('/:repoOwner/:repoName/labels', function (req, res,next) {
-    console.log('hey');
-	var userToken = req.user.github.token;
 
-	var github = new GitHubApi({
-	// required
-	version: "3.0.0"
-	//optional
-	// debug: true,
-	// protocol: "https",
-	// host: "api.github.com", // should be api.github.com for GitHub
-	// pathPrefix: "/api/v3", // for some GHEs; none for GitHub
-	// timeout: 5000,
-	// headers: {
-	//     "user-agent": "My-Cool-GitHub-App" // GitHub is happy with a unique user agent
-	// }
-	});
+	var userToken = req.user.github.token;
 
 	github.authenticate({
 	    type: "oauth",
@@ -321,9 +304,7 @@ router.post('/:repoOwner/:repoName/labels', function (req, res,next) {
 		name: req.body.old,
 		color: req.body.color
 	}, function(err, name) {
-		if(err) next(err);
-		console.log('ERROR: ', err);
-		console.log('NAME: ',name)
+		if(err) { errGitHub(err); }		
 		res.json(name);
 	});
 });
@@ -350,6 +331,7 @@ router.post('/:repoOwner/:repoName/create-repo-milestone/:milestoneTitle', funct
 		description: milestoneDescription,
 		due_on: milestoneDueDate
 	}, function(err, createdRepoMilestone) {
+		if(err) { errGitHub(err); }		
 		res.json(createdRepoMilestone);
 	});
 });
@@ -369,9 +351,8 @@ router.get('/:repoOwner/:repoName/repo-issue-comments/:issueNumber', function (r
 		repo: req.params.repoName,
 		number: req.params.issueNumber
 	}, function(err, issueComments) {
+		if(err) { errGitHub(err); }		
 		res.json(issueComments);
 	});
 });
-
-
 
