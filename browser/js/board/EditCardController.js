@@ -35,11 +35,12 @@ app.controller('EditCardController', function($scope, $modal, BoardService, Boar
             labels: ['Feature - '+featureName],
             dueDate: currentCard.dueDate,
             number: currentCard.number,
-            feature: currentCard.feature
+            feature: currentCard.feature,
+            state: currentCard.state
            };
 
 
-           function err(error){
+          function err(error){
             console.log(error);
           }
 
@@ -68,18 +69,11 @@ app.controller('EditCardController', function($scope, $modal, BoardService, Boar
           // };
 
           // $scope.getRepoNum(currentCard);
+          var filterIssue = function(editedCard){
+              $scope.editedIssue = {
+                title: editedCard.title
+              }
 
-          console.log('currentCARD', currentCard);
-
-          $scope.ok = function(editedCard){
-            
-            $scope.editedIssue = {
-                title: editedCard.title,
-                labels: [editedCard.labels]
-              };
-
-            var filterIssue = function(){
-              
               if(editedCard.details){
                 $scope.editedIssue.body = editedCard.details;
               }
@@ -89,9 +83,17 @@ app.controller('EditCardController', function($scope, $modal, BoardService, Boar
               if(editedCard.state){
                 $scope.editedIssue.state = editedCard.state;
               }
+              $scope.editedIssue.labels = editedCard.labels;
+              return $scope.editedIssue;
             };
-              
-          console.log('EDITED ISSUE: ', $scope.editedIssue); 
+
+          console.log('currentCARD', currentCard);
+
+          $scope.ok = function(editedCard){
+
+            filterIssue(editedCard);
+        
+            console.log('EDITED ISSUE: ', $scope.editedIssue); 
 
             BoardManipulator.editCard($scope.board, currentFeature, currentStatus, currentCard, editedCard);
             RepoFactory.getRepoIssues($stateParams).then(editIssue, err).then(RepoFactory.editRepoIssue($stateParams, $scope.issueNum, $scope.editedIssue));
