@@ -210,15 +210,23 @@ router.post('/:repoOwner/:repoName/create-repo-issue', function (req, res) {
 	    token: req.user.github.token
 	});
 
+	var createdIssue = {};
+
+	if(req.body.title) { createdIssue.title = req.body.title } else { createdIssue.title = ""; }	
+	if(req.body.body) { createdIssue.body = req.body.body; } else { createdIssue.body = ""; }
+	if(req.body.assignee) { createdIssue.assignee = req.body.assignee } else { createdIssue.assignee = ""; }
+	if(req.body.labels) { createdIssue.labels = req.body.labels } else { createdIssue.labels = "[]"; }
+
+	console.log("CREATED ISSUE: ", createdIssue);
 
 	github.issues.create({
 		user: req.params.repoOwner,
 		repo: req.params.repoName,
-		title: req.body.title,
-		body: req.body.body,
-		assignee: req.body.assignee,
+		title: createdIssue.title,
+		body: createdIssue.body,
+		assignee: createdIssue.assignee,
 		// milestone: req.body.milestone,
-		labels: req.body.labels
+		labels: createdIssue.labels
 	}, function(err, createdRepoIssue) {
 		if(err) { errGitHub(err); }		
 		res.json(createdRepoIssue);
@@ -228,35 +236,32 @@ router.post('/:repoOwner/:repoName/create-repo-issue', function (req, res) {
 /***CREATES/POSTS AN ISSUE***/
 router.post('/:repoOwner/:repoName/edit-repo-issue/:issueNumber', function (req, res) {
 
-	var userToken = req.user.github.token;
-	// var issueTitle = req.body.title;
-	// var issueBody = req.body.body;
-	// var issueAssignee;
-	// var issueState;
-	// var issueMilestone;
-	// var issueLabels = [];
-	// if (typeof req.body.assignee === 'string') { issueAssignee = req.body.assignee; }
-	// if (typeof req.body.state === 'string') { issueState = req.body.state; }
-	// if (typeof req.body.milestone === 'number') { issueMilestone = req.body.milestone; }
-
-	// req.body.labels.forEach(function(objLabel) {
-	// 	issueLabels.push(objLabel.name);
-	// });
 	github.authenticate({
 	    type: "oauth",
-	    token: userToken
+	    token: req.user.github.token
 	});
+
+	var editedIssue = {};
+
+	if(req.params.issueNumber) { editedIssue.number = req.params.issueNumber; } else { editedIssue.number = ""; }
+	if(req.body.title) { editedIssue.title = req.body.title; } else { editedIssue.title = ""; }
+	if(req.body.body) { editedIssue.body = req.body.body; } else { editedIsse.body = ""; }
+	if(req.body.assignee) { editedIssue.assignee = req.body.assignee; } else { editedIssue.assignee = ""; }
+	if(req.body.state) { editedIssue.state = req.body.state } else { editedIssue.state = ""; }
+	if(req.body.labels) { editedIssue.labels = req.body.labels } else { editedIssue.labels = "[]"; } 
+
+	console.log("EDITE ISSUE: ", editedIssue);
 
 	github.issues.edit({
 		user: req.params.repoOwner,
 		repo: req.params.repoName,
-		number: req.params.issueNumber,
-		title: req.body.title,
-		body: req.body.body,
-		assignee: req.body.assignee,
+		number: editedIssue.number,
+		title: editedIssue.title,
+		body: editedIssue.body,
+		assignee: editedIssue.assignee,
 		// milestone: issueMilestone,	
-		state: req.body.state,
-		labels: req.body.labels
+		state: editedIssue.state,
+		labels: editedIssue.labels
 	}, function(err, editedRepoIssue) {
 		if(err) { errGitHub(err); }
 		res.json(editedRepoIssue);

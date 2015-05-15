@@ -8,17 +8,15 @@
             <label class="control-label" for="newCardTitle">Card title</label>
 
             <div>
-                <input type="text" id="newCardTitle" placeholder="Title on a card" ng-model="title" required
-                       focus-me class="cardInputs form-control"/>
+                <input type="text" id="newCardTitle" placeholder="Title on a card" ng-model="title" required focus-me class="cardInputs form-control"/>
             </div>
         </div>
         <div class="form-group">
             <label class="control-label" for="newCardDetails">More details
-                <small>(optional)</small>
             </label>
 
             <div>
-                <textarea id="newCardDetails" ng-model="details" class="cardInputs form-control" rows="7">
+                <textarea id="newCardDetails" ng-model="details" class="cardInputs form-control" rows="7" required>
                 </textarea>
             </div>
         </div>
