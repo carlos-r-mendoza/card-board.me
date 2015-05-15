@@ -10,6 +10,16 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
 
   $scope.sprintBoard; 
 
+  $scope.isCollapsed = false;
+
+  // $scope.collapse = function(isCollapsed, feature){
+  //   $scope.collapsed = !(isCollapsed);
+  //   return !$scope.collapsed;
+  //   console.log(!$scope.collapsed);
+    
+  //   $scope.collapseFeature = feature;
+  // };
+
   $scope.sprintSortOptions = {
 
     //restrict move across features. move only within feature.
