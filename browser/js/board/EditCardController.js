@@ -45,31 +45,6 @@ app.controller('EditCardController', function($scope, $modal, BoardService, Boar
             console.log(error);
           }
 
-          function editIssue(info){
-            var issues = info.data;
-            // console.log('ISSUE info', info.data);
-            // console.log('ISSUES: ', issues);
-            issues.filter(function(issue){
-              // console.log('ELEMENT: ', issue);
-              // console.log('TITLE:' , issue.title);
-              // console.log('CARD TITLE: ', currentCard.title);
-              
-              if(issue.title === currentCard.title){
-                console.log('NUMBER: ', issue.number);
-                $scope.issueNum = issue.number;
-                // RepoFactory.editRepoIssue($stateParams, $scope.issueNum, editedCard);
-                // $modalInstance.close();
-              }
-            });
-          }
-            // console.log('SCOPEREPO!!:', $scope.repoIssues);
-           
-          //TO DO !!!
-          // $scope.getRepoNum = function(currentCard){ //NEED TO GET REPO ISSUE AND FIND MATCHING NUMBER TO BE ABLE TO UPDATE THE ISSUE IN GITHUB
-          //   RepoFactory.getRepoIssues($stateParams).then(response, err);
-          // };
-
-          // $scope.getRepoNum(currentCard);
           var filterIssue = function(editedCard){
               $scope.editedIssue = {
                 title: editedCard.title
@@ -94,10 +69,11 @@ app.controller('EditCardController', function($scope, $modal, BoardService, Boar
 
             filterIssue(editedCard);
         
-            console.log('EDITED ISSUE: ', $scope.editedIssue); 
+            // console.log('EDITED ISSUE: ', $scope.editedIssue); 
+            // console.log('NUMBER', currentCard.number);
 
             BoardManipulator.editCard($scope.board, currentFeature, currentStatus, currentCard, editedCard);
-            RepoFactory.getRepoIssues($stateParams).then(editIssue, err).then(RepoFactory.editRepoIssue($stateParams, $scope.issueNum, $scope.editedIssue));
+            RepoFactory.editRepoIssue($stateParams, currentCard.number, $scope.editedIssue);
             $modalInstance.close();
           };
         }
