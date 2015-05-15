@@ -18,7 +18,7 @@ app.controller('NewFeatureController', function ($scope, $modal, BoardService, B
           cards: [{
             title: '',
             details: '',
-            status: 'Open',
+            status: 'In progress',
             assignee: '',
             label: '',
             dueDate: ''
@@ -28,7 +28,7 @@ app.controller('NewFeatureController', function ($scope, $modal, BoardService, B
           cards: [{
             title: '',
             details: '',
-            status: 'Open',
+            status: 'Closed',
             assignee: '',
             label: '',
             dueDate: ''

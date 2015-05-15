@@ -6,10 +6,9 @@ app.controller('NewCardController', function ($scope, $modal, $modalInstance, Bo
       title: '',
       details: '',
       status: 'Open',
-      comments: '',
       assignee: '',
       label: 'Feature - '+featureName,
-      dueDate: ''
+      phase: 'open' 
   };
 
   $scope.close = function () {
