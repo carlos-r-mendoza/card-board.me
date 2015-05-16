@@ -219,10 +219,10 @@ router.post('/:repoOwner/:repoName/create-repo-issue', function (req, res) {
 
 	var createdIssue = {};
 
-	if(req.body.title) { createdIssue.title = req.body.title } else { createdIssue.title = ""; }	
-	if(req.body.body) { createdIssue.body = req.body.body; } else { createdIssue.body = ""; }
-	if(req.body.assignee) { createdIssue.assignee = req.body.assignee } else { createdIssue.assignee = ""; }
-	if(req.body.labels) { createdIssue.labels = req.body.labels } else { createdIssue.labels = "[]"; }
+	if(req.body.title) { createdIssue.title = req.body.title } else { createdIssue.title = undefined; }	
+	if(req.body.body) { createdIssue.body = req.body.body; } else { createdIssue.body = undefined; }
+	if(req.body.assignee) { createdIssue.assignee = req.body.assignee } else { createdIssue.assignee = undefined; }
+	if(req.body.labels) { createdIssue.labels = req.body.labels } else { createdIssue.labels = undefined; }
 
 	console.log("CREATED ISSUE: ", createdIssue);
 
@@ -250,14 +250,14 @@ router.post('/:repoOwner/:repoName/edit-repo-issue/:issueNumber', function (req,
 
 	var editedIssue = {};
 
-	if(req.params.issueNumber) { editedIssue.number = req.params.issueNumber; } else { editedIssue.number = ""; }
-	if(req.body.title) { editedIssue.title = req.body.title; } else { editedIssue.title = ""; }
-	if(req.body.body) { editedIssue.body = req.body.body; } else { editedIsse.body = ""; }
-	if(req.body.assignee) { editedIssue.assignee = req.body.assignee; } else { editedIssue.assignee = ""; }
-	if(req.body.state) { editedIssue.state = req.body.state } else { editedIssue.state = ""; }
-	if(req.body.labels) { editedIssue.labels = req.body.labels } else { editedIssue.labels = "[]"; } 
+	if(req.params.issueNumber) { editedIssue.number = req.params.issueNumber; } else { editedIssue.number = undefined; }
+	if(req.body.title) { editedIssue.title = req.body.title; } else { editedIssue.title = undefined; }
+	if(req.body.body) { editedIssue.body = req.body.body; } else { editedIsse.body = undefined; }
+	if(req.body.assignee) { editedIssue.assignee = req.body.assignee; } else { editedIssue.assignee = undefined; }
+	if(req.body.state) { editedIssue.state = req.body.state } else { editedIssue.state = undefined; }
+	if(req.body.labels) { editedIssue.labels = req.body.labels } else { editedIssue.labels = undefined; } 
 
-	console.log("EDITE ISSUE: ", editedIssue);
+	console.log("EDITED ISSUE: ", editedIssue);
 
 	github.issues.edit({
 		user: req.params.repoOwner,
