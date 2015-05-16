@@ -53,12 +53,10 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
   function rejected(error){
     console.log(error);
   }
-  
-
-
 
     var sprint= { //board data structure
       "name": "Sprint Board",
+      "collaborators": $scope.collab,
       "numberOfColumns": 3, //change this number to match number of hardcoded columns 
       "columns": [
         {"name": "Open"},
@@ -67,8 +65,6 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
       ],
       "features": []
     };
-
- 
 
 
     RepoFactory.getRepoLabels($stateParams).then(getLabelFeatures, rejected);
@@ -132,7 +128,7 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
                   issue.feature = feature.title;
 
                   for (var m = l; m <= issue.labels.length-1; m++) { //checking for phase label
-                    label = issue.labels[m]
+                    label = issue.labels[m];
                     
                     for (var j = sprint.numberOfColumns-1; j <= phases.length-1; j++) {
                       var phase = phases[j]; //a phase 
@@ -172,30 +168,22 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
 
     function createCard(phase, issue) {
       //console.log('ISSUE STATE', issue.state);
-      if(issue.milestone) { issue.due_date = issue.milestone.due_on } else { issue.due_date = undefined };
-      phase.cards.push({"title": issue.title, //issue name
-                        "details": issue.body, //issue body
-                        "state": issue.state,
-                        "number": issue.number,
-                        "feature": issue.feature,
-                        "phase": issue.phase,
-                        "labels": issue.labels,
-                        "assignee": issue.assignee,
-                        "comments_number": issue.comments,
-                        "milestone": issue.milestone,
-                        "due_date": issue.due_date,
-                        "created_at": issue.created_at,
-                        "updated_at": issue.updated_at,
-                        "closed_at": issue.closed_at
-                        
-                      }); 
-            
-
-
+      if(issue.milestone) { issue.due_date = issue.milestone.due_on; } else { issue.due_date = undefined; }
+      phase.cards.push({
+        "title": issue.title, //issue name
+        "details": issue.body, //issue body
+        "state": issue.state,
+        "number": issue.number,
+        "feature": issue.feature,
+        "phase": issue.phase,
+        "labels": issue.labels,
+        "assignee": issue.assignee,
+        "comments_number": issue.comments,
+        "milestone": issue.milestone,
+        "due_date": issue.due_date,
+        "created_at": issue.created_at,
+        "updated_at": issue.updated_at,
+        "closed_at": issue.closed_at
+      }); 
     }
-
-
-
-
-
 });
