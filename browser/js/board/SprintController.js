@@ -37,24 +37,18 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
       var destinationPhase=event.dest.sortableScope.$parent.phase.name;
       var sourcePhase=event.source.sortableScope.$parent.phase.name;
       var issueNum=event.source.itemScope.card.number;
-      var featureName=event.source.itemScope.card.feature;
       var allLabels=event.source.itemScope.card.labels;
-      // console.log("feature");
-      console.log("labels",allLabels);
+      var filteredArray=allLabels.filter(phaseFilter);
       if (destinationPhase==="Closed"){
-        var filteredArray=allLabels.filter(phaseFilter);
         RepoFactory.editRepoIssue($stateParams,issueNum,{state:"closed", labels:filteredArray});
       } else if (destinationPhase==="Open"&&sourcePhase==="Closed"){
         RepoFactory.editRepoIssue($stateParams,issueNum,{state:"open"});
       } else if (sourcePhase==="Closed"){
         var currentLabelNames=_.pluck(allLabels, 'name');
-        currentLabelNames.push("Phase - "+destinationPhase);
         RepoFactory.editRepoIssue($stateParams,issueNum,{state:"open", labels:currentLabelNames});
       } else if (destinationPhase==="Open"){
-        var filteredArray=allLabels.filter(phaseFilter);
         RepoFactory.editRepoIssue($stateParams,issueNum,{labels:filteredArray});
       } else {
-        var filteredArray=allLabels.filter(phaseFilter);
         var currentLabelNames=_.pluck(filteredArray, 'name');
         currentLabelNames.push("Phase - "+destinationPhase);
         RepoFactory.editRepoIssue($stateParams,issueNum,{labels:currentLabelNames});
