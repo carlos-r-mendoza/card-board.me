@@ -33,7 +33,7 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
       var issueNum=event.source.itemScope.card.number;
       var featureName=event.source.itemScope.card.feature;
       var allLabels=event.source.itemScope.card;
-      console.log("feature",featureName);
+      //console.log("feature",featureName);
       console.log("labels",allLabels);
       if (destinationPhase==="Closed"){
         //console.log($stateParams);
