@@ -1,3 +1,5 @@
+//var _=require('lodash');
+
 app.config(function ($stateProvider) {
     $stateProvider.state('board', {
         url: '/board/:owner/:name',
@@ -28,18 +30,30 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
       return sourceItemHandleScope.itemScope.sortableScope.$parent.$parent.feature.$$hashKey === destSortableScope.$parent.$parent.feature.$$hashKey;
     },
     itemMoved: function (event) {
+      function phaseFilter(label){
+          return label.name.split(" - ")[0]!=="Phase";
+      }
+
       var destinationPhase=event.dest.sortableScope.$parent.phase.name;
-      var Phase=event.source.sortableScope.$parent.phase.name;
+      var sourcePhase=event.source.sortableScope.$parent.phase.name;
       var issueNum=event.source.itemScope.card.number;
-      var featureName=event.source.itemScope.card.feature;
-      var allLabels=event.source.itemScope.card;
-      console.log("feature",featureName);
-      console.log("labels",allLabels);
+      var allLabels=event.source.itemScope.card.labels;
+      var filteredArray=allLabels.filter(phaseFilter);
       if (destinationPhase==="Closed"){
-        //console.log($stateParams);
-        //console.log("WooHoo");
-        RepoFactory.editRepoIssue($stateParams,issueNum,{state:"closed"});
-      } 
+        RepoFactory.editRepoIssue($stateParams,issueNum,{state:"closed", labels:filteredArray});
+      } else if (destinationPhase==="Open"&&sourcePhase==="Closed"){
+        RepoFactory.editRepoIssue($stateParams,issueNum,{state:"open"});
+      } else if (sourcePhase==="Closed"){
+        var currentLabelNames=_.pluck(allLabels, 'name');
+        RepoFactory.editRepoIssue($stateParams,issueNum,{state:"open", labels:currentLabelNames});
+      } else if (destinationPhase==="Open"){
+        RepoFactory.editRepoIssue($stateParams,issueNum,{labels:filteredArray});
+      } else {
+        var currentLabelNames=_.pluck(filteredArray, 'name');
+        currentLabelNames.push("Phase - "+destinationPhase);
+        RepoFactory.editRepoIssue($stateParams,issueNum,{labels:currentLabelNames});
+      }
+      
     },
     orderChanged: function (event) {
     },
@@ -167,7 +181,7 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
     }
 
     function createCard(phase, issue) {
-      //console.log('ISSUE STATE', issue.state);
+
       if(issue.milestone) { issue.due_date = issue.milestone.due_on; } else { issue.due_date = undefined; }
       phase.cards.push({
         "title": issue.title, //issue name
