@@ -28,6 +28,14 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
       return sourceItemHandleScope.itemScope.sortableScope.$parent.$parent.feature.$$hashKey === destSortableScope.$parent.$parent.feature.$$hashKey;
     },
     itemMoved: function (event) {
+      var destinationPhase=event.dest.sortableScope.$parent.phase.name;
+      var Phase=event.source.sortableScope.$parent.phase.name;
+      var issueNum=event.source.itemScope.card.number;
+      if (destinationPhase==="Closed"){
+        //console.log($stateParams);
+        //console.log("WooHoo");
+        RepoFactory.editRepoIssue($stateParams,issueNum,{state:"closed"});
+      }
     },
     orderChanged: function (event) {
     },
