@@ -26,13 +26,12 @@
         </div>
 
          <div class='form-group'>
-            <label class="control-label" for="editedCardDetails">Assignee
-                <small>(optional)</small>
-            </label>
-            <div>
-                <textarea id="editedCardDetails" ng-model="editedCard.assignee" class="cardInputs form-control" rows="7">
-                </textarea>
-            </div>
+            <div class='input-field col s12'>
+            <select class="browser-default" ng-model="editedCard.assignee">
+                <option value='' disabled selected>Assignee</option>
+                <option value='{{collaborator.login}}' name='text' id="editedCardDetails"  ng-repeat="collaborator in collaborators">{{collaborator.login}}</option>
+            </select>
+           </div>
         </div>
         <div class='form-group'>
             <label class="control-label" for="editedCardDetails">Comments
@@ -43,14 +42,15 @@
                 </textarea>
             </div>
         </div>
-        <div class='form-group'>
-            <label class="control-label" for="editedCardDetails">Status
+        <div class="row">
+        <div class='input-field col s6'>
+            <label class="control-label" for="editedCardDetails">Labels
                 <small>(optional)</small>
             </label>
-            <div>
-                <textarea id="editedCardDetails" ng-model="editedCard.state" class="cardInputs form-control" rows="7">
-                </textarea>
-            </div>
+                <input type='text' id="editedCardDetails" ng-model="editedCard.labels" placeholder="Label Name"/>
+                pick color:
+                <a ng-click="addLabel(editedCard.labels)" class="glyphicon glyphicon-plus"></a>
+        </div>
         </div>
 
     </div>

@@ -1,7 +1,7 @@
 app.controller('EditCardController', function($scope, $modal, BoardService, BoardManipulator, $rootScope, RepoFactory, $stateParams){
 	   
 	   $scope.editCard = function(board, featureName, cardStatus, card){
-      console.log("CARD", card);
+      
         $scope.modalEdit = $modal.open({
         templateUrl: '/js/board/editCard.html',
         backdrop: 'static',
@@ -19,7 +19,8 @@ app.controller('EditCardController', function($scope, $modal, BoardService, Boar
             return card;
           }
         },
-        controller: function($scope, $modalInstance, sprintBoard, currentFeature, currentCard, currentStatus){
+        
+          controller: function($scope, $modalInstance, sprintBoard, currentFeature, currentCard, currentStatus){
 
           $scope.board = sprintBoard;
           
@@ -30,16 +31,16 @@ app.controller('EditCardController', function($scope, $modal, BoardService, Boar
           $scope.editedCard = {
             title: currentCard.title,
             details: currentCard.details,
-            phase: currentCard.phase,
-            comments: currentCard.comments,
-            assignee: currentCard.assignee,
-            labels: ['Feature - '+featureName],
-            dueDate: currentCard.dueDate,
+            state: currentCard.state,
             number: currentCard.number,
             feature: currentCard.feature,
-            state: currentCard.state
-           };
-
+            phase: currentCard.phase,
+            labels: ['Feature - '+featureName],
+            assignee: currentCard.assignee.login,
+            comments: currentCard.comments,
+            milesone: currentCard.milesone,
+            dueDate: currentCard.dueDate
+          };
 
           function err(error){
             console.log(error);
@@ -48,22 +49,31 @@ app.controller('EditCardController', function($scope, $modal, BoardService, Boar
           var filterIssue = function(editedCard){
               $scope.editedIssue = {
                 title: editedCard.title
-              }
+              };
 
               if(editedCard.details){
                 $scope.editedIssue.body = editedCard.details;
               }
+
+              console.log('ASSIGN BEFORE', editedCard.assignee);
               if(editedCard.assignee){
                 $scope.editedIssue.assignee = editedCard.assignee;
+                console.log('ASSIGN AFTER', $scope.editedIssue.assignee);
               }
-              if(editedCard.state){
-                $scope.editedIssue.state = editedCard.state;
-              }
+                // RepoFactory.createLabels;//EDIT THIS
               $scope.editedIssue.labels = editedCard.labels;
+              
               return $scope.editedIssue;
             };
 
           console.log('currentCARD', currentCard);
+
+          
+          RepoFactory.getRepoCollaborators($stateParams).then(function(info){
+            $scope.collaborators = info.data;
+          }, err);
+
+          
 
           $scope.ok = function(editedCard){
 
@@ -76,8 +86,7 @@ app.controller('EditCardController', function($scope, $modal, BoardService, Boar
             RepoFactory.editRepoIssue($stateParams, currentCard.number, $scope.editedIssue);
             $modalInstance.close();
           };
-        }
-      });
-    };
-
+      }
+    });
+};
 });
