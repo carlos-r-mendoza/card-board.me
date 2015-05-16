@@ -189,11 +189,7 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
                         "closed_at": issue.closed_at
                         
                       }); 
-            //console.log("PHASECARDS", phase.cards)
-      
-                if(issue.status === "HELLO") {
-          console.log("BOARD", issue)
-    }
+            
 
 
     }
