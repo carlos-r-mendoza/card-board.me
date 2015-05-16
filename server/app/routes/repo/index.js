@@ -9,15 +9,17 @@ var errGitHub = function(err) {
 }
 
 router.get('/:repoOwner/:repoName', function (req, res) {
-
-	var userToken = req.user.github.token;
+	var date = new Date();
 
 	github.authenticate({
 	    type: "oauth",
-	    token: userToken
+	    token: req.user.github.token
 	});
 
 	github.repos.get({
+		// headers: {
+		// 	'If-Modified-Since' : date
+		// },
 		user: req.params.repoOwner,
 		repo: req.params.repoName,
 	}, function(err, repoInfo){
@@ -29,11 +31,9 @@ router.get('/:repoOwner/:repoName', function (req, res) {
 
 router.get('/:repoOwner/:repoName/collaborators', function (req, res) {
 
-	var userToken = req.user.github.token;
-
 	github.authenticate({
 	    type: "oauth",
-	    token: userToken
+	    token: req.user.github.token
 	});
 
 	github.repos.getCollaborators({
@@ -48,11 +48,9 @@ router.get('/:repoOwner/:repoName/collaborators', function (req, res) {
 
 router.get('/:repoOwner/:repoName/commits', function (req, res) {
 
-	var userToken = req.user.github.token;
-
 	github.authenticate({
 	    type: "oauth",
-	    token: userToken
+	    token: req.user.github.token
 	});
 
 	github.repos.getCommits({
@@ -67,11 +65,9 @@ router.get('/:repoOwner/:repoName/commits', function (req, res) {
 
 router.get('/:repoOwner/:repoName/statsCodeFrequency', function (req, res) {
 
-	var userToken = req.user.github.token;
-
 	github.authenticate({
 	    type: "oauth",
-	    token: userToken
+	    token: req.user.github.token
 	});
 
 	github.repos.getStatsCodeFrequency({
@@ -86,11 +82,9 @@ router.get('/:repoOwner/:repoName/statsCodeFrequency', function (req, res) {
 
 router.get('/:repoOwner/:repoName/statsCommitActivity', function (req, res) {
 
-	var userToken = req.user.github.token;
-
 	github.authenticate({
 	    type: "oauth",
-	    token: userToken
+	    token: req.user.github.token
 	});
 
 	github.repos.getStatsCommitActivity({
@@ -105,11 +99,9 @@ router.get('/:repoOwner/:repoName/statsCommitActivity', function (req, res) {
 
 router.get('/:repoOwner/:repoName/statsContributors', function (req, res) {
 
-	var userToken = req.user.github.token;
-
 	github.authenticate({
 	    type: "oauth",
-	    token: userToken
+	    token: req.user.github.token
 	});
 
 	github.repos.getStatsContributors({
@@ -124,11 +116,9 @@ router.get('/:repoOwner/:repoName/statsContributors', function (req, res) {
 
 router.get('/:repoOwner/:repoName/statsParticipation', function (req, res) {
 
-	var userToken = req.user.github.token;
-
 	github.authenticate({
 	    type: "oauth",
-	    token: userToken
+	    token: req.user.github.token
 	});
 
 	github.repos.getStatsParticipation({
@@ -144,15 +134,17 @@ router.get('/:repoOwner/:repoName/statsParticipation', function (req, res) {
 
 /***GETS ISSUES FOR A PARTICULAR REPO***/
 router.get('/:repoOwner/:repoName/repo-issues', function (req, res) {
-
-	var userToken = req.user.github.token;
+	var date = new Date();
 
 	github.authenticate({
 	    type: "oauth",
-	    token: userToken
+	    token: req.user.github.token
 	});
 
 	github.issues.repoIssues({
+		// headers: {
+		// 	'If-Modified-Since' : date
+		// },
 		user: req.params.repoOwner,
 		repo: req.params.repoName,
 		state: "all",
@@ -174,6 +166,9 @@ router.get('/:repoOwner/:repoName/repo-labels', function (req, res) {
 	});
 
 	github.issues.getLabels({
+		headers: {
+			'If-Modified-Since' : 'Sat, 16 May 2015 12:47:30 GMT'
+		},
 		user: req.params.repoOwner,
 		repo: req.params.repoName,
 		per_page: 100
@@ -314,6 +309,24 @@ router.post('/:repoOwner/:repoName/labels', function (req, res,next) {
 	});
 });
 
+/***DELETE A LABEL FROM REPO***/
+router.get('/:repoOwner/:repoName/delete-repo-label', function (req, res) {
+
+	github.authenticate({
+	    type: "oauth",
+	    token: req.user.github.token
+	});
+
+	github.issues.deleteLabel({
+		user: req.params.repoOwner,
+		repo: req.params.repoName,
+		name: req.body.name
+	}, function(err, deletedLabel) {
+		if(err) { errGitHub(err); }		
+		res.json(deletedLabel);
+	});
+});
+
 /***CREATES/POSTS AN ISSUE***/
 router.post('/:repoOwner/:repoName/create-repo-milestone/:milestoneTitle', function (req, res) {
 
@@ -360,4 +373,6 @@ router.get('/:repoOwner/:repoName/repo-issue-comments/:issueNumber', function (r
 		res.json(issueComments);
 	});
 });
+
+
 
