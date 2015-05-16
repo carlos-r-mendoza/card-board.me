@@ -179,7 +179,7 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
                         "milestone": issue.milestone,
                         "feature": issue.feature,
                         "phase": issue.phase}); 
-            //console.log("PHASECARDS", phase.cards)
+            console.log("PHASECARDS", phase.cards)
       
                 if(issue.status === "HELLO") {
           console.log("BOARD", issue)
