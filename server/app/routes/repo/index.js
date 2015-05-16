@@ -253,7 +253,7 @@ router.post('/:repoOwner/:repoName/edit-repo-issue/:issueNumber', function (req,
 
 	if(req.params.issueNumber) { editedIssue.number = req.params.issueNumber; } else { editedIssue.number = undefined; }
 	if(req.body.title) { editedIssue.title = req.body.title; } else { editedIssue.title = undefined; }
-	if(req.body.body) { editedIssue.body = req.body.body; } else { editedIsse.body = undefined; }
+	if(req.body.body) { editedIssue.body = req.body.body; } else { editedIssue.body = undefined; }
 	if(req.body.assignee) { editedIssue.assignee = req.body.assignee; } else { editedIssue.assignee = undefined; }
 	if(req.body.state) { editedIssue.state = req.body.state } else { editedIssue.state = undefined; }
 	if(req.body.labels) { editedIssue.labels = req.body.labels } else { editedIssue.labels = undefined; } 

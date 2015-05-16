@@ -82,7 +82,7 @@ app.factory('RepoFactory', function($http){
 			// return $http.post('/api/repo', {name: 'asdf', color: 'asdf'});
 		},
 		deleteRepoLabel: function (repoInfo, label) {
-			return $http.post('api/repo/' + repoInfo.owner + "/" + repoInfo.name + "/delete-repo-label", label).then(function(editedRepoLabel){
+			return $http.post('api/repo/' + repoInfo.owner + "/" + repoInfo.name + "/delete-repo-label", label).then(function(deletedRepoLabel){
 				return deletedRepoLabel;
 			});
 		},
