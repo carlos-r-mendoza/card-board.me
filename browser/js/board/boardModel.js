@@ -94,7 +94,7 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams)
     addFeature: function (board, featureName) {
       board.features.push(new BoardModel.Feature(featureName));
       var label = {name: 'Feature - '+featureName, color: 'FFFFFF'};
-      RepoFactory.createRepoLabel($stateParams, label);
+      //RepoFactory.createRepoLabel($stateParams, label);
     },
 
     editFeature: function(board, currentFeature, editFeature){
@@ -116,8 +116,8 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams)
     addPhaseToAll: function (board, phase) {
       board.columns.push(new BoardModel.Phase(phase));
       var phaseName = "Phase - " + phase;
-      var phaseInfo={name: phaseName, color:'FFFFFF'};
-      RepoFactory.createRepoLabel($stateParams,phaseInfo);
+      var phaseInfo= {name: phaseName, color:'FFFFFF'};
+      //RepoFactory.createRepoLabel($stateParams, phaseInfo);
     },
 
     addCardToFeature: function (board, featureName, phaseName, task) {

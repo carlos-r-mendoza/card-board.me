@@ -81,6 +81,11 @@ app.factory('RepoFactory', function($http){
 			
 			// return $http.post('/api/repo', {name: 'asdf', color: 'asdf'});
 		},
+		deleteRepoLabel: function (repoInfo, label) {
+			return $http.post('api/repo/' + repoInfo.owner + "/" + repoInfo.name + "/delete-repo-label", label).then(function(editedRepoLabel){
+				return deletedRepoLabel;
+			});
+		},
 		getRepoMilestones: function (repoInfo) {
 			return $http.get('api/repo/' + repoInfo.owner + "/" + repoInfo.name + "/repo-milestones").then(function(repoMilestones){
 				return repoMilestones;
@@ -148,9 +153,12 @@ app.controller('RepoController', function($scope, $stateParams, RepoFactory){
 	};
 
 	$scope.editLabel = function(label) {
-		console.log(label);
 		RepoFactory.editRepoLabel($stateParams, label).then(editedRepoLabelFulfilled, rejected);
 	};
+
+	$scope.deleteLabel = function(label) {
+		RepoFactory.deleteRepoLabel($stateParams, label);
+	}
 
 	$scope.createMilestone = function(milestone) {
 		RepoFactory.createRepoMilestone($stateParams, milestone).then(createdRepoMilestoneFulfilled, rejected);
