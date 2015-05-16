@@ -250,7 +250,7 @@ router.post('/:repoOwner/:repoName/edit-repo-issue/:issueNumber', function (req,
 	if(req.body.state) { editedIssue.state = req.body.state } else { editedIssue.state = ""; }
 	if(req.body.labels) { editedIssue.labels = req.body.labels } else { editedIssue.labels = "[]"; } 
 
-	console.log("EDITE ISSUE: ", editedIssue);
+	console.log("EDITED ISSUE: ", editedIssue);
 
 	github.issues.edit({
 		user: req.params.repoOwner,

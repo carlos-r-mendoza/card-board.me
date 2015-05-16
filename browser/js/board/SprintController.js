@@ -31,6 +31,7 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
       var destinationPhase=event.dest.sortableScope.$parent.phase.name;
       var Phase=event.source.sortableScope.$parent.phase.name;
       var issueNum=event.source.itemScope.card.number;
+      console.log(event.source);
       if (destinationPhase==="Closed"){
         //console.log($stateParams);
         //console.log("WooHoo");
@@ -167,7 +168,7 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
     }
 
     function createCard(phase, issue) {
-      console.log('ISSUE STATE', issue.state);
+      //console.log('ISSUE STATE', issue.state);
       phase.cards.push({"title": issue.title, //issue name
                         "details": issue.body, //issue body
                         "state": issue.state,
