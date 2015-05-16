@@ -1,43 +1,12 @@
 app.controller('NewFeatureController', function ($scope, $modal, BoardService, BoardManipulator, $rootScope) {
 
   $scope.newFeature = {
-      title: '',
-      details: '',
-      phases:[
-        { name: 'Open',
-          cards: [{
-            title: 'Add new card',
-            details: '',
-            status: 'Open',
-            assignee: '',
-            label: '',
-            dueDate: ''
-          }]
-        },
-        { name: 'In progress',
-          cards: [{
-            title: '',
-            details: '',
-            status: 'In progress',
-            assignee: '',
-            label: '',
-            dueDate: ''
-          }]
-        },
-        { name: 'Closed',
-          cards: [{
-            title: '',
-            details: '',
-            status: 'Closed',
-            assignee: '',
-            label: '',
-            dueDate: ''
-          }]
-        }
-      ]
+    title: "",
+    color: "",
+    due_on: "",
+    description: ""
   };
   
-
   $scope.addNewFeature = function(board){
       $scope.modalFeature = $modal.open({
         templateUrl: '/js/board/newFeature.html',
@@ -52,8 +21,8 @@ app.controller('NewFeatureController', function ($scope, $modal, BoardService, B
           $scope.close = function(){
             $modalInstance.close();
           };
-          $scope.ok = function(featureTitle, featureDetails){
-              BoardManipulator.addFeature($scope.board, featureTitle);
+          $scope.ok = function(featureTitle, featureInfo){
+              BoardManipulator.addNewFeature($scope.board, featureInfo);
               BoardManipulator.addPhaseToFeature($scope.board, featureTitle, {name: 'Open'}); //NEED TO AUTOMATE BY COULMN NAME
               BoardManipulator.addPhaseToFeature($scope.board, featureTitle, {name: 'In progress'});
               BoardManipulator.addPhaseToFeature($scope.board, featureTitle, {name: 'Closed'});

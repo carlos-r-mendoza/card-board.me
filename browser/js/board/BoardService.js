@@ -38,11 +38,10 @@ app.factory('BoardService', function ($modal, BoardManipulator, BoardModel) {
         BoardManipulator.addColumn(sprintBoard, column.name);
       });
       angular.forEach(board.features, function (feature) {
-        BoardManipulator.addFeature(sprintBoard, feature.title);
+        BoardManipulator.addFeature(sprintBoard, feature);
         angular.forEach(feature.phases, function (phase) {
           BoardManipulator.addPhaseToFeature(sprintBoard, feature.title, phase);
           angular.forEach(phase.cards, function (card) {
-            console.log("CARDA", card);
             BoardManipulator.addCardToFeature(sprintBoard, feature.title, phase.name, card);
           });
         });

@@ -253,7 +253,7 @@ router.post('/:repoOwner/:repoName/edit-repo-issue/:issueNumber', function (req,
 
 	if(req.params.issueNumber) { editedIssue.number = req.params.issueNumber; } else { editedIssue.number = undefined; }
 	if(req.body.title) { editedIssue.title = req.body.title; } else { editedIssue.title = undefined; }
-	if(req.body.body) { editedIssue.body = req.body.body; } else { editedIsse.body = undefined; }
+	if(req.body.body) { editedIssue.body = req.body.body; } else { editedIssue.body = undefined; }
 	if(req.body.assignee) { editedIssue.assignee = req.body.assignee; } else { editedIssue.assignee = undefined; }
 	if(req.body.state) { editedIssue.state = req.body.state } else { editedIssue.state = undefined; }
 	if(req.body.labels) { editedIssue.labels = req.body.labels } else { editedIssue.labels = undefined; } 
@@ -281,20 +281,18 @@ router.post('/:repoOwner/:repoName/edit-repo-issue/:issueNumber', function (req,
 /***CREATES/POSTS A REPO LABEL***/
 router.post('/:repoOwner/:repoName/create-repo-label/:labelName', function (req, res) {
 
-	var userToken = req.user.github.token;
-	var labelName = req.body.name;
-	var labelColor = req.body.color;
+	console.log("Create Label", req.body);		
 
 	github.authenticate({
 	    type: "oauth",
-	    token: userToken
+	    token: req.user.github.token
 	});
 
 	github.issues.createLabel({
 		user: req.params.repoOwner,
 		repo: req.params.repoName,
-		name: labelName,
-		color: labelColor
+		name: req.params.labelName,
+		color: req.body.color
 	}, function(err, createdRepoLabel) {
 		if(err) { errGitHub(err); }		
 		res.json(createdRepoLabel);
@@ -343,6 +341,7 @@ router.get('/:repoOwner/:repoName/delete-repo-label', function (req, res) {
 /***CREATES/POSTS A MILESTONE***/
 router.post('/:repoOwner/:repoName/create-repo-milestone/:milestoneTitle', function (req, res) {
 
+	console.log("MILESTONE", req.body)
 	var userToken = req.user.github.token;
 	var milestoneTitle = req.body.title;
 	var milestoneState = req.body.state;
