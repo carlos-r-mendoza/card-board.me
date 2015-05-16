@@ -31,12 +31,15 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
       var destinationPhase=event.dest.sortableScope.$parent.phase.name;
       var Phase=event.source.sortableScope.$parent.phase.name;
       var issueNum=event.source.itemScope.card.number;
-      console.log(event.source);
+      var featureName=event.source.itemScope.card.feature;
+      var allLabels=event.source.itemScope.card;
+      console.log("feature",featureName);
+      console.log("labels",allLabels);
       if (destinationPhase==="Closed"){
         //console.log($stateParams);
         //console.log("WooHoo");
         RepoFactory.editRepoIssue($stateParams,issueNum,{state:"closed"});
-      }
+      } 
     },
     orderChanged: function (event) {
     },
@@ -169,17 +172,23 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
 
     function createCard(phase, issue) {
       //console.log('ISSUE STATE', issue.state);
+      if(issue.milestone) { issue.due_date = issue.milestone.due_on } else { issue.due_date = undefined };
       phase.cards.push({"title": issue.title, //issue name
                         "details": issue.body, //issue body
                         "state": issue.state,
                         "number": issue.number,
-                        "comments_number": issue.comments,
-                        "assignee": issue.assignee,
-                        "labels": issue.labels,
-                        "hasPhase": issue.hasPhase,
-                        "milestone": issue.milestone,
                         "feature": issue.feature,
-                        "phase": issue.phase}); 
+                        "phase": issue.phase,
+                        "labels": issue.labels,
+                        "assignee": issue.assignee,
+                        "comments_number": issue.comments,
+                        "milestone": issue.milestone,
+                        "due_date": issue.due_date,
+                        "created_at": issue.created_at,
+                        "updated_at": issue.updated_at,
+                        "closed_at": issue.closed_at
+                        
+                      }); 
             //console.log("PHASECARDS", phase.cards)
       
                 if(issue.status === "HELLO") {

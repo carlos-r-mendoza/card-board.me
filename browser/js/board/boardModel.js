@@ -23,7 +23,7 @@ app.factory('BoardModel', function(){
           this.cards = [];
       },
       
-      Card: function (title, details, state, number, assignee, labels, dueDate, feature, phase) {
+      Card: function (title, details, state, number, feature, phase, labels, assignee, comments, milestone, dueDate) {
         this.title = title;
         this.details = details;
         this.state = state;
@@ -33,6 +33,8 @@ app.factory('BoardModel', function(){
         this.milestone = dueDate;
         this.feature = feature;
         this.phase = phase;
+        this.comments = comments;
+        this.dueDate = dueDate;
         return this;
       }
   };
@@ -125,7 +127,7 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams)
         if (feature.name === featureName) {
           angular.forEach(feature.phases, function (phase) {
             if (phase.name === phaseName) {
-              phase.cards.push(new BoardModel.Card(task.title, task.details, task.state, task.number, task.comments, task.assignee, task.labels, task.feature, task.phase));
+              phase.cards.push(new BoardModel.Card(task.title, task.details, task.state, task.number, task.feature, task.phase, task.labels, task.assignee, task.comments, task.milestone, task.dueDate));
             }
           });
         }
