@@ -3,7 +3,7 @@
 
     <div class="modal-header">
         <button type="button" class="close" ng-click="close()">&times;</button>
-        <h4 class="modal-title" ng-model="columnName">Edit Card in '{{featureName}}'</h4>
+        <h4 class="modal-title" ng-model="columnName">Edit Card in '{{editedCard.feature}}'</h4>
     </div>
     <div class="modal-body">
         <div class="form-group">
@@ -42,13 +42,37 @@
                 </textarea>
             </div>
         </div>
+
+        <div class='form-group'>
+            <label class="control-label" for="editedCardDetails">Add Label
+                <small>(optional)</small>
+            </label>
+        </div>
+        <div class='form-group'>
+            <label class="control-label" for="editedCardDetails">Select Existing Label
+            </label>
+        </div>
+         <div class='form-group'>
+            <div class='input-field col s12'>
+            <select class="browser-default" ng-model="label">
+                <option value='' disabled selected>Select Exisiting Label</option>
+                <option value='{{label.name}}' name="text" id="label"  ng-repeat="label in listLabels">{{label.name}}</option>
+            </select>
+            <a ng-click="addLabelToIssue(label)" class="glyphicon glyphicon-plus"></a>
+           </div>
+        </div>
+        <div class='form-group'>
+            <label class="control-label" for="editedCardDetails">Or Create New Label
+            </label>
+        </div>
         <div class="row">
-        <div class='input-field col s6'>
-            <label>Add Label</label>
+            <div class='input-field col s6'>
                 <input type='text' id="editedCardDetails" ng-model="label.name" placeholder="Label Name"/>
+            </div>
+            <div class='input-field col s6'>
                 <input type="text" ng-model="label.color" placeholder="Label Color"/>
                 <a ng-click="addLabel(label)" class="glyphicon glyphicon-plus"></a>
-        </div>
+            </div>
         </div>
 
     </div>
