@@ -132,7 +132,7 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams)
       var phaseName = "Phase - " + phase;
       var phaseInfo= {name: phaseName, color:'FFFFFF'};
       console.log("HELLO", phaseInfo)
-      //RepoFactory.createRepoLabel($stateParams, phaseInfo);
+      RepoFactory.createRepoLabel($stateParams, phaseInfo);
     },
 
     addCardToFeature: function (board, featureName, phaseName, task) {

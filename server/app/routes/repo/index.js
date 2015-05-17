@@ -30,6 +30,7 @@ router.get('/:repoOwner/:repoName', function (req, res) {
 });
 
 router.get('/:repoOwner/:repoName/collaborators', function (req, res) {
+	console.log("USER", req.user)
 
 	github.authenticate({
 	    type: "oauth",
@@ -134,6 +135,8 @@ router.get('/:repoOwner/:repoName/statsParticipation', function (req, res) {
 
 /***GETS ISSUES FOR A PARTICULAR REPO***/
 router.get('/:repoOwner/:repoName/repo-issues', function (req, res) {
+		console.log("USER", req)
+
 	var date = new Date();
 	var allRepoIssues = [];
 	var pageNumber = 1;
