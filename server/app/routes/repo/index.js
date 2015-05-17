@@ -223,6 +223,7 @@ router.post('/:repoOwner/:repoName/create-repo-issue', function (req, res) {
 	if(req.body.body) { createdIssue.body = req.body.body; } else { createdIssue.body = undefined; }
 	if(req.body.assignee) { createdIssue.assignee = req.body.assignee } else { createdIssue.assignee = undefined; }
 	if(req.body.labels) { createdIssue.labels = req.body.labels } else { createdIssue.labels = undefined; }
+	if(req.body.milestone) { createdIssue.milestone = req.body.milestone } else { createdIssue.milestone = undefined; }
 
 	console.log("CREATED ISSUE: ", createdIssue);
 
@@ -232,7 +233,7 @@ router.post('/:repoOwner/:repoName/create-repo-issue', function (req, res) {
 		title: createdIssue.title,
 		body: createdIssue.body,
 		assignee: createdIssue.assignee,
-		// milestone: req.body.milestone,
+		milestone: createdIssue.milestone,
 		labels: createdIssue.labels
 	}, function(err, createdRepoIssue) {
 		if(err) { errGitHub(err); }		
@@ -281,20 +282,18 @@ router.post('/:repoOwner/:repoName/edit-repo-issue/:issueNumber', function (req,
 /***CREATES/POSTS A REPO LABEL***/
 router.post('/:repoOwner/:repoName/create-repo-label/:labelName', function (req, res) {
 
-	var userToken = req.user.github.token;
-	var labelName = req.body.name;
-	var labelColor = req.body.color;
+	console.log("Create Label", req.body);		
 
 	github.authenticate({
 	    type: "oauth",
-	    token: userToken
+	    token: req.user.github.token
 	});
 
 	github.issues.createLabel({
 		user: req.params.repoOwner,
 		repo: req.params.repoName,
-		name: labelName,
-		color: labelColor
+		name: req.params.labelName,
+		color: req.body.color
 	}, function(err, createdRepoLabel) {
 		if(err) { errGitHub(err); }		
 		res.json(createdRepoLabel);
@@ -343,6 +342,7 @@ router.get('/:repoOwner/:repoName/delete-repo-label', function (req, res) {
 /***CREATES/POSTS A MILESTONE***/
 router.post('/:repoOwner/:repoName/create-repo-milestone/:milestoneTitle', function (req, res) {
 
+	console.log("MILESTONE", req.body)
 	var userToken = req.user.github.token;
 	var milestoneTitle = req.body.title;
 	var milestoneState = req.body.state;

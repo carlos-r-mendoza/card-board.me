@@ -8,19 +8,36 @@
     <div class="modal-body">
         <div class="form-group">
             <label class="control-label" for="newFeatureTitle">Feature Title</label>
-
+            <div ng-repeat="collaborator in collaborators">
+            {{collaborator.login}}
+            </div>
             <div>
                 <input type="text" id="newFeatureTitle" placeholder="Feature title" ng-model="newFeature.title" required
                        focus-me class="cardInputs form-control"/>
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label" for="newFeatureDetails">More Details
+            <label class="control-label" for="newFeatureColor">Color<small>(optional)</small></label>
+
+            <div>
+                <input type="text" id="newFeatureColor" placeholder="HEX color without #" ng-model="newFeature.color"
+                       focus-me class="cardInputs form-control"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="newFeatureDueDate">Due Date<small>(optional)</small></label>
+            <div>
+                <input type="date" id="newFeatureDate" ng-model="newFeature.due_on"
+                       focus-me class="cardInputs form-control"/>
+            </div>
+        </div>            
+        <div class="form-group">
+            <label class="control-label" for="newFeatureDetails">Description
                 <small>(optional)</small>
             </label>
 
             <div>
-                <textarea id="newFeatureDetails" ng-model="newFeature.details" class="cardInputs form-control" rows="7">
+                <textarea id="newFeatureDetails" ng-model="newFeature.description" class="cardInputs form-control" rows="7">
                 </textarea>
             </div>
         </div>
@@ -28,6 +45,6 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" ng-click="close()">Close</button>
-        <button type="submit" class="btn btn-primary" ng-click="ok(newFeature.title)">Add</button>
+        <button type="submit" class="btn btn-primary" ng-click="ok(newFeature.title, newFeature)">Add</button>
     </div>
 </form>

@@ -13,7 +13,7 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
   //$scope.sprintBoard = ""; 
 
   $scope.isCollapsed = false;
-  $scope.sprintBoard = "";
+  //$scope.sprintBoard = "";
 
   // $scope.collapse = function(isCollapsed, feature){
   //   $scope.collapsed = !(isCollapsed);
@@ -81,14 +81,23 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
     };
 
 
-    RepoFactory.getRepoLabels($stateParams).then(getLabelFeatures, rejected);
+    
+    RepoFactory.getRepoMilestones($stateParams).then(getFeatures, rejected);
+    RepoFactory.getRepoLabels($stateParams).then(getPhases, rejected);
+    
+    function getFeatures(repoMilestones) {
+      repoMilestones.data.forEach(function(milestone) {
+        var featureName = milestone.title.split(" - ");
+        if(featureName[0] === "Feature") { populateFeaturesColumn(featureName[1], milestone); } 
+      });
+    }
 
-    function getLabelFeatures(repoLabels) {
+    function getPhases(repoLabels) {
       repoLabels.data.forEach(function(label) {
         var labelName = label.name.split(" - ");
-         if(labelName[0] === "Feature") {
-          populateFeaturesColumn(labelName[1]);
-        }  
+        //  if(labelName[0] === "Feature") {
+        //   populateFeaturesColumn(labelName[1]);
+        // }  
         if (labelName[0] === "Phase" && labelName[1] !== "In Progress") {
           createPhaseColumn(labelName[1]);
         }
@@ -97,10 +106,12 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
       RepoFactory.getRepoIssues($stateParams).then(addIssuesToPhases, rejected);
     } 
 
-    function populateFeaturesColumn(featuresTitle) {
+    function populateFeaturesColumn(featureName, feature) {
       sprint.features.push(
-        {"title": featuresTitle, //rows
-          "details": "Feature",  //can delete
+        {"title": featureName, //rows
+          "description": feature.description,
+          "due_date": feature.due_on,
+          "number": feature.number,
           "phases": [
             {"name": "Open", //colums
               "cards": []},

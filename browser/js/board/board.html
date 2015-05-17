@@ -21,14 +21,19 @@
         </tr>
         </thead>
         <tbody ng-repeat="feature in sprintBoard.features">
+        {{feature}}
         <tr>
-            <th class="black-text" ng-click='isCollapsed=!isCollapsed'>{{feature.name}}</th>
+            <th class="black-text" ng-click='isCollapsed=!isCollapsed'>{{feature.title}}</th>
         </tr>
         <tr collapse='isCollapsed'>
             <th style="width:22%">
                 <div class="story card sortable-item black-text">
                     <div class="row">
-                        <span class="card-title black-text" ng-click="isCollapsed=!isCollapsed">{{feature.name}}</span>
+                        <span class="card-title black-text" ng-click="isCollapsed=!isCollapsed">
+                        <div>Feature: {{feature.title}}</div>
+                        <div>Due Date: {{feature.due_date}}</div>
+                        <div>Details: {{feature.description}}</div>
+                        </span>
                     </div>
              <!--       <div class="col-sm-2" ng-controller="EditFeatureController">
                         <a data-no-drag class="addNewCard" ng-click="editingFeature(sprintBoard, feature.name)"><span class="mdi-editor-mode-edit"></span></a>
@@ -36,7 +41,7 @@
                 </div>
             </th>
             <td class="addTask">
-                <a title="Add card to column" ng-click="addNewCard(sprintBoard, column, feature.name)"><i
+                <a title="Add card to column" ng-click="addNewCard(sprintBoard, column, feature.name, feature)"><i
                         class="glyphicon glyphicon-plus addNewCard"></i></a>
             </td>
             <td as-sortable="sprintSortOptions" ng-repeat="phase in feature.phases" ng-model="phase.cards">

@@ -13,8 +13,12 @@ app.factory('BoardModel', function(){
           this.cards = [];
       },
 
-      Feature: function (name) {
-          this.name = name;
+      Feature: function (feature) {
+          this.name = feature.title;
+          this.title = feature.title;
+          this.description = feature.description;
+          this.due_date = feature.due_date;
+          this.number = feature.number;
           this.phases = [];
       },
 
@@ -93,12 +97,20 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams)
       });
     },
 
-    addFeature: function (board, featureName) {
-      board.features.push(new BoardModel.Feature(featureName));
-      var label = {name: 'Feature - '+featureName, color: 'FFFFFF'};
-      //RepoFactory.createRepoLabel($stateParams, label);
-    },
+    addFeature: function (board, feature) {
 
+      board.features.push(new BoardModel.Feature(feature));
+      // var label = {name: 'Feature - '+featureName, color: 'FFFFFF'};
+      //Removed createRepoLabelss statement in line below. It attempts 
+        //to create new labels each time page is refreshed
+      // RepoFactory.createRepoLabel($stateParams, label);
+    },
+    addNewFeature: function(board, feature) {
+      board.features.push(new BoardModel.Feature(feature.title));
+      feature.title = "Feature - " + feature.title;
+      RepoFactory.createRepoLabel($stateParams, feature);
+      RepoFactory.createRepoMilestone($stateParams, feature);      
+    },
     editFeature: function(board, currentFeature, editFeature){
       angular.forEach(board.features, function(feature){
         if(feature.name === currentFeature){
@@ -119,6 +131,7 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams)
       board.columns.push(new BoardModel.Phase(phase));
       var phaseName = "Phase - " + phase;
       var phaseInfo= {name: phaseName, color:'FFFFFF'};
+      console.log("HELLO", phaseInfo)
       //RepoFactory.createRepoLabel($stateParams, phaseInfo);
     },
 

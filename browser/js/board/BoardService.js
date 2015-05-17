@@ -7,13 +7,14 @@ app.factory('BoardService', function ($modal, BoardManipulator, BoardModel, Repo
           title: card.title,
           body: 'removed issue',
           state: 'closed',
+          milestone: undefined,
           labels: []
         };
         RepoFactory.editRepoIssue($stateParams, card.number, editedIssue);
         BoardManipulator.removeCardFromColumn(board, feature, phase, card);      
     },
 
-    addNewCard: function (board, column, featureName) {
+    addNewCard: function (board, column, featureName, featureInfo) {
       var modalInstance = $modal.open({
         templateUrl: '/js/board/newCard.html',
         controller: 'NewCardController',
@@ -24,6 +25,9 @@ app.factory('BoardService', function ($modal, BoardManipulator, BoardModel, Repo
           },
           featureName: function () {
             return featureName;
+          },
+          featureInfo: function () {
+            return featureInfo;
           }
         }
       });
@@ -41,7 +45,7 @@ app.factory('BoardService', function ($modal, BoardManipulator, BoardModel, Repo
         BoardManipulator.addColumn(sprintBoard, column.name);
       });
       angular.forEach(board.features, function (feature) {
-        BoardManipulator.addFeature(sprintBoard, feature.title);
+        BoardManipulator.addFeature(sprintBoard, feature);
         angular.forEach(feature.phases, function (phase) {
           BoardManipulator.addPhaseToFeature(sprintBoard, feature.title, phase);
           angular.forEach(phase.cards, function (card) {

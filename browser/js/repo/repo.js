@@ -69,7 +69,9 @@ app.factory('RepoFactory', function($http){
 			});
 		},
 		createRepoLabel: function(repoInfo, labelInfo) {
-			return $http.post('api/repo/' + repoInfo.owner + "/" + repoInfo.name + "/create-repo-label/" + labelInfo, labelInfo).then(function(createdLabel){
+			//changed labelInfo to contain both labelInfo.title and labelInfo.color - might cause error somewhere else
+			if(labelInfo.title) { labelInfo.name = labelInfo.title; }
+			return $http.post('api/repo/' + repoInfo.owner + "/" + repoInfo.name + "/create-repo-label/" + labelInfo.name, labelInfo).then(function(createdLabel){
 				return createdLabel;
 			});
 		},
