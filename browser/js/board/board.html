@@ -54,6 +54,18 @@
                             <div class="col-sm-2" ng-controller="EditCardController">
                                 <a data-no-drag class=" removeCard pull-right btn btn-xs" ng-click="editCard(sprintBoard, feature.name, phase.name, card)"><span class="mdi-editor-mode-edit"></span></a>
                             </div>
+                            <accordion close-others="oneAtATime">
+                                <accordion-group heading="details">
+                                    <p>Details: {{card.details}}</p>
+                                    <p>Comments: {{card.comments}}</p>
+                                    <p>Labels: {{card.labels.name}}</p>
+                                    <p>Assignee: {{card.assignee.login}}</p>
+                                    <p>Created: {{card.created_at}}</p>
+                                    <p>Updated: {{card.updated_at}}</p>
+                                    <p>Closed: {{card.closed_at}}</p>
+                                </accordion>
+                            </accordion>
+
                         </div>
                     </div>
                 </div>
