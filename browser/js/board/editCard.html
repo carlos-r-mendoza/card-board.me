@@ -28,8 +28,8 @@
          <div class='form-group'>
             <div class='input-field col s12'>
             <select class="browser-default" ng-model="editedCard.assignee">
-                <option value='' disabled selected>Assignee</option>
-                <option value='{{collaborator.login}}' name='text' id="editedCardDetails"  ng-repeat="collaborator in collaborators">{{collaborator.login}}</option>
+                <option value='' disabled selected>Assignee: {{editedCard.assignee}}</option>
+                <option value='{{collaborator.login}}' name="text" id="editedCardDetails"  ng-repeat="collaborator in collaborators">{{collaborator.login}}</option>
             </select>
            </div>
         </div>
@@ -44,11 +44,10 @@
         </div>
         <div class="row">
         <div class='input-field col s6'>
-            <label class="control-label" for="editedCardDetails">Labels
-                <small>(optional)</small>
-            </label>
-                <input type='text' id="editedCardDetails" ng-model="editedCard.labels" placeholder="Label Name"/>
-                <button colorpicker='hex' type="button" colorpicker-position="bottom" ng-model="editedCard.labels">Label Color</button>
+            
+                <input type='text' id="editedCardDetails" ng-model="editedCard.labels.name" placeholder="Label Name"/>
+<!--                 <label class="control-label" for="editedCardDetails">Labels</label>
+ -->                <button colorpicker='hex' type="button" colorpicker-position="bottom" ng-model="editedCard.labels.color">Label Color</button>
                 <a ng-click="addLabel(editedCard.labels)" class="glyphicon glyphicon-plus"></a>
         </div>
         </div>

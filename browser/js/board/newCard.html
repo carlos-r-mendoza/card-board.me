@@ -19,17 +19,26 @@
             </label>
 
             <div>
-                <textarea id="newCardDetails" ng-model="newCard.details" class="cardInputs form-control" rows="7" required>
+                <textarea id="newCardDetails" ng-model="newCard.details" class="cardInputs form-control" rows="7">
                 </textarea>
             </div>
         </div>
 
          <div class='form-group'>
-            <label class="control-label" for="newCardDetails">Assignee
-            </label>
-            <div>
-                <textarea id="newCardDetails" ng-model="newCard.assignee" class="cardInputs form-control" rows="7" required>
-                </textarea>
+            <div class='input-field col s12'>
+            <select class="browser-default" ng-model="assignee">
+                <option value='' disabled selected>Assignee</option>
+                <option value='{{collaborator.login}}' name='text' id="newCardDetails"  ng-repeat="collaborator in collaborators">{{collaborator.login}}</option>
+            </select>
+           </div>
+        </div>
+
+        <div class="row">
+            <div class='input-field col s6'>
+                <label class="control-label" for="newCardDetails">Labels
+                    <small>(optional)</small>
+                </label>
+                <input type='text' id="newCardDetails" ng-model="labels" placeholder="Label Name"/>
             </div>
         </div>
 

@@ -4,12 +4,14 @@ app.controller('NewCardController', function ($scope, $modal, $modalInstance, Bo
   $scope.newCard = {
       title: '',
       details: '',
-      status: 'Open',
+      state: 'open',
+      feature: featureName,
+      phase: 'Open',
+      labels: [],
       assignee: '',
-      label: 'Feature - '+ featureName,
-      milestone: featureInfo.number,
-      phase: 'open' 
+      milestone: featureInfo.number 
   };
+
 
   $scope.close = function () {
     $modalInstance.close();
@@ -21,22 +23,36 @@ app.controller('NewCardController', function ($scope, $modal, $modalInstance, Bo
   console.log(error);
  }
 
+ RepoFactory.getRepoCollaborators($stateParams).then(function(info){
+            $scope.collaborators = info.data;
+          }, rejected);
+
+  var taskInfo = function(newCard) {
+    $scope.newIssue={
+      title: newCard.title
+    };
+    if(newCard.details){
+      $scope.newIssue.body = newCard.details;
+    }
+    if(newCard.assignee){
+      $scope.newIssue.assignee = newCard.assignee;
+    }
+    $scope.newIssue.state = 'open';
+    $scope.newIssue.milestone = newCard.milestone;
+    $scope.newIssue.labels = ['Feature - '+ featureName];
+    if((newCard.labels).length > 0){
+      ($scope.newIssue.labels).push(newCard.labels);
+    }  
+  };
+
   $scope.addCard = function(newCard, featureName){ 
 
     console.log(newCard);
     
-    var taskInfo = {
-                user: $stateParams.owner,
-                repo: $stateParams.name,
-                title: newCard.title, 
-                body: newCard.details, 
-                assignee: newCard.assignee, 
-                milestone: newCard.milestone,
-                labels: [newCard.label]
-              };
-    //taskInfo.push("Feature - Testing");
+    taskInfo(newCard);
+    
     BoardManipulator.addCardToFeature($scope.board, featureName, 'Open', newCard);
-    RepoFactory.createRepoIssue($stateParams, taskInfo);
+    RepoFactory.createRepoIssue($stateParams, $scope.newIssue);
     $modalInstance.close();
   };
 

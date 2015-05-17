@@ -2,6 +2,8 @@ app.controller('EditCardController', function($scope, $modal, BoardService, Boar
 	   
 	   $scope.editCard = function(board, featureName, cardStatus, card){
       
+      console.log('CARD: ', card);
+
         $scope.modalEdit = $modal.open({
         templateUrl: '/js/board/editCard.html',
         backdrop: 'static',
@@ -36,11 +38,15 @@ app.controller('EditCardController', function($scope, $modal, BoardService, Boar
             feature: currentCard.feature,
             phase: currentCard.phase,
             labels: [],
-            assignee: currentCard.assignee.login,
+            assignee: '',
             comments: currentCard.comments,
             milesone: currentCard.milesone,
             dueDate: currentCard.dueDate
           };
+
+          if(currentCard.assignee){
+            $scope.editedCard.assignee = currentCard.assignee.login;
+          }
 
           function err(error){
             console.log(error);
