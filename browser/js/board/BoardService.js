@@ -7,6 +7,7 @@ app.factory('BoardService', function ($modal, BoardManipulator, BoardModel, Repo
           title: card.title,
           body: 'removed issue',
           state: 'closed',
+          milestone: undefined,
           labels: []
         };
         RepoFactory.editRepoIssue($stateParams, card.number, editedIssue);
