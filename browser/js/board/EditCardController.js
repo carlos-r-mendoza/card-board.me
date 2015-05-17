@@ -64,28 +64,38 @@ app.controller('EditCardController', function($scope, $modal, BoardService, Boar
               if(editedCard.assignee){
                 $scope.editedIssue.assignee = editedCard.assignee;
               }
-                // RepoFactory.createLabels;//EDIT THIS
               $scope.editedIssue.labels=['Feature - '+featureName];
               
+              if(($scope.labels).length>0){
+                var issueLabels = $scope.editedIssue.labels;
+                var newLabels = $scope.labels;
+                $scope.editedIssue.labels = issueLabels.concat(newLabels);
+              }
               return $scope.editedIssue;
             };
-
-          console.log('currentCARD', currentCard);
 
           
           RepoFactory.getRepoCollaborators($stateParams).then(function(info){
             $scope.collaborators = info.data;
           }, err);
 
-          
+          $scope.labels = [];
+
+          $scope.addLabel = function(label){
+            $scope.label = {
+              name: label.name,
+              color: label.color
+            };
+            $scope.labels.push($scope.label.name);
+            
+            RepoFactory.createRepoLabel($stateParams, $scope.label);
+           
+          };
 
           $scope.ok = function(editedCard){
 
             filterIssue(editedCard);
-        
-            // console.log('EDITED ISSUE: ', $scope.editedIssue); 
-            // console.log('NUMBER', currentCard.number);
-
+            console.log($scope.editedIssue);
             BoardManipulator.editCard($scope.board, currentFeature, currentStatus, currentCard, editedCard);
             RepoFactory.editRepoIssue($stateParams, currentCard.number, $scope.editedIssue);
             $modalInstance.close();
