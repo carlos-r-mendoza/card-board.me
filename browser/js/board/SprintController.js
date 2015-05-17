@@ -205,10 +205,11 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
         "assignee": issue.assignee,
         "comments_number": issue.comments,
         "milestone": issue.milestone,
-        "due_date": issue.due_date,
-        "created_at": issue.created_at,
-        "updated_at": issue.updated_at,
-        "closed_at": issue.closed_at
-      }); 
+        "dueDate": issue.due_date,
+        "created": issue.created_at,
+        "updated": issue.updated_at,
+        "closed": issue.closed_at
+      });
+      console.log('PHASE', phase.cards); 
     }
 });

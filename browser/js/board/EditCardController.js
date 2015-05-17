@@ -99,20 +99,17 @@ app.controller('EditCardController', function($scope, $modal, BoardService, Boar
                 return true;
               }
             });
-
-            console.log($scope.listLabels);
           }, err);
 
 
           $scope.addLabelToIssue = function(label){
-            console.log('LABEL', label);
             $scope.labels.push(label);
-          }
+          };
 
           $scope.ok = function(editedCard){
 
             filterIssue(editedCard);
-            console.log($scope.editedIssue);
+            // console.log($scope.editedIssue);
             BoardManipulator.editCard($scope.board, currentFeature, currentStatus, currentCard, editedCard);
             RepoFactory.editRepoIssue($stateParams, currentCard.number, $scope.editedIssue);
             $modalInstance.close();
