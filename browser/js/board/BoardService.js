@@ -1,13 +1,16 @@
-app.factory('BoardService', function ($modal, BoardManipulator, BoardModel) {
+app.factory('BoardService', function ($modal, BoardManipulator, BoardModel, RepoFactory, $stateParams) {
 
   return {
-    removeCard: function (board, feature, phase, card) {
-      console.log("board: ", board);
-      //console.log("column: ", column);
-      console.log('card: ', card);
-      
-        BoardManipulator.removeCardFromColumn(board, feature, phase, card);
-      
+    removeCard: function (board, feature, phase, card) {        
+        console.log('CARD: ', card);
+        var editedIssue = {
+          title: card.title,
+          body: 'removed issue',
+          state: 'closed',
+          labels: []
+        };
+        RepoFactory.editRepoIssue($stateParams, card.number, editedIssue);
+        BoardManipulator.removeCardFromColumn(board, feature, phase, card);      
     },
 
     addNewCard: function (board, column, featureName, featureInfo) {

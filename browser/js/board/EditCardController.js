@@ -35,7 +35,7 @@ app.controller('EditCardController', function($scope, $modal, BoardService, Boar
             number: currentCard.number,
             feature: currentCard.feature,
             phase: currentCard.phase,
-            labels: ['Feature - '+featureName],
+            labels: [],
             assignee: currentCard.assignee.login,
             comments: currentCard.comments,
             milesone: currentCard.milesone,
@@ -55,13 +55,11 @@ app.controller('EditCardController', function($scope, $modal, BoardService, Boar
                 $scope.editedIssue.body = editedCard.details;
               }
 
-              console.log('ASSIGN BEFORE', editedCard.assignee);
               if(editedCard.assignee){
                 $scope.editedIssue.assignee = editedCard.assignee;
-                console.log('ASSIGN AFTER', $scope.editedIssue.assignee);
               }
                 // RepoFactory.createLabels;//EDIT THIS
-              $scope.editedIssue.labels = editedCard.labels;
+              $scope.editedIssue.labels=['Feature - '+featureName];
               
               return $scope.editedIssue;
             };
