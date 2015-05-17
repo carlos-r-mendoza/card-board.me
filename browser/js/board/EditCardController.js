@@ -92,6 +92,23 @@ app.controller('EditCardController', function($scope, $modal, BoardService, Boar
            
           };
 
+          RepoFactory.getRepoLabels($stateParams).then(function(info){
+            $scope.listLabels = (info.data).filter(function(el){
+              var name = el.name;
+              if(name.indexOf('Feature - ')!==0 && name.indexOf('Phase - ')!==0){
+                return true;
+              }
+            });
+
+            console.log($scope.listLabels);
+          }, err);
+
+
+          $scope.addLabelToIssue = function(label){
+            console.log('LABEL', label);
+            $scope.labels.push(label);
+          }
+
           $scope.ok = function(editedCard){
 
             filterIssue(editedCard);
