@@ -1,5 +1,4 @@
 app.controller('NewCardController', function ($scope, $modal, $modalInstance, BoardService, BoardManipulator, RepoFactory, featureName, $rootScope, $stateParams, sprintBoard) {
-
   $scope.featureName = featureName;
 
   $scope.newCard = {
@@ -7,7 +6,8 @@ app.controller('NewCardController', function ($scope, $modal, $modalInstance, Bo
       details: '',
       status: 'Open',
       assignee: '',
-      label: 'Feature - '+featureName,
+      label: 'Feature - '+ featureName,
+      milestone: 'Feature - '+ featureName,
       phase: 'open' 
   };
 

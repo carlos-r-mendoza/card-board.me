@@ -17,7 +17,7 @@ app.factory('BoardModel', function(){
           this.title = feature.title;
           this.description = feature.description;
           this.due_date = feature.due_date;
-          this.description
+          this.number = feature.number;
           this.phases = [];
       },
 
