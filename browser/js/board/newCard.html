@@ -33,22 +33,37 @@
            </div>
         </div>
 
+        <div class='form-group'>
+            <label class="control-label" for="newCardDetails">Add Label
+                <small>(optional)</small>
+            </label>
+        </div>
+        <div class='form-group'>
+            <label class="control-label" for="newCardDetails">Select Existing Label
+            </label>
+        </div>
+         <div class='form-group'>
+            <div class='input-field col s12'>
+            <select class="browser-default" ng-model="label">
+                <option value='' disabled selected>Select Exisiting Label</option>
+                <option value='{{label.name}}' name="text" id="label"  ng-repeat="label in listLabels">{{label.name}}</option>
+            </select>
+            <a ng-click="addLabelToIssue(label)" class="glyphicon glyphicon-plus"></a>
+           </div>
+        </div>
+        <div class='form-group'>
+            <label class="control-label" for="newCardDetails">Or Create New Label
+            </label>
+        </div>
         <div class="row">
             <div class='input-field col s6'>
-                <label class="control-label" for="newCardDetails">Labels
-                    <small>(optional)</small>
-                </label>
-                <input type='text' id="newCardDetails" ng-model="labels" placeholder="Label Name"/>
+                <input type='text' id="newCardDetails" ng-model="label.name" placeholder="Label Name"/>
+            </div>
+            <div class='input-field col s6'>
+                <input type="text" ng-model="label.color" placeholder="Label Color"/>
+                <a ng-click="addLabel(label)" class="glyphicon glyphicon-plus"></a>
             </div>
         </div>
-
-     <!--     <div class='form-group'>
-            <label class="control-label" for="newCardDetails">Due Date</label>
-            <div>
-                <textarea id="newCardDetails" ng-model="newCard.dueDate" class="cardInputs form-control" rows="7">
-                </textarea>
-            </div>
-        </div> -->
 
     </div>
     <div class="modal-footer">
