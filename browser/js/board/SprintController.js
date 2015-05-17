@@ -83,13 +83,13 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
 
     
     RepoFactory.getRepoMilestones($stateParams).then(getFeatures, rejected);
-    RepoFactory.getRepoLabels($stateParams).then(getPhases, rejected);
     
     function getFeatures(repoMilestones) {
       repoMilestones.data.forEach(function(milestone) {
         var featureName = milestone.title.split(" - ");
         if(featureName[0] === "Feature") { populateFeaturesColumn(featureName[1], milestone); } 
       });
+      RepoFactory.getRepoLabels($stateParams).then(getPhases, rejected);
     }
 
     function getPhases(repoLabels) {
