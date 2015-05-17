@@ -223,6 +223,7 @@ router.post('/:repoOwner/:repoName/create-repo-issue', function (req, res) {
 	if(req.body.body) { createdIssue.body = req.body.body; } else { createdIssue.body = undefined; }
 	if(req.body.assignee) { createdIssue.assignee = req.body.assignee } else { createdIssue.assignee = undefined; }
 	if(req.body.labels) { createdIssue.labels = req.body.labels } else { createdIssue.labels = undefined; }
+	if(req.body.milestone) { createdIssue.milestone = req.body.milestone } else { createdIssue.milestone = undefined; }
 
 	console.log("CREATED ISSUE: ", createdIssue);
 
@@ -232,7 +233,7 @@ router.post('/:repoOwner/:repoName/create-repo-issue', function (req, res) {
 		title: createdIssue.title,
 		body: createdIssue.body,
 		assignee: createdIssue.assignee,
-		// milestone: req.body.milestone,
+		milestone: createdIssue.milestone,
 		labels: createdIssue.labels
 	}, function(err, createdRepoIssue) {
 		if(err) { errGitHub(err); }		

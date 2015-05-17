@@ -10,7 +10,7 @@ app.factory('BoardService', function ($modal, BoardManipulator, BoardModel) {
       
     },
 
-    addNewCard: function (board, column, featureName) {
+    addNewCard: function (board, column, featureName, featureInfo) {
       var modalInstance = $modal.open({
         templateUrl: '/js/board/newCard.html',
         controller: 'NewCardController',
@@ -21,6 +21,9 @@ app.factory('BoardService', function ($modal, BoardManipulator, BoardModel) {
           },
           featureName: function () {
             return featureName;
+          },
+          featureInfo: function () {
+            return featureInfo;
           }
         }
       });

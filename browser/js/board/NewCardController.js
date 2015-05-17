@@ -1,4 +1,4 @@
-app.controller('NewCardController', function ($scope, $modal, $modalInstance, BoardService, BoardManipulator, RepoFactory, featureName, $rootScope, $stateParams, sprintBoard) {
+app.controller('NewCardController', function ($scope, $modal, $modalInstance, BoardService, BoardManipulator, RepoFactory, featureName, featureInfo, $rootScope, $stateParams, sprintBoard, BoardModel) {
   $scope.featureName = featureName;
 
   $scope.newCard = {
@@ -7,7 +7,7 @@ app.controller('NewCardController', function ($scope, $modal, $modalInstance, Bo
       status: 'Open',
       assignee: '',
       label: 'Feature - '+ featureName,
-      milestone: 'Feature - '+ featureName,
+      milestone: featureInfo.number,
       phase: 'open' 
   };
 
@@ -31,7 +31,7 @@ app.controller('NewCardController', function ($scope, $modal, $modalInstance, Bo
                 title: newCard.title, 
                 body: newCard.details, 
                 assignee: newCard.assignee, 
-                // milestone:1,
+                milestone: newCard.milestone,
                 labels: [newCard.label]
               };
     //taskInfo.push("Feature - Testing");
