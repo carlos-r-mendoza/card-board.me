@@ -1,16 +1,17 @@
-<form ng-submit="addNewCard()" class="noMargin" name="newCardForm">
+<!-- <form ng-submit="addNewCard()" class="noMargin" name="newCardForm">
     <div class="modal-header">
         <button type="button" class="close" ng-click="close()">&times;</button>
         <h4 class="modal-title" ng-model="columnName">Add New Card in '{{columnName}}'</h4>
     </div>
     <div class="modal-body">
+
         <div class="form-group">
             <label class="control-label" for="newCardTitle">Card title</label>
-
             <div>
                 <input type="text" id="newCardTitle" placeholder="Title on a card" ng-model="title" required focus-me class="cardInputs form-control"/>
             </div>
         </div>
+
         <div class="form-group">
             <label class="control-label" for="newCardDetails">More details
             </label>
@@ -20,9 +21,29 @@
                 </textarea>
             </div>
         </div>
+    
+        <div class='form-group'>
+            <div class='input-field col s12'>
+            <select class="browser-default" ng-model="assignee">
+                <option value='' disabled selected>Assignee</option>
+                <option value='{{collaborator.login}}' name='text' id="newCardDetails"  ng-repeat="collaborator in collaborators">{{collaborator.login}}</option>
+            </select>
+           </div>
+        </div>
+
+        <div class="row">
+            <div class='input-field col s6'>
+                <label class="control-label" for="newCardDetails">Labels
+                    <small>(optional)</small>
+                </label>
+                <input type='text' id="newCardDetails" ng-model="labels.name" placeholder="Label Name"/>
+                <button colorpicker='hex' type="button" colorpicker-position="bottom" ng-model="labels.color">Label Color</button>
+                <a ng-click="addLabel(newCard.labels)" class="glyphicon glyphicon-plus"></a>
+            </div>
+        </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" ng-click="close()">Close</button>
         <button type="submit" class="btn btn-primary">Add</button>
     </div>
-</form>
+</form> -->
