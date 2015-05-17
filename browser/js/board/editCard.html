@@ -48,7 +48,7 @@
                 <small>(optional)</small>
             </label>
                 <input type='text' id="editedCardDetails" ng-model="editedCard.labels" placeholder="Label Name"/>
-                pick color:
+                <button colorpicker='hex' type="button" colorpicker-position="bottom" ng-model="editedCard.labels">Label Color</button>
                 <a ng-click="addLabel(editedCard.labels)" class="glyphicon glyphicon-plus"></a>
         </div>
         </div>
