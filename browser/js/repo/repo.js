@@ -94,16 +94,18 @@ app.factory('RepoFactory', function($http){
 			});
 		},
 		editRepoIssue: function(repoInfo, num, issue) {
-			console.log("REPO INFO", repoInfo);
-			console.log("ISSUE INFO", issue);
 			return $http.post('api/repo/' + repoInfo.owner + "/" + repoInfo.name + "/edit-repo-issue/"+ num, issue).then(function(editedRepoIssue){
-				console.log('IM IN!');
 				return editedRepoIssue;
 			});
 		},
 		createRepoMilestone: function(repoInfo, milestoneInfo) {
 			return $http.post('api/repo/' + repoInfo.owner + "/" + repoInfo.name + "/create-repo-milestone/" + milestoneInfo.title, milestoneInfo).then(function(createdMilestone){
 				return createdMilestone;
+			});
+		},
+		createComment: function(repoInfo, issueNum, comment){
+			return $http.post('api/repo/'+ repoInfo.owner+"/"+repoInfo.name+'/issues/'+ issueNum +"/comments", comment).then(function(createdComment){
+				return createdComment;
 			});
 		}
 	};

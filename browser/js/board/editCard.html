@@ -70,7 +70,11 @@
                 <input type='text' id="editedCardDetails" ng-model="label.name" placeholder="Label Name"/>
             </div>
             <div class='input-field col s6'>
-                <input type="text" ng-model="label.color" placeholder="Label Color"/>
+                <select ng-controller='ColorPicker' class="browser-default" ng-model="label.color">
+                    <option ng-repeat="color in colors" value='{{color.hex}}' style="background-color: #{{color.hex}}">
+                        {{color.name}}
+                    </option>
+                </select>
                 <a ng-click="addLabel(label)" class="glyphicon glyphicon-plus"></a>
             </div>
         </div>

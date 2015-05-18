@@ -16,14 +16,18 @@
                        focus-me class="cardInputs form-control"/>
             </div>
         </div>
+
         <div class="form-group">
             <label class="control-label" for="newFeatureColor">Color<small>(optional)</small></label>
-
-            <div>
-                <input type="text" id="newFeatureColor" placeholder="HEX color without #" ng-model="newFeature.color"
-                       focus-me class="cardInputs form-control"/>
-            </div>
         </div>
+        <div class='input-field col s6'>
+                <select ng-controller='ColorPicker' class="browser-default" ng-model="newFeature.color">
+                    <option ng-repeat="color in colors" value='{{color.hex}}' style="background-color: #{{color.hex}}">
+                        {{color.name}}
+                    </option>
+                </select>
+        </div>
+        
         <div class="form-group">
             <label class="control-label" for="newFeatureDueDate">Due Date<small>(optional)</small></label>
             <div>

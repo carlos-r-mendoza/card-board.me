@@ -39,7 +39,7 @@ app.controller('EditCardController', function($scope, $modal, BoardService, Boar
             phase: currentCard.phase,
             labels: [],
             assignee: '',
-            comments: currentCard.comments,
+            comments: '',
             milesone: currentCard.milesone,
             dueDate: currentCard.dueDate
           };
@@ -47,6 +47,12 @@ app.controller('EditCardController', function($scope, $modal, BoardService, Boar
           if(currentCard.assignee){
             $scope.editedCard.assignee = currentCard.assignee.login;
           }
+
+          if(currentCard.comments){
+            $scope.editedCard.comments = currentCard.comments;
+          }
+
+          console.log('INITIAL COMMENTS', $scope.editedCard.comments);
 
           function err(error){
             console.log(error);
@@ -64,6 +70,12 @@ app.controller('EditCardController', function($scope, $modal, BoardService, Boar
               if(editedCard.assignee){
                 $scope.editedIssue.assignee = editedCard.assignee;
               }
+
+              if(editedCard.comments){
+                var comment = {'body': editedCard.comments};
+                RepoFactory.createComment($stateParams, currentCard.number, comment);
+              }
+
               $scope.editedIssue.labels=['Feature - '+featureName];
               
               if(($scope.labels).length>0){
@@ -109,7 +121,7 @@ app.controller('EditCardController', function($scope, $modal, BoardService, Boar
           $scope.ok = function(editedCard){
 
             filterIssue(editedCard);
-            // console.log($scope.editedIssue);
+            
             BoardManipulator.editCard($scope.board, currentFeature, currentStatus, currentCard, editedCard);
             RepoFactory.editRepoIssue($stateParams, currentCard.number, $scope.editedIssue);
             $modalInstance.close();
