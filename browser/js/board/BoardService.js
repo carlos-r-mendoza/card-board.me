@@ -38,11 +38,11 @@ app.factory('BoardService', function ($modal, BoardManipulator, BoardModel, Repo
       });
     },
 
-    sprintBoard: function (board) {
+    sprintBoard: function (board) { //this is what populates data on view
       //console.log("board", board)
       var sprintBoard = new BoardModel.Board(board.name, board.numberOfColumns);
       angular.forEach(board.columns, function (column) {
-        BoardManipulator.addColumn(sprintBoard, column.name);
+        BoardManipulator.addColumn(sprintBoard, column);
       });
       angular.forEach(board.features, function (feature) {
         BoardManipulator.addFeature(sprintBoard, feature);

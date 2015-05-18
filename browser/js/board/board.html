@@ -2,19 +2,19 @@
     <table id="boardTable" class="table table-bordered">
         <thead>
         <tr id="boardHeader">
-            <th style="width:22%; text-align: left;">
+            <th style="width:20%; text-align: left;">
                 <span>Features</span>
             </th>
-            <th class="addStory" style="width:3%;" ng-controller="NewFeatureController">
+            <th class="addStory" style="width:2%;" ng-controller="NewFeatureController">
                 <a title="Add Feature" ng-click="addNewFeature(sprintBoard)"><i
                         class="glyphicon glyphicon-plus addNewCard"></i></a>
             </th>
-            <th ng-repeat="column in sprintBoard.columns" style="width:25%;">
+            <th ng-repeat="column in sprintBoard.columns" style="width:15%;"> <!--columns width -->
                 <div>
                     <span>{{column.name}}</span>
                 </div>
             </th>
-            <th class="addPhase" style="width:3%;" ng-controller="NewPhaseController">
+            <th class="addPhase" style="width:2%;" ng-controller="NewPhaseController">
                 <a title="Add Phase" ng-click="addNewPhase(sprintBoard)"><i
                         class="glyphicon glyphicon-plus addNewCard"></i></a>
             </th>
@@ -26,7 +26,7 @@
             <th class="black-text" ng-click='isCollapsed=!isCollapsed'>{{feature.title}}</th>
         </tr>
         <tr collapse='isCollapsed'>
-            <th style="width:22%">
+            <th style="width:20%"> <!-- features width -->
                 <div class="card small">
                     <div class="row">
                         <span class="card-title black-text" ng-click="isCollapsed=!isCollapsed">
@@ -45,9 +45,60 @@
                         class="glyphicon glyphicon-plus addNewCard"></i></a>
             </td>
             <td as-sortable="sprintSortOptions" ng-repeat="phase in feature.phases" ng-model="phase.cards">
-                <div class="card black-text" ng-repeat="card in phase.cards" as-sortable-item>
+                <div ng-repeat="card in phase.cards" as-sortable-item>
                      <div as-sortable-item-handle>
                         <div class="row">
+<!-- 
+                        <ul class="collection" style="min-height: 150px">
+                        <li class="collection-item avatar">
+                           <img src="{{ card.assignee_avatar }}" alt="" class="circle"></span>
+                            <span class="title">{{ card.title }}</span>
+                            <p>by {{ card.creator }}<p>
+                        </li>
+                        </ul> -->
+
+                            <div class="card blue-grey darken-1">
+                                <div class="card-content white-text">
+                                <span class="cursor-pointer">
+                                    <a ng-click="removeCard(sprintBoard, feature.name, phase.name, card)"><i class="mdi-action-highlight-remove right"></i></a>
+                                </span>
+                                    <div class="title">{{ card.title }}</div>
+                                    <p>by {{ card.creator }}<p>  
+                                </div>
+                                <div class="card-action">
+                                <span class="cursor-pointer">
+                                    <a ng-controller="EditCardController" data-no-drag ng-click="editCard(sprintBoard, feature.name, phase.name, card)" class=".cursor-pointer">Edit</a>
+                                </span>
+                                <span class="cursor-pointer">
+                                    <a ng-click="showDetails = !showDetails" class=".cursor-pointer">Details</a>
+                                </span>
+                                   <img src="{{ card.assignee_avatar }}" alt="" class="circle right" id="assignee-avatar" ng-show="card.assignee_avatar">  
+                                    <div ng-show="showDetails" class="white-text">
+                                        <p>Details: {{card.details}}</p>
+                                        <p>Comments: {{card.comments}}</p>
+                                        <p>Labels: <span ng-repeat="label in card.labels">{{label.name}} </span></p>
+                                        <p>Assignee: {{card.assignee.login}}</p>
+                                        <p>Created: {{card.created}}</p>
+                                        <p>Updated: {{card.updated}}</p>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+
+<!-- 
+                               <accordion close-others="oneAtATime">
+                                <accordion-group heading="details">
+                                    <p>Details: {{card.details}}</p>
+                                    <p>Comments: {{card.comments}}</p>
+                                    <p>Labels: <span ng-repeat="label in card.labels">{{label.name}} </span></p>
+                                    <p>Assignee: {{card.assignee.login}}</p>
+                                    <p>Created: {{card.created}}</p>
+                                    <p>Updated: {{card.updated}}</p>
+                                </accordion>
+                                </accordion> -->
+
+<!-- 
                             <div class="col-sm-10">
                                 <span class="card-title black-text">{{card.title}}</span>
 
@@ -55,7 +106,7 @@
                             <div class="col-sm-2">
                                 <a data-no-drag class=" removeCard pull-right btn btn-xs" ng-click="removeCard(sprintBoard, feature.name, phase.name, card)"><span class="glyphicon glyphicon-remove"></span></a>
                             </div>
-                            <!-- EDIT CARD -->
+                            EDIT CARD 
                             <div class="col-sm-2" ng-controller="EditCardController">
                                 <a data-no-drag class=" removeCard pull-right btn btn-xs" ng-click="editCard(sprintBoard, feature.name, phase.name, card)"><span class="mdi-editor-mode-edit"></span></a>
                             </div>
@@ -68,7 +119,7 @@
                                     <p>Created: {{card.created}}</p>
                                     <p>Updated: {{card.updated}}</p>
                                 </accordion>
-                            </accordion>
+                            </accordion> -->
 
                         </div>
                     </div>
@@ -97,5 +148,32 @@
         position: absolute;
         top: 50%;
         right: 50%;
+    }
+    #assignee-avatar {
+        position: relative;
+        bottom: 10px;
+        left: 10px;
+/*        height: 20%;
+*/        width: 20%;
+/*          left: 100%;
+*/    }
+    .as-sortable-item {
+        border: 0px;
+        margin: 0px;
+        background-color: transparent;
+        border-radius: 0px;
+
+/*        -ms-touch-action:none;touch-action:none
+*/
+    }
+    .cursor-pointer {
+        cursor: default;
+    }
+    .mdi-action-highlight-remove {
+        font-size: 25px;
+        top: -20px;
+        right: -15px;
+        color: #ffab40;
+        position: relative;
     }
   </style>
