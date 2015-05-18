@@ -20,6 +20,7 @@ app.factory('BoardModel', function(){
           this.due_date = feature.due_date;
           this.number = feature.number;
           this.phases = [];
+          this.color = feature.color;
       },
 
       Phase: function (name) {
