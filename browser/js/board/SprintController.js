@@ -8,7 +8,7 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('SprintController', function ($scope, $stateParams, BoardService, BoardManipulator, $rootScope, RepoFactory) {
+app.controller('SprintController', function ($scope, $stateParams, BoardService, BoardManipulator, $rootScope, RepoFactory, ProgressFactory) {
 
   //$scope.sprintBoard = ""; 
 
@@ -191,6 +191,9 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
             }
           }
       $scope.sprintBoard = BoardService.sprintBoard(sprint); 
+      $scope.open = ProgressFactory.open($scope.sprintBoard);
+      $scope.closed = ProgressFactory.closed($scope.sprintBoard);
+      $scope.total = ProgressFactory.total($scope.sprintBoard);
     }
 
     function createCard(phase, issue) {
@@ -212,6 +215,11 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
         "updated": issue.updated_at,
         "closed": issue.closed_at
       });
-      console.log('PHASE', phase.cards); 
     }
+
+    
+    // RepoFactory.getRepoIssues($stateParams).then(function(issue){
+    //   $scope.total = issue.data.length;
+    // }, rejected);
+
 });
