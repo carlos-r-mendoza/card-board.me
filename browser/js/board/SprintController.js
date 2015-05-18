@@ -101,6 +101,7 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
         }
         if (labelName[0] === "Feature") {
           addFeatureColor(labelName[1], label.color);
+          console.log("LABEL", label)
         }
       });
       addPhasesToFeatures();
@@ -127,8 +128,10 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
 
     function addFeatureColor(featureName, color) {
       sprint.features.forEach(function(feature) {
+
         if(feature.title === featureName) {
           feature.feature_color = color;
+
         }
       });
     }
@@ -228,7 +231,6 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
         "updated": issue.updated_at,
         "closed": issue.closed_at,
       });
-      console.log('PHASE HERE', phase.cards); 
 
     }
 });

@@ -20,15 +20,15 @@ app.factory('BoardModel', function(){
           this.description = feature.description;
           this.due_date = feature.due_date;
           this.number = feature.number;
-          this.feature_color = feature.feature_color;
-          this.phases = feature.phases;
+          this.phases = [];
+          this.color = feature.feature_color;
       },
 
       Phase: function (name) {
           this.name = name;
           this.cards = [];
       },
-
+      
       Card: function (card) {
         this.title = card.title;
         this.details = card.details;
@@ -56,8 +56,8 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams)
 
   return {
 
-    addColumn: function (board, column) {
-      board.columns.push(new BoardModel.Column(column));
+    addColumn: function (board, columnName) {
+      board.columns.push(new BoardModel.Column(columnName));
     },
 
     addCardToColumn: function (board, column, cardTitle, details) {
@@ -138,6 +138,7 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams)
       board.columns.push(new BoardModel.Phase(phase));
       var phaseName = "Phase - " + phase;
       var phaseInfo= {name: phaseName, color:'FFFFFF'};
+      console.log("HELLO", phaseInfo)
       RepoFactory.createRepoLabel($stateParams, phaseInfo);
     },
 
@@ -154,6 +155,3 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams)
     }
   };
 });
-
-
-

@@ -27,17 +27,17 @@
         </tr>
         <tr collapse='isCollapsed'>
             <th style="width:20%"> <!-- features width -->
-                <div class="card small">
-                    <div class="row">
-                        <span class="card-title black-text" ng-click="isCollapsed=!isCollapsed">
-                        <div>Feature: {{feature.title}}</div>
-                        <div>Due Date: {{feature.due_date}}</div>
-                        <div>Details: {{feature.description}}</div>
-                        </span>
+                <div class="row">
+                    <div class="card">
+                        <div class="card-content black-text" ng-click="isCollapsed=!isCollapsed" style="background-color: #{{feature.color}};">
+                            <span class="card-title black-text">Feature: {{feature.title}}</span>
+                            <p>Due Date: {{feature.due_date}}</p>
+                            <p>Details: {{feature.description}}</p>
+                        </div>
+                 <!--       <div class="col-sm-2" ng-controller="EditFeatureController">
+                            <a data-no-drag class="addNewCard" ng-click="editingFeature(sprintBoard, feature.name)"><span class="mdi-editor-mode-edit"></span></a>
+                        </div> -->
                     </div>
-             <!--       <div class="col-sm-2" ng-controller="EditFeatureController">
-                        <a data-no-drag class="addNewCard" ng-click="editingFeature(sprintBoard, feature.name)"><span class="mdi-editor-mode-edit"></span></a>
-                    </div> -->
                 </div>
             </th>
             <td class="addTask">
