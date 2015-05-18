@@ -1,10 +1,11 @@
 app.controller('NewFeatureController', function ($scope, $modal, BoardService, BoardManipulator, $rootScope) {
 
   $scope.newFeature = {
-    title: "",
-    color: "",
-    due_on: "",
-    description: ""
+    title: undefined,
+    color: undefined,
+    state: "open",
+    due_on: undefined,
+    description: undefined
   };
   
   $scope.addNewFeature = function(board){
