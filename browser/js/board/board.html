@@ -1,3 +1,11 @@
+<div class='row' ng-controller="SprintController">
+    <div class='col-sm-4'>
+        <progressbar class="progress-striped active" max='total' value='closed' type="info">
+            <b>{{total - open}}/{{total}}</b>
+        </progressbar>
+    </div>
+</div>
+
 <div ng-model="sprintBoard" id="board" style="width: 120%;">
     <table id="boardTable" class="table table-bordered">
         <thead>
