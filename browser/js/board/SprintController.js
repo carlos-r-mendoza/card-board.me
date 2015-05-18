@@ -113,6 +113,7 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
           "description": feature.description,
           "due_date": feature.due_on,
           "number": feature.number,
+          "color": feature.color,
           "phases": [
             {"name": "Open", //colums
               "cards": []},
