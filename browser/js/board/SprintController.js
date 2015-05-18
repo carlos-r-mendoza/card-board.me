@@ -45,6 +45,7 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
         RepoFactory.editRepoIssue($stateParams,issueNum,{state:"open"});
       } else if (sourcePhase==="Closed"){
         var currentLabelNames=_.pluck(allLabels, 'name');
+        currentLabelNames.push("Phase - "+destinationPhase);
         RepoFactory.editRepoIssue($stateParams,issueNum,{state:"open", labels:currentLabelNames});
       } else if (destinationPhase==="Open"){
         RepoFactory.editRepoIssue($stateParams,issueNum,{labels:filteredArray});
