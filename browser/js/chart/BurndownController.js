@@ -1,7 +1,7 @@
 app.config(function ($stateProvider) {
     $stateProvider.state('chart', {
         url: '/chart/:owner/:name',
-        templateUrl: 'js/board/chart.html',
+        templateUrl: 'js/chart/chart.html',
         controller: 'BurndownController'
     });
 });
