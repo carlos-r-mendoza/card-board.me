@@ -166,7 +166,11 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams)
       board.columns.push(new BoardModel.Phase(phase));
       var phaseName = "Phase - " + phase;
       var phaseInfo= {name: phaseName, color:'FFFFFF'};
-      console.log("HELLO", phaseInfo)
+      //console.log("HELLO", phaseInfo)
+      angular.forEach(board.features, function(feature){
+        console.log("insideaddphasetoall phases", feature.phases);
+        feature.phases.push(new BoardModel.Phase(phase));
+      })
       RepoFactory.createRepoLabel($stateParams, phaseInfo);
     },
 
@@ -190,7 +194,17 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams)
             })
           }
         })
+        console.log("fpbefore", feature.phases)
+        feature.phases=feature.phases.filter(function(myphase){
+          return myphase.name!==phase.name;
+        })
+        console.log("fpafter", feature.phases);
       })
+      // board.features.forEach(function(feature){
+      //   feature.phases.forEach(function(myphase){
+
+      //   })
+      
       board.columns=board.columns.filter(function(column){
         return column.name!==phase.name;
       });
