@@ -134,7 +134,6 @@ router.get('/:repoOwner/:repoName/statsParticipation', function (req, res) {
 
 /***GETS ISSUES FOR A PARTICULAR REPO***/
 router.get('/:repoOwner/:repoName/repo-issues', function (req, res) {
-		console.log("USER", req)
 
 	var date = new Date();
 	var allRepoIssues = [];
@@ -285,7 +284,6 @@ router.post('/:repoOwner/:repoName/edit-repo-issue/:issueNumber', function (req,
 /***CREATES/POSTS A REPO LABEL***/
 router.post('/:repoOwner/:repoName/create-repo-label/:labelName', function (req, res) {
 
-	console.log("Create Label", req.body);	
 	var color;
 	if(req.body.color) { color = req.body.color; } else { color = "ffffff"; }	
 
@@ -314,7 +312,7 @@ router.post('/:repoOwner/:repoName/labels', function (req, res,next) {
 	    type: "oauth",
 	    token: userToken
 	});
-	console.log('body', req.body);
+
 	github.issues.updateLabel({
 		user: req.params.repoOwner,
 		repo: req.params.repoName,
@@ -388,6 +386,26 @@ router.get('/:repoOwner/:repoName/repo-issue-comments/:issueNumber', function (r
 		number: req.params.issueNumber
 	}, function(err, issueComments) {
 		if(err) { errGitHub(err); }		
+		res.json(issueComments);
+	});
+});
+
+/***CREATE COMMENTS ON AN ISSUE***/
+router.post('/:repoOwner/:repoName/issues/:issueNumber/comments', function(req, res){
+	var userToken = req.user.github.token;
+
+	github.authenticate({
+	    type: "oauth",
+	    token: userToken
+	});
+	console.log('REQ BODY', req.body);
+	github.issues.createComment({
+		user: req.params.repoOwner,
+		repo: req.params.repoName,
+		number: req.params.issueNumber,
+		body: req.body.body
+	}, function(err, issueComments){
+		if(err){ errGitHub(err);}
 		res.json(issueComments);
 	});
 });

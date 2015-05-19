@@ -8,8 +8,9 @@ app.factory('BoardModel', function(){
           this.features = [];
       },
 
-      Column: function (name) {
-          this.name = name;
+      Column: function (column) {
+          this.name = column.name;
+          this.color = column.column_color;
           this.cards = [];
       },
 
@@ -20,6 +21,7 @@ app.factory('BoardModel', function(){
           this.due_date = feature.due_date;
           this.number = feature.number;
           this.phases = [];
+          this.color = feature.color;
       },
 
       Phase: function (name) {
@@ -27,18 +29,23 @@ app.factory('BoardModel', function(){
           this.cards = [];
       },
       
-      Card: function (title, details, state, number, feature, phase, labels, assignee, comments, milestone, dueDate) {
-        this.title = title;
-        this.details = details;
-        this.state = state;
-        this.number = number;
-        this.assignee = assignee;
-        this.labels = labels;
-        this.milestone = dueDate;
-        this.feature = feature;
-        this.phase = phase;
-        this.comments = comments;
-        this.dueDate = dueDate;
+      Card: function (card) {
+        this.title = card.title;
+        this.details = card.details;
+        this.state = card.state;
+        this.number = card.number;
+        this.creator = card.creator;
+        this.feature = card.feature;
+        this.phase = card.phase;
+        this.assignee = card.assignee;
+        this.assignee_avatar = card.assignee_avatar;
+        this.comments_number = card.comments;
+        this.labels = card.labels;
+        this.milestone = card.milestone;
+        this.dueDate = card.dueDate;
+        this.created = card.created;
+        this.updated = card.updated;
+        this.closed = card.closed;
         return this;
       }
   };
@@ -135,12 +142,12 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams)
       RepoFactory.createRepoLabel($stateParams, phaseInfo);
     },
 
-    addCardToFeature: function (board, featureName, phaseName, task) {
+    addCardToFeature: function (board, featureName, phaseName, card) {
       angular.forEach(board.features, function (feature) {
         if (feature.name === featureName) {
           angular.forEach(feature.phases, function (phase) {
             if (phase.name === phaseName) {
-              phase.cards.push(new BoardModel.Card(task.title, task.details, task.state, task.number, task.feature, task.phase, task.labels, task.assignee, task.comments, task.milestone, task.dueDate));
+              phase.cards.push(new BoardModel.Card(card));
             }
           });
         }
@@ -193,6 +200,3 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams)
     }
   };
 });
-
-
-
