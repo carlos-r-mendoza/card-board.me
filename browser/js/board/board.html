@@ -1,6 +1,6 @@
 <div class='row' ng-controller="SprintController">
-    <div class='col-sm-4'>
-        <progressbar class="progress-striped active" max='total' value='closed' type="info">
+    <div class="col-sm-4">
+        <progressbar class="progress-striped active" max='100' value='percent' type="info">
             <b>{{total - open}}/{{total}}</b>
         </progressbar>
     </div>
@@ -20,7 +20,7 @@
             <th ng-repeat="column in sprintBoard.columns" style="width:15%;"> <!--columns width -->
                 <div>
                     <span>{{column.name}}</span>
-                    <span><a title="Delete Phase" ng-click="deletePhase(column,sprintBoard)" ng-controller="NewPhaseController"><i
+                    <span ng-show="column.name!=='Open'&&column.name!=='Closed'&&column.name!=='In Progress'"><a title="Delete Phase" ng-click="deletePhase(column,sprintBoard)" ng-controller="NewPhaseController"><i
                         class="glyphicon glyphicon-remove addNewCard"></i></a></span>
                 </div>
             </th>

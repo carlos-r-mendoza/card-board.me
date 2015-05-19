@@ -10,7 +10,7 @@ app.controller('NewFeatureController', function ($scope, $modal, BoardService, B
   
   $scope.addNewFeature = function(board){
       $scope.modalFeature = $modal.open({
-        templateUrl: '/js/board/newFeature.html',
+        templateUrl: '/js/features/newFeature.html',
         backdrop: 'static',
         resolve: {
           sprintBoard: function(){

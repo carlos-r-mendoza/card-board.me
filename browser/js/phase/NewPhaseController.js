@@ -4,10 +4,21 @@ app.controller('NewPhaseController', function ($scope, $modal, BoardService, Boa
     name: '',
     cards: []
   };
+  $scope.columnshow=false;
+
+  // $scope.columnshow=function(column){
+  //   var colarray=["Open","Closed","In Progress"];
+  //   console.log(column.name);
+  //   if (colarray.indexOf(column.name)<0){
+  //     return ;
+  //   }
+  // }
+  //$scope.columnshow(column);
+
 
   $scope.addNewPhase = function(board){
       $scope.modalFeature = $modal.open({
-        templateUrl: '/js/board/newPhase.html',
+        templateUrl: '/js/phase/newPhase.html',
         backdrop: 'static',
         resolve: {
           sprintBoard: function(){

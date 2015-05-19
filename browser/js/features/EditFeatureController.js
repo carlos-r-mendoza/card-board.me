@@ -3,7 +3,7 @@ app.controller('EditFeatureController', function($scope, $modal, BoardService, B
 	   $scope.editingFeature = function(board, currentFeature){
 	   
         $scope.modalEdit = $modal.open({
-        templateUrl: '/js/board/editFeature.html',
+        templateUrl: '/js/features/editFeature.html',
         backdrop: 'static',
         resolve: {
           sprintBoard: function(){

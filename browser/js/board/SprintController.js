@@ -52,6 +52,8 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
         RepoFactory.editRepoIssue($stateParams,issueNum,{labels:filteredArray});
       } else {
         var currentLabelNames=_.pluck(filteredArray, 'name');
+        console.log("eventdest",event.dest);
+        console.log("destphase",destinationPhase);
         currentLabelNames.push("Phase - "+destinationPhase);
         RepoFactory.editRepoIssue($stateParams,issueNum,{labels:currentLabelNames});
       }
@@ -209,6 +211,8 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
       $scope.open = ProgressFactory.open($scope.sprintBoard);
       $scope.closed = ProgressFactory.closed($scope.sprintBoard);
       $scope.total = ProgressFactory.total($scope.sprintBoard);
+      $scope.percent = ($scope.closed / $scope.total * 100);
+      console.log('PERCENT', $scope.percent);
     }
 
     function createCard(phase, issue) {
