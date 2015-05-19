@@ -15,7 +15,7 @@ app.factory('BoardService', function ($modal, BoardManipulator, BoardModel, Repo
     },
     addNewCard: function (board, column, featureName, featureInfo) {
       var modalInstance = $modal.open({
-        templateUrl: '/js/board/newCard.html',
+        templateUrl: '/js/cards/newCard.html',
         controller: 'NewCardController',
         backdrop: 'static',
         resolve: {
