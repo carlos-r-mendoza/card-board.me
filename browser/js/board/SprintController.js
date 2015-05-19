@@ -211,6 +211,8 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
       $scope.open = ProgressFactory.open($scope.sprintBoard);
       $scope.closed = ProgressFactory.closed($scope.sprintBoard);
       $scope.total = ProgressFactory.total($scope.sprintBoard);
+      $scope.percent = ($scope.closed / $scope.total * 100);
+      console.log('PERCENT', $scope.percent);
     }
 
     function createCard(phase, issue) {
