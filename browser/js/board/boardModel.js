@@ -180,6 +180,51 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams)
           });
         }
       });
+    },
+    removePhase: function(board,phase){
+      board.features.forEach(function(feature){
+        feature.phases.forEach(function(myphase){
+          if (myphase.name===phase.name){
+            myphase.cards.forEach(function(card){
+              RepoFactory.editRepoIssue($stateParams,card.number,{state:"closed"});
+            })
+          }
+        })
+      })
+      board.columns=board.columns.filter(function(column){
+        return column.name!==phase.name;
+      });
+      var transferphase;
+      board.features.forEach(function(feature){
+        var currentfeature=feature.name;
+        feature.phases.forEach(function(thisphase){
+          if (thisphase.name===phase.name){
+            transferphase=_.clone(thisphase.cards,true);
+            board.features.forEach(function(feature){
+              if (feature.name===currentfeature){
+                feature.phases.forEach(function(allphase){
+                  if (allphase.name==="Closed"){
+                    allphase.cards=allphase.cards.concat(transferphase);
+                }
+              })
+              }
+
+            })
+            thisphase.cards=[];
+          }
+        })
+      })
+      console.log("tphase", transferphase);
+      board.features.forEach(function(feature){
+        feature.phases.forEach(function(newphase){
+          if (newphase.name==="Closed"){
+            console.log("nphase",newphase);
+            newphase=newphase.cards.concat(transferphase);
+          }
+        })
+      })
+      phase.name="Phase - "+phase.name;
+      RepoFactory.deleteRepoLabel($stateParams,phase);
     }
   };
 });

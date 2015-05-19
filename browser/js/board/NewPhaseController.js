@@ -33,4 +33,9 @@ app.controller('NewPhaseController', function ($scope, $modal, BoardService, Boa
           $scope.board = board;
       });
     };
+    $scope.deletePhase=function(phase, sprintBoard){
+      //console.log(phaseName);
+      //console.log(sprintBoard);
+      BoardManipulator.removePhase(sprintBoard,phase)
+    }
 });
