@@ -6,8 +6,8 @@
     </div>
 </div>
 
-<div ng-model="sprintBoard" id="board" style="width: 120%;">
-    <table id="boardTable" class="table table-bordered">
+<div ng-model="sprintBoard" style="width: 120%;">
+    <table id="boardTable" class="table">
         <thead>
         <tr id="boardHeader">
             <th style="width:20%; text-align: left;">
@@ -39,12 +39,14 @@
             <th style="width:20%"> <!-- features width -->
                 <div class="row">
                     <div class="card">
-                        <div class="card-content" style="background-color: #{{feature.color}};"> <!-- ng-click="isCollapsed=!isCollapsed" -->
+                        <div class="card-content" ng-style="{'background-color': '#{{feature.color}}'};">
+                             <!-- ng-click="isCollapsed=!isCollapsed" -->
                             <span ng-controller="EditFeatureController">
                             <a ng-click="removeFeature(feature, sprintBoard)"><i class="mdi-action-highlight-remove right red-text"></i></a></span>
-                            <span class="card-title black-text">Feature: {{feature.title}}</span>
+                            <span class="card-title black-text">Feature: {{feature.title}}</span></span> 
                             <p>Due Date: {{feature.due_date}}</p>
-                            <p>Details: {{feature.description}}</p>
+                            <span ng-style="{'background-color': '#feature.color'};"><p>Details: {{feature.description}}</p></
+                            <p>color: {{feature.color}}</p>
                         </div>
                  <!--       <div class="col-sm-2" ng-controller="EditFeatureController">
                             <a data-no-drag class="addNewCard" ng-click="editingFeature(sprintBoard, feature.name)"><span class="mdi-editor-mode-edit"></span></a>
