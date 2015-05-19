@@ -3,7 +3,7 @@
        <div class="col-sm-4"> <h2 class='right'> Progress </h2> </div>
     <div class="col-sm-4 progressDiv">
         <progressbar animate="false" max='100' value='percent' type="success">
-            <b>{{total - open}}/{{total}}</b>
+            <b>{{closed}}/{{total}}</b>
         </progressbar>
     </div>
     <div class="col-sm-4"><h2 class='left'>{{percent}}% Complete</h2></div>
@@ -36,7 +36,7 @@
         <tbody ng-repeat="feature in sprintBoard.features">
         {{feature}}
         <tr>
-            <th class="black-text pen" ng-click='isCollapsed=!isCollapsed'>{{feature.title}}</th>
+            <th class="black-text pencil" ng-click='isCollapsed=!isCollapsed'>{{feature.title}}</th>
         </tr>
         <tr collapse='isCollapsed'>
             <th style="width:20%"> <!-- features width -->
@@ -85,14 +85,16 @@
                                     <p>{{ card.detail }}<p>  
                                 </div>
                                 <div class="card-action">
-                                <span class="cursor-pointer">
-                                    <a ng-controller="EditCardController" data-no-drag ng-click="editCard(sprintBoard, feature.name, phase.name, card)" class="cursor-pointer">Edit</a>
-                                </span>
-                                <span class="cursor-pointer">
-                                    <a ng-click="showDetails = !showDetails" class="cursor-pointer">Details</a>
-                                </span>
+                                    <div>
+                                        <span class="cursor-pointer">
+                                            <a ng-controller="EditCardController" data-no-drag ng-click="editCard(sprintBoard, feature.name, phase.name, card)" class="cursor-pointer">Edit</a>
+                                        </span>
+                                        <span class="cursor-pointer">
+                                            <a ng-click="showDetails = !showDetails" class="cursor-pointer">Details</a>
+                                        </span>
+                                    </div>
                                    <img src="{{ card.assignee_avatar }}" alt="" class="circle right" id="assignee-avatar" ng-show="card.assignee_avatar">  
-                                    <div ng-show="showDetails" class="black-text">
+                                    <div ng-show="showDetails" class="black-text left">
                                         <p>Details: {{card.details}}</p>
                                         <p>Comments: {{card.comments}}</p>
                                         <p>Labels: <span ng-repeat="label in card.labels">{{label.name}} </span></p>
