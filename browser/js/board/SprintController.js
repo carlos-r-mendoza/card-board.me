@@ -11,7 +11,8 @@ app.config(function ($stateProvider) {
 app.controller('SprintController', function ($scope, $stateParams, BoardService, BoardManipulator, $rootScope, RepoFactory, ProgressFactory) {
 
   //$scope.sprintBoard = ""; 
-
+  // $scope.table = { 
+  //   width: 0 };
   $scope.isCollapsed = false;
   //$scope.sprintBoard = "";
 
@@ -74,9 +75,9 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
       "collaborators": $scope.collab,
       "numberOfColumns": 3, //change this number to match number of hardcoded columns 
       "columns": [
-        {"name": "Open"},
-        {"name": "In Progress"},
-        {"name": "Closed"}
+        {"name": "Open", "column_color": ""},
+        {"name": "In Progress", "column_color": ""},
+        {"name": "Closed", "column_color": ""}
       ],
       "features": []
     };
@@ -96,11 +97,11 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
     function getPhases(repoLabels) {
       repoLabels.data.forEach(function(label) {
         var labelName = label.name.split(" - ");
-        //  if(labelName[0] === "Feature") {
-        //   populateFeaturesColumn(labelName[1]);
-        // }  
         if (labelName[0] === "Phase" && labelName[1] !== "In Progress") {
-          createPhaseColumn(labelName[1]);
+          createPhaseColumn(labelName[1], label.color);
+        }
+        if (labelName[0] === "Feature") {
+          addFeatureColor(labelName[1], label.color);
         }
       });
       addPhasesToFeatures();
@@ -113,7 +114,7 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
           "description": feature.description,
           "due_date": feature.due_on,
           "number": feature.number,
-          "color": feature.color,
+          "feature_color": "",
           "phases": [
             {"name": "Open", //colums
               "cards": []},
@@ -125,9 +126,20 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
       );
     }
 
-    function createPhaseColumn(phase) {
+    function addFeatureColor(featureName, color) {
+      sprint.features.forEach(function(feature) {
+
+        if(feature.title === featureName) {
+          feature.feature_color = color;
+
+        }
+      });
+    }
+
+    function createPhaseColumn(phase, color) {
       sprint.columns.push(
-        {"name": phase});
+        {"name": phase,
+          "column_color": color});
     }
 
     function addPhasesToFeatures() {
@@ -172,7 +184,6 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
                         break;
                       }                
                     }
-
                     if(m === issue.labels.length-1) {
                       if(issue.state === "open" && issue.hasPhase !== true) {
                       issue.hasPhase = false;
@@ -190,6 +201,10 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
               }
             }
           }
+      // $scope.table = {
+      //   width: 24 + ( sprint.columns.length * 18 ),
+      //   column_width: 15
+      // }
       $scope.sprintBoard = BoardService.sprintBoard(sprint); 
       $scope.open = ProgressFactory.open($scope.sprintBoard);
       $scope.closed = ProgressFactory.closed($scope.sprintBoard);
@@ -199,22 +214,27 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
     function createCard(phase, issue) {
 
       if(issue.milestone) { issue.due_date = issue.milestone.due_on; } else { issue.due_date = undefined; }
+      if(issue.assignee) { issue.assignee_avatar = issue.assignee.avatar_url } else { issue.assignee_avatar = undefined; }
+
       phase.cards.push({
         "title": issue.title, //issue name
         "details": issue.body, //issue body
         "state": issue.state,
         "number": issue.number,
+        "creator": issue.user.login,
         "feature": issue.feature,
         "phase": issue.phase,
         "labels": issue.labels,
         "assignee": issue.assignee,
+        "assignee_avatar": issue.assignee_avatar,
         "comments_number": issue.comments,
         "milestone": issue.milestone,
         "dueDate": issue.due_date,
         "created": issue.created_at,
         "updated": issue.updated_at,
-        "closed": issue.closed_at
+        "closed": issue.closed_at,
       });
+
     }
 
     

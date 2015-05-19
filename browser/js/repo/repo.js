@@ -94,7 +94,9 @@ app.factory('RepoFactory', function($http){
 			});
 		},
 		editRepoIssue: function(repoInfo, num, issue) {
-			return $http.post('api/repo/' + repoInfo.owner + "/" + repoInfo.name + "/edit-repo-issue/"+ num, issue).then(function(editedRepoIssue){
+			if(issue.labelNames) { issue.labels = issue.labelNames; }
+			if(issue.assignee_login) { issue.assignee = issue.assignee_login; }
+			return $http.post('api/repo/' + repoInfo.owner + "/" + repoInfo.name + "/edit-repo-issue/" + num, issue).then(function(editedRepoIssue){
 				return editedRepoIssue;
 			});
 		},
@@ -103,8 +105,13 @@ app.factory('RepoFactory', function($http){
 				return createdMilestone;
 			});
 		},
+		deleteRepoMilestone: function(repoInfo, milestoneNumber) {
+			return $http.get('api/repo/'+ repoInfo.owner+"/" + repoInfo.name + '/delete-repo-milestone/'+ milestoneNumber).then(function(deletedMilestone){
+				return deletedMilestone;
+			});			
+		},
 		createComment: function(repoInfo, issueNum, comment){
-			return $http.post('api/repo/'+ repoInfo.owner+"/"+repoInfo.name+'/issues/'+ issueNum +"/comments", comment).then(function(createdComment){
+			return $http.post('api/repo/' + repoInfo.owner+ "/" + repoInfo.name + '/issues/'+ issueNum + "/comments", comment).then(function(createdComment){
 				return createdComment;
 			});
 		}

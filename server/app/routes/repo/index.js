@@ -134,7 +134,6 @@ router.get('/:repoOwner/:repoName/statsParticipation', function (req, res) {
 
 /***GETS ISSUES FOR A PARTICULAR REPO***/
 router.get('/:repoOwner/:repoName/repo-issues', function (req, res) {
-		console.log("USER", req)
 
 	var date = new Date();
 	var allRepoIssues = [];
@@ -225,7 +224,7 @@ router.post('/:repoOwner/:repoName/create-repo-issue', function (req, res) {
 	if(req.body.body) { createdIssue.body = req.body.body; } else { createdIssue.body = undefined; }
 	if(req.body.assignee) { createdIssue.assignee = req.body.assignee } else { createdIssue.assignee = undefined; }
 	if(req.body.labels) { createdIssue.labels = req.body.labels } else { createdIssue.labels = undefined; }
-	if(req.body.milestone) { createdIssue.milestone = req.body.milestone } else { createdIssue.milestone = undefined; }
+	if(typeof req.body.milestone === "number") { createdIssue.milestone = req.body.milestone } else { createdIssue.milestone = undefined; }
 
 	console.log("CREATED ISSUE: ", createdIssue);
 
@@ -258,7 +257,7 @@ router.post('/:repoOwner/:repoName/edit-repo-issue/:issueNumber', function (req,
 	if(req.body.title) { editedIssue.title = req.body.title; } else { editedIssue.title = undefined; }
 	if(req.body.body) { editedIssue.body = req.body.body; } else { editedIssue.body = undefined; }
 	if(req.body.assignee) { editedIssue.assignee = req.body.assignee; } else { editedIssue.assignee = undefined; }
-	if(req.body.milestone || req.body.milestone === null) { editedIssue.milestone = req.body.milestone; } else { editedIssue.milestone = undefined; }	
+	if(typeof req.body.milestone === "number" || req.body.milestone === null) { editedIssue.milestone = req.body.milestone; } else { editedIssue.milestone = undefined; }	
 	if(req.body.state) { editedIssue.state = req.body.state; } else { editedIssue.state = undefined; }
 	if(req.body.labels) { editedIssue.labels = req.body.labels; } else { editedIssue.labels = undefined; } 
 
@@ -285,7 +284,6 @@ router.post('/:repoOwner/:repoName/edit-repo-issue/:issueNumber', function (req,
 /***CREATES/POSTS A REPO LABEL***/
 router.post('/:repoOwner/:repoName/create-repo-label/:labelName', function (req, res) {
 
-	console.log("Create Label", req.body);	
 	var color;
 	if(req.body.color) { color = req.body.color; } else { color = "ffffff"; }	
 
@@ -314,7 +312,7 @@ router.post('/:repoOwner/:repoName/labels', function (req, res,next) {
 	    type: "oauth",
 	    token: userToken
 	});
-	console.log('body', req.body);
+
 	github.issues.updateLabel({
 		user: req.params.repoOwner,
 		repo: req.params.repoName,
@@ -327,8 +325,8 @@ router.post('/:repoOwner/:repoName/labels', function (req, res,next) {
 });
 
 /***DELETE A LABEL FROM REPO***/
-router.get('/:repoOwner/:repoName/delete-repo-label', function (req, res) {
-
+router.post('/:repoOwner/:repoName/delete-repo-label', function (req, res) {
+	console.log("reqbody",req.body);
 	github.authenticate({
 	    type: "oauth",
 	    token: req.user.github.token
@@ -369,6 +367,24 @@ router.post('/:repoOwner/:repoName/create-repo-milestone/:milestoneTitle', funct
 	}, function(err, createdRepoMilestone) {
 		if(err) { errGitHub(err); }		
 		res.json(createdRepoMilestone);
+	});
+});
+
+/***CREATES/POSTS A MILESTONE***/
+router.get('/:repoOwner/:repoName/delete-repo-milestone/:milestoneNumber', function (req, res) {
+
+	github.authenticate({
+	    type: "oauth",
+	    token: req.user.github.token
+	});
+
+	github.issues.deleteMilestone({
+		user: req.params.repoOwner,
+		repo: req.params.repoName,
+		number: req.params.milestoneNumber
+	}, function(err, deletedMilestone) {
+		if(err) { errGitHub(err); }		
+		res.json(deletedMilestone);
 	});
 });
 
@@ -413,31 +429,31 @@ router.post('/:repoOwner/:repoName/issues/:issueNumber/comments', function(req, 
 });
 
 /***CREATE HOOK FOR REPO***/
-router.post('/:repoOwner/:repoName/create-repo-hook', function (req, res) {
+// router.post('/:repoOwner/:repoName/create-repo-hook', function (req, res) {
 
-	var userToken = req.user.github.token;
-	var milestoneTitle = req.body.title;
-	var milestoneState = req.body.state;
-	var milestoneDescription = req.body.description;
-	var milestoneDueDate = req.body.due_on;
+// 	var userToken = req.user.github.token;
+// 	var milestoneTitle = req.body.title;
+// 	var milestoneState = req.body.state;
+// 	var milestoneDescription = req.body.description;
+// 	var milestoneDueDate = req.body.due_on;
 
-	github.authenticate({
-	    type: "oauth",
-	    token: userToken
-	});
+// 	github.authenticate({
+// 	    type: "oauth",
+// 	    token: userToken
+// 	});
 
-	github.repos.createHook({
-		user: req.params.repoOwner,
-		repo: req.params.repoName,
-		title: milestoneTitle,
-		state: milestoneState,
-		description: milestoneDescription,
-		due_on: milestoneDueDate
-	}, function(err, createdRepoMilestone) {
-		if(err) { errGitHub(err); }		
-		res.json(createdRepoMilestone);
-	});
-});
+// 	github.repos.createHook({
+// 		user: req.params.repoOwner,
+// 		repo: req.params.repoName,
+// 		title: milestoneTitle,
+// 		state: milestoneState,
+// 		description: milestoneDescription,
+// 		due_on: milestoneDueDate
+// 	}, function(err, createdRepoMilestone) {
+// 		if(err) { errGitHub(err); }		
+// 		res.json(createdRepoMilestone);
+// 	});
+// });
 
 
 

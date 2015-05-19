@@ -8,8 +8,9 @@ app.factory('BoardModel', function(){
           this.features = [];
       },
 
-      Column: function (name) {
-          this.name = name;
+      Column: function (column) {
+          this.name = column.name;
+          this.color = column.column_color;
           this.cards = [];
       },
 
@@ -20,7 +21,7 @@ app.factory('BoardModel', function(){
           this.due_date = feature.due_date;
           this.number = feature.number;
           this.phases = [];
-          this.color = feature.color;
+          this.color = feature.feature_color;
       },
 
       Phase: function (name) {
@@ -28,18 +29,23 @@ app.factory('BoardModel', function(){
           this.cards = [];
       },
       
-      Card: function (title, details, state, number, feature, phase, labels, assignee, comments, milestone, dueDate) {
-        this.title = title;
-        this.details = details;
-        this.state = state;
-        this.number = number;
-        this.assignee = assignee;
-        this.labels = labels;
-        this.milestone = dueDate;
-        this.feature = feature;
-        this.phase = phase;
-        this.comments = comments;
-        this.dueDate = dueDate;
+      Card: function (card) {
+        this.title = card.title;
+        this.details = card.details;
+        this.state = card.state;
+        this.number = card.number;
+        this.creator = card.creator;
+        this.feature = card.feature;
+        this.phase = card.phase;
+        this.assignee = card.assignee;
+        this.assignee_avatar = card.assignee_avatar;
+        this.comments_number = card.comments;
+        this.labels = card.labels;
+        this.milestone = card.milestone;
+        this.dueDate = card.dueDate;
+        this.created = card.created;
+        this.updated = card.updated;
+        this.closed = card.closed;
         return this;
       }
   };
@@ -73,7 +79,35 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams)
         }
       });
     },
-
+    removeFeature: function(feature, board) {
+      feature.phases.forEach(function(phase) {
+        for(var i = 0; i < phase.cards.length; i++) {
+          var card = phase.cards[i];  
+          card.labelNames = [];
+          if(card.assignee) { card.assignee_login = card.assignee.login; }
+          card.labels.forEach(function(label){
+            if(label.name) {
+            card.labelNames.push(label.name);
+            var labelName = label.name.split(" - "); 
+              if(labelName[0] === "Phase" || labelName[0] === "Feature") {
+                console.log("in", labelName[0])
+                card.labels.splice(i, i+1);
+                i-=1;
+              }
+            }
+          }); 
+          card.state = "closed";
+          RepoFactory.editRepoIssue($stateParams, card.number, card);
+        }
+      });
+      RepoFactory.deleteRepoMilestone($stateParams, feature.number).then(function(){
+        board.features.forEach(function(featureBoard, index, array) {
+          if(featureBoard.name === feature.name) {
+            board.features.splice(index, index+1);
+          }
+        });
+      });
+    },
     editCard: function(board, featureName, phaseName, currentTask, newTask){
       angular.forEach(board.features, function(feature){
         if(feature.name ===featureName){
@@ -136,19 +170,61 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams)
       RepoFactory.createRepoLabel($stateParams, phaseInfo);
     },
 
-    addCardToFeature: function (board, featureName, phaseName, task) {
+    addCardToFeature: function (board, featureName, phaseName, card) {
       angular.forEach(board.features, function (feature) {
         if (feature.name === featureName) {
           angular.forEach(feature.phases, function (phase) {
             if (phase.name === phaseName) {
-              phase.cards.push(new BoardModel.Card(task.title, task.details, task.state, task.number, task.feature, task.phase, task.labels, task.assignee, task.comments, task.milestone, task.dueDate));
+              phase.cards.push(new BoardModel.Card(card));
             }
           });
         }
       });
+    },
+    removePhase: function(board,phase){
+      board.features.forEach(function(feature){
+        feature.phases.forEach(function(myphase){
+          if (myphase.name===phase.name){
+            myphase.cards.forEach(function(card){
+              RepoFactory.editRepoIssue($stateParams,card.number,{state:"closed"});
+            })
+          }
+        })
+      })
+      board.columns=board.columns.filter(function(column){
+        return column.name!==phase.name;
+      });
+      var transferphase;
+      board.features.forEach(function(feature){
+        var currentfeature=feature.name;
+        feature.phases.forEach(function(thisphase){
+          if (thisphase.name===phase.name){
+            transferphase=_.clone(thisphase.cards,true);
+            board.features.forEach(function(feature){
+              if (feature.name===currentfeature){
+                feature.phases.forEach(function(allphase){
+                  if (allphase.name==="Closed"){
+                    allphase.cards=allphase.cards.concat(transferphase);
+                }
+              })
+              }
+
+            })
+            thisphase.cards=[];
+          }
+        })
+      })
+      console.log("tphase", transferphase);
+      board.features.forEach(function(feature){
+        feature.phases.forEach(function(newphase){
+          if (newphase.name==="Closed"){
+            console.log("nphase",newphase);
+            newphase=newphase.cards.concat(transferphase);
+          }
+        })
+      })
+      phase.name="Phase - "+phase.name;
+      RepoFactory.deleteRepoLabel($stateParams,phase);
     }
   };
 });
-
-
-
