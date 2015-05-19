@@ -2,9 +2,9 @@
 
 	<md-content>
 		<div class="col-md-4">
-			<md-card id="profile-card">
-			<core-toolbar id="profile-card-toolbar"><div flex>Profile Information</div></core-toolbar>
-				<md-card-content>
+			<div class='card' id="profile-card">
+			<div class='card' id="profile-card-toolbar"><div flex>Profile</div></div>
+				<div class='card-content'>
 					<div class="text-center">
 					<img src="{{ profile.avatar }}" id="profile-pic" />
 					</div>
@@ -13,16 +13,16 @@
 					<div><strong>Public Email:</strong> {{ profile.email }}</div>
 					<p ng-show="profile.company">Company:</strong> </p> {{ profile.company }}
 					<div><strong>Location:</strong> {{ profile.location }}</div>
-					<div><strong>GitHub Profile Link:</strong> <a href="{{ profile.gitHubProfileLink }}">{{ profile.gitHubProfileLink }}</a></div>
+					<div><strong>GitHub Link:</strong> <a href="{{ profile.gitHubProfileLink }}">{{ profile.gitHubProfileLink }}</a></div>
 					<div><strong>Number of Public Repos:</strong> {{ profile.publicRepos }}</div>
-				</md-card-content>
-			</md-card>
+				</div-card-content>
+			</div-card>
 		</div>
 <!-- 		<div class="inner-div"></div>
- -->		<div class="col-md-8 pull-right">
-			<md-card id="profile-repos-card">
-				<core-toolbar id="profile-repos-card-toolbar"><div flex>User Repos</div></core-toolbar>
-				<md-card-content>
+ -->		<div class="col-div-8 pull-right">
+			<div-card id="profile-repos-card">
+				<div id="profile-repos-card-toolbar"><div flex>Repos</div></div>
+				<div-card-content>
 					<div ng-repeat="profileRepo in profileRepos">
 						<div><strong>Repo Name:</strong> {{ profileRepo.name }}</div>
 						<div><strong>Language:</strong> {{ profileRepo.language }}</div>						
@@ -33,28 +33,28 @@
 						<div><strong>Watchers:</strong> {{ profileRepo.watchers }}</div>
 						<div><strong>Forks:</strong> {{ profileRepo.forks }}</div>
 
-						<md-divider></md-divider>
+						<div-divider></div-divider>
 					</div>	
-				</md-card-content>
-			</md-card>
+				</div-card-content>
+			</div-card>
 		</div>
 
-		<div class="col-md-4" style="float: left;">
-			<md-card id="profile-events-card">
-				<core-toolbar id="profile-events-card-toolbar"><div flex>Latest User Events</div></core-toolbar>
-				<md-card-content>
+		<div class="col-div-4" style="float: left;">
+			<div-card id="profile-events-card">
+				<div id="profile-events-card-toolbar"><div flex>Latest Events</div></div>
+				<div-card-content>
 					<div ng-repeat="profileEvent in profileEvents">
 						<div><strong>Event Type:</strong> {{ profileEvent.type }}</div>
 						<div><strong>Repo:</strong> {{ profileEvent.repo }}</div>
 						<div ng-show="profileEvent.message"><strong>Message:</strong> {{ profileEvent.message }}</div>
 						<div><strong>Date:</strong> {{ profileEvent.date }}</div>
-						<md-divider></md-divider>
+						<div-divider></div-divider>
 					</div>	
-				</md-card-content>
-			</md-card>
+				</div-card-content>
+			</div-card>
 		</div>
 
-	</md-content>
+	</div-content>
 </div>
 
 	<style>
@@ -77,7 +77,7 @@
 				background-color: #ffffff;
 
 	}
-	md-divider {
+	div-divider {
 		color: #CFD8DC;
 	}
 	.inner-div {
