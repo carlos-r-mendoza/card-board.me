@@ -9,7 +9,6 @@ module.exports = function (config) {
         'bower_components/angular/angular.js',
         'bower_components/angular-ui-router/release/angular-ui-router.js',
         'bower_components/socket.io-client/socket.io.js',
-        'bower_components/angular-chart.js/dist/angular-chart.js',
         'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
         'public/main.js',
         'node_modules/sinon/pkg/sinon.js',

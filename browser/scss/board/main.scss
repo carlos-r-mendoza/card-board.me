@@ -265,6 +265,9 @@ b{
 
 .card .card-action a {
     color: #03a9f4;
+    &:hover{
+        color: black;
+    }
 }
 
 .mdi-action-highlight-remove {
@@ -273,5 +276,12 @@ b{
 }
 
 a{
-    color: #337ab7;
+    color: #03a9f4;
+    &:hover{
+        color: black;
+    }
+}
+
+.card .card-title{
+    font-weight: 700;
 }
