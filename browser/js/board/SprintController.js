@@ -102,7 +102,6 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
         }
         if (labelName[0] === "Feature") {
           addFeatureColor(labelName[1], label.color);
-          console.log("LABEL", label)
         }
       });
       addPhasesToFeatures();

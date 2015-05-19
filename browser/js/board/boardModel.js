@@ -21,7 +21,7 @@ app.factory('BoardModel', function(){
           this.due_date = feature.due_date;
           this.number = feature.number;
           this.phases = [];
-          this.color = feature.color;
+          this.color = feature.feature_color;
       },
 
       Phase: function (name) {
@@ -79,7 +79,35 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams)
         }
       });
     },
-
+    removeFeature: function(feature, board) {
+      feature.phases.forEach(function(phase) {
+        for(var i = 0; i < phase.cards.length; i++) {
+          var card = phase.cards[i];  
+          card.labelNames = [];
+          if(card.assignee) { card.assignee_login = card.assignee.login; }
+          card.labels.forEach(function(label){
+            if(label.name) {
+            card.labelNames.push(label.name);
+            var labelName = label.name.split(" - "); 
+              if(labelName[0] === "Phase" || labelName[0] === "Feature") {
+                console.log("in", labelName[0])
+                card.labels.splice(i, i+1);
+                i-=1;
+              }
+            }
+          }); 
+          card.state = "closed";
+          RepoFactory.editRepoIssue($stateParams, card.number, card);
+        }
+      });
+      RepoFactory.deleteRepoMilestone($stateParams, feature.number).then(function(){
+        board.features.forEach(function(featureBoard, index, array) {
+          if(featureBoard.name === feature.name) {
+            board.features.splice(index, index+1);
+          }
+        });
+      });
+    },
     editCard: function(board, featureName, phaseName, currentTask, newTask){
       angular.forEach(board.features, function(feature){
         if(feature.name ===featureName){

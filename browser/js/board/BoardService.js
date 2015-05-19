@@ -13,7 +13,6 @@ app.factory('BoardService', function ($modal, BoardManipulator, BoardModel, Repo
         RepoFactory.editRepoIssue($stateParams, card.number, editedIssue);
         BoardManipulator.removeCardFromColumn(board, feature, phase, card);      
     },
-
     addNewCard: function (board, column, featureName, featureInfo) {
       var modalInstance = $modal.open({
         templateUrl: '/js/board/newCard.html',
