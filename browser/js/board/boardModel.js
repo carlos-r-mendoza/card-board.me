@@ -15,13 +15,15 @@ app.factory('BoardModel', function(){
       },
 
       Feature: function (feature) {
-          this.name = feature.title;
-          this.title = feature.title;
-          this.description = feature.description;
-          this.due_date = feature.due_date;
-          this.number = feature.number;
-          this.phases = [];
-          this.color = feature.feature_color;
+        if(feature.due_on) { feature.due_date = feature.due_on; }
+        if(feature.color) { feature.feature_color = feature.color;  }
+        this.name = feature.title;
+        this.title = feature.title;
+        this.description = feature.description;
+        this.due_date = feature.due_date;
+        this.number = feature.number;
+        this.phases = [];
+        this.color = feature.feature_color;
       },
 
       Phase: function (name) {
@@ -91,7 +93,7 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams)
             var labelName = label.name.split(" - "); 
               if(labelName[0] === "Phase" || labelName[0] === "Feature") {
                 console.log("in", labelName[0])
-                card.labels.splice(i, i+1);
+                card.labels.splice(i, 1);
                 i-=1;
               }
             }
@@ -101,11 +103,12 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams)
         }
       });
       RepoFactory.deleteRepoMilestone($stateParams, feature.number).then(function(){
-        board.features.forEach(function(featureBoard, index, array) {
-          if(featureBoard.name === feature.name) {
-            board.features.splice(index, index+1);
+        for (var i = 0; i < board.features.length; i++) {
+          if(board.features[i].name === feature.name) {
+            board.features.splice(i, 1);
+            i-=1;
           }
-        });
+        }
       });
     },
     editCard: function(board, featureName, phaseName, currentTask, newTask){
@@ -141,7 +144,8 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams)
       // RepoFactory.createRepoLabel($stateParams, label);
     },
     addNewFeature: function(board, feature) {
-      board.features.push(new BoardModel.Feature(feature.title));
+      console.log("fa", feature)
+      board.features.push(new BoardModel.Feature(feature));
       feature.title = "Feature - " + feature.title;
       RepoFactory.createRepoLabel($stateParams, feature);
       RepoFactory.createRepoMilestone($stateParams, feature);      
@@ -166,7 +170,11 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams)
       board.columns.push(new BoardModel.Phase(phase));
       var phaseName = "Phase - " + phase;
       var phaseInfo= {name: phaseName, color:'FFFFFF'};
-      console.log("HELLO", phaseInfo)
+      //console.log("HELLO", phaseInfo)
+      angular.forEach(board.features, function(feature){
+        console.log("insideaddphasetoall phases", feature.phases);
+        feature.phases.push(new BoardModel.Phase(phase));
+      })
       RepoFactory.createRepoLabel($stateParams, phaseInfo);
     },
 
@@ -190,7 +198,17 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams)
             })
           }
         })
+        console.log("fpbefore", feature.phases)
+        feature.phases=feature.phases.filter(function(myphase){
+          return myphase.name!==phase.name;
+        })
+        console.log("fpafter", feature.phases);
       })
+      // board.features.forEach(function(feature){
+      //   feature.phases.forEach(function(myphase){
+
+      //   })
+      
       board.columns=board.columns.filter(function(column){
         return column.name!==phase.name;
       });

@@ -52,6 +52,8 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
         RepoFactory.editRepoIssue($stateParams,issueNum,{labels:filteredArray});
       } else {
         var currentLabelNames=_.pluck(filteredArray, 'name');
+        console.log("eventdest",event.dest);
+        console.log("destphase",destinationPhase);
         currentLabelNames.push("Phase - "+destinationPhase);
         RepoFactory.editRepoIssue($stateParams,issueNum,{labels:currentLabelNames});
       }
