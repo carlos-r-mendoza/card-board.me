@@ -18,7 +18,7 @@ app.controller('NewPhaseController', function ($scope, $modal, BoardService, Boa
 
   $scope.addNewPhase = function(board){
       $scope.modalFeature = $modal.open({
-        templateUrl: '/js/board/newPhase.html',
+        templateUrl: '/js/phase/newPhase.html',
         backdrop: 'static',
         resolve: {
           sprintBoard: function(){

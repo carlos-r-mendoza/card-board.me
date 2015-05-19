@@ -5,7 +5,7 @@ app.controller('EditCardController', function($scope, $modal, BoardService, Boar
       console.log('CARD: ', card);
 
         $scope.modalEdit = $modal.open({
-        templateUrl: '/js/board/editCard.html',
+        templateUrl: '/js/cards/editCard.html',
         backdrop: 'static',
         resolve: {
           sprintBoard: function(){
