@@ -1,23 +1,33 @@
 app.controller('ColorPicker', function($scope, $stateParams){
 	$scope.colors = [
-		{name: 'black',
-		 hex: '000000'},
 		{name: 'grey',
 		 hex: '9e9e9e'},
 		{name: 'white',
 	 	 hex: 'FFFFFF'},
 	 	{name: 'red',
-	 	 hex: 'c62828'},
+	 	 hex: 'ef5350'},
 	 	{name: 'orange',
-	 	 hex: 'ff9800'},
+	 	 hex: 'ffa726'},
 	 	{name: 'yellow',
-	 	 hex: 'ffd600'},
+	 	 hex: 'ffee58'},
 	 	{name: 'green',
-	 	 hex: '4caf50'},
+	 	 hex: '66bb6a'},
 	 	{name: 'blue',
-	 	 hex: '2196f3'},
+	 	 hex: '64b5f6'},
 	 	{name: 'purple',
-	 	 hex: '7e57c2'}
+	 	 hex: 'b39ddb'},
+	 	{name: 'pink',
+	 	 hex: 'f48fb1'},
+	 	{name: 'indigo',
+	 	 hex: '7986cb'},
+	 	{name: 'teal',
+	 	 hex: '80cbc4'},
+	 	{name: 'cyan',
+	 	 hex: '4dd0e1'},
+	 	{name: 'lime',
+	 	 hex: '9ccc65'},
+	 	{name: 'red-orange',
+	 	 hex: 'ff7043'}
 	];
 
 });
