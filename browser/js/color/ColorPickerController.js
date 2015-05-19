@@ -9,7 +9,7 @@ app.controller('ColorPicker', function($scope, $stateParams){
 	 	{name: 'orange',
 	 	 hex: 'ffa726'},
 	 	{name: 'yellow',
-	 	 hex: 'ffee58'},
+	 	 hex: 'ffd600'},
 	 	{name: 'green',
 	 	 hex: '66bb6a'},
 	 	{name: 'blue',

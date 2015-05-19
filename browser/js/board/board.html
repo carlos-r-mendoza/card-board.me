@@ -1,9 +1,12 @@
-<div class='row' ng-controller="SprintController">
-    <div class="col-sm-4">
-        <progressbar class="progress-striped active" max='100' value='percent' type="info">
+<div class="container">
+    <div class='row centerDiv' ng-controller="SprintController">
+       <div class="col-sm-4"> <h2 class='right'> Progress </h2> </div>
+    <div class="col-sm-4 progressDiv">
+        <progressbar animate="false" max='100' value='percent' type="success">
             <b>{{total - open}}/{{total}}</b>
         </progressbar>
     </div>
+    <div class="col-sm-4"><h2 class='left'>{{percent}}% Complete</h2></div>
 </div>
 
 <div ng-model="sprintBoard" style="width: 120%;">
@@ -156,6 +159,7 @@
         </div>
     </div>
      </div>
+</div>
 
   <style type="text/css">
     #loader {
