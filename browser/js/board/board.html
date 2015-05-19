@@ -20,6 +20,8 @@
             <th ng-repeat="column in sprintBoard.columns" style="width:15%;"> <!--columns width -->
                 <div>
                     <span>{{column.name}}</span>
+                    <span><a title="Delete Phase" ng-click="deletePhase(column,sprintBoard)" ng-controller="NewPhaseController"><i
+                        class="glyphicon glyphicon-remove addNewCard"></i></a></span>
                 </div>
             </th>
             <th class="addPhase" style="width:2%;" ng-controller="NewPhaseController">

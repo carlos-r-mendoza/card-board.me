@@ -235,6 +235,7 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
         "updated": issue.updated_at,
         "closed": issue.closed_at,
       });
+
     }
 
     

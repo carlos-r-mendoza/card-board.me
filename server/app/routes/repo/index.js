@@ -325,8 +325,8 @@ router.post('/:repoOwner/:repoName/labels', function (req, res,next) {
 });
 
 /***DELETE A LABEL FROM REPO***/
-router.get('/:repoOwner/:repoName/delete-repo-label', function (req, res) {
-
+router.post('/:repoOwner/:repoName/delete-repo-label', function (req, res) {
+	console.log("reqbody",req.body);
 	github.authenticate({
 	    type: "oauth",
 	    token: req.user.github.token
