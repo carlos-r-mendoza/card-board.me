@@ -17,18 +17,32 @@
         <thead>
         <tr id="boardHeader">
             <th style="width:20%">
-                <h2 class="noMargin">Features</h2>
+                <h2 class="noMargin">Features
+                    <span class="addStory" ng-controller="NewFeatureController">  
+                    <a title="Add Feature" ng-click="addNewFeature(sprintBoard)">
+                            <i  popover-placement='top' popover='Add New Feature' popover-trigger="mouseenter"
+                        class="glyphicon glyphicon-plus addNewCard"></i>
+                    </a>
+                    </span>
+                </h2>
             </th>
             <th class="addStory" style="width:5%" ng-controller="NewFeatureController">
-                <a title="Add Feature"><i ng-click="addNewFeature(sprintBoard)" popover-placement='top' popover='Add New Feature' popover-trigger="mouseenter"
-                        class="glyphicon glyphicon-plus addNewCard"></i></a>
+                
             </th>
             <th ng-repeat="column in sprintBoard.columns"> <!--columns width -->
-                <div>
-                    <h2 class="noMargin">{{column.name}}</h2>
-                    <span ng-show="column.name!=='Open'&&column.name!=='Closed'&&column.name!=='In Progress'"><a title="Delete Phase" ng-click="deletePhase(column,sprintBoard)" ng-controller="NewPhaseController"><i popover-placement='top' popover='Delete Phase' popover-trigger="mouseenter"
-                        class="glyphicon glyphicon-remove addNewCard"></i></a></span>
-                </div>
+                
+                    <h2 class="noMargin">{{column.name}}
+                        <span ng-show="column.name!=='Open'&&column.name!=='Closed'&&column.name!=='In Progress'">
+                            <a title="Delete Phase" ng-click="deletePhase(column,sprintBoard)" ng-controller="NewPhaseController" class="Xbtn">
+                                <i popover-placement='top' popover='Delete Phase' popover-trigger="mouseenter"
+                                class="glyphicon glyphicon-remove addNewCard Xbtn"></i>
+                            </a>
+                        </span>
+                    </h2>
+                
+                
+                    
+                
             </th>
             <th class="addPhase" style="width:5%" ng-controller="NewPhaseController">
                 <a title="Add Phase" ng-click="addNewPhase(sprintBoard)"><i
