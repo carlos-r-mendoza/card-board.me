@@ -8,7 +8,7 @@
 	    <li><a id="triCat" href="/" class="pen">Card-Board Beta</a></li>
 		<li ng-show="!user"><a href="/auth/github/" target="_self">Login</a></li>
 		<li ng-show="user"><a href="/auth/github/logout" target="_self">Logout</a></li>
-	    <li id="navbar-profile-pic-li"><a ui-sref="github-profile"><img src="{{ profile.avatar }}" id="navbar-profile-pic" /></a></li>
+	    <li ng-show="user" id="navbar-profile-pic-li"><a ui-sref="github-profile"><img src="{{ profile.avatar }}" id="navbar-profile-pic" /></a></li>
 	  </ul>
 
 
@@ -23,7 +23,7 @@
 
   </div>
 
-  <a href="#" data-activates="slide-out" class="button-collapse show-on-large spaceLeft"><i class="mdi-navigation-menu"></i></a>
+  <a ng-show="user" href="#" data-activates="slide-out" class="button-collapse show-on-large spaceLeft"><i class="mdi-navigation-menu"></i></a>
   
   <div>
   	<ul>
