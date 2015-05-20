@@ -58,6 +58,13 @@ passport.use(new GitHubStrategy(gitHubCredentials, verifyCallback));
 app.get('/auth/github',
   passport.authenticate('github', { scope: ['repo', 'notifications'] }));
 
+app.get('/auth/github/logout', function(req, res){
+    console.log("inside logout before", req.user);
+  req.logout();
+  console.log("inside logout after", req.user);
+  res.redirect('/go');
+});
+
 app.get('/auth/github/callback', 
   passport.authenticate('github', { failureRedirect: '/login' }),
   function (req, res) {
