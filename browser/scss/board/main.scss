@@ -151,7 +151,7 @@ label{
 
 
 input{
-    font-size: 1.5rem;
+    font-size: 1.5rem !important;
 }
 
 .spaceRight {
@@ -199,4 +199,9 @@ th{
 
 .addNewCard{
     display: inline-block;
+}
+
+.modalBtn{
+    vertical-align: middle;
+    top: 10px;
 }

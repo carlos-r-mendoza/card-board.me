@@ -26,7 +26,7 @@
             <th ng-repeat="column in sprintBoard.columns"> <!--columns width -->
                 <div>
                     <h2 class="noMargin">{{column.name}}</h2>
-                    <span ng-show="column.name!=='Open'&&column.name!=='Closed'&&column.name!=='In Progress'"><a title="Delete Phase" ng-click="deletePhase(column,sprintBoard)" ng-controller="NewPhaseController"><i popover-placement='left' popover='Delete Phase' popover-trigger="mouseenter"
+                    <span ng-show="column.name!=='Open'&&column.name!=='Closed'&&column.name!=='In Progress'"><a title="Delete Phase" ng-click="deletePhase(column,sprintBoard)" ng-controller="NewPhaseController"><i popover-placement='top' popover='Delete Phase' popover-trigger="mouseenter"
                         class="glyphicon glyphicon-remove addNewCard"></i></a></span>
                 </div>
             </th>
