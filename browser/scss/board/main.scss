@@ -87,10 +87,10 @@ b{
 
 .ProgressContainer{
     width: 100%;
-    height: 100vh;
     max-width: 100%;
     padding: 20px;
     margin: 0 auto;
+    margin-bottom: 20px;
 }
 
 .left{
@@ -107,6 +107,8 @@ b{
 
 .note{
     background-color: #ffff8d;
+    max-width: 250px;
+    text-align: center;
 }
 
 .card .card-action a {
@@ -156,11 +158,6 @@ input{
     margin-right: 10px !important;
 }
 
-.glyphicon{
-    vertical-align: middle;
-    top: 10px;
-}
-
 .btn-primary{
     background-color: #03a9f4;
     border-color: #03a9f4;
@@ -184,4 +181,22 @@ th{
     max-width: 250px;
     padding: 0;
     max-width: 250px;
+    border: none;
+}
+
+.addPhase{
+    vertical-align: middle !important;
+    text-align: center;
+}
+
+.addStory{
+    vertical-align: middle !important;
+}
+
+.noMargin{
+    margin: 0;
+}
+
+.addNewCard{
+    display: inline-block;
 }
