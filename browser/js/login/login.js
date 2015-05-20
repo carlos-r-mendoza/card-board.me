@@ -1,11 +1,23 @@
-app.config(function ($stateProvider) {
 
+
+// app.directive('backImg', function(){
+//     console.log("AFDS")
+//     return function(scope, element, attrs){
+//         var url = attrs.backImg;
+//         console.log("FADS", url)
+//         element.css({
+//             'background-image': 'url(' + url +')',
+//             'background-size' : 'cover'
+//         });
+//     };
+// });​
+
+app.config(function ($stateProvider) {
     $stateProvider.state('login', {
         url: '/login',
         templateUrl: 'js/login/login.html',
         controller: 'LoginCtrl'
     });
-
 });
 
 app.controller('LoginCtrl', function ($scope, AuthService, $state) {
@@ -26,3 +38,4 @@ app.controller('LoginCtrl', function ($scope, AuthService, $state) {
     };
 
 });
+

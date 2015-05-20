@@ -1,11 +1,11 @@
 'use strict';
-app.config(function ($stateProvider) {
-    $stateProvider.state('home', {
-        url: '/',
-        templateUrl: 'js/map/map.html',
-        controller: 'SearchController'
-    });
-});
+// app.config(function ($stateProvider) {
+//     $stateProvider.state('home', {
+//         url: '/',
+//         templateUrl: 'js/map/map.html',
+//         controller: 'SearchController'
+//     });
+// });
 
 app.factory('SearchFactory', function($http){
 	return {
