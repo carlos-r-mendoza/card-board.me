@@ -5,67 +5,71 @@
        <div class="col-sm-4"> <h2 class='right'> Progress </h2> </div>
     <div class="col-sm-4 progressDiv">
         <progressbar animate="false" max='100' value='percent' type="success">
-            <b>{{closed}}/{{total}}</b>
+            <b>{{closed}}/{{total}} cards</b>
         </progressbar>
     </div>
     <div class="col-sm-4"><h2 class='left'>{{percent}}% Complete</h2></div>
 </div>
-
-    <div id="board" ng-model="sprintBoard" style="width: 120%;">
-        <table id="boardTable" class="table">
-            <thead>
-            <tr id="boardHeader">
-                <th style="width:10%;">
-                    <span>Features</span>
-                </th>
-                <th class="addStory" style="width:2%;" ng-controller="NewFeatureController">
-                    <a title="Add Feature" ng-click="addNewFeature(sprintBoard)"><i
-                            class="glyphicon glyphicon-plus addNewCard"></i></a>
-                </th>
-                <th ng-repeat="column in sprintBoard.columns" style="width:10%;"> <!--columns width -->
-                    <div>
-                        <span>{{column.name}}</span>
-                        <span ng-show="column.name!=='Open'&&column.name!=='Closed'&&column.name!=='In Progress'"><a title="Delete Phase" ng-click="deletePhase(column,sprintBoard)" ng-controller="NewPhaseController"><i
-                            class="glyphicon glyphicon-remove addNewCard"></i></a></span>
-                    </div>
-                </th>
-                <th class="addPhase" style="width:2%;" ng-controller="NewPhaseController">
-                    <a title="Add Phase" ng-click="addNewPhase(sprintBoard)"><i
-                            class="glyphicon glyphicon-plus addNewCard"></i></a>
-                </th>
-            </tr>
-            </thead>
+</div>
+    <div ng-model="sprintBoard" style="width: 100%;">
+    <table id="boardTable" class="table">
+        <thead>
+        <tr id="boardHeader">
+            <th style="width:20%">
+                <h2 class="noMargin">Features</h2>
+            </th>
+            <th class="addStory" style="width:5%" ng-controller="NewFeatureController">
+                <a title="Add Feature"><i ng-click="addNewFeature(sprintBoard)" popover-placement='top' popover='Add New Feature' popover-trigger="mouseenter"
+                        class="glyphicon glyphicon-plus addNewCard"></i></a>
+            </th>
+            <th ng-repeat="column in sprintBoard.columns"> <!--columns width -->
+                <div>
+                    <h2 class="noMargin">{{column.name}}</h2>
+                    <span ng-show="column.name!=='Open'&&column.name!=='Closed'&&column.name!=='In Progress'"><a title="Delete Phase" ng-click="deletePhase(column,sprintBoard)" ng-controller="NewPhaseController"><i popover-placement='left' popover='Delete Phase' popover-trigger="mouseenter"
+                        class="glyphicon glyphicon-remove addNewCard"></i></a></span>
+                </div>
+            </th>
+            <th class="addPhase" style="width:5%" ng-controller="NewPhaseController">
+                <a title="Add Phase" ng-click="addNewPhase(sprintBoard)"><i
+                        class="glyphicon glyphicon-plus addNewCard" popover-placement='top' popover='Add New Phase' popover-trigger="mouseenter"></i></a>
+            </th>
+        </tr>
+        </thead>
             <tbody ng-repeat="feature in sprintBoard.features">
             <tr>
-                <th class="black-text pencil" ng-click='isCollapsed=!isCollapsed' ng-style="{'background-color': '#{{feature.color}}'}">{{feature.title}}</th>
+                <th class="black-text collapsableRow" ng-click='isCollapsed=!isCollapsed' ng-style="{'background-color': '#{{feature.color}}'}">
+                    
+                    <span ng-show="collapseFeature" class="spaceLeft">{{feature.title}}</span>
+                    <div class='arrow'>
+                    <a ng-click="collapseFeature = !collapseFeature" ng-show="!collapseFeature"><i class="mdi-hardware-keyboard-arrow-up left red-text" popover-placement='right' popover='Collapse Row' popover-trigger="mouseenter"></i></a>
+                    <a ng-click="collapseFeature = !collapseFeature" ng-show="collapseFeature"><i class="mdi-hardware-keyboard-arrow-down left red-text" popover-placement='right' popover='Expand Row' popover-trigger="mouseenter"></i></a>
+                    </div>
+                    
+                <td ng-style="{'background-color': '#{{feature.color}}'}"></td>
+                <td ng-repeat='column in sprintBoard.columns' ng-style="{'background-color': '#{{feature.color}}'}"></td>
+                <td ng-style="{'background-color': '#{{feature.color}}'}"></td>
             </tr>
             <tr collapse='isCollapsed'>
-                <th style="width:20%"> <!-- features width -->
+                <th> <!-- features width -->
                     <div class="row">
                         <div class="card" id="featuresCard" ng-style="{'background-color': '#{{feature.color}}'}">
                             <div class="card-content">
-                                    <a ng-click="collapseFeature = !collapseFeature" ng-show="!collapseFeature"><i class="mdi-hardware-keyboard-arrow-up left red-text"></i></a>
-                                    <a ng-click="collapseFeature = !collapseFeature" ng-show="collapseFeature"><i class="mdi-hardware-keyboard-arrow-down left red-text"></i></a>                                   
                                     <span ng-controller="EditFeatureController">
-                                    <a ng-click="removeFeature(feature, sprintBoard)"><i class="mdi-action-highlight-remove right red-text"></i></a></span>
-                                    <span class="card-title black-text pen" ng-show="collapseFeature" style="font-size:14px">Feature: {{feature.title}}</span>
-
-                                    <span ng-show="!collapseFeature">
+                                    <a ng-click="removeFeature(feature, sprintBoard)"><i class="mdi-action-highlight-remove right red-text" popover-placement='left' popover='Delete Feature' popover-trigger="mouseenter"></i></a></span>
                                         <h2 class="card-title black-text pen">{{feature.title}}</h2>
                                         <p>Due Date: <span ng-show="feature.due_date">{{feature.due_date | date : 'fullDate'}}</span>             
                                                      <span ng-hide="feature.due_date">N/A</span>
                                         </p>
                                         <p>Details: <span ng-style="{'background-color': '#feature.color'};" ng-show="feature.description">{{feature.description}}</span>
                                                     <span ng-hide="feature.description">N/A</span>
-                                        </p>
-                                    </span>    
+                                        </p>    
                             </div>
                         </div>
                     </div>
                 </th>
                 <td class="addTask">
                     <a title="Add card to column" ng-click="addNewCard(sprintBoard, column, feature.name, feature)"><i
-                            class="glyphicon glyphicon-plus addNewCard"></i></a>
+                            class="glyphicon glyphicon-plus addNewCard" popover-placement='bottom' popover='Add New Card' popover-trigger="mouseenter"></i></a>
                 </td>
                 <td as-sortable="sprintSortOptions" ng-repeat="phase in feature.phases" ng-model="phase.cards">
                     <div ng-repeat="card in phase.cards" as-sortable-item>
@@ -74,39 +78,33 @@
                                 <div class="card note">
                                     <div class="card-content black-text">
                                         <span class="cursor-pointer">
-                                            <a ng-click="removeCard(sprintBoard, feature.name, phase.name, card)"><i class="mdi-action-highlight-remove right"></i></a>
+                                            <a ng-click="removeCard(sprintBoard, feature.name, phase.name, card)" ><i class="mdi-action-highlight-remove right" popover-placement='left' popover='Remove Card' popover-trigger="mouseenter"></i></a>
                                         </span>
-                                        <div class="title" ng-show="collapseFeature">
-                                            <h2 class="pen">{{ card.title }}</h2>
-                                        </div>
-
-                                        <span ng-show="!collapseFeature">
                                             <div class="title">
                                                 <h2 class="pen">{{ card.title }}</h2>
                                             </div>
-                                            <div class="card-action">
-                                            <span class="cursor-pointer">
-                                                <a ng-controller="EditCardController" data-no-drag ng-click="editCard(sprintBoard, feature.name, phase.name, card)" class=".cursor-pointer">Edit</a>
-                                            </span>
-                                            <span class="cursor-pointer">
-                                                <a ng-click="showDetails = !showDetails" class=".cursor-pointer">Details</a>
-                                            </span>
-                                               <img src="{{ card.assignee_avatar }}" alt="" class="circle right" id="assignee-avatar" ng-show="card.assignee_avatar">  
-                                                <div ng-show="showDetails" class="white-text">
-                                                    <p>Details: {{card.details}}</p>
-                                                    <p>Comments: {{card.comments}}</p>
-                                                    <p>Labels: <span ng-repeat="label in card.labels">{{label.name}} </span></p>
-                                                    <p>Assignee: {{card.assignee.login}}</p>
-                                                    <p>Created: {{card.created}}</p>
-                                                    <p>Updated: {{card.updated}}</p>
-                                                </div>
-                                            </div>
-                                        </span>
+                                            <p>{{ card.detail }}<p>  
                                     </div>
-                
+                                <div class="card-action">
+                                    <div>
+                                        <span class="cursor-pointer">
+                                            <a ng-controller="EditCardController" data-no-drag ng-click="editCard(sprintBoard, feature.name, phase.name, card)" class=".cursor-pointer">Edit</a>
+                                        </span>
+                                        <span class="cursor-pointer">
+                                            <a ng-click="showDetails = !showDetails" class=".cursor-pointer">Details</a>
+                                        </span>
+                                           <img src="{{ card.assignee_avatar }}" alt="" class="circle right" id="assignee-avatar" ng-show="card.assignee_avatar">  
+                                            <div ng-show="showDetails" class="white-text">
+                                                <p>Details: {{card.details}}</p>
+                                                <p>Comments: {{card.comments}}</p>
+                                                <p>Labels: <span ng-repeat="label in card.labels">{{label.name}} </span></p>
+                                                <p>Assignee: {{card.assignee.login}}</p>
+                                                <p>Created: {{card.created}}</p>
+                                                <p>Updated: {{card.updated}}</p>
+                                            </div>
+                                        </div>
+                                    </div> 
                                 </div>
-                            </div>
-
                             </div>
                         </div>
                     </div>
@@ -116,17 +114,18 @@
         </table>
     </div>
 </div>
-</div>
+
         <div class="preloader-wrapper big active" id="loader" ng-show="!sprintBoard">
-        <div class="preloader-wrapper big active">
-            <div class="spinner-layer spinner-blue-only">
-              <div class="circle-clipper left">
-                <div class="circle"></div>
-              </div><div class="gap-patch">
-                <div class="circle"></div>
-              </div><div class="circle-clipper right">
-                <div class="circle"></div>
-              </div>
+            <div class="preloader-wrapper big active">
+                <div class="spinner-layer spinner-blue-only">
+                  <div class="circle-clipper left">
+                        <div class="circle"></div>
+                  </div><div class="gap-patch">
+                        <div class="circle"></div>
+                  </div><div class="circle-clipper right">
+                        <div class="circle"></div>
+                  </div>
+                </div>
             </div>
-        </div>
          </div>
+   

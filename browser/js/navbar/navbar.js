@@ -11,10 +11,36 @@ app.directive('mainContent', function ($rootScope, AuthService, AUTH_EVENTS, $st
 
 });
 
-app.controller('NavbarController', function($scope){
+app.controller('NavbarController', function($scope,$rootScope, AuthService, AUTH_EVENTS, $state){
 
   // More information: http://materializecss.com/side-nav.html
+  $scope.user = null;
 
+  $scope.isLoggedIn = function () {
+      return AuthService.isAuthenticated();
+  };
+
+  $scope.logout = function () {
+      AuthService.logout().then(function () {
+         $state.go('home');
+      });
+  };
+
+  var setUser = function () {
+      AuthService.getLoggedInUser().then(function (user) {
+          $scope.user = user;
+      });
+  };
+
+  var removeUser = function () {
+      $scope.user = null;
+  };
+
+  setUser();
+
+  $rootScope.$on(AUTH_EVENTS.loginSuccess, setUser);
+  $rootScope.$on(AUTH_EVENTS.logoutSuccess, removeUser);
+  $rootScope.$on(AUTH_EVENTS.sessionTimeout, removeUser);
    $('.button-collapse').sideNav({
 	menuWidth: 450, // Default is 240
 	edge: 'left', // Choose the horizontal origin
