@@ -190,8 +190,10 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams)
       });
     },
     removePhase: function(board,phase){
+      //console.log("board phase", board,phase);
       board.features.forEach(function(feature){
         feature.phases.forEach(function(myphase){
+          console.log("two phases1",phase.name, myphase.name)
           if (myphase.name===phase.name){
             myphase.cards.forEach(function(card){
               RepoFactory.editRepoIssue($stateParams,card.number,{state:"closed"});
@@ -199,9 +201,9 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams)
           }
         })
         console.log("fpbefore", feature.phases)
-        feature.phases=feature.phases.filter(function(myphase){
-          return myphase.name!==phase.name;
-        })
+        // feature.phases=feature.phases.filter(function(myphase){
+        //   return myphase.name!==phase.name;
+        // })
         console.log("fpafter", feature.phases);
       })
       // board.features.forEach(function(feature){
@@ -216,6 +218,7 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams)
       board.features.forEach(function(feature){
         var currentfeature=feature.name;
         feature.phases.forEach(function(thisphase){
+          //console.log("two phases",phase.name, thisphase.name);
           if (thisphase.name===phase.name){
             transferphase=_.clone(thisphase.cards,true);
             board.features.forEach(function(feature){
@@ -231,8 +234,11 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams)
             thisphase.cards=[];
           }
         })
+        feature.phases=feature.phases.filter(function(myphase){
+          return myphase.name!==phase.name;
+        })
       })
-      console.log("tphase", transferphase);
+      //console.log("tphase", transferphase);
       board.features.forEach(function(feature){
         feature.phases.forEach(function(newphase){
           if (newphase.name==="Closed"){
