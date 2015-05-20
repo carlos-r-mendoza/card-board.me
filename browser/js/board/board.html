@@ -13,43 +13,42 @@
     <table id="boardTable" class="table">
         <thead>
         <tr id="boardHeader">
-            <th style="width:20%; text-align: left;">
+            <th style="width:10%">
                 <h3>Features</h3>
             </th>
-            <th class="addStory" style="width:2%;" ng-controller="NewFeatureController">
+            <th class="addStory" style="width:2%" ng-controller="NewFeatureController">
                 <a title="Add Feature" ng-click="addNewFeature(sprintBoard)"><i
                         class="glyphicon glyphicon-plus addNewCard"></i></a>
             </th>
-            <th ng-repeat="column in sprintBoard.columns" style="width:15%;"> <!--columns width -->
+            <th ng-repeat="column in sprintBoard.columns" style="width:10%"> <!--columns width -->
                 <div>
                     <h3>{{column.name}}</h3>
                     <span ng-show="column.name!=='Open'&&column.name!=='Closed'&&column.name!=='In Progress'"><a title="Delete Phase" ng-click="deletePhase(column,sprintBoard)" ng-controller="NewPhaseController"><i
                         class="glyphicon glyphicon-remove addNewCard"></i></a></span>
                 </div>
             </th>
-            <th class="addPhase" style="width:2%;" ng-controller="NewPhaseController">
+            <th class="addPhase" style="width:2%" ng-controller="NewPhaseController">
                 <a title="Add Phase" ng-click="addNewPhase(sprintBoard)"><i
                         class="glyphicon glyphicon-plus addNewCard"></i></a>
             </th>
         </tr>
         </thead>
-        <tbody ng-repeat="feature in sprintBoard.features">
-        {{feature}}
+        <tbody ng-repeat="feature in sprintBoard.features" >
+        
         <tr>
-            <th class="black-text pencil" ng-click='isCollapsed=!isCollapsed'>{{feature.title}}</th>
+            <th class="black-text pencil" ng-click='isCollapsed=!isCollapsed' ng-style="{'background-color': '#{{feature.color}}'}">{{feature.title}}</th>
         </tr>
         <tr collapse='isCollapsed'>
-            <th style="width:20%"> <!-- features width -->
+            <th> <!-- features width -->
                 <div class="row">
-                    <div class="card">
-                        <div class="card-content" ng-style="{'background-color': '#{{feature.color}}'};">
+                    <div class="card" ng-style="{'background-color': '#{{feature.color}}'}">
+                        <div class="card-content">
                              <!-- ng-click="isCollapsed=!isCollapsed" -->
                             <span ng-controller="EditFeatureController">
                             <a ng-click="removeFeature(feature, sprintBoard)"><i class="mdi-action-highlight-remove right red-text"></i></a></span>
-                            <h2 class="card-title black-text pen">Feature: {{feature.title}}</h2>
-                            <p>Due Date: {{feature.due_date}}</p>
-                            <span ng-style="{'background-color': '#feature.color'};"><p>Details: {{feature.description}}</p></
-                            <p>color: {{feature.color}}</p>
+                            <h2 class="card-title black-text pen">{{feature.title}}</h2>
+                            <p ng-show"feature.due_date">Due Date: {{feature.due_date}}</p>
+                            <span ng-style="{'background-color': '#feature.color'};" ng-show="feature.description"><p>Details: {{feature.description}}</p>
                         </div>
                  <!--       <div class="col-sm-2" ng-controller="EditFeatureController">
                             <a data-no-drag class="addNewCard" ng-click="editingFeature(sprintBoard, feature.name)"><span class="mdi-editor-mode-edit"></span></a>
@@ -94,7 +93,7 @@
                                         </span>
                                     </div>
                                    <img src="{{ card.assignee_avatar }}" alt="" class="circle right" id="assignee-avatar" ng-show="card.assignee_avatar">  
-                                    <div ng-show="showDetails" class="black-text left">
+                                    <div ng-show="showDetails" class="black-text left spaceTop">
                                         <p>Details: {{card.details}}</p>
                                         <p>Comments: {{card.comments}}</p>
                                         <p>Labels: <span ng-repeat="label in card.labels">{{label.name}} </span></p>
