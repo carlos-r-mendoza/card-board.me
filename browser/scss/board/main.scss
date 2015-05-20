@@ -33,6 +33,7 @@
 #board .table thead th:first-of-type {
     padding: 5px 10px 5px 20px;
     white-space: nowrap;
+    text-align: center;
 }
 
 #board .table thead {
@@ -54,12 +55,14 @@
 #board tbody td {
     background-color: #ffffff;
     text-align: center;
+    max-width: 250px;
 }
 
 #board .table td.addTask,
 #board .table td.addStory {
     margin: 0;
     padding: 0;
+    text-align: center;
 }
 
 #board .table td.addTask button,
@@ -136,6 +139,12 @@ div.task h3 {
 //     border: solid 1px darkgrey;
 //     box-shadow: rgba(0, 0, 0, 0.7) 0 1px 10px 0;
 // }
+
+.th{
+    text-align: center;
+    max-width: 250px;
+}
+
 .card-list {
     margin: 0;
     padding: 0;
@@ -152,6 +161,8 @@ div.task h3 {
 
 .card {
    padding: 10px;
+   max-width: 250px;
+   height: auto;
 }
 
 .card-title {
@@ -266,7 +277,8 @@ b{
 .card .card-action a {
     color: #03a9f4;
     &:hover{
-        color: black;
+        color: #337ab7;
+        text-decoration: none;
     }
 }
 
@@ -278,10 +290,47 @@ b{
 a{
     color: #03a9f4;
     &:hover{
-        color: black;
+        color: #337ab7;
+        text-decoration: none;
     }
 }
 
 .card .card-title{
     font-weight: 700;
+}
+
+.modal-content{
+    padding: 30px;
+}
+
+.modal-dialog{
+    width: 100%;
+    margin: 0 auto;
+}
+
+label{
+    font-size: 1.75rem;
+}
+
+
+input{
+    font-size: 1.5rem;
+}
+
+.spaceRight {
+    margin-right: 10px !important;
+}
+
+.glyphicon{
+    vertical-align: middle;
+    top: 10px;
+}
+
+.btn-primary{
+    background-color: #03a9f4;
+    border-color: #03a9f4;
+}
+
+.spaceTop{
+    margin-top: 20px;
 }
