@@ -169,6 +169,7 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams,
     },
     addNewFeature: function(board, feature) {
       var featureTitle = feature.title;
+      var phase
       console.log("FEAEARAFADSF", feature);
 
       var splitTitle = feature.title.split(" - ");
@@ -179,6 +180,11 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams,
       RepoFactory.createRepoLabel($stateParams, feature);
       RepoFactory.createRepoMilestone($stateParams, feature).then(function (featureCreated) {
         console.log("COLOR", feature.color)
+              feature
+              board.columns.forEach(function(column){
+                column.name;
+              })
+              feature.phases
               board.features.push(new BoardModel.Feature(featureCreated.data, feature.color, featureTitle));
       });      
     },
@@ -212,9 +218,9 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams,
     },
 
     addCardToFeature: function (board, featureName, phaseName, card) {
-      console.log("HEREHREHHRE", card);
       angular.forEach(board.features, function (feature) {
         if (feature.name === featureName) {
+          feature.phases = [{name: "Open", cards: []}];
           angular.forEach(feature.phases, function (phase) {
             if (phase.name === phaseName) {
               phase.cards.push(new BoardModel.Card(card, featureName, phaseName));
@@ -224,13 +230,12 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams,
       });
     },
     removePhase: function(board,phase){
-      //console.log("board phase", board,phase);
       board.features.forEach(function(feature){
         feature.phases.forEach(function(myphase){
           console.log("two phases1",phase.name, myphase.name)
           if (myphase.name===phase.name){
             myphase.cards.forEach(function(card){
-              RepoFactory.editRepoIssue($stateParams,card.number,{state:"closed"});
+              //RepoFactory.editRepoIssue($stateParams,card.number,{state:"closed"});
             })
           }
         })
