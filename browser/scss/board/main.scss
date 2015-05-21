@@ -151,7 +151,7 @@ label{
 
 
 input{
-    font-size: 1.5rem;
+    font-size: 1.5rem !important;
 }
 
 .spaceRight {
@@ -165,6 +165,10 @@ input{
 
 .spaceTop{
     margin-top: 20px;
+}
+
+.spaceBottom{
+    margin-bottom: 25px;
 }
 
 .arrow{
@@ -199,4 +203,14 @@ th{
 
 .addNewCard{
     display: inline-block;
+    font-size: 15px;
+}
+
+.modalBtn{
+    vertical-align: middle;
+    top: 10px;
+}
+
+.control-label{
+    margin-top: 25px;
 }

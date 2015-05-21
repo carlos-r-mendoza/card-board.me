@@ -70,7 +70,7 @@ app.factory('BoardModel', function(){
   };
 });
 
-app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams) {
+app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams, ProgressFactory) {
 
 
   return {
@@ -132,6 +132,7 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams)
           }
         }
       });
+      ProgressFactory.updateBar(board);
     },
     editCard: function(board, featureName, phaseName, currentTask, newTask){
       angular.forEach(board.features, function(feature){
@@ -282,6 +283,7 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams)
       })
       phase.name="Phase - "+phase.name;
       RepoFactory.deleteRepoLabel($stateParams,phase);
+      ProgressFactory.updateBar(board);
     }
   };
 });
