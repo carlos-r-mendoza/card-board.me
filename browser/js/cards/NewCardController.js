@@ -1,4 +1,4 @@
-app.controller('NewCardController', function ($scope, $modal, $modalInstance, BoardService, BoardManipulator, RepoFactory, featureName, featureInfo, $rootScope, $stateParams, sprintBoard, BoardModel) {
+app.controller('NewCardController', function ($scope, $modal, $modalInstance, BoardService, BoardManipulator, RepoFactory, featureName, featureInfo, $rootScope, $stateParams, sprintBoard, BoardModel, ProgressFactory) {
   $scope.featureName = featureName;
 
   $scope.newCard = {
@@ -75,7 +75,7 @@ app.controller('NewCardController', function ($scope, $modal, $modalInstance, Bo
     $scope.labels.push(label);
   };
 
-  $scope.addCard = function(newCard, featureName){ 
+  $scope.addCard = function(newCard, featureName, board){ 
 
     console.log(newCard);
     
@@ -84,6 +84,7 @@ app.controller('NewCardController', function ($scope, $modal, $modalInstance, Bo
     BoardManipulator.addCardToFeature($scope.board, featureName, 'Open', newCard);
     RepoFactory.createRepoIssue($stateParams, $scope.newIssue);
     $modalInstance.close();
+    ProgressFactory.updateBar(board);
   };
 
 });

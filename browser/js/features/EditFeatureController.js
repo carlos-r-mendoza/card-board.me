@@ -1,4 +1,4 @@
-app.controller('EditFeatureController', function($scope, $modal, BoardService, BoardManipulator, $rootScope, RepoFactory, $stateParams){
+app.controller('EditFeatureController', function($scope, $modal, BoardService, BoardManipulator, $rootScope, RepoFactory, $stateParams, ProgressFactory){
 	   
 	   $scope.editingFeature = function(board, currentFeature){
 	   
@@ -41,6 +41,7 @@ app.controller('EditFeatureController', function($scope, $modal, BoardService, B
 
     $scope.removeFeature = function(feature, board) {
       BoardManipulator.removeFeature(feature, board);
+      ProgressFactory.updateBar(board);
     }
 
 });

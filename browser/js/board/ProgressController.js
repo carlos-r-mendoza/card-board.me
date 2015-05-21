@@ -1,4 +1,4 @@
-app.factory('ProgressFactory', function(RepoFactory){
+app.factory('ProgressFactory', function(RepoFactory, $rootScope){
 return{
 	open: function(board){
 		var count = 0;
@@ -30,6 +30,12 @@ return{
 				});
 			});
 		return count;
+	},
+	updateBar: function(board){
+	  $rootScope.xopen = this.open(board);
+      $rootScope.xclosed = this.closed(board);
+      $rootScope.xtotal = this.total(board);
+      $rootScope.percent = ($rootScope.xclosed / $rootScope.xtotal * 100);
 	}
 };
 });
