@@ -1,4 +1,4 @@
-<div class="profileDiv">
+<div class="profileDiv" ng-controller='GitHubProfileController'>
 	<div class="row">
 		<div class="col s12 m4 fixedCard">
 			<div class='card' id="profile-card">
@@ -21,7 +21,7 @@
 				<div class='card-content'>
 					<div class='card-title' id="profile-repos-card-toolbar">Repos</div>
 					<div class='contentDiv' ng-repeat="profileRepo in profileRepos">
-						<div><h3 class="cardTitle">{{ profileRepo.name }}</h3></div>
+						<div><h3 class="cardTitle" ng-click="getAssignments(profileRepo.url, profile.username)" popover="Click to see assignments" popover-placement='top' popover-trigger='mouseenter'>{{ profileRepo.name }}</h3></div>
 						<!-- <div><strong>Language:</strong> {{ profileRepo.language }}</div> -->
 						<div><strong>Description:</strong> {{ profileRepo.description }}</div>
 						<div><strong>Url:</strong> {{ profileRepo.url }}</div>
@@ -38,11 +38,17 @@
 			<div class='card' id="profile-events-card">
 				<div class='card-content'>
 					<div class='card-title' id="profile-events-card-toolbar">Assignments</div>
-					<div class='contentDiv' ng-repeat="profileEvent in profileEvents">
-						<div><strong>Event Type:</strong> {{ profileEvent.type }}</div>
-						<div><strong>Repo:</strong> {{ profileEvent.repo }}</div>
-						<div ng-show="profileEvent.message"><strong>Message:</strong> {{ profileEvent.message }}</div>
-						<div><strong>Date:</strong> {{ profileEvent.date }}</div>
+					<div class='contentDiv' ng-show="!assignments">
+						<div><strong>Click on a repo to see assignments</strong></div>
+					</div>
+					<div class='contentDiv' ng-repeat="assignment in assignments">
+						<div><strong>{{ assignment.title }}</strong></div>
+						<div ng-show="assignment.body"><strong>Details:</strong> {{ assignment.body }}</div>
+						<div ng-show="assignment.comments"><strong>Comments:</strong> {{ assignment.comments }}</div>
+						<div ng-show="assignment.state"><strong>Status:</strong> {{ assignment.state }}</div>
+						<div ng-show="assignment.created_at"><strong>Created:</strong> {{ assignment.created_at }}</div>
+						<div ng-show="assignment.updated_at"><strong>Updated:</strong> {{ assignment.updated_at }}</div>
+						<div ng-show="assignment.closed_at"><strong>Closed:</strong> {{ assignment.closed_at }}</div>
 					</div>	
 				</div>
 			</div>
