@@ -55,10 +55,10 @@
             <tr>
                 <th class="black-text collapsableRow" ng-click='isCollapsed=!isCollapsed' ng-style="{'background-color': '#{{feature.color}}'}">
                     
-                    <span ng-show="collapseFeature" class="spaceLeft">{{feature.title}}</span>
+                    <span ng-show="isCollapsed" class="spaceLeft">{{feature.title}}</span>
                     <div class='arrow'>
-                    <a ng-click="collapseFeature = !collapseFeature" ng-show="!collapseFeature"><i class="mdi-hardware-keyboard-arrow-up left red-text" popover-placement='right' popover='Collapse Row' popover-trigger="mouseenter"></i></a>
-                    <a ng-click="collapseFeature = !collapseFeature" ng-show="collapseFeature"><i class="mdi-hardware-keyboard-arrow-down left red-text" popover-placement='right' popover='Expand Row' popover-trigger="mouseenter"></i></a>
+                    <a ng-show="!isCollapsed"><i class="mdi-hardware-keyboard-arrow-up left red-text" popover-placement='right' popover='Collapse Row' popover-trigger="mouseenter"></i></a>
+                    <a ng-show="isCollapsed"><i class="mdi-hardware-keyboard-arrow-down left red-text" popover-placement='right' popover='Expand Row' popover-trigger="mouseenter"></i></a>
                     </div>
                     
                 <td ng-style="{'background-color': '#{{feature.color}}'}"></td>
