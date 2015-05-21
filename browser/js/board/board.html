@@ -110,7 +110,7 @@
                                             <a ng-click="showDetails = !showDetails" class=".cursor-pointer">Details</a>
                                         </span>
                                            <img src="{{ card.assignee_avatar }}" alt="" class="circle right" id="assignee-avatar" ng-show="card.assignee_avatar">  
-                                            <div ng-show="showDetails" class="white-text">
+                                            <div ng-show="showDetails" class="black-text left-align">
                                                 <p>Details: {{card.details}}</p>
                                                 <p>Comments: {{card.comments}}</p>
                                                 <p>Labels: <span ng-repeat="label in card.labels">{{label.name}} </span></p>
