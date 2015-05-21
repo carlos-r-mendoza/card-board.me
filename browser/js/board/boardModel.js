@@ -14,9 +14,14 @@ app.factory('BoardModel', function(){
           this.cards = [];
       },
 
-      Feature: function (feature) {
+      Feature: function (feature, color, featureTitle) {
+        console.log("FEAFAFD", featureTitle)
+
+        console.log("COLOR2", color)
         if(feature.due_on) { feature.due_date = feature.due_on; }
         if(feature.color) { feature.feature_color = feature.color;  }
+        if(color) { feature.feature_color = color; }
+        if(featureTitle) { feature.title = featureTitle; }
         this.name = feature.title;
         this.title = feature.title;
         this.description = feature.description;
@@ -24,6 +29,7 @@ app.factory('BoardModel', function(){
         this.number = feature.number;
         this.phases = [];
         this.color = feature.feature_color;
+        console.log("THISCOLOR", this.color);
       },
 
       Phase: function (name) {
@@ -31,7 +37,18 @@ app.factory('BoardModel', function(){
           this.cards = [];
       },
       
-      Card: function (card) {
+      Card: function (card, featureName, phaseName) {
+        console.log("CCCC", card);
+        if(card.body) { card.details = card.body; }
+        if(card.user) { card.creator = card.user.login; }
+        if(featureName) { card.feature = featureName; }
+        if(phaseName) { card.phase = phaseName; }
+        if(typeof card.assignee === 'object' && card.assignee !== null) {  card.assignee_avatar = card.assignee.avatar_url; card.assignee = card.assignee.login; }
+        if(typeof card.milestone === 'object' && card.milestone !== null) { card.dueDate = card.milestone.created_at; card.milestone = card.milestone.title; }
+        if(card.created_at) { card.created = card.created_at; }
+        if(card.updated_at) { card.updated = card.updated; }
+        if(card.closed_at) { card.closed = card.closed_at; }
+
         this.title = card.title;
         this.details = card.details;
         this.state = card.state;
@@ -63,6 +80,8 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams)
     },
 
     addCardToColumn: function (board, column, cardTitle, details) {
+      console.log("CARDTITE", cardTitle)
+      console.log("DETAILS", details)
       angular.forEach(board.columns, function (col) {
         if (col.name === column.name) {
           col.cards.push(new BoardModel.Card(cardTitle, details, column.name));
@@ -99,9 +118,12 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams)
             }
           }); 
           card.state = "closed";
+          console.log("Hello Card" , card)
+          console.log("Hello, Feature ", feature)
           RepoFactory.editRepoIssue($stateParams, card.number, card);
         }
       });
+      console.log("featurenum", feature.number)
       RepoFactory.deleteRepoMilestone($stateParams, feature.number).then(function(){
         for (var i = 0; i < board.features.length; i++) {
           if(board.features[i].name === feature.name) {
@@ -136,6 +158,7 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams)
     },
 
     addFeature: function (board, feature) {
+      console.log("added", feature);
 
       board.features.push(new BoardModel.Feature(feature));
       // var label = {name: 'Feature - '+featureName, color: 'FFFFFF'};
@@ -144,11 +167,19 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams)
       // RepoFactory.createRepoLabel($stateParams, label);
     },
     addNewFeature: function(board, feature) {
-      console.log("fa", feature)
-      board.features.push(new BoardModel.Feature(feature));
-      feature.title = "Feature - " + feature.title;
+      var featureTitle = feature.title;
+      console.log("FEAEARAFADSF", feature);
+
+      var splitTitle = feature.title.split(" - ");
+      if(splitTitle[0] !== "Feature") { feature.title = "Feature - " + feature.title; }
+
+      console.log("SPLIT", splitTitle);
+      console.log("TITL", feature.title)
       RepoFactory.createRepoLabel($stateParams, feature);
-      RepoFactory.createRepoMilestone($stateParams, feature);      
+      RepoFactory.createRepoMilestone($stateParams, feature).then(function (featureCreated) {
+        console.log("COLOR", feature.color)
+              board.features.push(new BoardModel.Feature(featureCreated.data, feature.color, featureTitle));
+      });      
     },
     editFeature: function(board, currentFeature, editFeature){
       angular.forEach(board.features, function(feature){
@@ -180,11 +211,12 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams)
     },
 
     addCardToFeature: function (board, featureName, phaseName, card) {
+      console.log("HEREHREHHRE", card);
       angular.forEach(board.features, function (feature) {
         if (feature.name === featureName) {
           angular.forEach(feature.phases, function (phase) {
             if (phase.name === phaseName) {
-              phase.cards.push(new BoardModel.Card(card));
+              phase.cards.push(new BoardModel.Card(card, featureName, phaseName));
             }
           });
         }
