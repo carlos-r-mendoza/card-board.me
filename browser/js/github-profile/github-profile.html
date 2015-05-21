@@ -20,7 +20,7 @@
 			<div class='card' id="profile-repos-card">
 				<div class='card-content'>
 					<div class='card-title' id="profile-repos-card-toolbar">Repos</div>
-					<div ng-repeat="profileRepo in profileRepos">
+					<div class='contentDiv' ng-repeat="profileRepo in profileRepos">
 						<div><strong>Repo Name:</strong> {{ profileRepo.name }}</div>
 						<div><strong>Language:</strong> {{ profileRepo.language }}</div>						
 						<div><strong>Description:</strong> {{ profileRepo.description }}</div>
@@ -38,12 +38,11 @@
 			<div class='card' id="profile-events-card">
 				<div class='card-content'>
 					<div class='card-title' id="profile-events-card-toolbar">Latest Events</div>
-					<div ng-repeat="profileEvent in profileEvents">
+					<div class='contentDiv' ng-repeat="profileEvent in profileEvents">
 						<div><strong>Event Type:</strong> {{ profileEvent.type }}</div>
 						<div><strong>Repo:</strong> {{ profileEvent.repo }}</div>
 						<div ng-show="profileEvent.message"><strong>Message:</strong> {{ profileEvent.message }}</div>
 						<div><strong>Date:</strong> {{ profileEvent.date }}</div>
-						
 					</div>	
 				</div>
 			</div>
