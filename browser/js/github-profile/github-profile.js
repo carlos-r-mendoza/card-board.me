@@ -23,12 +23,17 @@ app.factory('GitHubProfileFactory', function($http){
 			return $http.get('api/github-profile/repos').then(function(profileRepos){
 				return profileRepos;
 			});
+		},
+		getRepoIssues: function(url){
+			return $http.get('api/repo/'+url+"/repo-issues").then(function(repoIssues){
+				return repoIssues;
+			});
 		}
 	};
 
 });
 
-app.controller('GitHubProfileController', function($scope, GitHubProfileFactory) {
+app.controller('GitHubProfileController', function($scope, GitHubProfileFactory, RepoFactory) {
 
 	$scope.profile = {};
 	$scope.profileEvents = [];
@@ -39,7 +44,7 @@ app.controller('GitHubProfileController', function($scope, GitHubProfileFactory)
 
 	$scope.placeRepoNameOnNavbar = function(repoName) {
 		$scope.repoNameOnNavbar = repoName;
-	}
+	};
 
 
 		function profileFulfilled(profileData) {
@@ -101,6 +106,31 @@ app.controller('GitHubProfileController', function($scope, GitHubProfileFactory)
 		}
 
 
+		function getIssueAssignments(info){
+			var issue = info.data;
+			issue.forEach(function(iss){
+				if(iss.assignee){
+					console.log('LOGIN', iss.assignee.login);
+					console.log('USER', $scope.username);
+					if(iss.assignee.login == $scope.username){
+						$scope.assignments.push(iss);
+					}
+				}
+				
+			})
+			if($scope.assignments.length===0){
+				$scope.assignments.push({title: 'No Assingments for this Repo'});
+			}
+			console.log($scope.assignments);
+			return $scope.assignments;
+		}
+
+		$scope.getAssignments = function(profileRepoURL, username){
+			$scope.assignments = [];
+			var url = profileRepoURL.split("https://github.com")[1];
+			$scope.username = username;
+			GitHubProfileFactory.getRepoIssues(url).then(getIssueAssignments, rejected);
+		};
 
 		GitHubProfileFactory.getUserInfo().then(profileFulfilled, rejected);
 		GitHubProfileFactory.getUserEvents().then(profileEventsFulfilled, rejected);
