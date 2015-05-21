@@ -14,7 +14,7 @@ app.factory('BoardModel', function(){
           this.cards = [];
       },
 
-      Feature: function (feature, color, featureTitle) {
+      Feature: function (feature, color, featureTitle, featurePhases) {
         console.log("FEAFAFD", featureTitle)
 
         console.log("COLOR2", color)
@@ -22,12 +22,12 @@ app.factory('BoardModel', function(){
         if(feature.color) { feature.feature_color = feature.color;  }
         if(color) { feature.feature_color = color; }
         if(featureTitle) { feature.title = featureTitle; }
+        if(featurePhases) { this.phases = featurePhases } else { this.phases = []; }
         this.name = feature.title;
         this.title = feature.title;
         this.description = feature.description;
         this.due_date = feature.due_date;
         this.number = feature.number;
-        this.phases = [];
         this.color = feature.feature_color;
         console.log("THISCOLOR", this.color);
       },
@@ -179,13 +179,15 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams,
       console.log("TITL", feature.title)
       RepoFactory.createRepoLabel($stateParams, feature);
       RepoFactory.createRepoMilestone($stateParams, feature).then(function (featureCreated) {
-        console.log("COLOR", feature.color)
-              feature
+        console.log("COLOR", feature.color)   
+        feature.phases = [];
+              
               board.columns.forEach(function(column){
-                column.name;
-              })
-              feature.phases
-              board.features.push(new BoardModel.Feature(featureCreated.data, feature.color, featureTitle));
+                console.log("AFDSFDSFADDDU")
+                feature.phases.push({name: column.name, cards: []});
+              });
+              console.log("fafsad", feature.phases)
+              board.features.push(new BoardModel.Feature(featureCreated.data, feature.color, featureTitle, feature.phases));
       });      
     },
     editFeature: function(board, currentFeature, editFeature){
@@ -216,11 +218,21 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams,
       })
       RepoFactory.createRepoLabel($stateParams, phaseInfo);
     },
-
+    // addCardToFeature: function (board, featureName, phaseName, card) {
+    //   angular.forEach(board.features, function (feature) {
+    //     if (feature.name === featureName) {
+    //       angular.forEach(feature.phases, function (phase) {
+    //         if (phase.name === phaseName) {
+    //           phase.cards.push(new BoardModel.Card(card));
+    //         }
+    //       });
+    //     }
+    //   });
+    // },
     addCardToFeature: function (board, featureName, phaseName, card) {
       angular.forEach(board.features, function (feature) {
         if (feature.name === featureName) {
-          feature.phases = [{name: "Open", cards: []}];
+          //feature.phases = [{name: "Open", cards: []}];
           angular.forEach(feature.phases, function (phase) {
             if (phase.name === phaseName) {
               phase.cards.push(new BoardModel.Card(card, featureName, phaseName));
