@@ -57,7 +57,7 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
         currentLabelNames.push("Phase - "+destinationPhase);
         RepoFactory.editRepoIssue($stateParams,issueNum,{labels:currentLabelNames});
       }
-      
+      ProgressFactory.updateBar($scope.sprintBoard);
     },
     orderChanged: function (event) {
     },
@@ -208,11 +208,14 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
       //   column_width: 15
       // }
       $scope.sprintBoard = BoardService.sprintBoard(sprint); 
-      $scope.open = ProgressFactory.open($scope.sprintBoard);
-      $scope.closed = ProgressFactory.closed($scope.sprintBoard);
-      $scope.total = ProgressFactory.total($scope.sprintBoard);
-      $scope.percent = ($scope.closed / $scope.total * 100);
-      console.log('PERCENT', $scope.percent);
+      // $rootScope.xopen = ProgressFactory.open($scope.sprintBoard);
+      // $rootScope.xclosed = ProgressFactory.closed($scope.sprintBoard);
+      // $rootScope.xtotal = ProgressFactory.total($scope.sprintBoard);
+      // $rootScope.percent = ($rootScope.xclosed / $rootScope.total * 100);
+      // console.log('PERCENT', $scope.percent);
+      ProgressFactory.updateBar($scope.sprintBoard);
+      //updateProgress();
+      //$scope.$digest();
     }
 
     function createCard(phase, issue) {
@@ -240,8 +243,15 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
       });
 
     }
+    // function updateProgress(){
+    //   $scope.open = ProgressFactory.open($scope.sprintBoard);
+    //   $scope.closed = ProgressFactory.closed($scope.sprintBoard);
+    //   $scope.total = ProgressFactory.total($scope.sprintBoard);
+    //   $scope.percent = ($scope.closed / $scope.total * 100);
+    //   //$scope.$digest();
+    // }
 
-    
+    //SprintController.updateProgress();
     // RepoFactory.getRepoIssues($stateParams).then(function(issue){
     //   $scope.total = issue.data.length;
     // }, rejected);

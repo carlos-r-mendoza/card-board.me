@@ -1,4 +1,4 @@
-app.factory('BoardService', function ($modal, BoardManipulator, BoardModel, RepoFactory, $stateParams) {
+app.factory('BoardService', function ($modal, BoardManipulator, BoardModel, RepoFactory, $stateParams, ProgressFactory, $rootScope) {
 
   return {
     removeCard: function (board, feature, phase, card) {        
@@ -11,7 +11,15 @@ app.factory('BoardService', function ($modal, BoardManipulator, BoardModel, Repo
           labels: []
         };
         RepoFactory.editRepoIssue($stateParams, card.number, editedIssue);
-        BoardManipulator.removeCardFromColumn(board, feature, phase, card);      
+        BoardManipulator.removeCardFromColumn(board, feature, phase, card);
+        //SprintController.updateProgress();
+        //$scope.$digest();
+      // $rootScope.open = ProgressFactory.open(board);
+      // $rootScope.closed = ProgressFactory.closed(board);
+      // $rootScope.total = ProgressFactory.total(board);
+      // $rootScope.percent = ($rootScope.closed / $rootScope.total * 100);
+        //$scope.$digest();
+        ProgressFactory.updateBar(board);
     },
     addNewCard: function (board, column, featureName, featureInfo) {
       var modalInstance = $modal.open({
@@ -35,6 +43,7 @@ app.factory('BoardService', function ($modal, BoardManipulator, BoardModel, Repo
           BoardManipulator.addCardToColumn(board, cardDetails.column, cardDetails.title, cardDetails.details);
         }
       });
+
     },
 
     sprintBoard: function (board) { //this is what populates data on view

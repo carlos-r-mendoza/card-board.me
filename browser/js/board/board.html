@@ -5,10 +5,11 @@
        <div class="col-sm-4"> <h2 class='right'> Progress </h2> </div>
     <div class="col-sm-4 progressDiv">
         <progressbar animate="false" max='100' value='percent' type="success">
-            <b>{{closed}}/{{total}} cards</b>
+            <b>{{$root.xclosed}}/{{$root.xtotal}} cards</b>
         </progressbar>
     </div>
-    <div class="col-sm-4"><h2 class='left'>{{percent | number:0}}% Complete</h2></div>
+    <div class="col-sm-4"><h2 class='left'>{{$root.percent | number:0}}% Complete</h2></div>
+
 </div>
 </div>
 
