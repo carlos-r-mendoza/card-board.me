@@ -14,9 +14,11 @@
 
 
 	  <ul id="slide-out" class="side-nav">
+
 	  	<div ng-controller="GitHubProfileController">
+	  		<li id="project-font" class="black text center">Your Projects</li>
 	    	<li role="presentation" ng-repeat="profileRepo in profileRepos">
-	    		<a ui-sref="board({ name: profileRepo.name, owner: profileRepo.owner })" role="menuitem" tabindex="-1">{{ profileRepo.full_name }}</a>
+	    		<a id="repo-names" ui-sref="board({ name: profileRepo.name, owner: profileRepo.owner })" role="menuitem" tabindex="-1">{{ profileRepo.full_name }}</a>
 	    	</li>
 	    </div>
 	  </ul>
@@ -34,6 +36,12 @@
 </nav>
 </div>
 <style type="text/css">
+	#project-font {
+		font-size: 20px;
+	}
+	#repo-names {
+		font-size: 16px;
+	}
 	#sidebar {
 		background-color: #03a9f4;
 	}
