@@ -1,6 +1,6 @@
 <div class="profileDiv">
 	<div class="row">
-		<div class="col s12 m4">
+		<div class="col s12 m4 fixedCard">
 			<div class='card' id="profile-card">
 				<div class='card-content'>
 					<div class="text-center">
@@ -16,28 +16,28 @@
 				</div>
 			</div>
 		</div>
-		<div class="col  s12 m4">
+		<div class="col  s12 m4 floatRight">
 			<div class='card' id="profile-repos-card">
 				<div class='card-content'>
 					<div class='card-title' id="profile-repos-card-toolbar">Repos</div>
 					<div class='contentDiv' ng-repeat="profileRepo in profileRepos">
-						<div><strong>Repo Name:</strong> {{ profileRepo.name }}</div>
-						<div><strong>Language:</strong> {{ profileRepo.language }}</div>						
+						<div><h3 class="cardTitle">{{ profileRepo.name }}</h3></div>
+						<!-- <div><strong>Language:</strong> {{ profileRepo.language }}</div> -->
 						<div><strong>Description:</strong> {{ profileRepo.description }}</div>
 						<div><strong>Url:</strong> {{ profileRepo.url }}</div>
 						<div><strong>Date Created:</strong> {{ profileRepo.created }}</div>
 						<div><strong>Date Last Updated:</strong> {{ profileRepo.lastUpdated }}</div>
-						<div><strong>Watchers:</strong> {{ profileRepo.watchers }}</div>
-						<div><strong>Forks:</strong> {{ profileRepo.forks }}</div>	
+						<!-- <div><strong>Watchers:</strong> {{ profileRepo.watchers }}</div>
+						<div><strong>Forks:</strong> {{ profileRepo.forks }}</div>	 -->
 					</div>	
 				</div>
 			</div>
 		</div>
 
-		<div class="col s12 m4">
+		<div class="col s12 m4 floatRight">
 			<div class='card' id="profile-events-card">
 				<div class='card-content'>
-					<div class='card-title' id="profile-events-card-toolbar">Latest Events</div>
+					<div class='card-title' id="profile-events-card-toolbar">Assignments</div>
 					<div class='contentDiv' ng-repeat="profileEvent in profileEvents">
 						<div><strong>Event Type:</strong> {{ profileEvent.type }}</div>
 						<div><strong>Repo:</strong> {{ profileEvent.repo }}</div>
