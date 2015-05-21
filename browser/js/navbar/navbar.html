@@ -6,8 +6,8 @@
 
 	  <ul class="right hide-on-med-and-down">
 	    <li><a id="triCat" href="/" class="pen">Card-Board Beta</a></li>
-		<li ng-show="!user"><a href="/auth/github/" target="_self">Login</a></li>
-		<li ng-show="user"><a href="/auth/github/logout" target="_self">Logout</a></li>
+		<li  ng-show="!user"><a href="/auth/github/" target="_self">Login</a></li>
+		<li  ng-show="user"><a href="/auth/github/logout" target="_self">Logout</a></li>
 	    <li ng-show="user" id="navbar-profile-pic-li"><a ui-sref="github-profile"><img src="{{ profile.avatar }}" id="navbar-profile-pic" /></a></li>
 	  </ul>
 
@@ -62,4 +62,9 @@
 	.spaceLeft{
 		margin-left: 20px;
 	}
+
+	nav ul a {
+		font-size: 1.5rem;
+	}
+
 </style>  
