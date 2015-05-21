@@ -167,6 +167,10 @@ input{
     margin-top: 20px;
 }
 
+.spaceBottom{
+    margin-bottom: 25px;
+}
+
 .arrow{
     display: inline-block;
     vertical-align: middle;
@@ -199,9 +203,14 @@ th{
 
 .addNewCard{
     display: inline-block;
+    font-size: 15px;
 }
 
 .modalBtn{
     vertical-align: middle;
     top: 10px;
+}
+
+.control-label{
+    margin-top: 25px;
 }
