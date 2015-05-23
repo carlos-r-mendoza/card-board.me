@@ -42,11 +42,6 @@ app.controller('GitHubProfileController', function($scope, GitHubProfileFactory,
 	$scope.repoName = "";
 	//$scope.searchResults=[];
 
-	$scope.setRepoName = function(repo_name) {
-		$scope.repoName = repo_name;
-	};
-
-
 	function profileFulfilled(profileData) {
 		$scope.info = profileData;
 		$scope.profile.name = profileData.data.name;
