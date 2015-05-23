@@ -24,6 +24,11 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
   //   $scope.collapseFeature = feature;
   // };
 
+
+  $scope.$parent.$$childHead.repoName = $stateParams.name; //places project name on navbar
+
+
+
   $scope.sprintSortOptions = {
 
     //restrict move across features. move only within feature.
@@ -243,6 +248,8 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
       });
 
     }
+        console.log("CONSOLED", $scope.$parent.$$childHead.repoName);
+
     // function updateProgress(){
     //   $scope.open = ProgressFactory.open($scope.sprintBoard);
     //   $scope.closed = ProgressFactory.closed($scope.sprintBoard);
