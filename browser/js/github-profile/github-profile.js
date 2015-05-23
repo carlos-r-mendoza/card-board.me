@@ -25,12 +25,12 @@ app.factory('GitHubProfileFactory', function($http){
 			});
 		},
 		getRepoIssues: function(url){
-			return $http.get('api/repo/'+url+"/repo-issues").then(function(repoIssues){
+			return $http.get('api/repo'+url+"/repo-issues").then(function(repoIssues){
 				return repoIssues;
 			});
 		},
 		closeIssue: function(url, number, issue){
-			return $http.get('api/repo/'+url+'/issues/'+number, issue).then(function(iss){
+			return $http.post('api/repo'+url+'/edit-repo-issue/'+number, issue).then(function(iss){
 				return iss;
 			});
 		}
@@ -47,7 +47,6 @@ app.controller('GitHubProfileController', function($scope, GitHubProfileFactory,
 	$scope.repoName = "";
 	$scope.repoOwner = "";
 	$scope.otherCardsCount = 0;
-	//$scope.searchResults=[];
 
 	function profileFulfilled(profileData) {
 		$scope.info = profileData;
@@ -104,42 +103,73 @@ app.controller('GitHubProfileController', function($scope, GitHubProfileFactory,
 			$scope.collaborators = profileRepos;
 		}
 
+	
+
 	function getIssueAssignments(info){
 		var issue = info.data;
 		issue.forEach(function(iss){
 			if(iss.assignee){
-				console.log('LOGIN', iss.assignee.login);
-				console.log('USER', $scope.username);
-				if(iss.assignee.login === $scope.username){
+				$scope.assign = true;
+				if(iss.assignee.login === $scope.username && iss.state==='open'){
 					$scope.assignments.push(iss);
 				}
 			}
 		});
 		if($scope.assignments.length===0){
-			$scope.assignments.push({title: 'No Assingments for this Repo'});
+			$scope.assignments.push({title: 'No Assignments for this Repo'});
+			$scope.assign = false;
 		}
-		console.log($scope.assignments);
 		return $scope.assignments;
 	}
 
-	$scope.getAssignments = function(profileRepoURL, username){
+	$scope.getAssignments = function(profileRepo, user){
+		$scope.repoName = profileRepo.name;
+		$scope.repoOwner = profileRepo.owner;
+		console.log('REPONAME', $scope.repoName);
+		var profileRepoURL = profileRepo.url;
 		$scope.assignments = [];
-		var url = profileRepoURL.split("https://github.com")[1];
-		$scope.username = username;
-		GitHubProfileFactory.getRepoIssues(url).then(getIssueAssignments, rejected);
+		$scope.url = profileRepoURL.split("https://github.com")[1];
+		$scope.username = user;
+		console.log('USER', $scope.username);
+		GitHubProfileFactory.getRepoIssues($scope.url).then(getIssueAssignments, rejected);
 	};
 	
-	$scope.closed = false;
+	
 
+	$scope.closeIssue = function(assignment){
+		var number = assignment.number;
+		var issue = {};
 
-	$scope.closeIssue = function(number){
-		$scope.closed = true;
-		console.log('NUM', number);
-		var issue = {
-			state: closed,
-		};
-		console.log('ISSUE', issue);
+		if(assignment.state === 'open'){
+			issue = {
+			title: assignment.title,
+			body: assignment.body,
+			assignee: assignment.assignee.login,
+			state: 'closed'
+			};
+			assignment.state = 'closed';
+			
+		}
+		else if(assignment.state === 'closed'){
+			issue = {
+			title: assignment.title,
+			body: assignment.body,
+			assignee: assignment.assignee.login,
+			state: 'open'
+			};
+			assignment.state = 'open';
+		}
+		
 		GitHubProfileFactory.closeIssue($scope.url, number, issue);
+	};
+
+	$scope.updateStatus = function(state){
+		if(state==='open'){
+			state='closed';
+		}
+		else{
+			state='open';
+		}
 	};
 
 		GitHubProfileFactory.getUserInfo().then(profileFulfilled, rejected);

@@ -12,24 +12,6 @@
 		border: 2px solid #ff5252;
 	}
 
-#profile-card-toolbar {
-	background-color: #ff5252;
-	text-align: center;
-	padding: 10px;
-	margin-bottom: 10px;
-} 
-#profile-repos-card-toolbar {
-	background-color: #ff5252;
-	text-align: center;
-	padding: 10px;
-	margin-bottom: 10px;
-}
-#profile-events-card-toolbar {
-	background-color: #ff5252;
-	text-align: center;
-	padding: 10px;
-	margin-bottom: 10px;
-}
 #profile-card, #profile-events-card, #profile-repos-card {
 	background-color: #FFFFFF;
 }
@@ -45,10 +27,46 @@
 	margin-top: 20px !important;
 }
 
-// .card{
-// 	border: 2px solid #ff5252;
-// }
-
-.cardTitle {
+.cardTitle{
 	color: #ff5252;
+	cursor: pointer;
+}
+
+.divTitle{
+	background-color: #424242;
+	text-align: center;
+	padding: 10px;
+	margin-bottom: 10px;
+	color: white;
+	font-size: 2.5rem;
+	font-weight: bold;
+}
+
+.redLabel {
+	font-size: 1.75rem !important;
+	color: #ff5252;
+}
+
+.floatRight{
+	float: right !important;
+}
+
+.fixedCard{
+	position: fixed;
+}
+
+.toBoard{
+	cursor: pointer;
+	&:hover{
+		color: #ff5252; 
+	}
+}
+
+.cardTitle .popover{
+	color: #424242;
+}
+
+.mdi-navigation-chevron-left{
+	vertical-align: middle;
+	font-size: 3rem;
 }
