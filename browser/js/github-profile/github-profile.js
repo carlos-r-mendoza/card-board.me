@@ -28,6 +28,11 @@ app.factory('GitHubProfileFactory', function($http){
 			return $http.get('api/repo/'+url+"/repo-issues").then(function(repoIssues){
 				return repoIssues;
 			});
+		},
+		closeIssue: function(url, number, issue){
+			return $http.get('api/repo/'+url+'/issues/'+number, issue).then(function(iss){
+				return iss;
+			});
 		}
 	};
 
@@ -90,14 +95,12 @@ app.controller('GitHubProfileController', function($scope, GitHubProfileFactory,
 			repoObj.forks = repo.forks_count;
 			repoObj.owner = repo.owner.login;
 			$scope.profileRepos.push(repoObj);
-	
-		});
-	}
+			});	
+		}
 
-	function profileReposCollaboratorsFulfilled(profileRepos) {
-		$scope.collaborators = profileRepos;
-	}
-
+		function profileReposCollaboratorsFulfilled(profileRepos) {
+			$scope.collaborators = profileRepos;
+		}
 
 	function getIssueAssignments(info){
 		var issue = info.data;
@@ -105,12 +108,11 @@ app.controller('GitHubProfileController', function($scope, GitHubProfileFactory,
 			if(iss.assignee){
 				console.log('LOGIN', iss.assignee.login);
 				console.log('USER', $scope.username);
-				if(iss.assignee.login == $scope.username){
+				if(iss.assignee.login === $scope.username){
 					$scope.assignments.push(iss);
 				}
 			}
-			
-		})
+		});
 		if($scope.assignments.length===0){
 			$scope.assignments.push({title: 'No Assingments for this Repo'});
 		}
@@ -124,9 +126,22 @@ app.controller('GitHubProfileController', function($scope, GitHubProfileFactory,
 		$scope.username = username;
 		GitHubProfileFactory.getRepoIssues(url).then(getIssueAssignments, rejected);
 	};
+	
+	$scope.closed = false;
 
-	GitHubProfileFactory.getUserInfo().then(profileFulfilled, rejected);
-	GitHubProfileFactory.getUserEvents().then(profileEventsFulfilled, rejected);
-	GitHubProfileFactory.getUserRepos().then(profileReposFulfilled, rejected);
+
+	$scope.closeIssue = function(number){
+		$scope.closed = true;
+		console.log('NUM', number);
+		var issue = {
+			state: closed,
+		};
+		console.log('ISSUE', issue);
+		GitHubProfileFactory.closeIssue($scope.url, number, issue);
+	};
+
+		GitHubProfileFactory.getUserInfo().then(profileFulfilled, rejected);
+		GitHubProfileFactory.getUserEvents().then(profileEventsFulfilled, rejected);
+		GitHubProfileFactory.getUserRepos().then(profileReposFulfilled, rejected);
 
 });
