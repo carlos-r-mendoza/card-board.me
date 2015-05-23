@@ -2,40 +2,68 @@
  <div class="navbar-fixed">
  <nav id="sidebar">
 
+ <div class="nav-wrapper">
+  
+  <a ng-show="user" href="#" data-activates="slide-out" class="button-collapse show-on-large spaceLeft"><i class="mdi-navigation-menu"></i></a>
+
+
+  
   <div ng-controller="GitHubProfileController"> 
+	<ul>
+		<span ng-show="repoName">
+		<li style="margin-left: 20px; font-size: 18px; font-weight: bold;">{{ repoName }}</li>
+	    <span id="tabButtons" class="left">
+	        <li class="active tab col s3"><a href="#test1">Board</a></li>
+	        <li class="tab col s3"><a href="#test2">Collaborators</a></li>
+	        <li class="tab col s3"><a href="#test3">Burndown Chart</a></li>
+	        <li class="tab col s3"><a href="#test4">Repo Activity</a></li>
+	 	</span>
+	 	</span>
 
-	  <ul class="right hide-on-med-and-down">
-	    <li><a id="triCat" href="/" class="pen">Card-Board Beta</a></li>
-		<li  ng-show="!user"><a href="/auth/github/" target="_self">Login</a></li>
-		<li  ng-show="user"><a href="/auth/github/logout" target="_self">Logout</a></li>
-	    <li ng-show="user" id="navbar-profile-pic-li"><a ui-sref="github-profile"><img src="{{ profile.avatar }}" id="navbar-profile-pic" /></a></li>
-	  </ul>
+
+ 		<span class="right">
+		    <li><a id="triCat" href="/" class="pen">Card-Board Beta</a></li>
+			<li  ng-show="!user"><a href="/auth/github/" target="_self">Login</a></li>
+			<li  ng-show="user"><a href="/auth/github/logout" target="_self">Logout</a></li>
+		    <li ng-show="user" id="navbar-profile-pic-li"><a ui-sref="github-profile"><img src="{{ profile.avatar }}" id="navbar-profile-pic" /></a></li>
+	   </span> 
+	</ul>
+	<ul id="slide-out" class="side-nav">
 
 
+ 		<li id="project-font" class="black text center">Your Projects</li>
+		<li role="presentation" ng-repeat="profileRepo in profileRepos">
+			<a id="repo-names" ui-sref="board({ name: profileRepo.name, owner: profileRepo.owner })" role="menuitem" tabindex="-1">{{ profileRepo.full_name }}</a>
+		</li>
 
-	  <ul id="slide-out" class="side-nav">
-
-	  	<div ng-controller="GitHubProfileController">
-	  		<li id="project-font" class="black text center">Your Projects</li>
-	    	<li role="presentation" ng-repeat="profileRepo in profileRepos">
-	    		<a id="repo-names" ui-sref="board({ name: profileRepo.name, owner: profileRepo.owner })" role="menuitem" tabindex="-1">{{ profileRepo.full_name }}</a>
-	    	</li>
-	    </div>
-	  </ul>
+	</ul>
 
   </div>
+  </div>
 
-  <a ng-show="user" href="#" data-activates="slide-out" class="button-collapse show-on-large spaceLeft"><i class="mdi-navigation-menu"></i></a>
-  
-  <div>
+
+<!--   <div>
   	<ul>
   		<li id="triCat">{{ repoNameOnNavbar }}</li>
   	</ul>
-  </div>
+  </div> -->
 
 </nav>
 </div>
 <style type="text/css">
+	#tabButtons {
+		padding-left: 20px;
+		/*font-weight: bold;*/ 
+	}
+	#tabButtons li a:hover {
+		color: #eeeeee;
+	}
+/*	#tabButtons li {
+		width: 150px;
+	}*/
+	/*.activeLink {
+		background-color: #039be5;
+	}*/
 	#project-font {
 		font-size: 20px;
 	}

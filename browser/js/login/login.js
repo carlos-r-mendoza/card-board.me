@@ -26,7 +26,7 @@ app.controller('LoginCtrl', function ($scope, AuthService, $state) {
 
     $scope.login = {};
     $scope.error = null;
-
+    $scope.$parent.$$childHead.repoName = ""; //hides navbar repo links 
 
 
     $scope.sendLogin = function (loginInfo) {

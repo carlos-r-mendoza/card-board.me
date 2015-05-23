@@ -38,119 +38,110 @@ app.factory('GitHubProfileFactory', function($http){
 
 });
 
-app.controller('GitHubProfileController', function($scope, GitHubProfileFactory, RepoFactory) {
+app.controller('GitHubProfileController', function($scope, GitHubProfileFactory, RepoFactory, $stateParams) {
 
 	$scope.profile = {};
 	$scope.profileEvents = [];
 	$scope.profileRepos = [];
 	$scope.collaborators = "";
-	$scope.repoNameOnNavbar = "Hello";
+	$scope.repoName = "";
 	//$scope.searchResults=[];
 
-	$scope.placeRepoNameOnNavbar = function(repoName) {
-		$scope.repoNameOnNavbar = repoName;
-	};
+	function profileFulfilled(profileData) {
+		$scope.info = profileData;
+		$scope.profile.name = profileData.data.name;
+		$scope.profile.name = profileData.data.name;
+		$scope.profile.username = profileData.data.login;
+		$scope.profile.avatar = profileData.data.avatar_url;
+		$scope.profile.email = profileData.data.email;
+		$scope.profile.company = profileData.data.company;
+		$scope.profile.location = profileData.data.location;
+		$scope.profile.gitHubProfileLink = profileData.data.html_url;
+		$scope.profile.publicRepos = profileData.data.public_repos;
 
+	}
+	function rejected(error){
+		console.log(error);
+	}
 
-		function profileFulfilled(profileData) {
-			$scope.info = profileData;
-			$scope.profile.name = profileData.data.name;
-			$scope.profile.name = profileData.data.name;
-			$scope.profile.username = profileData.data.login;
-			$scope.profile.avatar = profileData.data.avatar_url;
-			$scope.profile.email = profileData.data.email;
-			$scope.profile.company = profileData.data.company;
-			$scope.profile.location = profileData.data.location;
-			$scope.profile.gitHubProfileLink = profileData.data.html_url;
-			$scope.profile.publicRepos = profileData.data.public_repos;
+	function profileEventsFulfilled(profileEvents) {
 
-		}
-		function rejected(error){
-			console.log(error);
-		}
-	
-		function profileEventsFulfilled(profileEvents) {
+		profileEvents.data.forEach(function(event){
+			var eventObj = {};
 
-			profileEvents.data.forEach(function(event){
-				var eventObj = {};
+			eventObj.type = event.type;
+			eventObj.repo = event.repo.name;
+			eventObj.date = event.created_at;
+			if(eventObj.type === "PushEvent") {
+				eventObj.message = event.payload.commits[0].message;
+			} else { eventObj.message = ""; }
+		
+		$scope.profileEvents.push(eventObj);
+		
+		});
+	}
 
-				eventObj.type = event.type;
-				eventObj.repo = event.repo.name;
-				eventObj.date = event.created_at;
-				if(eventObj.type === "PushEvent") {
-					eventObj.message = event.payload.commits[0].message;
-				} else { eventObj.message = ""; }
-			
-			$scope.profileEvents.push(eventObj);
-			
-			});
-		}
-	
-		function profileReposFulfilled(profileRepos) {
-			profileRepos.data.forEach(function(repo){
-				var repoObj = {};
-				repoObj.name = repo.name;
-				repoObj.full_name = repo.full_name;
-				repoObj.language = repo.language;
-				repoObj.description = repo.description;
-				repoObj.url = repo.html_url;
-				repoObj.created = repo.created_at;
-				repoObj.lastUpdated = repo.updated_at;
-				repoObj.watchers = repo.watchers_count;
-				repoObj.forks = repo.forks_count;
-				repoObj.owner = repo.owner.login;
-
-				$scope.profileRepos.push(repoObj);
-			
-			});
-			
+	function profileReposFulfilled(profileRepos) {
+		profileRepos.data.forEach(function(repo){
+			var repoObj = {};
+			repoObj.name = repo.name;
+			repoObj.full_name = repo.full_name;
+			repoObj.language = repo.language;
+			repoObj.description = repo.description;
+			repoObj.url = repo.html_url;
+			repoObj.created = repo.created_at;
+			repoObj.lastUpdated = repo.updated_at;
+			repoObj.watchers = repo.watchers_count;
+			repoObj.forks = repo.forks_count;
+			repoObj.owner = repo.owner.login;
+			$scope.profileRepos.push(repoObj);
+			});	
 		}
 
 		function profileReposCollaboratorsFulfilled(profileRepos) {
 			$scope.collaborators = profileRepos;
 		}
 
-
-		function getIssueAssignments(info){
-			var issue = info.data;
-			issue.forEach(function(iss){
-				if(iss.assignee){
-					if(iss.assignee.login == $scope.username){
-						$scope.assignments.push(iss);
-					}
+	function getIssueAssignments(info){
+		var issue = info.data;
+		issue.forEach(function(iss){
+			if(iss.assignee){
+				console.log('LOGIN', iss.assignee.login);
+				console.log('USER', $scope.username);
+				if(iss.assignee.login === $scope.username){
+					$scope.assignments.push(iss);
 				}
-				
-			})
-			if($scope.assignments.length===0){
-				$scope.assignments.push({title: 'No Assingments for this Repo'});
 			}
-			console.log($scope.assignments);
-			return $scope.assignments;
+		});
+		if($scope.assignments.length===0){
+			$scope.assignments.push({title: 'No Assingments for this Repo'});
 		}
+		console.log($scope.assignments);
+		return $scope.assignments;
+	}
 
-		$scope.getAssignments = function(profileRepoURL, username){
-			$scope.assignments = [];
-			$scope.url = profileRepoURL.split("https://github.com")[1];
-			$scope.username = username;
-			GitHubProfileFactory.getRepoIssues($scope.url).then(getIssueAssignments, rejected);
+	$scope.getAssignments = function(profileRepoURL, username){
+		$scope.assignments = [];
+		var url = profileRepoURL.split("https://github.com")[1];
+		$scope.username = username;
+		GitHubProfileFactory.getRepoIssues(url).then(getIssueAssignments, rejected);
+	};
+	
+	$scope.closed = false;
+
+
+	$scope.closeIssue = function(number){
+		$scope.closed = true;
+		console.log('NUM', number);
+		var issue = {
+			state: closed,
 		};
-
-		
-		$scope.closed = false;
-
-
-		$scope.closeIssue = function(number){
-			$scope.closed = true;
-			console.log('NUM', number);
-			var issue = {
-				state: closed,
-			}
-			console.log('ISSUE', issue);
-			GitHubProfileFactory.closeIssue($scope.url, number, issue);
-		};
+		console.log('ISSUE', issue);
+		GitHubProfileFactory.closeIssue($scope.url, number, issue);
+	};
 
 		GitHubProfileFactory.getUserInfo().then(profileFulfilled, rejected);
 		GitHubProfileFactory.getUserEvents().then(profileEventsFulfilled, rejected);
 		GitHubProfileFactory.getUserRepos().then(profileReposFulfilled, rejected);
 
-	});
+});
