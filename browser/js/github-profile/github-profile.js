@@ -122,6 +122,7 @@ app.controller('GitHubProfileController', function($scope, GitHubProfileFactory,
 
 	$scope.getAssignments = function(profileRepo, user){
 		$scope.repoName = profileRepo.name;
+		$scope.repoOwner = profileRepo.owner;
 		console.log('REPONAME', $scope.repoName);
 		var profileRepoURL = profileRepo.url;
 		$scope.assignments = [];

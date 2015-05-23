@@ -27,12 +27,12 @@
 		<div class="col s12 m4 floatRight">
 			<div class='card' id="profile-events-card">
 				<div class='card-content'>
-					<div class='card-title' id="profile-events-card-toolbar">Assignments</div>
+					<div class='divTitle' id="profile-events-card-toolbar">Assignments</div>
 					<div class='contentDiv'>
-						<h2 class='center'>{{repoName}}</h2>
+						<h2 class='center toBoard' ui-sref="board({owner: repoOwner, name: repoName})" popover="Go to board" popover-placement='top' popover-trigger='mouseenter'>{{repoName}}</h2>
 					</div>
 					<div class='contentDiv' ng-show="!assignments">
-						<div class='center'><strong><i class='mdi-navigation-chevron-left'/> Click on a repo to see assignments</strong></div>
+						<div class='center'><h2><i class='mdi-navigation-chevron-left'/> Click on a repo to see assignments</h2></div>
 					</div>
 					<div class='contentDiv' ng-repeat="assignment in assignments">
 						<form>
@@ -55,7 +55,7 @@
 		<div class="col  s12 m4 floatRight" style='padding-left: 15px'>
 			<div class='card' id="profile-repos-card">
 				<div class='card-content'>
-					<div class='card-title' id="profile-repos-card-toolbar">Repos</div>
+					<div class='divTitle' id="profile-repos-card-toolbar">Repos</div>
 					<div class='contentDiv' ng-repeat="profileRepo in profileRepos">
 						<div>
 							<h2 class="cardTitle">
