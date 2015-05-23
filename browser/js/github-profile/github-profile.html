@@ -44,9 +44,8 @@
 					<div class='contentDiv' ng-repeat="assignment in assignments">
 						<form>
 							<h3>
-								<input type='checkbox' id='{{assignment.title}}' check='checked' ng-click='closeIssue(profileRepo.url, assignment.number)'/>
-								<!-- <i ng-show='closed' class='mdi-toggle-check-box'/> -->
-								<label for='{{assignment.title}}'>{{ assignment.title }}</label>
+								<input ng-hide='!assign' ng-show="assign" type='checkbox' id='{{assignment.title}}' ng-click='closeIssue(assignment) && updateStatus(assignment.state)'></input>
+								<label class="redLabel" for='{{assignment.title}}'>{{ assignment.title }}</label>
 							</h3>
 						</form>
 						<div ng-show="assignment.body"><strong>Details:</strong> {{ assignment.body }}</div>
