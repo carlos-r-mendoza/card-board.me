@@ -45,6 +45,8 @@ app.controller('GitHubProfileController', function($scope, GitHubProfileFactory,
 	$scope.profileRepos = [];
 	$scope.collaborators = "";
 	$scope.repoName = "";
+	$scope.repoOwner = "";
+	$scope.otherCardsCount = 0;
 	//$scope.searchResults=[];
 
 	function profileFulfilled(profileData) {
