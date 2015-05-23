@@ -28,6 +28,11 @@ app.factory('GitHubProfileFactory', function($http){
 			return $http.get('api/repo/'+url+"/repo-issues").then(function(repoIssues){
 				return repoIssues;
 			});
+		},
+		closeIssue: function(url, number, issue){
+			return $http.get('api/repo/'+url+'/issues/'+number, issue).then(function(iss){
+				return iss;
+			});
 		}
 	};
 
@@ -110,8 +115,6 @@ app.controller('GitHubProfileController', function($scope, GitHubProfileFactory,
 			var issue = info.data;
 			issue.forEach(function(iss){
 				if(iss.assignee){
-					console.log('LOGIN', iss.assignee.login);
-					console.log('USER', $scope.username);
 					if(iss.assignee.login == $scope.username){
 						$scope.assignments.push(iss);
 					}
@@ -127,9 +130,23 @@ app.controller('GitHubProfileController', function($scope, GitHubProfileFactory,
 
 		$scope.getAssignments = function(profileRepoURL, username){
 			$scope.assignments = [];
-			var url = profileRepoURL.split("https://github.com")[1];
+			$scope.url = profileRepoURL.split("https://github.com")[1];
 			$scope.username = username;
-			GitHubProfileFactory.getRepoIssues(url).then(getIssueAssignments, rejected);
+			GitHubProfileFactory.getRepoIssues($scope.url).then(getIssueAssignments, rejected);
+		};
+
+		
+		$scope.closed = false;
+
+
+		$scope.closeIssue = function(number){
+			$scope.closed = true;
+			console.log('NUM', number);
+			var issue = {
+				state: closed,
+			}
+			console.log('ISSUE', issue);
+			GitHubProfileFactory.closeIssue($scope.url, number, issue);
 		};
 
 		GitHubProfileFactory.getUserInfo().then(profileFulfilled, rejected);
