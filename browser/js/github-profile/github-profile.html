@@ -6,30 +6,20 @@
 					<div class="text-center">
 					<img src="{{ profile.avatar }}" id="profile-pic" />
 					</div>
-					<h3>Name:{{ profile.name }}</h3>
-					<div><strong>GitHub Username:</strong> {{ profile.username }}</div>
-					<div><strong>Email:</strong> {{ profile.email }}</div>
-					<p ng-show="profile.company">Company:</strong> </p> {{ profile.company }}
-					<div><strong>Location:</strong> {{ profile.location }}</div>
-					<div><strong>GitHub Link:</strong> <a href="{{ profile.gitHubProfileLink }}">{{ profile.gitHubProfileLink }}</a></div>
-					<div><strong># Public Repos:</strong> {{ profile.publicRepos }}</div>
-				</div>
-			</div>
-		</div>
-		<div class="col  s12 m4 floatRight">
-			<div class='card' id="profile-repos-card">
-				<div class='card-content'>
-					<div class='card-title' id="profile-repos-card-toolbar">Repos</div>
-					<div class='contentDiv' ng-repeat="profileRepo in profileRepos">
-						<div><h3 class="cardTitle" ng-click="getAssignments(profileRepo.url, profile.username)" popover="Click to see assignments" popover-placement='top' popover-trigger='mouseenter'>{{ profileRepo.name }}</h3></div>
-						<!-- <div><strong>Language:</strong> {{ profileRepo.language }}</div> -->
-						<div><strong>Description:</strong> {{ profileRepo.description }}</div>
-						<div><strong>Url:</strong> {{ profileRepo.url }}</div>
-						<div><strong>Date Created:</strong> {{ profileRepo.created }}</div>
-						<div><strong>Date Last Updated:</strong> {{ profileRepo.lastUpdated }}</div>
-						<!-- <div><strong>Watchers:</strong> {{ profileRepo.watchers }}</div>
-						<div><strong>Forks:</strong> {{ profileRepo.forks }}</div>	 -->
-					</div>	
+					<div style="padding: 20px">
+						
+						<div class='row' style='margin: 0 auto'>
+							<div class='col m5 center'>	
+								<h1 ng-show="profile.name">Name:{{ profile.name }}</h1>
+								<h1>{{ profile.username }}</h1>
+							</div>
+							<div class='col m5'>
+								<h3 ng-show="profile.email">{{ profile.email }}</h3>
+								<h3><a href="{{ profile.gitHubProfileLink }}" style='color: #ff5252'>{{ profile.gitHubProfileLink }}</a></h3>
+								<h3><span style="font-size: 2rem; color: #ff5252">{{ profile.publicRepos }}</span> Public Repos</h3>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -38,8 +28,11 @@
 			<div class='card' id="profile-events-card">
 				<div class='card-content'>
 					<div class='card-title' id="profile-events-card-toolbar">Assignments</div>
+					<div class='contentDiv'>
+						<h2 class='center'>{{repoName}}</h2>
+					</div>
 					<div class='contentDiv' ng-show="!assignments">
-						<div><strong>Click on a repo to see assignments</strong></div>
+						<div class='center'><strong><i class='mdi-navigation-chevron-left'/> Click on a repo to see assignments</strong></div>
 					</div>
 					<div class='contentDiv' ng-repeat="assignment in assignments">
 						<form>
@@ -53,8 +46,30 @@
 						<div ng-show="assignment.state"><strong>Status:</strong> {{ assignment.state }}</div>
 						<div ng-show="assignment.created_at"><strong>Created:</strong> {{ assignment.created_at }}</div>
 						<div ng-show="assignment.updated_at"><strong>Updated:</strong> {{ assignment.updated_at }}</div>
-						<div ng-show="assignment.closed_at"><strong>Closed:</strong> {{ assignment.closed_at }}</div>
-							
+						<div ng-show="assignment.closed_at"><strong>Closed:</strong> {{ assignment.closed_at }}</div>	
+					</div>	
+				</div>
+			</div>
+		</div>
+
+		<div class="col  s12 m4 floatRight" style='padding-left: 15px'>
+			<div class='card' id="profile-repos-card">
+				<div class='card-content'>
+					<div class='card-title' id="profile-repos-card-toolbar">Repos</div>
+					<div class='contentDiv' ng-repeat="profileRepo in profileRepos">
+						<div>
+							<h2 class="cardTitle">
+								<span ng-click="getAssignments(profileRepo, profile.username)" popover="Click to see assignments" popover-placement='right' popover-trigger='mouseenter'>{{ profileRepo.name }}</span>
+								<a ng-show="isCollapsed"><i class="mdi-hardware-keyboard-arrow-up right red-text" ng-click='isCollapsed=!isCollapsed'></i></a>
+                    			<a ng-show="!isCollapsed"><i class="mdi-hardware-keyboard-arrow-down right red-text" ng-click='isCollapsed=!isCollapsed'></i></a>
+							</h2>
+                    	</div>
+						<div collapse='!isCollapsed'>
+							<div><strong>Description:</strong> {{ profileRepo.description }}</div>
+							<div><strong>Url:</strong> {{ profileRepo.url }}</div>
+							<div><strong>Date Created:</strong> {{ profileRepo.created }}</div>
+							<div><strong>Date Last Updated:</strong> {{ profileRepo.lastUpdated }}</div>
+						</div>
 					</div>	
 				</div>
 			</div>

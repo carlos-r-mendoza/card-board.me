@@ -120,10 +120,14 @@ app.controller('GitHubProfileController', function($scope, GitHubProfileFactory,
 		return $scope.assignments;
 	}
 
-	$scope.getAssignments = function(profileRepoURL, username){
+	$scope.getAssignments = function(profileRepo, user){
+		$scope.repoName = profileRepo.name;
+		console.log('REPONAME', $scope.repoName);
+		var profileRepoURL = profileRepo.url;
 		$scope.assignments = [];
 		$scope.url = profileRepoURL.split("https://github.com")[1];
-		$scope.username = username;
+		$scope.username = user;
+		console.log('USER', $scope.username);
 		GitHubProfileFactory.getRepoIssues($scope.url).then(getIssueAssignments, rejected);
 	};
 	
