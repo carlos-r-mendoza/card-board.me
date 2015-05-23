@@ -10,6 +10,8 @@ app.config(function ($stateProvider) {
 
 app.controller('SprintController', function ($scope, $stateParams, BoardService, BoardManipulator, $rootScope, RepoFactory, ProgressFactory) {
 
+  console.log("TESTTATAT")
+  var otherCardsCount = 0;
   //$scope.sprintBoard = ""; 
   // $scope.table = { 
   //   width: 0 };
@@ -25,9 +27,8 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
   // };
 
 
-  $scope.$parent.$$childHead.repoName = $stateParams.name; //places project name on navbar
-
-
+  $scope.$parent.$$childHead.repoName = $stateParams.name; //gives navbar.html access project name
+  $scope.$parent.$$childHead.repoOwner = $stateParams.owner; //gives navbar.html access to owner
 
   $scope.sprintSortOptions = {
 
@@ -204,7 +205,7 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
                       }
                     } 
                   }
-                }
+                } else { otherCardsCount++; }
               }
             }
           }
@@ -219,6 +220,9 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
       // $rootScope.percent = ($rootScope.xclosed / $rootScope.total * 100);
       // console.log('PERCENT', $scope.percent);
       ProgressFactory.updateBar($scope.sprintBoard);
+
+      $scope.$parent.$$childHead.otherCardsCount = otherCardsCount; //gives navbar.html cards count number
+
       //updateProgress();
       //$scope.$digest();
     }
@@ -248,7 +252,6 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
       });
 
     }
-        console.log("CONSOLED", $scope.$parent.$$childHead.repoName);
 
     // function updateProgress(){
     //   $scope.open = ProgressFactory.open($scope.sprintBoard);

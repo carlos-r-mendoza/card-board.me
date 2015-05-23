@@ -4,11 +4,12 @@
     <div class='row centerDiv' ng-controller="SprintController">
        <div class="col-sm-4"> <h2 class='right'> Progress </h2> </div>
     <div class="col-sm-4 progressDiv">
-        <progressbar animate="false" max='100' value='percent' type="success">
-            <b>{{$root.xclosed}}/{{$root.xtotal}} cards</b>
+        <progressbar animate="false" max='100' value='percent' type="success" placeholder="{{1+1}}">
+            <b style="color:black;">{{$root.percent | number:0}}% </b>
         </progressbar>
+        <!-- <b style="color:black;">{{$root.xclosed}}/{{$root.xtotal}} Cards Completed</b> -->
     </div>
-    <div class="col-sm-4"><h2 class='left'>{{$root.percent | number:0}}% Complete</h2></div>
+    <div class="col-sm-4"><h2 class='left'>{{$root.xclosed}}/{{$root.xtotal}} Completed</h2></div>
 
 </div>
 </div>
