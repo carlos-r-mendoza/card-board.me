@@ -257,6 +257,7 @@ router.post('/:repoOwner/:repoName/edit-repo-issue/:issueNumber', function (req,
 	if(req.body.title) { editedIssue.title = req.body.title; } else { editedIssue.title = undefined; }
 	if(req.body.body) { editedIssue.body = req.body.body; } else { editedIssue.body = undefined; }
 	if(req.body.assignee) { editedIssue.assignee = req.body.assignee; } else { editedIssue.assignee = undefined; }
+	if(typeof editedIssue.assignee === 'object') { editedIssue.assignee = editedIssue.assignee.login; }
 	if(typeof req.body.milestone === "number" || req.body.milestone === null) { editedIssue.milestone = req.body.milestone; } else { editedIssue.milestone = undefined; }	
 	if(req.body.state) { editedIssue.state = req.body.state; } else { editedIssue.state = undefined; }
 	if(req.body.labels) { editedIssue.labels = req.body.labels; } else { editedIssue.labels = undefined; } 
