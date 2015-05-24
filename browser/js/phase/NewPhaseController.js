@@ -20,6 +20,7 @@ app.controller('NewPhaseController', function ($scope, $modal, BoardService, Boa
       $scope.modalFeature = $modal.open({
         templateUrl: '/js/phase/newPhase.html',
         backdrop: 'static',
+        size: 'sm',
         resolve: {
           sprintBoard: function(){
             return board;
