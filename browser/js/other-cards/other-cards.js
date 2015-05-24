@@ -12,12 +12,46 @@ app.controller('OtherCardsController', function ($scope, $stateParams, RepoFacto
 	$scope.otherOpenCards = [];
 	$scope.otherClosedCards = [];
 	$scope.repoFeatures = [];
-	$scope.showFeatures = false;
-	$scope.showDetails = false;
+	$scope.showOpenCardFeatures = [];
+	$scope.showOpenCardDetails = [];
+	$scope.showClosedCardFeatures = [];
+	$scope.showClosedCardDetails = [];
+	// $scope.assignFeature = [];
 
-	$scope.assignCardFeature = function(card) {
-		console.log("CARDDDDD", card);
-	}
+	$scope.toggleOpenCardFeatures = function(indx) {
+		$scope.showOpenCardFeatures[indx] = !$scope.showOpenCardFeatures[indx];
+		$scope.showOpenCardDetails[indx] = false;
+	};
+
+	$scope.toggleOpenCardDetails = function(indx) {
+		$scope.showOpenCardDetails[indx] = !$scope.showOpenCardDetails[indx];
+		$scope.showOpenCardFeatures[indx] = false;
+	};
+
+	$scope.toggleClosedCardFeatures = function(indx) {
+		$scope.showClosedCardFeatures[indx] = !$scope.showClosedCardFeatures[indx];
+		$scope.showClosedCardDetails[indx] = false;
+	};
+
+	$scope.toggleClosedCardDetails = function(indx) {
+		$scope.showClosedCardDetails[indx] = !$scope.showClosedCardDetails[indx];
+		$scope.showClosedCardFeatures[indx] = false;
+	};
+
+	$scope.assignCardAFeature = function(card) {
+		var featureInfo = JSON.parse(card.feature);
+		card.milestone = featureInfo.number;
+		card.state = "open";
+		card.labels.push("Feature - " + featureInfo.title);
+		RepoFactory.editRepoIssue($stateParams, card.number, card).then(function(updatedCard){
+
+					console.log("CARDDDDD", updatedCard);
+
+
+		}
+
+			);
+	};
 
 
 	RepoFactory.getRepoMilestones($stateParams).then(setCardsOptions, rejected);
