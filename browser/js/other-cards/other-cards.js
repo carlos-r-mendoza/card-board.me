@@ -9,6 +9,7 @@ app.config(function ($stateProvider) {
 
 app.controller('OtherCardsController', function ($scope, $stateParams, RepoFactory){
 
+
 	$scope.otherOpenCards = [];
 	$scope.otherClosedCards = [];
 	$scope.repoFeatures = [];
@@ -16,7 +17,6 @@ app.controller('OtherCardsController', function ($scope, $stateParams, RepoFacto
 	$scope.showOpenCardDetails = [];
 	$scope.showClosedCardFeatures = [];
 	$scope.showClosedCardDetails = [];
-	// $scope.assignFeature = [];
 
 	$scope.toggleOpenCardFeatures = function(indx) {
 		$scope.showOpenCardFeatures[indx] = !$scope.showOpenCardFeatures[indx];
@@ -80,6 +80,7 @@ app.controller('OtherCardsController', function ($scope, $stateParams, RepoFacto
 				}
 			}
 		});
+			console.log($scope);
 
 	}
 	

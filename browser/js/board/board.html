@@ -72,7 +72,7 @@
                             <div class="card-content">
                                     <span ng-controller="EditFeatureController">
                                     <a ng-click="removeFeature(feature, sprintBoard)"><i class="mdi-action-highlight-remove right red-text" popover-placement='left' popover='Delete Feature' popover-trigger="mouseenter"></i></a></span>
-                                        <h2 class="card-title black-text pen">{{feature.title}}</h2>
+                                        <h2 class="card-title black-text">{{feature.title}}</h2>
                                         <p>Due Date: <span ng-show="feature.due_date">{{feature.due_date | date : 'fullDate'}}</span>             
                                                      <span ng-hide="feature.due_date">N/A</span>
                                         </p>
@@ -97,9 +97,8 @@
                                             <a ng-click="removeCard(sprintBoard, feature.name, phase.name, card)" ><i class="mdi-action-highlight-remove right" popover-placement='left' popover='Remove Card' popover-trigger="mouseenter"></i></a>
                                         </span>
                                             <div class="title">
-                                                <h2 class="pen">{{ card.title }}</h2>
+                                                <h2>{{ card.title }}</h2>
                                             </div>
-                                            <p>{{ card.detail }}<p>  
                                     </div>
                                 <div class="card-action">
                                     <div>
