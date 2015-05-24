@@ -1,6 +1,6 @@
 <div id="other-cards" class="container">
 	<div class="row">
-		<div id="open-cards-title" class="col s12"><h1>Open</h1></div>
+		<div id="open-cards-title" class="col s12"><h1>Open ({{ otherOpenCards.length }})</h1></div>
 	</div>
 	<div class="row">
 		<div ng-repeat="card in otherOpenCards">
@@ -10,19 +10,32 @@
                 <div class="card note other-cards-note">
                     <div class="card-content black-text center-align">
                             <div class="title">
-                                <h2 class="pen">{{ card.title }}</h2>
+                                <h2 id="open-card-title">{{ card.title }}</h2>
                             </div>
                             <p>{{ card.detail }}<p>  
                     </div>
 	                <div class="card-action">
 	                    <div>
 	                        <span class="cursor-pointer">
-	                            <a ng-controller="EditCardController" data-no-drag ng-click="editCard(sprintBoard, feature.name, phase.name, card)" class=".cursor-pointer">Edit</a>
+	                            <a ng-click="showFeatures = !showFeatures && showDetails === false" class=".cursor-pointer">Assign Feature</a>
 	                        </span>
+
 	                        <span class="cursor-pointer">
-	                            <a ng-click="showDetails = !showDetails" class=".cursor-pointer">Details</a>
-	                        </span>
+	                            <a ng-click="showDetails = !showDetails && showFeatures == false" class=".cursor-pointer">Details</a>
+	                        </span>                  
 	                           <img src="{{ card.assignee_avatar }}" alt="" class="circle right" id="assignee-avatar" ng-show="card.assignee_avatar" />  
+	                            
+	                           	<div ng-show="showFeatures"> 
+		                           <p id="assign-feature-heading">Below are the existing features on your board:</p>
+									<form name="assignFeature" ng-submit="assignCardFeature(card)">
+										<p ng-repeat="feature in repoFeatures">
+										  <input type="radio" id="test + {{$index}}" value ="{{ feature.number }}" ng-model="card.feature" />
+										  <label for="test + {{$index}}" id="assign-feature-label">{{ feature.title }}</label>
+										</p>
+										<input type="submit" value="Submit" />
+									</form>	
+								</div>                                              
+
 	                            <div ng-show="showDetails" class="black-text left-align">
 	                                <p>Details: {{card.details}}</p>
 	                                <p>Comments: {{card.comments}}</p>
@@ -32,6 +45,7 @@
 	                                <p>Updated: {{card.updated}}</p>
 	                            </div>
 	                    </div>
+
 	                </div> 
                 </div>
 			</div>
@@ -42,7 +56,7 @@
 
 
 	<div class="row">
-		<div id="closed-cards-title" class="col s12"><h1>Closed</h1></div>
+		<div id="closed-cards-title" class="col s12"><h1>Closed ({{ otherClosedCards.length }})</h1></div>
 	</div>
 
 	<div class="row">
@@ -53,7 +67,7 @@
                 <div class="card note">
                     <div class="card-content black-text">
                             <div class="title">
-                                <h2 class="pen">{{ card.title }}</h2>
+                                <h2 id="closed-card-title">{{ card.title }}</h2>
                             </div>
                             <p>{{ card.detail }}<p>  
                     </div>
@@ -103,6 +117,12 @@
 		margin: 0 auto;
 		text-align: center;
 	}
+	#open-card-title {
+		text-align: center;
+	}
+	#closed-card-title {
+		text-align: center;
+	}
 /*	.other-cards-note {
 		min-width: 250px;
 		min-height: 188px;
@@ -117,6 +137,15 @@
 	}
 	#hr-closed-cards {
 		border-color: #ffcdd2;
+	}
+	#assign-feature-heading {
+		font-size: 16px !important;
+		color: #424242;
+		margin-top: 10px;
+	}
+	#assign-feature-label {
+		font-size: 14px !important;
+		color: #424242;
 	}
 
 </style>

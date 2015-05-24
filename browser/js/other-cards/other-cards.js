@@ -11,11 +11,28 @@ app.controller('OtherCardsController', function ($scope, $stateParams, RepoFacto
 
 	$scope.otherOpenCards = [];
 	$scope.otherClosedCards = [];
+	$scope.repoFeatures = [];
+	$scope.showFeatures = false;
+	$scope.showDetails = false;
 
-	RepoFactory.getRepoIssues($stateParams).then(getOtherCards, rejected);
+	$scope.assignCardFeature = function(card) {
+		console.log("CARDDDDD", card);
+	}
 
-	function getOtherCards(issues) {
-		
+
+	RepoFactory.getRepoMilestones($stateParams).then(setCardsOptions, rejected);
+
+	function setCardsOptions(milestones) {
+		milestones.data.forEach(function(milestone) {
+			var featureMilestone = milestone.title.split(" - ");
+			if(featureMilestone[0] === "Feature") {
+				$scope.repoFeatures.push({ title: featureMilestone[1], number: milestone.number});
+			}
+		});
+		RepoFactory.getRepoIssues($stateParams).then(getOtherCards, rejected);
+	}
+
+	function getOtherCards(issues) {	
 		issues.data.forEach(function(issue) {
 			if(!issue.milestone && !issue.pull_request) {
 				if(issue.state === "open") { $scope.otherOpenCards.push(issue); } 
@@ -24,20 +41,16 @@ app.controller('OtherCardsController', function ($scope, $stateParams, RepoFacto
 			if(issue.milestone && issue.pull_request) {
 				var milestoneName = issue.milestone.title.split(" - ");
 				if(milestoneName[0] !== "Feature") {
-					console.log("TEST", issue)
 					if(issue.state === "open") { $scope.otherOpenCards.push(issue); } 
 					else { $scope.otherClosedCards.push(issue); }				
 				}
 			}
 		});
-	console.log($scope.otherOpenCards.length)	
-	console.log($scope.otherClosedCards.length)	
+
 	}
 	
-
 	function rejected(error){
 	 console.log(error);
 	}
-
 
 });
