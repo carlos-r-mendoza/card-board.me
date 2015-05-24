@@ -139,23 +139,35 @@ app.controller('GitHubProfileController', function($scope, GitHubProfileFactory,
 	$scope.closeIssue = function(assignment){
 		var number = assignment.number;
 		var issue = {};
-
+		$scope.feature = [];
+		
+		angular.forEach(assignment.labels, function(label){
+						console.log('LABEL', label);
+						if(label.name.split('-')[0]==='Feature '){
+							$scope.feature.push(label.name);
+							console.log('FEATURE', $scope.feature);
+						}
+				});
+			
+		
 		if(assignment.state === 'open'){
 			issue = {
-			title: assignment.title,
-			body: assignment.body,
-			assignee: assignment.assignee.login,
-			state: 'closed'
+				title: assignment.title,
+				body: assignment.body,
+				assignee: assignment.assignee.login,
+				state: 'closed',
+				labels: $scope.feature
 			};
 			assignment.state = 'closed';
 			
 		}
 		else if(assignment.state === 'closed'){
 			issue = {
-			title: assignment.title,
-			body: assignment.body,
-			assignee: assignment.assignee.login,
-			state: 'open'
+				title: assignment.title,
+				body: assignment.body,
+				assignee: assignment.assignee.login,
+				state: 'open',
+				labels: $scope.feature
 			};
 			assignment.state = 'open';
 		}
