@@ -14,7 +14,7 @@
 		<li style="margin-left: 20px; font-size: 18px; font-weight: bold;">{{ repoName }}</li>
 	    <span id="tabButtons" class="left">
 	        <li class="active tab col s3"><a ui-sref="board({ name: repoName, owner: repoOwner })">Board</a></li>
-	        <li class="tab col s3"><a href="#test2">Other Cards ({{ otherCardsCount }})</a></li>
+	        <li class="tab col s3"><a ui-sref="other-cards({ name: repoName, owner: repoOwner })">Other Cards ({{ otherCardsCount }})</a></li>
 	        <li class="tab col s3"><a href="#test3">Burndown Chart</a></li>
 	        <li class="tab col s3"><a href="#test4">Repo Activity</a></li>
 	 	</span>

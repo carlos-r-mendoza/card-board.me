@@ -1,4 +1,5 @@
 <div id="other-cards" class="container">
+<!--OPEN CARDS-->
 	<div class="row">
 		<div id="open-cards-title" class="col s12 z-depth-1"><h1>Open ({{ otherOpenCards.length }})</h1></div>
 	</div>
@@ -7,7 +8,7 @@
 			<div class="row" ng-show="$index % 4 === 0"></div>
 			<hr id="hr-open-cards" ng-show="$index % 4 === 0 && $index !== 0"/>
 			<div class="col s3">
-                <div class="card note other-cards-note z-depth-1">
+                <div class="card note" ng-hide="assignFeature">
                     <div class="card-content black-text center-align">
 	                    <div class="title">
 	                        <h2 id="open-card-title">{{ card.title }}</h2>
@@ -26,12 +27,14 @@
 
                            	<div ng-show="showOpenCardFeatures[$index]"> 
 	                           	<p id="assign-feature-heading">Below are the existing features on your board. To move this card to your board, select a feature.</p>
-								<form name="{{cardsIndex}}" ng-submit="assignCardAFeature(card)">	
+								<form name="open+{{cardsIndex}}" ng-submit="assignCardAFeature(card)">	
 									<p ng-repeat="feature in repoFeatures">
-									  <input type="radio" id="{{cardsIndex}} + {{$index}}" value ="{{ feature }}" ng-model="card.feature" />
-									  <label for="{{cardsIndex}} + {{$index}}" id="assign-feature-label">{{ feature.title }}</label>
+									  <input type="radio" id="open+{{cardsIndex}}+{{$index}}" value ="{{feature}}" ng-model="card.feature" />
+									  <label for="open+{{cardsIndex}}+{{$index}}" id="assign-feature-label">{{ feature.title }}</label>
 									</p>							
-									<input type="submit" value="Submit" />
+									<button class="waves-effect waves-light other-cards-submitBtn btn-flat" type="submit" name="action">Submit
+									    <i class="mdi-content-send"></i>
+									</button>
 								</form>
 							</div>                                              
                             <div ng-show="showOpenCardDetails[$index]" class="black-text left-align">
@@ -43,31 +46,30 @@
                                 <p>Updated: {{card.updated}}</p>
                             </div>
 	                    </div>
-
 	                </div> 
                 </div>
+<!--                 <div class="card-panel teal" ng-show="assignFeature">
+		          <span class="white-text">
+		          	Success! The card titled "{{cardTitle}}" can now be found in the {{cardFeature}} feature section of your board.
+		          </span>
+        		</div> -->
 			</div>
 		</div>
 	</div>
-
-
-
-
+<!--CLOSED CARDS-->
 	<div class="row">
-		<div id="closed-cards-title" class="col s12 z-depth-1"><h1>Closed ({{ otherClosedCards.length }})</h1></div>
+		<div id="closed-cards-title" class="col s12"><h1>Closed ({{ otherClosedCards.length }})</h1></div>
 	</div>
-
 	<div class="row">
-		<div ng-repeat="card in otherClosedCards">
+		<div ng-repeat="card in otherClosedCards" ng-init="cardsIndex2 = $index">
 			<div class="row" ng-show="$index % 4 === 0"></div>
 			<hr id="hr-closed-cards" ng-show="$index % 4 === 0 && $index !== 0"/>
 			<div class="col s3">
                 <div class="card note">
                     <div class="card-content black-text">
-                            <div class="title">
-                                <h2 id="closed-card-title">{{ card.title }}</h2>
-                            </div>
-                            <p>{{ card.detail }}<p>  
+	                    <div class="title">
+	                        <h2 id="closed-card-title">{{ card.title }}</h2>
+	                    </div>
                     </div>
 	                <div class="card-action">
 	                    <div>
@@ -78,29 +80,36 @@
 	                        <span class="cursor-pointer">
 	                            <a ng-click="toggleClosedCardDetails($index)" class=".cursor-pointer">Details</a>
 	                        </span>   
-	                           <img src="{{ card.assignee_avatar }}" alt="" class="circle right" id="assignee-avatar" ng-show="card.assignee_avatar" />  
+                           <img src="{{ card.assignee_avatar }}" alt="" class="circle right" id="assignee-avatar" ng-show="card.assignee_avatar" />  
 
-	                           	<div ng-show="showClosedCardFeatures[$index]"> 
-		                           <p id="assign-feature-heading">Below are the existing features on your board. To re-open this issue and move this card to your board, select a feature.</p>
-									<form name="assignFeature" ng-submit="assignCardAFeature(card)">
-										<p ng-repeat="feature in repoFeatures">
-										  <input type="radio" id="test + {{$index}}" value ="{{ feature }}" ng-model="card.feature" />
-										  <label for="test + {{$index}}" id="assign-feature-label">{{ feature.title }}</label>
-										</p>
-										<input type="submit" value="Submit" />
-									</form>	
-								</div>                                              
-	                            <div ng-show="showClosedCardDetails[$index]" class="black-text left-align">
-	                                <p>Details: {{card.details}}</p>
-	                                <p>Comments: {{card.comments}}</p>
-	                                <p>Labels: <span ng-repeat="label in card.labels">{{label.name}} </span></p>
-	                                <p>Assignee: {{card.assignee.login}}</p>
-	                                <p>Created: {{card.created}}</p>
-	                                <p>Updated: {{card.updated}}</p>
-	                            </div>
+                           	<div ng-show="showClosedCardFeatures[$index]"> 
+	                           <p id="assign-feature-heading">Below are the existing features on your board. To re-open this issue and move this card to your board, select a feature.</p>
+								<form name="closed+{{cardsIndex2}}" ng-submit="assignCardAFeature(card)">
+									<p ng-repeat="feature in repoFeatures">
+									  <input type="radio" id="closed+{{cardsIndex2}}+{{$index}}" value ="{{ feature }}" ng-model="card.feature" />
+									  <label for="closed+{{cardsIndex2}}+{{$index}}" id="assign-feature-label">{{ feature.title }}</label>
+									</p>
+									<button class="waves-effect waves-light other-cards-submitBtn btn-flat" type="submit" name="action">Submit
+									    <i class="mdi-content-send"></i>
+									</button>
+								</form>	
+							</div>                                              
+                            <div ng-show="showClosedCardDetails[$index]" class="black-text left-align">
+                                <p>Details: {{card.details}}</p>
+                                <p>Comments: {{card.comments}}</p>
+                                <p>Labels: <span ng-repeat="label in card.labels">{{label.name}} </span></p>
+                                <p>Assignee: {{card.assignee.login}}</p>
+                                <p>Created: {{card.created}}</p>
+                                <p>Updated: {{card.updated}}</p>
+                            </div>
 	                    </div>
-	                </div> 
+	                </div>	                 
                 </div>
+<!--                 <div class="card-panel teal" ng-show="assignFeature">
+		          <span class="white-text">
+		          	Success! The card titled "{{cardTitle}}" can now be found in the {{cardFeature}} feature section of your board.
+		          </span>
+        		</div>     -->            
 			</div>
 		</div>
 	</div>
@@ -158,6 +167,13 @@
 	#assign-feature-label {
 		font-size: 14px !important;
 		color: #424242;
+	}
+	.other-cards-submitBtn {
+		width: 100%;
+/*		margin-bottom: 20px;
+*/		text-align: center;
+		color: white;
+		background-color: #26a69a;
 	}
 
 </style>

@@ -17,6 +17,7 @@ app.controller('OtherCardsController', function ($scope, $stateParams, RepoFacto
 	$scope.showOpenCardDetails = [];
 	$scope.showClosedCardFeatures = [];
 	$scope.showClosedCardDetails = [];
+	$scope.assignFeature = false;
 
 	$scope.toggleOpenCardFeatures = function(indx) {
 		$scope.showOpenCardFeatures[indx] = !$scope.showOpenCardFeatures[indx];
@@ -39,18 +40,18 @@ app.controller('OtherCardsController', function ($scope, $stateParams, RepoFacto
 	};
 
 	$scope.assignCardAFeature = function(card) {
+
+		if(card.feature){
 		var featureInfo = JSON.parse(card.feature);
 		card.milestone = featureInfo.number;
 		card.state = "open";
 		card.labels.push("Feature - " + featureInfo.title);
 		RepoFactory.editRepoIssue($stateParams, card.number, card).then(function(updatedCard){
+			$scope.assignFeature = true;
+			$scope.cardTitle = card.title;
+			$scope.cardFeature = featureInfo.title;
+		});}
 
-					console.log("CARDDDDD", updatedCard);
-
-
-		}
-
-			);
 	};
 
 
