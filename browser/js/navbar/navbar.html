@@ -31,7 +31,7 @@
 	<ul id="slide-out" class="side-nav">
 
 
- 		<li id="project-font" class="black text center">Your Projects</li>
+ 		<li id="project-font" class="black">Your Projects</li>
 		<li role="presentation" ng-repeat="profileRepo in profileRepos">
 			<a id="repo-names" ui-sref="board({ name: profileRepo.name, owner: profileRepo.owner })" role="menuitem" tabindex="-1">{{ profileRepo.full_name }}</a>
 		</li>
@@ -66,6 +66,7 @@
 	}*/
 	#project-font {
 		font-size: 20px;
+		padding-left: 30px;
 	}
 	#repo-names {
 		font-size: 16px;
