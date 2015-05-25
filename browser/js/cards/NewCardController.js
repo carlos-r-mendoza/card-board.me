@@ -76,15 +76,17 @@ app.controller('NewCardController', function ($scope, $modal, $modalInstance, Bo
   };
 
   $scope.addCard = function(newCard, featureName, board){ 
-
-    console.log("NewCard", newCard);
-        console.log("FEATURE NAME", featureName)
+    console.log("board before", board);
+    //console.log("NewCard", newCard);
+    //console.log("FEATURE NAME", featureName);
     taskInfo(newCard);
     RepoFactory.createRepoIssue($stateParams, $scope.newIssue).then(function(createdIssue){
           BoardManipulator.addCardToFeature($scope.board, featureName, 'Open', createdIssue.data);
     });
     $modalInstance.close();
-    ProgressFactory.updateBar(board);
+    //console.log("before",$rootScope.percent);
+    //ProgressFactory.updateBar(board);
+    //console.log("board after",board);
   };
 
 });
