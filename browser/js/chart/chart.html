@@ -1,4 +1,21 @@
-<div ng-controller="BurndownController">
-	<h1>Burndown Chart</h1>
-	<canvas id="line" class='chart chart-line' data='data' labels='labels' legend='true' series='series' click='onClick'></canvas>
+<div ng-controller="BurndownController" class='container'>
+	<div class='row'>
+		<h1 class='center'>Burndown Chart</h1>
+		<div class='col m4'>
+			<h2>Milestones</h2>
+			<div ng-repeat='milestone in milestones'>
+				<h3>{{milestone.title}}</h3>
+				<p>Details: {{milestone.description}}</p>
+				<p>Status: {{milestone.state}}</p>
+				<p># Open: {{milestone.open_issues}}</p>
+				<p># Closed: {{milestone.closed_issues}}</p>
+				<p>Due Date: {{(milestone.due_on | date) || 'N/A'}}</p>
+				<p>Date Created: {{milestone.created_at | date}}</p>
+				<p>Date Completed: {{(milestone.closed_at | date)|| 'N/A'}}</h3>
+			</div>
+		</div>
+		<div class='col m8'>
+			<canvas id="line" class='chart chart-line' data='data' labels='labels' legend='true' series='series'></canvas>
+		</div>
+	</div>
 </div>
