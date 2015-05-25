@@ -1,4 +1,5 @@
-<div id="other-cards" class="container">
+<preloader ng-show="spinner"></preloader>
+<div id="other-cards" class="container" ng-hide="spinner">
 <!--OPEN CARDS-->
 	<div class="row">
 		<div id="open-cards-title" class="col s12 z-depth-1"><h1>Open ({{ otherOpenCards.length }})</h1></div>
@@ -113,11 +114,7 @@
 			</div>
 		</div>
 	</div>
-
 </div>
-
-
-
 
 <style type="text/css">
 	#open-cards-title {
