@@ -5,21 +5,21 @@ app.controller('ColorPicker', function($scope, $stateParams){
 		{name: 'white',
 	 	 hex: 'FFFFFF'},
 	 	{name: 'red',
-	 	 hex: 'ef5350'},
+	 	 hex: 'ff5252'},
 	 	{name: 'orange',
 	 	 hex: 'ffa726'},
 	 	{name: 'yellow',
 	 	 hex: 'ffd600'},
 	 	{name: 'green',
-	 	 hex: '66bb6a'},
+	 	 hex: '81c784'},
 	 	{name: 'blue',
-	 	 hex: '64b5f6'},
+	 	 hex: 'bbdefb'},
 	 	{name: 'purple',
 	 	 hex: 'b39ddb'},
 	 	{name: 'pink',
 	 	 hex: 'f48fb1'},
 	 	{name: 'indigo',
-	 	 hex: '7986cb'},
+	 	 hex: '9fa8da'},
 	 	{name: 'teal',
 	 	 hex: '80cbc4'},
 	 	{name: 'cyan',
@@ -27,7 +27,9 @@ app.controller('ColorPicker', function($scope, $stateParams){
 	 	{name: 'lime',
 	 	 hex: '9ccc65'},
 	 	{name: 'red-orange',
-	 	 hex: 'ff7043'}
+	 	 hex: 'ff7043'},
+	 	{name: 'blue-grey',
+	 	 hex: 'b0bec5'}
 	];
 
 });
