@@ -14,7 +14,7 @@ app.config(function ($stateProvider, ChartJsProvider) {
 });
 
 app.controller('BurndownController', function($scope, $stateParams, RepoFactory){
-	
+
 	$scope.dueDates = [];
 	$scope.startDates = [];
 	$scope.today = new Date().toDateString();
@@ -49,8 +49,7 @@ app.controller('BurndownController', function($scope, $stateParams, RepoFactory)
 
 		});
 		
-		$scope.startDay = $scope.startDates.sort()[0];
-		$scope.startDay.toDateString;
+		$scope.startDay = new Date($scope.startDates.sort()[0]).toDateString();
 		
 		$scope.dueDay = new Date($scope.dueDates[$scope.dueDates.length-1]).toDateString();
 		
@@ -68,8 +67,26 @@ app.controller('BurndownController', function($scope, $stateParams, RepoFactory)
 			$scope.closed
 		];
 
+		$scope.showChart = function(milestone){
+			var idx = $scope.barLabels.indexOf(milestone);
+			if(idx < 0){
+				$scope.lineData = [
+					[$scope.totalIssues, ($scope.totalIssues/2), 0],
+					[$scope.totalIssues, $scope.totalOpen, 0]
+				];
+			}
+			else{
+				var open = $scope.open[idx];
+				var closed = $scope.closed[idx];
+				var total = open + closed;
+				$scope.lineData = [
+					[total, (total/2), 0],
+					[total, open, 0]
+				];
+			}
+		};
+
 	}, err);
 	
-
 });
 

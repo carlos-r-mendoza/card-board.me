@@ -4,15 +4,22 @@
 		<div class='col m4 card'>
 			<div class="card-content">
 			<div class='divTitle'>Milestones</div>
+			<h3 class='blueTitle' ng-click="showChart(summary)">SUMMARY - All Features</h3>
 			<div ng-repeat='milestone in milestones'>
-				<h3 class='blueTitle'>{{milestone.title}}</h3>
-				<p ng-show="milestone.description">Details: {{milestone.description}}</p>
-				<p><strong>Status:</strong> {{milestone.state}}</p>
-				<p><strong># Open:</strong> {{milestone.open_issues}}</p>
-				<p><strong># Closed:</strong> {{milestone.closed_issues}}</p>
-				<p><strong>Due Date:</strong> {{(milestone.due_on | date) || 'N/A'}}</p>
-				<p><strong>Date Created:</strong> {{milestone.created_at | date}}</p>
-				<p><strong>Date Completed:</strong> {{(milestone.closed_at | date)|| 'N/A'}}<p>
+				<h3 class='blueTitle' ng-click='isCollapsed=!isCollapsed'>
+					<span ng-click="showChart(milestone.title)">{{milestone.title}}</span>
+					<a ng-show="isCollapsed"><i class="mdi-hardware-keyboard-arrow-up right"></i></a>
+                    <a ng-show="!isCollapsed"><i class="mdi-hardware-keyboard-arrow-down right"></i></a>
+				</h3>
+				<div div collapse='!isCollapsed'>
+					<p ng-show="milestone.description">Details: {{milestone.description}}</p>
+					<p><strong>Status:</strong> {{milestone.state}}</p>
+					<p><strong># Open:</strong> {{milestone.open_issues}}</p>
+					<p><strong># Closed:</strong> {{milestone.closed_issues}}</p>
+					<p><strong>Due Date:</strong> {{(milestone.due_on | date) || 'N/A'}}</p>
+					<p><strong>Date Created:</strong> {{milestone.created_at | date}}</p>
+					<p><strong>Date Completed:</strong> {{(milestone.closed_at | date)|| 'N/A'}}<p>
+				</div>
 			</div>
 			</div>
 		</div>
@@ -21,11 +28,11 @@
 				<div class='card-content'>
 					<div class='divTitle'>Burndown</div>
 					<div class='chartDiv'>
-						<h2 class='blueTitle'>Progress Summary</h2>
+						<h2 class='greyTitle'>Progress Summary</h2>
 						<canvas id="line" class='chart chart-line' data='lineData' labels='lineLabels' legend='true' series='lineSeries'></canvas>
 					</div>
 					<div class='chartDiv'>
-						<h2 class='blueTitle'>Open/Closed Issues by Feature</h2>
+						<h2 class='greyTitle' ng-click='showBar()'>Open/Closed Issues by Feature</h2>
 						<canvas id="bar" class="chart chart-bar" data="barData" labels="barLabels" series='barSeries' legend='true'></canvas> 
 					</div>
 				</div>

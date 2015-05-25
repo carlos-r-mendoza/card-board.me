@@ -11,4 +11,11 @@
 
 .blueTitle{
 	color: #03a9f4;
+	&:hover {
+		color: #424242;
+	}
+}
+
+.greyTitle{
+	color: #424242;
 }
