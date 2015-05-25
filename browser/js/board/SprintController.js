@@ -8,9 +8,10 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('SprintController', function ($scope, $stateParams, BoardService, BoardManipulator, $rootScope, RepoFactory, ProgressFactory) {
+app.controller('SprintController', function ($scope, $rootScope, $stateParams, BoardService, BoardManipulator, RepoFactory, ProgressFactory) {
 
-  //console.log("TESTTATAT")
+  $scope.$parent.tabs[0].ifSelected = "tab-active"; //sets nav tab active on refresh
+  
   var otherCardsCount = 0;
   //$scope.sprintBoard = ""; 
   // $scope.table = { 
@@ -27,8 +28,9 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
   // };
 
 
-  $scope.$parent.$$childHead.repoName = $stateParams.name; //gives navbar.html access project name
-  $scope.$parent.$$childHead.repoOwner = $stateParams.owner; //gives navbar.html access to owner
+  $rootScope.repoName = $stateParams.name; //gives navbar.html access project name
+  $rootScope.repoOwner = $stateParams.owner; //gives navbar.html access to owner
+  $rootScope.otherCardsCount = 0;
 
   $scope.sprintSortOptions = {
 
@@ -160,6 +162,11 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
       }
 
     function addIssuesToPhases(repoIssues) {
+
+      repoIssues.data.forEach(function(issue){
+        if(!issue.pull_request) { otherCardsCount++; }
+      });
+
       for (var i = 0; i <= sprint.features.length-1; i++) {
         var feature = sprint.features[i];
         var phases = feature.phases; //a feature's phase
@@ -173,6 +180,7 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
 
                 if(label.name === "Feature - " + feature.title) {
                   issue.feature = feature.title;
+                  otherCardsCount--;
 
                   for (var m = l; m <= issue.labels.length-1; m++) { //checking for phase label
                     label = issue.labels[m];
@@ -205,7 +213,7 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
                       }
                     } 
                   }
-                } else { otherCardsCount++; }
+                } 
               }
             }
           }
@@ -221,7 +229,7 @@ app.controller('SprintController', function ($scope, $stateParams, BoardService,
       // console.log('PERCENT', $scope.percent);
       ProgressFactory.updateBar($scope.sprintBoard);
 
-      $scope.$parent.$$childHead.otherCardsCount = otherCardsCount; //gives navbar.html cards count number
+      $rootScope.otherCardsCount = otherCardsCount; //gives navbar.html cards count number
 
       //updateProgress();
       //$scope.$digest();

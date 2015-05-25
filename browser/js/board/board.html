@@ -2,7 +2,7 @@
 
 <div id="board">
 <div class="ProgressContainer">
-    <div class='row centerDiv' ng-controller="SprintController">
+    <div class='row centerDiv'>
        <div class="col-sm-4"> <h2 class='right'> Progress </h2> </div>
     <div class="col-sm-4 progressDiv">
         <progressbar animate="false" max='100' value='percent' type="success">
@@ -42,10 +42,7 @@
                             </a>
                         </span>
                     </h2>
-                
-                
                     
-                
             </th>
             <th class="addPhase" style="width:5%" ng-controller="NewPhaseController">
                 <a title="Add Phase" ng-click="addNewPhase(sprintBoard)"><i
