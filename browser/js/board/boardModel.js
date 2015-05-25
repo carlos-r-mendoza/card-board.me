@@ -151,8 +151,6 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams,
     },
 
     addFeature: function (board, feature) {
-      console.log("added", feature);
-
       board.features.push(new BoardModel.Feature(feature));
       // var label = {name: 'Feature - '+featureName, color: 'FFFFFF'};
       //Removed createRepoLabelss statement in line below. It attempts 

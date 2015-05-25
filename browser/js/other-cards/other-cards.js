@@ -8,8 +8,14 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('OtherCardsController', function ($scope, $stateParams, RepoFactory){
+app.controller('OtherCardsController', function ($scope, $rootScope, $stateParams, RepoFactory){
+	
+	$scope.$parent.tabs[1].ifSelected = "tab-active"; //sets nav tab active on refresh
+	var otherCardsCount = 0;	
 
+	$rootScope.repoName = $stateParams.name; //gives navbar.html access project name
+  	$rootScope.repoOwner = $stateParams.owner;
+  	$rootScope.otherCardsCount = 0;
 	$scope.spinner = true;
 	$scope.otherOpenCards = [];
 	$scope.otherClosedCards = [];
@@ -85,19 +91,20 @@ app.controller('OtherCardsController', function ($scope, $stateParams, RepoFacto
 	function getOtherCards(issues) {	
 		issues.data.forEach(function(issue) {
 			if(!issue.milestone && !issue.pull_request) {
+				otherCardsCount++;
 				if(issue.state === "open") { $scope.otherOpenCards.push(issue); } 
 				else { $scope.otherClosedCards.push(issue); }
-			}
-			if(issue.milestone && issue.pull_request) {
+			} else if(issue.milestone && !issue.pull_request) {
 				var milestoneName = issue.milestone.title.split(" - ");
 				if(milestoneName[0] !== "Feature") {
+					otherCardsCount++;
 					if(issue.state === "open") { $scope.otherOpenCards.push(issue); } 
 					else { $scope.otherClosedCards.push(issue); }				
 				}
 			}
 		});
-			$scope.spinner = false;
-
+		$scope.spinner = false;
+  		$rootScope.otherCardsCount = otherCardsCount;
 	}
 	
 	function rejected(error){

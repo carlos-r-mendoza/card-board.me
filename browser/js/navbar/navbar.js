@@ -11,10 +11,23 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) 
 
 });
 
-app.controller('NavbarController', function($scope,$rootScope, AuthService, AUTH_EVENTS, $state){
+app.controller('NavbarController', function($scope, $rootScope, AuthService, AUTH_EVENTS, $state){
 
   // More information: http://materializecss.com/side-nav.html
   $scope.user = null;
+
+  $scope.tabs = [
+    { name: "Board", link: "board({ name: repoName, owner: repoOwner })", ifSelected: "" },
+    { name: "Other Cards", link: "other-cards({ name: repoName, owner: repoOwner })", ifSelected: "" },
+    { name: "Burndown Chart", link: "board({ name: repoName, owner: repoOwner })", ifSelected: "" },
+    { name: "Repo Activity", link: "board({ name: repoName, owner: repoOwner })", ifSelected: "" }];
+
+  $scope.changeActiveTab = function(indx) {
+    $scope.tabs.forEach(function(tab){
+      tab.ifSelected = "";
+    })
+    $scope.tabs[indx].ifSelected = "tab-active";
+  }
 
   $scope.isLoggedIn = function () {
       return AuthService.isAuthenticated();
