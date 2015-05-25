@@ -95,6 +95,7 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams,
       });
     },
     removeFeature: function(feature, board) {
+      console.log("feature", feature);
       feature.phases.forEach(function(phase) {
         for(var i = 0; i < phase.cards.length; i++) {
           var card = phase.cards[i];  
@@ -113,9 +114,11 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams,
           }); 
           card.state = "closed";
           RepoFactory.editRepoIssue($stateParams, card.number, card);
+          phase.cards=[];
         }
       });
-      console.log("featurenum", feature.number)
+      ProgressFactory.updateBar(board);
+      //console.log("featurenum", feature.number)
       RepoFactory.deleteRepoMilestone($stateParams, feature.number).then(function(){
         for (var i = 0; i < board.features.length; i++) {
           if(board.features[i].name === feature.name) {
@@ -123,8 +126,10 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams,
             i-=1;
           }
         }
+        //ProgressFactory.updateBar(board);
+        console.log("after", board)
       });
-      ProgressFactory.updateBar(board);
+      //ProgressFactory.updateBar(board);
     },
     editCard: function(board, featureName, phaseName, currentTask, newTask){
       angular.forEach(board.features, function(feature){
@@ -151,7 +156,7 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams,
     },
 
     addFeature: function (board, feature) {
-      console.log("added", feature);
+      //console.log("added", feature);
 
       board.features.push(new BoardModel.Feature(feature));
       // var label = {name: 'Feature - '+featureName, color: 'FFFFFF'};
@@ -226,6 +231,7 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams,
           });
         }
       });
+      ProgressFactory.updateBar(board);
     },
     removePhase: function(board,phase){
       board.features.forEach(function(feature){

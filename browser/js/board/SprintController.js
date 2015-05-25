@@ -10,7 +10,7 @@ app.config(function ($stateProvider) {
 
 app.controller('SprintController', function ($scope, $stateParams, BoardService, BoardManipulator, $rootScope, RepoFactory, ProgressFactory) {
 
-  console.log("TESTTATAT")
+  //console.log("TESTTATAT")
   var otherCardsCount = 0;
   //$scope.sprintBoard = ""; 
   // $scope.table = { 
