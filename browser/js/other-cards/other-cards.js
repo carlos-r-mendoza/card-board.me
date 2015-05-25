@@ -1,3 +1,4 @@
+'use strict';
 
 app.config(function ($stateProvider) {
     $stateProvider.state('other-cards', {
@@ -9,7 +10,7 @@ app.config(function ($stateProvider) {
 
 app.controller('OtherCardsController', function ($scope, $stateParams, RepoFactory){
 
-
+	$scope.spinner = true;
 	$scope.otherOpenCards = [];
 	$scope.otherClosedCards = [];
 	$scope.repoFeatures = [];
@@ -95,7 +96,7 @@ app.controller('OtherCardsController', function ($scope, $stateParams, RepoFacto
 				}
 			}
 		});
-			console.log($scope);
+			$scope.spinner = false;
 
 	}
 	

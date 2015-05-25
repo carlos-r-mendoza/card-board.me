@@ -20,7 +20,7 @@ app.factory('BoardModel', function(){
         if(feature.color) { feature.feature_color = feature.color;  }
         if(color) { feature.feature_color = color; }
         if(featureTitle) { feature.title = featureTitle; }
-        if(featurePhases) { this.phases = featurePhases } else { this.phases = []; }
+        if(featurePhases) { this.phases = featurePhases; } else { this.phases = []; }
         this.name = feature.title;
         this.title = feature.title;
         this.description = feature.description;
