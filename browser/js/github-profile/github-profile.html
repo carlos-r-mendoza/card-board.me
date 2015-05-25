@@ -15,8 +15,8 @@
 							</div>
 							<div class='col m5'>
 								<h3 ng-show="profile.email">{{ profile.email }}</h3>
-								<h3><a href="{{ profile.gitHubProfileLink }}" style='color: #ff5252'>{{ profile.gitHubProfileLink }}</a></h3>
-								<h3><span style="font-size: 2rem; color: #ff5252">{{ profile.publicRepos }}</span> Public Repos</h3>
+								<h3><a href="{{ profile.gitHubProfileLink }}" style='color: #03a9f4'>{{ profile.gitHubProfileLink }}</a></h3>
+								<h3><span style="font-size: 2rem; color: #03a9f4">{{ profile.publicRepos }}</span> Public Repos</h3>
 							</div>
 						</div>
 					</div>
@@ -38,15 +38,17 @@
 						<form>
 							<h3>
 								<input ng-hide='!assign' ng-show="assign" type='checkbox' id='{{assignment.title}}' ng-click='closeIssue(assignment) && updateStatus(assignment.state)'></input>
-								<label class="redLabel" for='{{assignment.title}}'>{{ assignment.title }}</label>
+								<label class="blueLabel" for='{{assignment.title}}'>{{ assignment.title }}</label>
 							</h3>
 						</form>
-						<div ng-show="assignment.body"><strong>Details:</strong> {{ assignment.body }}</div>
-						<div ng-show="assignment.comments"><strong>Comments:</strong> {{ assignment.comments }}</div>
-						<div ng-show="assignment.state"><strong>Status:</strong> {{ assignment.state }}</div>
-						<div ng-show="assignment.created_at"><strong>Created:</strong> {{ assignment.created_at }}</div>
-						<div ng-show="assignment.updated_at"><strong>Updated:</strong> {{ assignment.updated_at }}</div>
-						<div ng-show="assignment.closed_at"><strong>Closed:</strong> {{ assignment.closed_at }}</div>	
+						<div style='margin-left: 35px'>
+							<div ng-show="assignment.body"><strong>Details:</strong> {{ assignment.body }}</div>
+							<div ng-show="assignment.comments"><strong>Comments:</strong> {{ assignment.comments }}</div>
+							<div ng-show="assignment.state"><strong>Status:</strong> {{ assignment.state }}</div>
+							<div ng-show="assignment.created_at"><strong>Created:</strong> {{ assignment.created_at }}</div>
+							<div ng-show="assignment.updated_at"><strong>Updated:</strong> {{ assignment.updated_at }}</div>
+							<div ng-show="assignment.closed_at"><strong>Closed:</strong> {{ assignment.closed_at }}</div>	
+						</div>
 					</div>	
 				</div>
 			</div>
@@ -58,10 +60,10 @@
 					<div class='divTitle' id="profile-repos-card-toolbar">Repos</div>
 					<div class='contentDiv' ng-repeat="profileRepo in profileRepos">
 						<div>
-							<h2 class="cardTitle">
-								<span ng-click="getAssignments(profileRepo, profile.username)" popover="Click to see assignments" popover-placement='right' popover-trigger='mouseenter'>{{ profileRepo.name }}</span>
-								<a ng-show="isCollapsed"><i class="mdi-hardware-keyboard-arrow-up right red-text" ng-click='isCollapsed=!isCollapsed'></i></a>
-                    			<a ng-show="!isCollapsed"><i class="mdi-hardware-keyboard-arrow-down right red-text" ng-click='isCollapsed=!isCollapsed'></i></a>
+							<h2 class="cardTitle ng-class:{'isCollapsed': collapse}" ng-click='isCollapsed=!isCollapsed'>
+								<span ng-click="getAssignments(profileRepo, profile.username)">{{ profileRepo.name }}</span>
+								<a ng-show="isCollapsed"><i class="mdi-hardware-keyboard-arrow-up right" ></i></a>
+                    			<a ng-show="!isCollapsed"><i class="mdi-hardware-keyboard-arrow-down right"></i></a>
 							</h2>
                     	</div>
 						<div collapse='!isCollapsed'>

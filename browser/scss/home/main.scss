@@ -9,7 +9,7 @@
 		margin-top: 25px;
 		height: 250px;
 		width: 250px;
-		border: 2px solid #ff5252;
+		border: 2px solid #03a9f4;
 	}
 
 #profile-card, #profile-events-card, #profile-repos-card {
@@ -28,8 +28,16 @@
 }
 
 .cardTitle{
-	color: #ff5252;
-	cursor: pointer;
+		// color: #424242;
+	&:hover {
+		color: #03a9f4;
+	}
+	&:focus{
+		color: #03a9f4;
+	}
+	&:active{
+		color: #03a9f4;
+	}
 }
 
 .divTitle{
@@ -42,9 +50,9 @@
 	font-weight: bold;
 }
 
-.redLabel {
+.blueLabel {
 	font-size: 1.75rem !important;
-	color: #ff5252;
+	color: #03a9f4;
 }
 
 .floatRight{
@@ -58,7 +66,7 @@
 .toBoard{
 	cursor: pointer;
 	&:hover{
-		color: #ff5252; 
+		color: #03a9f4;
 	}
 }
 
@@ -69,4 +77,8 @@
 .mdi-navigation-chevron-left{
 	vertical-align: middle;
 	font-size: 3rem;
+}
+
+.collapse{
+	color: #03a9f4;
 }
