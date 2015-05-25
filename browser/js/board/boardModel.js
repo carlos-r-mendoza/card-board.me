@@ -95,41 +95,32 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams,
       });
     },
     removeFeature: function(feature, board) {
-      console.log("feature", feature);
+      //console.log("feature", feature);
       feature.phases.forEach(function(phase) {
-        for(var i = 0; i < phase.cards.length; i++) {
-          var card = phase.cards[i];  
-          card.labelNames = [];
-          if(card.assignee) { card.assignee_login = card.assignee.login; }
-          card.labels.forEach(function(label){
-            if(label.name) {
-            card.labelNames.push(label.name);
+        phase.cards.forEach(function(card){
+          card.labels=card.labels.filter(function(label){
             var labelName = label.name.split(" - "); 
-              if(labelName[0] === "Phase" || labelName[0] === "Feature") {
-                console.log("in", labelName[0])
-                card.labels.splice(i, 1);
-                i-=1;
-              }
-            }
-          }); 
+            return labelName[0]!=="Phase" && labelName[0] !== "Feature";
+          })
+          if(card.assignee) { card.assignee_login = card.assignee.login; }
           card.state = "closed";
           RepoFactory.editRepoIssue($stateParams, card.number, card);
           phase.cards=[];
-        }
-      });
-      ProgressFactory.updateBar(board);
+        });
+        ProgressFactory.updateBar(board);
       //console.log("featurenum", feature.number)
-      RepoFactory.deleteRepoMilestone($stateParams, feature.number).then(function(){
-        for (var i = 0; i < board.features.length; i++) {
-          if(board.features[i].name === feature.name) {
-            board.features.splice(i, 1);
-            i-=1;
+        RepoFactory.deleteRepoMilestone($stateParams, feature.number).then(function(){
+          for (var i = 0; i < board.features.length; i++) {
+            if(board.features[i].name === feature.name) {
+              board.features.splice(i, 1);
+              i-=1;
+            }
           }
-        }
-        //ProgressFactory.updateBar(board);
-        console.log("after", board)
-      });
+        
+        //console.log("after", board)
+        });
       //ProgressFactory.updateBar(board);
+      });
     },
     editCard: function(board, featureName, phaseName, currentTask, newTask){
       angular.forEach(board.features, function(feature){
