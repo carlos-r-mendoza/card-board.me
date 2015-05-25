@@ -14,10 +14,10 @@
 	</div>
 	<div class="row">
 		<div ng-repeat="card in otherOpenCards" ng-init="cardsIndex = $index">
-			<div class="row" ng-show="$index % 4 === 0"></div>
+			<div class="row center" ng-show="$index % 4 === 0" style="margin-left: 25px;"></div>
 			<hr id="hr-open-cards" ng-show="$index % 4 === 0 && $index !== 0"/>
 			<div class="col s3">
-                <div class="card note" ng-hide="openCardFeatureAssigned[cardsIndex]">
+                <div class="card note center-cards" ng-hide="openCardFeatureAssigned[cardsIndex]">
                     <div class="card-content black-text center-align">
 	                    <div class="title">
 	                        <h2 id="open-card-title">{{ card.title }}</h2>
@@ -47,7 +47,6 @@
 								</form>
 							</div>                                              
                             <div ng-show="showOpenCardDetails[$index]" class="left-align card-details">
-                                <p>Details: {{card.details}}</p>
                                 <p ng-show="card.body"><strong>details:</strong> {{card.body}}</p>
                                 <p ng-show="!card.body"><strong>details:</strong> N/A</p>
                                 <p><strong># of comments:</strong> {{card.comments}}</p>
@@ -79,7 +78,7 @@
 			<div class="row" ng-show="$index % 4 === 0"></div>
 			<hr id="hr-closed-cards" ng-show="$index % 4 === 0 && $index !== 0"/>
 			<div class="col s3">
-                <div class="card note" ng-hide="closedCardFeatureAssigned[cardsIndex2]">
+                <div class="card note center-cards" ng-hide="closedCardFeatureAssigned[cardsIndex2]">
                     <div class="card-content black-text">
 	                    <div class="title">
 	                        <h2 id="closed-card-title">{{ card.title }}</h2>
@@ -193,6 +192,10 @@
 		font-size: 14px !important;
 		color: #424242;
 		margin-top: 10px;
+	}
+	.center-cards {
+		margin-left: auto;
+		margin-right: auto;
 	}
 	.other-cards-submitBtn {
 		width: 100%;
