@@ -114,7 +114,12 @@ app.factory('RepoFactory', function($http){
 			return $http.post('api/repo/' + repoInfo.owner+ "/" + repoInfo.name + '/issues/'+ issueNum + "/comments", comment).then(function(createdComment){
 				return createdComment;
 			});
-		}
+		},
+		getRepoEvents: function (repoInfo) {
+			return $http.get('api/repo/' + repoInfo.owner + "/" + repoInfo.name + "/repo-events").then(function(repoEvents){
+				return repoEvents;
+			});
+		},
 	};
 });
 

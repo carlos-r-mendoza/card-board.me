@@ -429,6 +429,26 @@ router.post('/:repoOwner/:repoName/issues/:issueNumber/comments', function(req, 
 	});
 });
 
+
+/***GET COMMENTS ON AN ISSUE***/
+router.get('/:repoOwner/:repoName/repo-events', function (req, res) {
+
+	var userToken = req.user.github.token;
+
+	github.authenticate({
+	    type: "oauth",
+	    token: userToken
+	});
+
+	github.events.getFromRepo({
+		user: req.params.repoOwner,
+		repo: req.params.repoName,
+	}, function(err, issueComments) {
+		if(err) { errGitHub(err); }		
+		res.json(issueComments);
+	});
+});
+
 /***CREATE HOOK FOR REPO***/
 // router.post('/:repoOwner/:repoName/create-repo-hook', function (req, res) {
 
