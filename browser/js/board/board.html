@@ -1,4 +1,4 @@
-<preloader ng-show="!sprintBoard"></preloader>
+<preloader ng-hide="sprintBoard"></preloader>
 
 <div id="board">
 <div class="ProgressContainer">
@@ -15,7 +15,7 @@
 </div>
 </div>
  </thead>
-    <div ng-model="sprintBoard" style="width: 100%;">
+    <div ng-model="sprintBoard" ng-show="sprintBoard" style="width: 100%;">
     <table id="boardTable" class="table">
         <thead>
         <tr id="boardHeader">

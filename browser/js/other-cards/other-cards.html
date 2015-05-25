@@ -1,4 +1,12 @@
 <preloader ng-show="spinner"></preloader>
+<div class="container">
+	<div class="row">
+		<div id="other-cards-message" class="card-panel light-blue darken-4 center">
+          <span class="white-text">Card-Board makes migrating existing projects simple. Below is a list of current issues associated with this repository on GitHub that are currently not assigned to a feature on your board. Pull requests are excluded.
+          </span>
+        </div>
+	</div>
+</div>
 <div id="other-cards" class="container" ng-hide="spinner">
 <!--OPEN CARDS-->
 	<div class="row">
@@ -38,13 +46,18 @@
 									</button>
 								</form>
 							</div>                                              
-                            <div ng-show="showOpenCardDetails[$index]" class="black-text left-align">
+                            <div ng-show="showOpenCardDetails[$index]" class="left-align card-details">
                                 <p>Details: {{card.details}}</p>
-                                <p>Comments: {{card.comments}}</p>
-                                <p>Labels: <span ng-repeat="label in card.labels">{{label.name}} </span></p>
-                                <p>Assignee: {{card.assignee.login}}</p>
-                                <p>Created: {{card.created}}</p>
-                                <p>Updated: {{card.updated}}</p>
+                                <p ng-show="card.body"><strong>details:</strong> {{card.body}}</p>
+                                <p ng-show="!card.body"><strong>details:</strong> N/A</p>
+                                <p><strong># of comments:</strong> {{card.comments}}</p>
+                                <p><strong>creator:</strong> {{card.user.login}}</p>
+                                <p ng-show="card.assignee"><strong>assignee:</strong> {{card.assignee.login}}</p>
+                                <p ng-show="!card.assignee"><strong>assignee:</strong> N/A</p>
+                                <p ng-show="card.labels.length === 0"><strong>labels:</strong> N/A</p>
+                                <p ng-show="card.labels.length !== 0"><strong>labels:</strong> <span ng-repeat="label in card.labels">{{label.name}}</span></p>
+                                <p><strong>last updated:</strong> {{card.updated_at | date: 'short'}}</p>
+                                <p><strong>created:</strong> {{card.created_at | date: 'short'}}</p>
                             </div>
 	                    </div>
 	                </div> 
@@ -95,13 +108,17 @@
 									</button>
 								</form>	
 							</div>                                              
-                            <div ng-show="showClosedCardDetails[$index]" class="black-text left-align">
-                                <p>Details: {{card.details}}</p>
-                                <p>Comments: {{card.comments}}</p>
-                                <p>Labels: <span ng-repeat="label in card.labels">{{label.name}} </span></p>
-                                <p>Assignee: {{card.assignee.login}}</p>
-                                <p>Created: {{card.created}}</p>
-                                <p>Updated: {{card.updated}}</p>
+                            <div ng-show="showClosedCardDetails[$index]" class="left-align card-details">
+                                <p ng-show="card.body"><strong>details:</strong> {{card.body}}</p>
+                                <p ng-show="!card.body"><strong>details:</strong> N/A</p>
+                                <p><strong># of comments:</strong> {{card.comments}}</p>
+                                <p><strong>creator:</strong> {{card.user.login}}</p>
+                                <p ng-show="card.assignee"><strong>assignee:</strong> {{card.assignee.login}}</p>
+                                <p ng-show="!card.assignee"><strong>assignee:</strong> N/A</p>
+                                <p ng-show="card.labels.length === 0"><strong>labels:</strong> N/A</p>
+                                <p ng-show="card.labels.length !== 0"><strong>labels:</strong> <span ng-repeat="label in card.labels">{{label.name}}</span></p>
+                                <p><strong>last updated:</strong> {{card.updated_at | date: 'short'}}</p>
+                                <p><strong>created:</strong> {{card.created_at | date: 'short'}}</p>
                             </div>
 	                    </div>
 	                </div>	                 
@@ -117,6 +134,13 @@
 </div>
 
 <style type="text/css">
+	#other-cards-message {
+		margin-top: 40px;
+		margin-bottom: -15px;
+		font-size: 20px;
+		padding: 30px 100px;
+		color: #212121;
+	}
 	#open-cards-title {
 		margin-top: 40px;
 		background: #4db6ac;
@@ -156,7 +180,7 @@
 		border-color: #ffcdd2;
 	}
 	#assign-feature-heading {
-		font-size: 16px !important;
+		font-size: 14px !important;
 		color: #424242;
 		margin-top: 10px;
 		text-align: left;
@@ -164,6 +188,11 @@
 	#assign-feature-label {
 		font-size: 14px !important;
 		color: #424242;
+	}
+	.card-details {
+		font-size: 14px !important;
+		color: #424242;
+		margin-top: 10px;
 	}
 	.other-cards-submitBtn {
 		width: 100%;
