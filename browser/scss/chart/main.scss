@@ -1,33 +1,14 @@
-.chart {	
-	font-family: 'Arial';
-	font-size: 13px;
-	color: #000;
+.chartContainer{
+	width: 100%;
+	padding: 20px 40px;
+	margin: 0 auto;
 }
-.chart > .axis path,
-.chart > .axis line {
-	fill: none;
-	stroke: #eee;
-	stroke-width:2;
-	shape-rendering: crispEdges;
+
+.chartDiv{
+	padding: 10px;
+	margin: 10px;
 }
-.chart > .axis .tick line {	
-	fill: none;
-	stroke: #999;
-	stroke-width:2;
-}
-.chart > path.ideal {
-	 stroke: #eee;
-	 stroke-width:5;
-	 stroke-linecap:round;
-}
-.chart > path.actual {
-	 stroke: #91E500;
-	 stroke-width:2;
-	 stroke-linecap:round;
-	 fill: none;
-	 /*fill: rgba(0,0,0,0.1);*/
-}
-.chart > .grid .tick {
-    stroke: #eee;
-    opacity: 0.5;
+
+.blueTitle{
+	color: #03a9f4;
 }
