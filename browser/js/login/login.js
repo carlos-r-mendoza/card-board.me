@@ -20,13 +20,13 @@ app.config(function ($stateProvider) {
 // });​
 // }
 
-app.controller('LoginCtrl', function ($scope, AuthService, $state) {
+app.controller('LoginCtrl', function ($scope, $rootScope, AuthService, $state) {
 
 
 
     $scope.login = {};
     $scope.error = null;
-    $scope.$parent.$$childHead.repoName = ""; //hides navbar repo links 
+    $rootScope.repoName = ""; //hides navbar repo links 
 
 
     $scope.sendLogin = function (loginInfo) {

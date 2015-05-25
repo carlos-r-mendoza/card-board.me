@@ -10,13 +10,12 @@
   
   <div ng-controller="GitHubProfileController"> 
 	<ul>
-		<span ng-show="repoName">
-		<li style="margin-left: 20px; font-size: 18px; font-weight: bold;">{{ repoName }}</li>
+		<span ng-show="$root.repoName">
+		<li id="project-title">{{ $root.repoName }}</li>
 	    <span id="tabButtons" class="left">
-	        <li class="active tab col s3"><a ui-sref="board({ name: repoName, owner: repoOwner })">Board</a></li>
-	        <li class="tab col s3"><a ui-sref="other-cards({ name: repoName, owner: repoOwner })">Other Cards ({{ otherCardsCount }})</a></li>
-	        <li class="tab col s3"><a ui-sref="chart({name: repoName, owner: repoOwner})">Burndown Chart</a></li>
-	        <li class="tab col s3"><a href="#test4">Repo Activity</a></li>
+	    	<span ng-repeat="tab in tabs" >
+	        	<li class="tab col s3" ng-class="tab.ifSelected"><a id="tab-link" ui-sref="{{tab.link}}" ng-click="changeActiveTab($index)">{{tab.name}}<span ng-if="tab.name === 'Other Cards'"> ({{ $root.otherCardsCount }})</span></a></li>
+	        </span>
 	 	</span>
 	 	</span>
 
@@ -59,6 +58,21 @@
 	}
 	#tabButtons li a:hover {
 		color: #eeeeee;
+	}
+	.tab-active {
+		background-color: rgba(0, 0, 0, 0.1);
+		color: red;
+	}
+	#tab-link {
+		text-decoration: none;
+	}
+	#project-title {
+		margin-left: 20px; 
+		font-size: 18px; 
+		font-weight: bold;
+	}
+	#project-title:hover {
+		background-color: transparent;
 	}
 /*	#tabButtons li {
 		width: 150px;

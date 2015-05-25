@@ -38,15 +38,19 @@ app.factory('GitHubProfileFactory', function($http){
 
 });
 
-app.controller('GitHubProfileController', function($scope, GitHubProfileFactory, RepoFactory, $stateParams) {
+app.controller('GitHubProfileController', function($scope, $rootScope, GitHubProfileFactory, RepoFactory, $stateParams) {
 
 	$scope.profile = {};
 	$scope.profileEvents = [];
 	$scope.profileRepos = [];
 	$scope.collaborators = "";
-	$scope.repoName = "";
-	$scope.repoOwner = "";
-	$scope.otherCardsCount = 0;
+	$rootScope.repoName = "";
+
+	// $scope.tabs = [
+	// { name: "Board", link: "board({ name: repoName, owner: repoOwner })", ifSelected: "active" },
+	// { name: "Other Cards ({{ $root.otherCardsCount }})", link: "other-cards({ name: repoName, owner: repoOwner })", ifSelected: "" },
+	// { name: "Burndown Chart", link: "board({ name: repoName, owner: repoOwner })", ifSelected: "" },
+	// { name: "Repo Activity", link: "board({ name: repoName, owner: repoOwner })", ifSelected: "" }];
 
 	function profileFulfilled(profileData) {
 		$scope.info = profileData;
