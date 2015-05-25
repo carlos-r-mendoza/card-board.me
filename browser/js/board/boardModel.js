@@ -98,7 +98,7 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams,
       //console.log("feature", feature);
       feature.phases.forEach(function(phase) {
         phase.cards.forEach(function(card){
-          card.labels=card.labels.filter(function(label){
+          card.labels = card.labels.filter(function(label){
             var labelName = label.name.split(" - "); 
             return labelName[0]!=="Phase" && labelName[0] !== "Feature";
           })
