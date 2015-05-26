@@ -54,18 +54,21 @@
 <style type="text/css">
 	#tabButtons {
 		padding-left: 20px;
-		/*font-weight: bold;*/ 
 	}
-	#tabButtons li a:hover {
-		color: #eeeeee;
+
+	#tabButtons li a:hover , a:focus{
+		color: white;
+		background-color: #03a9f4;
+		font-weight: bold;
+		outline: none;
+		text-decoration: none;
+		outline-offset: 0;
 	}
-	.tab-active {
-		background-color: rgba(0, 0, 0, 0.1);
-		color: red;
-	}
+
 	#tab-link {
 		text-decoration: none;
 	}
+
 	#project-title {
 		margin-left: 20px; 
 		font-size: 18px; 
@@ -74,19 +77,19 @@
 	#project-title:hover {
 		background-color: transparent;
 	}
-/*	#tabButtons li {
-		width: 150px;
-	}*/
-	/*.activeLink {
-		background-color: #039be5;
-	}*/
+
 	#project-font {
 		font-size: 20px;
 		padding-left: 30px;
 	}
+
 	#repo-names {
 		font-size: 16px;
+		&:hover{
+			color: #03a9f4 !important;
+		}
 	}
+
 	#sidebar {
 		background-color: #03a9f4;
 	}
@@ -103,13 +106,44 @@
 		font-weight: 500;
 		margin-left: 50px;
 		font-family: 'Patrick Hand', cursive;
+		&:hover{
+			background-color: #03a9f4;
+			color: white;
+			font-weight: bolder;
+		}
+		&:focus{
+			outline: none;
+			background-color: #03a9f4;
+		}
 	}
 	.spaceLeft{
 		margin-left: 20px;
 	}
+	
+	nav ul li:hover, nav ul li.active{
+		background-color: #03a9f4;
+		transition: none;
+		font-weight: bold;
+		outline: none;
+		text-decoration: none;
+		color: white;
+	}
+	nav ul li a:hover{
+		color: white;
+		font-weight: bolder;
+	}
 
 	nav ul a {
 		font-size: 1.5rem;
+		&:hover{
+			background-color: #03a9f4;
+			color: white;
+			font-weight: bold;
+		}
+		&:focus{
+			outline: none;
+			background-color: #03a9f4;
+		}
 	}
 
 </style>  
