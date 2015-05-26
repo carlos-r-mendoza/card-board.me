@@ -13,20 +13,7 @@ app.controller('SprintController', function ($scope, $rootScope, $stateParams, B
   $scope.$parent.tabs[0].ifSelected = "tab-active"; //sets nav tab active on refresh
   
   var otherCardsCount = 0;
-  //$scope.sprintBoard = ""; 
-  // $scope.table = { 
-  //   width: 0 };
   $scope.isCollapsed = false;
-  //$scope.sprintBoard = "";
-
-  // $scope.collapse = function(isCollapsed, feature){
-  //   $scope.collapsed = !(isCollapsed);
-  //   return !$scope.collapsed;
-  //   console.log(!$scope.collapsed);
-    
-  //   $scope.collapseFeature = feature;
-  // };
-
 
   $rootScope.repoName = $stateParams.name; //gives navbar.html access project name
   $rootScope.repoOwner = $stateParams.owner; //gives navbar.html access to owner
