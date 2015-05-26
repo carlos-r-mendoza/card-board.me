@@ -23,7 +23,14 @@ app.controller('RepoActivityController', function ($scope, $rootScope, $statePar
 	RepoFactory.getRepoEvents($stateParams, pageCounter).then(repoEventsFulfilled, rejected);
 
 	function repoEventsFulfilled(repoEvents) {
-		console.log(repoEvents)
+		repoEvents.data.forEach(function(event){
+			var indx = event.type.indexOf("Even");
+
+			var name = event.type.slice(0, indx);
+			console.log("name", name, indx)
+			event.type = name;
+
+		});
 		$scope.repoEvents = repoEvents.data;
 	}
 
