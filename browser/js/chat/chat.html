@@ -1,8 +1,67 @@
-<form ng-submit="sendMessage(message)">
-	<textarea ng-model="message">
-		
-	</textarea>
-	<button type="submit">Send</button>
-</form>
-<br>
-{{receivedMessage}}
+<div id="chat-container" class="z-depth-1">
+<ul  id="ul-list" class="collapsible" data-collapsible="accordion">
+	<li>
+	<div class="collapsible-header" style="height: 30px"><i class="mdi-communication-chat"></i>Chat
+		<span class="switch">
+	    <label>
+	      Off
+	      <input type="checkbox">
+	      <span class="lever"></span>
+	      On
+	    </label>
+  	</span>
+  </div>
+	<div id="message-area" class="collapsible-body">
+		<br>
+		<div id="messages"ng-repeat="message in receivedMessages">
+		<img id="chat-avatar" ng-src="{{avatar}}" />	
+		{{message}}
+		</div>
+
+		<form ng-submit="sendMessage(message)">
+			<textarea ng-model="message">
+				
+			</textarea>
+			<button type="submit">Send</button>
+		</form>
+
+	</div>
+</ul>
+</div>
+
+<style type="text/css">
+	#chat-container {
+		width: 15%;
+		height: 50%;
+		background-color: white;
+		position: fixed;
+		bottom: 0px;
+		right: 0px;
+		border-bottom: 2px solid red;
+		border-radius: 5px 0 0 0;
+	}
+	/*#message-area {
+		height: 20%;
+
+	}*/
+	#ul-list {
+		height: 100%;
+		box-shadow: none;
+		border: none;
+	}
+	.switch {
+		font-size: 12px;
+	}
+	#chat-avatar {
+		height: 25px;
+		width: 25px;
+		border-radius: 50%;
+	}
+</style>
+<script type="text/javascript">
+	$(document).ready(function(){
+    $('.collapsible').collapsible({
+      accordion : false // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+    });
+  });
+</script>
