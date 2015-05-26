@@ -29,6 +29,9 @@ app.controller('RepoActivityController', function ($scope, $rootScope, $statePar
 
 			var name = event.type.slice(0, indx);
 			console.log("name", name, indx)
+			if(name === "PullRequest") { name = "Pull Request"; }
+			if(event.type === "Issues") { name = "Issue Edited"; }
+
 			event.type = name;
 
 		});

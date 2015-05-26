@@ -1,7 +1,7 @@
 <div id="chat-container" class="z-depth-1">
 <ul id="chat-box" class="collapsible" data-collapsible="accordion">
 	<li>
-	<div class="collapsible-header center" style="height: 30px"><i id="chat-icon" class="mdi-communication-chat"></i></div>
+	<div class="collapsible-header center" style="height: 30px"><i id="chat-icon" class="mdi-communication-chat"></i><i id="status-dot" class="mdi-image-brightness-1"></i></div>
 <!-- 		<span class="switch">
 	    <label>
 	      Off
@@ -30,6 +30,11 @@
 </div>
 
 <style type="text/css">
+	#status-dot {
+		float: right;
+		color: #558b2f;
+		font-size: 1.2rem;
+	}
 	#chat-container {
 		width: 250px;
 		background-color: white;

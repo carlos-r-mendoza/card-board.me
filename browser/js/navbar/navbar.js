@@ -18,7 +18,7 @@ app.controller('NavbarController', function($scope, $rootScope, AuthService, AUT
 
   $scope.tabs = [
     { name: "Board", link: "board({ name: repoName, owner: repoOwner })", ifSelected: "" },
-    { name: "Burndown Chart", link: "chart({ name: repoName, owner: repoOwner })", ifSelected: "" },
+    { name: "Analytics", link: "chart({ name: repoName, owner: repoOwner })", ifSelected: "" },
     { name: "Repo Activity", link: "repo-activity({ name: repoName, owner: repoOwner, pageNumber: 1 })", ifSelected: "" },
     { name: "Other Cards", link: "other-cards({ name: repoName, owner: repoOwner })", ifSelected: "" }];
 
