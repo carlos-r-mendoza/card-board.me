@@ -14,8 +14,9 @@
 		<li id="project-title">{{ $root.repoName }}</li>
 	    <span id="tabButtons" class="left">
 	    	<span ng-repeat="tab in tabs" >
-	        	<li class="tab col s3" ng-class="tab.ifSelected"><a id="tab-link" ui-sref="{{tab.link}}" ng-click="changeActiveTab($index)">{{tab.name}}<span ng-if="tab.name === 'Other Cards'"> ({{ $root.otherCardsCount }})</span></a></li>
-	        </span>
+	        	<li class="tab col s3" ng-class="tab.ifSelected"><a id="tab-link" ui-sref="{{tab.link}}" ng-click="changeActiveTab($index)">{{tab.name}}</a></li>
+<!-- 	        	<span ng-if="tab.name === 'Other Cards'"> ({{ $root.otherCardsCount }})</span>
+ -->	        </span>
 	 	</span>
 	 	</span>
 

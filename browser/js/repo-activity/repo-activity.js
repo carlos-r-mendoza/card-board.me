@@ -12,6 +12,7 @@ app.controller('RepoActivityController', function ($scope, $rootScope, $statePar
 	$rootScope.repoName = $stateParams.name; //gives navbar.html access to project name
 	$rootScope.repoOwner = $stateParams.owner; //gives navbar.html access to project owner
 	$scope.$parent.tabs[2].ifSelected = "tab-active";
+	$scope.spinner = true;
 
 	var pageCounter = 1;
 
@@ -32,6 +33,7 @@ app.controller('RepoActivityController', function ($scope, $rootScope, $statePar
 
 		});
 		$scope.repoEvents = repoEvents.data;
+		$scope.spinner = false;
 	}
 
 	function rejected(error) {
