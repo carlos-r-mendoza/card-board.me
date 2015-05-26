@@ -25,7 +25,7 @@ app.controller('ChatController', function($scope, $rootScope){
 	var socket = io.connect('http://localhost:1337');
 
 	socket.on('connect', function(data){
-		var username = $rootScope.user.github.username;
+	    var username = $rootScope.user.github.username;
 		avatar = $rootScope.user.github.avatar;
 		socket.emit('join', username, avatar);
 	});
@@ -35,6 +35,7 @@ app.controller('ChatController', function($scope, $rootScope){
 			console.log(data);
 			$scope.receivedMessages.push(data);
 			$scope.avatar = avatar;
+			$scope.message = "";
 		});
 	});
 	

@@ -15,13 +15,12 @@ module.exports = function (server) {
         });
     	
         socket.on("messages", function(data){
-            console.log("REQ", socket.request);
             console.log("MESSAGE", data);
             var username = socket.username;
 
-            socket.broadcast.emit("messages", username + ": "  + data);
+            socket.broadcast.emit("messages", data);
 
-            socket.emit("messages", username + ": "  + data);
+            socket.emit("messages", data);
     	});
     	
         // socket.emit('messages', { hello: "world" });

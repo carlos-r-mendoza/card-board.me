@@ -1,38 +1,37 @@
 <div id="chat-container" class="z-depth-1">
-<ul  id="ul-list" class="collapsible" data-collapsible="accordion">
+<ul id="chat-box" class="collapsible" data-collapsible="accordion">
 	<li>
-	<div class="collapsible-header" style="height: 30px"><i class="mdi-communication-chat"></i>Chat
-		<span class="switch">
+	<div class="collapsible-header center" style="height: 30px"><i id="chat-icon" class="mdi-communication-chat"></i></div>
+<!-- 		<span class="switch">
 	    <label>
 	      Off
 	      <input type="checkbox">
 	      <span class="lever"></span>
 	      On
 	    </label>
-  	</span>
-  </div>
-	<div id="message-area" class="collapsible-body">
+  	</span>  -->
+ 
+	<div class="collapsible-body">
 		<br>
-		<div id="messages"ng-repeat="message in receivedMessages">
-		<img id="chat-avatar" ng-src="{{avatar}}" />	
-		{{message}}
+		<div id="messages">
+			<div ng-repeat="message in receivedMessages">
+				<img id="chat-avatar" ng-src="{{avatar}}" />	
+				{{message}}
+			</div>
 		</div>
 
-		<form ng-submit="sendMessage(message)">
-			<textarea ng-model="message">
-				
-			</textarea>
-			<button type="submit">Send</button>
+		<form id="message-form" ng-submit="sendMessage(message)">
+			<input id="input-message-box" type="text" placeholder="Send a message..." ng-model="message" />	
 		</form>
 
 	</div>
+	</li>
 </ul>
 </div>
 
 <style type="text/css">
 	#chat-container {
-		width: 15%;
-		height: 50%;
+		width: 250px;
 		background-color: white;
 		position: fixed;
 		bottom: 0px;
@@ -40,23 +39,32 @@
 		border-bottom: 2px solid red;
 		border-radius: 5px 0 0 0;
 	}
-	/*#message-area {
-		height: 20%;
-
-	}*/
-	#ul-list {
-		height: 100%;
+	#messages {
+		height: 300px;
+		padding-left: 10px;
+		overflow: auto;
+	}
+	#chat-box {
 		box-shadow: none;
 		border: none;
 	}
-	.switch {
-		font-size: 12px;
+	#chat-icon {
+		
 	}
 	#chat-avatar {
 		height: 25px;
 		width: 25px;
 		border-radius: 50%;
+		margin-right: 10px;
+		margin-bottom: 5px;
 	}
+	#message-form {
+		bottom-margin: 0px;
+	}
+	#input-message-box {
+		padding-left: 10px;
+	}
+
 </style>
 <script type="text/javascript">
 	$(document).ready(function(){
