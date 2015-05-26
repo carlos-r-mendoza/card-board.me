@@ -8,7 +8,7 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('OtherCardsController', function ($scope, $rootScope, $stateParams, RepoFactory){
+app.controller('OtherCardsController', function ($scope, $rootScope, $stateParams, RepoFactory) {
 	
 	$scope.$parent.tabs[1].ifSelected = "tab-active"; //sets nav tab active on refresh
 	var otherCardsCount = 0;	
