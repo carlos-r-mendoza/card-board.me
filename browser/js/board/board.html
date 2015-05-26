@@ -56,8 +56,8 @@
                     
                     <span ng-show="isCollapsed" class="spaceLeft">{{feature.title}}</span>
                     <div class='arrow'>
-                    <a ng-show="!isCollapsed"><i class="mdi-hardware-keyboard-arrow-up left red-text" popover-placement='right' popover='Collapse Row' popover-trigger="mouseenter"></i></a>
-                    <a ng-show="isCollapsed"><i class="mdi-hardware-keyboard-arrow-down left red-text" popover-placement='right' popover='Expand Row' popover-trigger="mouseenter"></i></a>
+                    <a ng-show="!isCollapsed"><i class="mdi-hardware-keyboard-arrow-up left white-text" popover-placement='right' popover='Collapse Row' popover-trigger="mouseenter"></i></a>
+                    <a ng-show="isCollapsed"><i class="mdi-hardware-keyboard-arrow-down left white-text" popover-placement='right' popover='Expand Row' popover-trigger="mouseenter"></i></a>
                     </div>
                     
                 <td ng-style="{'background-color': '#{{feature.color}}'}"></td>
@@ -72,12 +72,10 @@
                                     <span ng-controller="EditFeatureController">
                                     <a ng-click="removeFeature(feature, sprintBoard)"><i class="mdi-action-highlight-remove right red-text" popover-placement='left' popover='Delete Feature' popover-trigger="mouseenter"></i></a></span>
                                         <h2 class="card-title black-text">{{feature.title}}</h2>
-                                        <p>Due Date: <span ng-show="feature.due_date">{{feature.due_date | date : 'fullDate'}}</span>             
-                                                     <span ng-hide="feature.due_date">N/A</span>
-                                        </p>
-                                        <p>Details: <span ng-style="{'background-color': '#feature.color'};" ng-show="feature.description">{{feature.description}}</span>
-                                                    <span ng-hide="feature.description">N/A</span>
-                                        </p>    
+                                        <div style='font-weight: normal'>
+                                            <p><strong>Due Date: </strong>{{(feature.due_date | date : 'fullDate') || 'N/A'}}</p>
+                                            <p><strong>Details: </strong> <span ng-style="{'background-color': '#feature.color'};">{{feature.description || 'N/A'}}</span></p>    
+                                        </div>
                             </div>
                         </div>
                     </div>
@@ -108,13 +106,13 @@
                                             <a ng-click="showDetails = !showDetails" class=".cursor-pointer">Details</a>
                                         </span>
                                            <img src="{{ card.assignee_avatar }}" alt="" class="circle right" id="assignee-avatar" ng-show="card.assignee_avatar">  
-                                            <div ng-show="showDetails" class="black-text left-align">
-                                                <p>Details: {{card.details}}</p>
-                                                <p>Comments: {{card.comments}}</p>
-                                                <p>Labels: <span ng-repeat="label in card.labels">{{label.name}} </span></p>
-                                                <p>Assignee: {{card.assignee.login}}</p>
-                                                <p>Created: {{card.created}}</p>
-                                                <p>Updated: {{card.updated}}</p>
+                                            <div ng-show="showDetails" class="black-text left-align spaceTop">
+                                                <p><strong>Details: </strong>{{card.details || 'N/A'}}</p>
+                                                <p><strong>Comments: </strong>{{card.comments || 'N/A'}}</p>
+                                                <p><strong>Labels: </strong><span ng-repeat="label in card.labels">{{label.name}} </span></p>
+                                                <p><strong>Assignee: </strong>{{card.assignee.login || 'Not assigned'}}</p>
+                                                <p><strong>Created: </strong>{{card.created | date}}</p>
+                                                <p><strong>Updated: </strong>{{card.updated | date}}</p>
                                             </div>
                                         </div>
                                     </div> 
