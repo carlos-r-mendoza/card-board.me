@@ -431,7 +431,7 @@ router.post('/:repoOwner/:repoName/issues/:issueNumber/comments', function(req, 
 
 
 /***GET COMMENTS ON AN ISSUE***/
-router.get('/:repoOwner/:repoName/repo-events', function (req, res) {
+router.get('/:repoOwner/:repoName/repo-events/:pageNumber', function (req, res) {
 
 	var userToken = req.user.github.token;
 
@@ -443,6 +443,7 @@ router.get('/:repoOwner/:repoName/repo-events', function (req, res) {
 	github.events.getFromRepo({
 		user: req.params.repoOwner,
 		repo: req.params.repoName,
+		page: req.params.pageNumber
 	}, function(err, issueComments) {
 		if(err) { errGitHub(err); }		
 		res.json(issueComments);
