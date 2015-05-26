@@ -1,6 +1,6 @@
 app.config(function ($stateProvider, ChartJsProvider) {
     $stateProvider.state('chart', {
-        url: '/chart/:owner/:name',
+        url: ':owner/:name/chart',
         templateUrl: 'js/chart/chart.html',
         controller: 'BurndownController'
     });
@@ -13,8 +13,9 @@ app.config(function ($stateProvider, ChartJsProvider) {
     });
 });
 
-app.controller('BurndownController', function($scope, $stateParams, RepoFactory){
+app.controller('BurndownController', function($scope, $rootScope, $stateParams, RepoFactory){
 
+	$rootScope.repoName = $stateParams.name; //gives navbar.html access project name
 	$scope.dueDates = [];
 	$scope.startDates = [];
 	$scope.today = new Date().toDateString();

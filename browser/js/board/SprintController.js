@@ -2,7 +2,7 @@
 
 app.config(function ($stateProvider) {
     $stateProvider.state('board', {
-        url: '/board/:owner/:name',
+        url: ':owner/:name/board',
         templateUrl: 'js/board/board.html',
         controller: 'SprintController'
     });
