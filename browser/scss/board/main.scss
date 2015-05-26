@@ -90,7 +90,6 @@ b{
     max-width: 100%;
     padding: 20px;
     margin: 0 auto;
-    margin-bottom: 20px;
 }
 
 .left{
@@ -228,6 +227,12 @@ th{
 progressbar{
     color:black;
  }
+
+ thead{
+    background-color: #424242;
+    color: white;
+ }
+
 
 // .as-sortable-placeholder {
 //     border: 1px dashed darkgrey;
