@@ -2,19 +2,19 @@
 
 app.config(function ($stateProvider) {
     $stateProvider.state('other-cards', {
-        url: '/board/:owner/:name/other-cards',
+        url: '/:owner/:name/other-cards',
         templateUrl: 'js/other-cards/other-cards.html',
         controller: 'OtherCardsController'
     });
 });
 
-app.controller('OtherCardsController', function ($scope, $rootScope, $stateParams, RepoFactory){
+app.controller('OtherCardsController', function ($scope, $rootScope, $stateParams, RepoFactory) {
 	
-	$scope.$parent.tabs[1].ifSelected = "tab-active"; //sets nav tab active on refresh
+	$scope.$parent.tabs[3].ifSelected = "tab-active"; //sets nav tab active on refresh
 	var otherCardsCount = 0;	
 
-	$rootScope.repoName = $stateParams.name; //gives navbar.html access project name
-  	$rootScope.repoOwner = $stateParams.owner;
+	$rootScope.repoName = $stateParams.name; //gives navbar.html access to project name
+	$rootScope.repoOwner = $stateParams.owner; //gives navbar.html access to project owner
   	$rootScope.otherCardsCount = 0;
 	$scope.spinner = true;
 	$scope.otherOpenCards = [];

@@ -44,7 +44,6 @@ app.controller('GitHubProfileController', function($scope, $rootScope, GitHubPro
 	$scope.profileEvents = [];
 	$scope.profileRepos = [];
 	$scope.collaborators = "";
-	$rootScope.repoName = "";
 
 	// $scope.tabs = [
 	// { name: "Board", link: "board({ name: repoName, owner: repoOwner })", ifSelected: "active" },
