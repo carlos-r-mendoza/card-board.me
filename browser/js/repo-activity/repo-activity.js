@@ -2,14 +2,15 @@
 
 app.config(function ($stateProvider) {
     $stateProvider.state('repo-activity', {
-        url: ':owner/:name/repo-activity/:pageNumber',
+        url: '/:owner/:name/repo-activity/:pageNumber',
         templateUrl: 'js/repo-activity/repo-activity.html',
         controller: 'RepoActivityController'
     });
 });
 
 app.controller('RepoActivityController', function ($scope, $rootScope, $stateParams, RepoFactory) {
-	$rootScope.repoName = $stateParams.name; //gives navbar.html access project name
+	$rootScope.repoName = $stateParams.name; //gives navbar.html access to project name
+	$rootScope.repoOwner = $stateParams.owner; //gives navbar.html access to project owner
 	$scope.$parent.tabs[2].ifSelected = "tab-active";
 
 	var pageCounter = 1;
