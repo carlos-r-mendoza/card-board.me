@@ -21,19 +21,14 @@ app.controller('RepoActivityController', function ($scope, $rootScope, $statePar
 		RepoFactory.getRepoEvents($stateParams, pageCounter).then(repoEventsFulfilled, rejected);
 	};
 
-	RepoFactory.getRepoEvents($stateParams, pageCounter).then(repoEventsFulfilled, rejected);
-
 	function repoEventsFulfilled(repoEvents) {
 		repoEvents.data.forEach(function(event){
 			var indx = event.type.indexOf("Even");
 
 			var name = event.type.slice(0, indx);
-			console.log("name", name, indx)
 			if(name === "PullRequest") { name = "Pull Request"; }
 			if(event.type === "Issues") { name = "Issue Edited"; }
-
 			event.type = name;
-
 		});
 		$scope.repoEvents = repoEvents.data;
 		$scope.spinner = false;
@@ -43,7 +38,5 @@ app.controller('RepoActivityController', function ($scope, $rootScope, $statePar
 		console.log(error);
 	}
 
-	//push has commits, each commit has a message
-	//pull has action (closed), pull_request.title
-
+	RepoFactory.getRepoEvents($stateParams, pageCounter).then(repoEventsFulfilled, rejected);
 });

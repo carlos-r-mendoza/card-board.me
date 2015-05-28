@@ -17,9 +17,6 @@ router.get('/:repoOwner/:repoName', function (req, res) {
 	});
 
 	github.repos.get({
-		// headers: {
-		// 	'If-Modified-Since' : date
-		// },
 		user: req.params.repoOwner,
 		repo: req.params.repoName,
 	}, function(err, repoInfo){
@@ -144,7 +141,7 @@ router.get('/:repoOwner/:repoName/repo-issues', function (req, res) {
 	    token: req.user.github.token
 	});
 
-	getRepoIssues();
+	
 
 	function getRepoIssues() {
 		github.issues.repoIssues({
@@ -166,6 +163,7 @@ router.get('/:repoOwner/:repoName/repo-issues', function (req, res) {
 			} else { res.json(allRepoIssues); }
 		});
 	}
+	getRepoIssues();
 });
 
 /***GETS LABELS FOR A PARTICULAR REPO***/
@@ -220,11 +218,11 @@ router.post('/:repoOwner/:repoName/create-repo-issue', function (req, res) {
 
 	var createdIssue = {};
 
-	if(req.body.title) { createdIssue.title = req.body.title } else { createdIssue.title = undefined; }	
+	if(req.body.title) { createdIssue.title = req.body.title; } else { createdIssue.title = undefined; }	
 	if(req.body.body) { createdIssue.body = req.body.body; } else { createdIssue.body = undefined; }
-	if(req.body.assignee) { createdIssue.assignee = req.body.assignee } else { createdIssue.assignee = undefined; }
-	if(req.body.labels) { createdIssue.labels = req.body.labels } else { createdIssue.labels = undefined; }
-	if(typeof req.body.milestone === "number") { createdIssue.milestone = req.body.milestone } else { createdIssue.milestone = undefined; }
+	if(req.body.assignee) { createdIssue.assignee = req.body.assignee; } else { createdIssue.assignee = undefined; }
+	if(req.body.labels) { createdIssue.labels = req.body.labels; } else { createdIssue.labels = undefined; }
+	if(typeof req.body.milestone === "number") { createdIssue.milestone = req.body.milestone; } else { createdIssue.milestone = undefined; }
 
 	console.log("CREATED ISSUE: ", createdIssue);
 
@@ -346,7 +344,6 @@ router.post('/:repoOwner/:repoName/delete-repo-label', function (req, res) {
 /***CREATES/POSTS A MILESTONE***/
 router.post('/:repoOwner/:repoName/create-repo-milestone/:milestoneTitle', function (req, res) {
 
-	console.log("MILESTONE", req.body)
 	var userToken = req.user.github.token;
 	var milestoneTitle = req.body.title;
 	var milestoneState = req.body.state;

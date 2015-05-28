@@ -72,4 +72,4 @@ app.get('/auth/github/callback',
     res.redirect('/');
   });
 
-}
+};
