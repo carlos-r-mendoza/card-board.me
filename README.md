@@ -9,13 +9,6 @@ Features:
 
 Deployed at http://www.card-board.me/
 
-#Preview
-
-![img](https://github.com/carlos-r-mendoza/project_management_tool/tree/master/screenshots/cardboard_cover.png)
-![img](https://github.com/carlos-r-mendoza/project_management_tool/tree/master/screenshots/cardboard_board.png)
-![img](https://github.com/carlos-r-mendoza/project_management_tool/tree/master/screenshots/cardboard_cards.png)
-![img](https://github.com/carlos-r-mendoza/project_management_tool/tree/master/screenshots/cardboard_analytics.png)
-
 #The Team
 
 - [Ryan Bronz](https://www.linkedin.com/in/ryanbronz)
