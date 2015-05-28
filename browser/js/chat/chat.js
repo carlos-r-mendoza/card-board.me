@@ -1,16 +1,7 @@
-// app.config(function ($stateProvider) {
-//     $stateProvider.state('chat', {
-//         url: '/:owner/:name/chat',
-//         templateUrl: 'js/chat/chat.html',
-//         controller: 'ChatController'
-//     });
-// });
-
 app.directive('chat', function() {
 
     return {
         restrict: 'E',
-        // scope: {},
         templateUrl: 'js/chat/chat.html',
         controller: 'ChatController'
     };
@@ -19,7 +10,7 @@ app.directive('chat', function() {
 
 app.controller('ChatController', function($scope, $rootScope){
 	$scope.receivedMessages=[];
-	console.log($rootScope)
+	console.log($rootScope);
 	var avatar = "";
 
 	var socket = io.connect('http://localhost:1337');
@@ -42,9 +33,5 @@ app.controller('ChatController', function($scope, $rootScope){
 	$scope.sendMessage = function(message) {
 		socket.emit('messages', message);
 	};
-	// socket.on('messages', function (data){
-	// 	console.log(data.hello);
-	// });
-
 });
 

@@ -137,12 +137,14 @@ app.controller('SprintController', function ($scope, $rootScope, $stateParams, B
           "column_color": color});
     }
 
+    function pushToFeature(feature, i){
+      feature.phases.push({'name': sprint.columns[i].name,
+        'cards': []});
+    }
+
     function addPhasesToFeatures() {
       for (var i = sprint.numberOfColumns; i <= sprint.columns.length-1; i++) { //2, 4
-        sprint.features.forEach(function(feature){
-          feature.phases.push({"name": sprint.columns[i].name, //Status Open
-              "cards": []});
-          });
+        sprint.features.forEach(pushToFeature);
          }
       }
 
