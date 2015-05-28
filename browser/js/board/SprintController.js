@@ -35,20 +35,19 @@ app.controller('SprintController', function ($scope, $rootScope, $stateParams, B
       var issueNum=event.source.itemScope.card.number;
       var allLabels=event.source.itemScope.card.labels;
       var filteredArray=allLabels.filter(phaseFilter);
+      var currentLabelNames;
       if (destinationPhase==="Closed"){
         RepoFactory.editRepoIssue($stateParams,issueNum,{state:"closed", labels:filteredArray});
       } else if (destinationPhase==="Open"&&sourcePhase==="Closed"){
         RepoFactory.editRepoIssue($stateParams,issueNum,{state:"open"});
       } else if (sourcePhase==="Closed"){
-        var currentLabelNames=_.pluck(allLabels, 'name');
+        currentLabelNames=_.pluck(allLabels, 'name');
         currentLabelNames.push("Phase - "+destinationPhase);
         RepoFactory.editRepoIssue($stateParams,issueNum,{state:"open", labels:currentLabelNames});
       } else if (destinationPhase==="Open"){
         RepoFactory.editRepoIssue($stateParams,issueNum,{labels:filteredArray});
       } else {
-        var currentLabelNames=_.pluck(filteredArray, 'name');
-        console.log("eventdest",event.dest);
-        console.log("destphase",destinationPhase);
+        currentLabelNames=_.pluck(filteredArray, 'name');
         currentLabelNames.push("Phase - "+destinationPhase);
         RepoFactory.editRepoIssue($stateParams,issueNum,{labels:currentLabelNames});
       }
@@ -80,9 +79,6 @@ app.controller('SprintController', function ($scope, $rootScope, $stateParams, B
     };
 
 
-    
-    RepoFactory.getRepoMilestones($stateParams).then(getFeatures, rejected);
-    
     function getFeatures(repoMilestones) {
       repoMilestones.data.forEach(function(milestone) {
         var featureName = milestone.title.split(" - ");
@@ -90,6 +86,8 @@ app.controller('SprintController', function ($scope, $rootScope, $stateParams, B
       });
       RepoFactory.getRepoLabels($stateParams).then(getPhases, rejected);
     }
+
+    RepoFactory.getRepoMilestones($stateParams).then(getFeatures, rejected);
 
     function getPhases(repoLabels) {
       repoLabels.data.forEach(function(label) {
@@ -204,28 +202,18 @@ app.controller('SprintController', function ($scope, $rootScope, $stateParams, B
               }
             }
           }
-      // $scope.table = {
-      //   width: 24 + ( sprint.columns.length * 18 ),
-      //   column_width: 15
-      // }
+      
       $scope.sprintBoard = BoardService.sprintBoard(sprint); 
-      // $rootScope.xopen = ProgressFactory.open($scope.sprintBoard);
-      // $rootScope.xclosed = ProgressFactory.closed($scope.sprintBoard);
-      // $rootScope.xtotal = ProgressFactory.total($scope.sprintBoard);
-      // $rootScope.percent = ($rootScope.xclosed / $rootScope.total * 100);
-      // console.log('PERCENT', $scope.percent);
+      
       ProgressFactory.updateBar($scope.sprintBoard);
 
       $rootScope.otherCardsCount = otherCardsCount; //gives navbar.html cards count number
-
-      //updateProgress();
-      //$scope.$digest();
     }
 
     function createCard(phase, issue) {
 
       if(issue.milestone) { issue.due_date = issue.milestone.due_on; } else { issue.due_date = undefined; }
-      if(issue.assignee) { issue.assignee_avatar = issue.assignee.avatar_url } else { issue.assignee_avatar = undefined; }
+      if(issue.assignee) { issue.assignee_avatar = issue.assignee.avatar_url; } else { issue.assignee_avatar = undefined; }
 
       phase.cards.push({
         "title": issue.title, //issue name
@@ -247,18 +235,5 @@ app.controller('SprintController', function ($scope, $rootScope, $stateParams, B
       });
 
     }
-
-    // function updateProgress(){
-    //   $scope.open = ProgressFactory.open($scope.sprintBoard);
-    //   $scope.closed = ProgressFactory.closed($scope.sprintBoard);
-    //   $scope.total = ProgressFactory.total($scope.sprintBoard);
-    //   $scope.percent = ($scope.closed / $scope.total * 100);
-    //   //$scope.$digest();
-    // }
-
-    //SprintController.updateProgress();
-    // RepoFactory.getRepoIssues($stateParams).then(function(issue){
-    //   $scope.total = issue.data.length;
-    // }, rejected);
 
 });

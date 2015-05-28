@@ -138,8 +138,7 @@ app.controller('RepoController', function($scope, $stateParams, RepoFactory){
 				if(tempLabelObj[label]) { $scope.issue.labels.push(label); }
 			}
 		});
-		issue.labels.push("Feature - Testing")
-		console.log("ADFASDF", issue)
+		issue.labels.push("Feature - Testing");
 		RepoFactory.createRepoIssue($stateParams, issue).then(createdRepoIssueFulfilled, rejected);
 	};
 
@@ -148,12 +147,8 @@ app.controller('RepoController', function($scope, $stateParams, RepoFactory){
 			for (var obj in issue.tempLabels) {
 				console.log("obj", issue.tempLabels[obj]);
 				for (var label in issue.tempLabels[obj]) {
-											console.log("LA", label);
-
 					for (var i = 0; i <= issue.labels.length-1; i++) {
-						//console.log("inside", issue.labels[i].name)
 						if(label === issue.labels[i].name) {
-							console.log("FADSF",issue.labels[i] );
 							 issue.tempLabels[obj][label] = false;
 						}
 					}
@@ -174,7 +169,7 @@ app.controller('RepoController', function($scope, $stateParams, RepoFactory){
 
 	$scope.deleteLabel = function(label) {
 		RepoFactory.deleteRepoLabel($stateParams, label);
-	}
+	};
 
 	$scope.createMilestone = function(milestone) {
 		RepoFactory.createRepoMilestone($stateParams, milestone).then(createdRepoMilestoneFulfilled, rejected);

@@ -41,7 +41,6 @@ app.controller('EditFeatureController', function($scope, $modal, BoardService, B
 
     $scope.removeFeature = function(feature, board) {
       BoardManipulator.removeFeature(feature, board);
-      //ProgressFactory.updateBar(board);
-    }
+    };
 
 });

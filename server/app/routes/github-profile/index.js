@@ -7,14 +7,13 @@ module.exports = router;
 
 var errGitHub = function(err) {
 	console.log("Error with GitHub API: ", err);
-}
+};
 
 router.get('/username', function (req, res, next){
 	console.log(req.user);
 	var userGitHub = req.user.github.username;
 	var userToken = req.user.github.token;
 
-	console.log("ATEARER")
 	github.authenticate({
     type: "oauth",
     token: userToken

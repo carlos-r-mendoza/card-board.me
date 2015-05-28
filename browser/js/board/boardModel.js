@@ -101,7 +101,7 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams,
           card.labels = card.labels.filter(function(label){
             var labelName = label.name.split(" - "); 
             return labelName[0]!=="Phase" && labelName[0] !== "Feature";
-          })
+          });
           if(card.assignee) { card.assignee_login = card.assignee.login; }
           card.state = "closed";
           RepoFactory.editRepoIssue($stateParams, card.number, card);
@@ -116,10 +116,7 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams,
               i-=1;
             }
           }
-        
-        //console.log("after", board)
         });
-      //ProgressFactory.updateBar(board);
       });
     },
     editCard: function(board, featureName, phaseName, currentTask, newTask){
@@ -148,14 +145,10 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams,
 
     addFeature: function (board, feature) {
       board.features.push(new BoardModel.Feature(feature));
-      // var label = {name: 'Feature - '+featureName, color: 'FFFFFF'};
-      //Removed createRepoLabelss statement in line below. It attempts 
-        //to create new labels each time page is refreshed
-      // RepoFactory.createRepoLabel($stateParams, label);
     },
     addNewFeature: function(board, feature) {
       var featureTitle = feature.title;
-      var phase
+      var phase;
 
       var splitTitle = feature.title.split(" - ");
       if(splitTitle[0] !== "Feature") { feature.title = "Feature - " + feature.title; }
@@ -195,20 +188,10 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams,
       //console.log("HELLO", phaseInfo)
       angular.forEach(board.features, function(feature){
         feature.phases.push(new BoardModel.Phase(phase));
-      })
+      });
       RepoFactory.createRepoLabel($stateParams, phaseInfo);
     },
-    // addCardToFeature: function (board, featureName, phaseName, card) {
-    //   angular.forEach(board.features, function (feature) {
-    //     if (feature.name === featureName) {
-    //       angular.forEach(feature.phases, function (phase) {
-    //         if (phase.name === phaseName) {
-    //           phase.cards.push(new BoardModel.Card(card));
-    //         }
-    //       });
-    //     }
-    //   });
-    // },
+    
     addCardToFeature: function (board, featureName, phaseName, card) {
       angular.forEach(board.features, function (feature) {
         if (feature.name === featureName) {
@@ -225,23 +208,12 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams,
     removePhase: function(board,phase){
       board.features.forEach(function(feature){
         feature.phases.forEach(function(myphase){
-          console.log("two phases1",phase.name, myphase.name)
+          console.log("two phases1",phase.name, myphase.name);
           if (myphase.name===phase.name){
             myphase.cards.forEach(function(card){
-              //RepoFactory.editRepoIssue($stateParams,card.number,{state:"closed"});
-            })
+            });
           }
-        })
-        console.log("fpbefore", feature.phases)
-        // feature.phases=feature.phases.filter(function(myphase){
-        //   return myphase.name!==phase.name;
-        // })
-        console.log("fpafter", feature.phases);
-      })
-      // board.features.forEach(function(feature){
-      //   feature.phases.forEach(function(myphase){
-
-      //   })
+        });
       
       board.columns=board.columns.filter(function(column){
         return column.name!==phase.name;
@@ -250,7 +222,6 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams,
       board.features.forEach(function(feature){
         var currentfeature=feature.name;
         feature.phases.forEach(function(thisphase){
-          //console.log("two phases",phase.name, thisphase.name);
           if (thisphase.name===phase.name){
             transferphase=_.clone(thisphase.cards,true);
             board.features.forEach(function(feature){
@@ -259,29 +230,28 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams,
                   if (allphase.name==="Closed"){
                     allphase.cards=allphase.cards.concat(transferphase);
                 }
-              })
+              });
               }
-
-            })
+            });
             thisphase.cards=[];
           }
-        })
+        });
         feature.phases=feature.phases.filter(function(myphase){
           return myphase.name!==phase.name;
-        })
-      })
-      //console.log("tphase", transferphase);
+        });
+      });
       board.features.forEach(function(feature){
         feature.phases.forEach(function(newphase){
           if (newphase.name==="Closed"){
             console.log("nphase",newphase);
             newphase=newphase.cards.concat(transferphase);
           }
-        })
-      })
+        });
+      });
       phase.name="Phase - "+phase.name;
       RepoFactory.deleteRepoLabel($stateParams,phase);
       ProgressFactory.updateBar(board);
-    }
-  };
+    });
+  }
+};
 });

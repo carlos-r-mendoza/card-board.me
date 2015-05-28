@@ -6,16 +6,6 @@ app.controller('NewPhaseController', function ($scope, $modal, BoardService, Boa
   };
   $scope.columnshow=false;
 
-  // $scope.columnshow=function(column){
-  //   var colarray=["Open","Closed","In Progress"];
-  //   console.log(column.name);
-  //   if (colarray.indexOf(column.name)<0){
-  //     return ;
-  //   }
-  // }
-  //$scope.columnshow(column);
-
-
   $scope.addNewPhase = function(board){
       $scope.modalFeature = $modal.open({
         templateUrl: '/js/phase/newPhase.html',
@@ -32,10 +22,7 @@ app.controller('NewPhaseController', function ($scope, $modal, BoardService, Boa
             $modalInstance.close();
           };
           $scope.ok = function(PhaseTitle){
-              //BoardManipulator.addFeature($scope.board, featureTitle);
               BoardManipulator.addPhaseToAll($scope.board, PhaseTitle);
-              // BoardManipulator.addPhaseToFeature($scope.board, featureTitle, {name: 'In progress'});
-              // BoardManipulator.addPhaseToFeature($scope.board, featureTitle, {name: 'Closed'});
               $modalInstance.close();
             };
         }
@@ -46,8 +33,6 @@ app.controller('NewPhaseController', function ($scope, $modal, BoardService, Boa
       });
     };
     $scope.deletePhase=function(phase, sprintBoard){
-      //console.log(phaseName);
-      //console.log(sprintBoard);
-      BoardManipulator.removePhase(sprintBoard,phase)
-    }
+      BoardManipulator.removePhase(sprintBoard,phase);
+    };
 });

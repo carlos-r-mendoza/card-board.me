@@ -76,8 +76,6 @@ app.controller('OtherCardsController', function ($scope, $rootScope, $stateParam
 		});}
 	};
 
-	RepoFactory.getRepoMilestones($stateParams).then(setCardsOptions, rejected);
-
 	function setCardsOptions(milestones) {
 		milestones.data.forEach(function(milestone) {
 			var featureMilestone = milestone.title.split(" - ");
@@ -87,6 +85,12 @@ app.controller('OtherCardsController', function ($scope, $rootScope, $stateParam
 		});
 		RepoFactory.getRepoIssues($stateParams).then(getOtherCards, rejected);
 	}
+
+	function rejected(error){
+	 console.log(error);
+	}
+
+	RepoFactory.getRepoMilestones($stateParams).then(setCardsOptions, rejected);
 
 	function getOtherCards(issues) {	
 		issues.data.forEach(function(issue) {
@@ -107,8 +111,6 @@ app.controller('OtherCardsController', function ($scope, $rootScope, $stateParam
   		$rootScope.otherCardsCount = otherCardsCount;
 	}
 	
-	function rejected(error){
-	 console.log(error);
-	}
+	
 
 });
