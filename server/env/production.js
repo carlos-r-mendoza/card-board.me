@@ -25,7 +25,7 @@ module.exports = {
         "callbackURL": process.env.CALLBACK_URL
     },
     "GITHUB": {
-        "clientID": process.env.GITHUB_CLIENT_D,
+        "clientID": process.env.GITHUB_CLIENT_ID,
         "clientSecret": process.env.GITHUB_CLIENT_SECRET,
         "callbackURL": process.env.GITHUB_CALLBACK_URL
     }
