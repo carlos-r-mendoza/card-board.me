@@ -24,14 +24,14 @@
 	                    </div>
                     </div>
 	                <div class="card-action">
-	                    <div>
-	                        <span class="cursor-pointer col md6 spaceBottom left">
+	                    <div class='row'>
+	                        <div class="cursor-pointer col md6 spaceBottom left">
 	                            <a ng-click="toggleOpenCardFeatures($index)" class=".cursor-pointer">Assign </br> Feature</a>
-	                        </span>
+	                        </div>
 
-	                        <span class="cursor-pointer col md6 spaceBottom">
+	                        <div class="cursor-pointer col md6 spaceBottom">
 	                            <a ng-click="toggleOpenCardDetails($index)" class=".cursor-pointer">Details</a>
-	                        </span>                  
+	                        </div>                  
 	
 
                            	<div ng-show="showOpenCardFeatures[$index]"> 
@@ -61,9 +61,9 @@
 	                    </div>
 	                </div> 
                 </div>
-                <div class="card-panel teal success-card" ng-show="openCardFeatureAssigned[cardsIndex]">
+                <div class="card-panel success-card" ng-show="openCardFeatureAssigned[cardsIndex]">
 		          <span class="white-text">
-		          	Success! The card titled <strong>"{{openCardTitle[cardsIndex]}}"</strong> can now be found in the <strong>{{openCardFeature[cardsIndex]}}</strong> feature section of your board.
+		          	Success! Card <strong>"{{openCardTitle[cardsIndex]}}"</strong> added to <strong>{{openCardFeature[cardsIndex]}}</strong> feature on your board.
 		          </span>
         		</div>
 			</div>
@@ -85,14 +85,14 @@
 	                    </div>
                     </div>
 	                <div class="card-action">
-	                    <div>
-	                        <span class="cursor-pointer spaceBottom col md6 left">
+	                    <div class='row'>
+	                        <div class="cursor-pointer spaceBottom col md6 left">
 	                            <a ng-click="toggleClosedCardFeatures($index)" class=".cursor-pointer">Assign </br> Feature</a>
-	                        </span>
+	                        </div>
 
-	                        <span class="cursor-pointer spaceBottom col md6">
+	                        <div class="cursor-pointer spaceBottom col md6">
 	                            <a ng-click="toggleClosedCardDetails($index)" class=".cursor-pointer">Details</a>
-	                        </span>   
+	                        </div>   
 
                            	<div ng-show="showClosedCardFeatures[$index]"> 
 	                           <p id="assign-feature-heading">Below are the existing features on your board. To re-open this issue and move this card to your board, select a feature.</p>
@@ -121,9 +121,9 @@
 	                    </div>
 	                </div>	                 
                 </div>
-                <div class="card-panel teal success-card" ng-show="closedCardFeatureAssigned[cardsIndex2]">
+                <div class="card-panel success-card" ng-show="closedCardFeatureAssigned[cardsIndex2]">
 		          <span class="white-text">
-		          	Success! The card titled <strong>"{{closedCardTitle[cardsIndex2]}}"</strong> can now be found in the <strong>{{closedCardFeature[cardsIndex2]}}</strong> feature section of your board.
+		          	Success! Card <strong>"{{closedCardTitle[cardsIndex2]}}"</strong> added to <strong>{{closedCardFeature[cardsIndex2]}}</strong> feature on your board.
 		          </span>
         		</div>                
 			</div>
@@ -206,6 +206,8 @@
 	.success-card {
 		min-width: 220px;
 		margin-left: 5px;
+		background-color: #5cb85c;
+		padding-top: 45px;
 	}
 
 </style>
