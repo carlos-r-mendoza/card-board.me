@@ -1,5 +1,3 @@
-//var _=require('lodash');
-
 app.config(function ($stateProvider) {
     $stateProvider.state('board', {
         url: '/:owner/:name/board',

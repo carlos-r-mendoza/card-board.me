@@ -4,7 +4,6 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) 
 
     return {
         restrict: 'E',
-        // scope: {},
         templateUrl: 'js/navbar/navbar.html',
         controller: 'NavbarController'
     };
@@ -13,7 +12,6 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) 
 
 app.controller('NavbarController', function($scope, $rootScope, AuthService, AUTH_EVENTS, $state, $stateParams){
 
-  // More information: http://materializecss.com/side-nav.html
   $scope.user = null;
 
   $scope.tabs = [
