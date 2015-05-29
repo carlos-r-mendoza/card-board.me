@@ -32,7 +32,7 @@
 	                        <span class="cursor-pointer">
 	                            <a ng-click="toggleOpenCardDetails($index)" class=".cursor-pointer">Details</a>
 	                        </span>                  
-	<!-- 			            <img src="{{ card.assignee_avatar }}" alt="" class="circle right" id="assignee-avatar" ng-show="card.assignee_avatar" /> -->
+	
 
                            	<div ng-show="showOpenCardFeatures[$index]"> 
 	                           	<p id="assign-feature-heading">Below are the existing features on your board. To move this card to your board, select a feature.</p>
@@ -93,7 +93,6 @@
 	                        <span class="cursor-pointer">
 	                            <a ng-click="toggleClosedCardDetails($index)" class=".cursor-pointer">Details</a>
 	                        </span>   
-<!--                            <img src="{{ card.assignee_avatar }}" alt="" class="circle right" id="assignee-avatar" ng-show="card.assignee_avatar" />   -->
 
                            	<div ng-show="showClosedCardFeatures[$index]"> 
 	                           <p id="assign-feature-heading">Below are the existing features on your board. To re-open this issue and move this card to your board, select a feature.</p>
@@ -132,6 +131,17 @@
 	</div>
 </div>
 
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-63549121-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
 <style type="text/css">
 	#other-cards-message {
 		margin-top: 40px;
@@ -144,8 +154,6 @@
 		margin-top: 40px;
 		background: #5cb85c;
 		color: white;
-/*		padding-top: 20px;
-		padding-bottom: 20px;*/
 	}
 	#closed-cards-title {
 		margin-top: 40px;
@@ -163,15 +171,7 @@
 	#closed-card-title {
 		text-align: center;
 	}
-/*	.other-cards-note {
-		min-width: 250px;
-		min-height: 188px;
-		max-height: 188px;
 
-	}*/
-/*	.card-content {
-		margin: 0px;
-	}*/
 	#hr-open-cards {
 		border-color: #b2dfdb;
 	}
@@ -199,8 +199,7 @@
 	}
 	.other-cards-submitBtn {
 		width: 100%;
-/*		margin-bottom: 20px;
-*/		text-align: center;
+		text-align: center;
 		color: white;
 		background-color: #26a69a;
 	}

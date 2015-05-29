@@ -1,3 +1,0 @@
-app.factory('BurndownFactory', function(){
-	
-});

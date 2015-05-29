@@ -1,12 +1,9 @@
-<!--More information: http://materializecss.com/side-nav.html-->
  <div class="navbar-fixed">
  <nav id="sidebar">
 
  <div class="nav-wrapper">
   
   <a ng-show="user" href="#" data-activates="slide-out" class="button-collapse show-on-large spaceLeft"><i class="mdi-navigation-menu"></i></a>
-
-
   
   <div ng-controller="GitHubProfileController"> 
 	<ul>
@@ -15,8 +12,7 @@
 	    <span id="tabButtons" class="left">
 	    	<span ng-repeat="tab in tabs" >
 	        	<li class="tab col s3" ng-class="tab.ifSelected"><a id="tab-link" ui-sref="{{tab.link}}" ng-click="changeActiveTab($index)">{{tab.name}}</a></li>
-<!-- 	        	<span ng-if="tab.name === 'Other Cards'"> ({{ $root.otherCardsCount }})</span>
- -->	        </span>
+ 	        </span>
 	 	</span>
 	 	</span>
 
@@ -40,13 +36,6 @@
 
   </div>
   </div>
-
-
-<!--   <div>
-  	<ul>
-  		<li id="triCat">{{ repoNameOnNavbar }}</li>
-  	</ul>
-  </div> -->
 
 </nav>
 </div>

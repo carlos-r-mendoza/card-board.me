@@ -12,13 +12,7 @@ app.factory('BoardService', function ($modal, BoardManipulator, BoardModel, Repo
         };
         RepoFactory.editRepoIssue($stateParams, card.number, editedIssue);
         BoardManipulator.removeCardFromColumn(board, feature, phase, card);
-        //SprintController.updateProgress();
-        //$scope.$digest();
-      // $rootScope.open = ProgressFactory.open(board);
-      // $rootScope.closed = ProgressFactory.closed(board);
-      // $rootScope.total = ProgressFactory.total(board);
-      // $rootScope.percent = ($rootScope.closed / $rootScope.total * 100);
-        //$scope.$digest();
+        
         ProgressFactory.updateBar(board);
     },
     addNewCard: function (board, column, featureName, featureInfo) {
@@ -47,7 +41,7 @@ app.factory('BoardService', function ($modal, BoardManipulator, BoardModel, Repo
     },
 
     sprintBoard: function (board) { //this is what populates data on view
-      //console.log("board", board)
+      
       var sprintBoard = new BoardModel.Board(board.name, board.numberOfColumns);
       angular.forEach(board.columns, function (column) {
         BoardManipulator.addColumn(sprintBoard, column);
