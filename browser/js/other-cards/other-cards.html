@@ -18,18 +18,18 @@
 			<hr id="hr-open-cards" ng-show="$index % 4 === 0 && $index !== 0"/>
 			<div class="col s3">
                 <div class="card note center-cards" ng-hide="openCardFeatureAssigned[cardsIndex]">
-                    <div class="card-content black-text center-align">
+                    <div class="card-content black-text">
 	                    <div class="title">
 	                        <h2 id="open-card-title">{{ card.title }}</h2>
 	                    </div>
                     </div>
 	                <div class="card-action">
 	                    <div>
-	                        <span class="cursor-pointer">
-	                            <a ng-click="toggleOpenCardFeatures($index)" class=".cursor-pointer">Assign Feature</a>
+	                        <span class="cursor-pointer col md6">
+	                            <a ng-click="toggleOpenCardFeatures($index)" class=".cursor-pointer">Assign </br> Feature</a>
 	                        </span>
 
-	                        <span class="cursor-pointer">
+	                        <span class="cursor-pointer col md6">
 	                            <a ng-click="toggleOpenCardDetails($index)" class=".cursor-pointer">Details</a>
 	                        </span>                  
 	
