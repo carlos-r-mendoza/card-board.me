@@ -76,8 +76,7 @@ app.controller('NewCardController', function ($scope, $modal, $modalInstance, Bo
   };
 
   $scope.addCard = function(newCard, featureName, board){ 
-    console.log("board before", board);
-    
+   
     taskInfo(newCard);
     RepoFactory.createRepoIssue($stateParams, $scope.newIssue).then(function(createdIssue){
           BoardManipulator.addCardToFeature($scope.board, featureName, 'Open', createdIssue.data);

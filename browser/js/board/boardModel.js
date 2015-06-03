@@ -87,7 +87,6 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams,
         if (feature.name === featureName) {
           angular.forEach(feature.phases, function (phase) {
             if (phase.name === phaseName) {
-              console.log("phase.cards", phase.cards);
               phase.cards.splice(phase.cards.indexOf(task), 1);
             }
           });
@@ -95,7 +94,6 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams,
       });
     },
     removeFeature: function(feature, board) {
-      //console.log("feature", feature);
       feature.phases.forEach(function(phase) {
         phase.cards.forEach(function(card){
           card.labels = card.labels.filter(function(label){
@@ -108,7 +106,6 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams,
           phase.cards=[];
         });
         ProgressFactory.updateBar(board);
-      //console.log("featurenum", feature.number)
         RepoFactory.deleteRepoMilestone($stateParams, feature.number).then(function(){
           for (var i = 0; i < board.features.length; i++) {
             if(board.features[i].name === feature.name) {
@@ -185,7 +182,6 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams,
       // board.numberOfColumns++;
       var phaseName = "Phase - " + phase;
       var phaseInfo= {name: phaseName, color:'FFFFFF'};
-      //console.log("HELLO", phaseInfo)
       angular.forEach(board.features, function(feature){
         feature.phases.push(new BoardModel.Phase(phase));
       });
@@ -208,7 +204,6 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams,
     removePhase: function(board,phase){
       board.features.forEach(function(feature){
         feature.phases.forEach(function(myphase){
-          console.log("two phases1",phase.name, myphase.name);
           if (myphase.name===phase.name){
             myphase.cards.forEach(function(card){
             });
@@ -243,7 +238,6 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams,
       board.features.forEach(function(feature){
         feature.phases.forEach(function(newphase){
           if (newphase.name==="Closed"){
-            console.log("nphase",newphase);
             newphase=newphase.cards.concat(transferphase);
           }
         });
