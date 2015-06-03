@@ -2,7 +2,6 @@ app.factory('BoardService', function ($modal, BoardManipulator, BoardModel, Repo
 
   return {
     removeCard: function (board, feature, phase, card) {        
-        console.log('CARD: ', card);
         var editedIssue = {
           title: card.title,
           body: 'removed issue',

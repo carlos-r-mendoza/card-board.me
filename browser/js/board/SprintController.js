@@ -1,3 +1,5 @@
+//var _=require('lodash');
+
 app.config(function ($stateProvider) {
     $stateProvider.state('board', {
         url: '/:owner/:name/board',
@@ -33,19 +35,18 @@ app.controller('SprintController', function ($scope, $rootScope, $stateParams, B
       var issueNum=event.source.itemScope.card.number;
       var allLabels=event.source.itemScope.card.labels;
       var filteredArray=allLabels.filter(phaseFilter);
-      var currentLabelNames;
       if (destinationPhase==="Closed"){
         RepoFactory.editRepoIssue($stateParams,issueNum,{state:"closed", labels:filteredArray});
       } else if (destinationPhase==="Open"&&sourcePhase==="Closed"){
         RepoFactory.editRepoIssue($stateParams,issueNum,{state:"open"});
       } else if (sourcePhase==="Closed"){
-        currentLabelNames=_.pluck(allLabels, 'name');
+        var currentLabelNames=_.pluck(allLabels, 'name');
         currentLabelNames.push("Phase - "+destinationPhase);
         RepoFactory.editRepoIssue($stateParams,issueNum,{state:"open", labels:currentLabelNames});
       } else if (destinationPhase==="Open"){
         RepoFactory.editRepoIssue($stateParams,issueNum,{labels:filteredArray});
       } else {
-        currentLabelNames=_.pluck(filteredArray, 'name');
+        var currentLabelNames=_.pluck(filteredArray, 'name');
         currentLabelNames.push("Phase - "+destinationPhase);
         RepoFactory.editRepoIssue($stateParams,issueNum,{labels:currentLabelNames});
       }
@@ -77,6 +78,9 @@ app.controller('SprintController', function ($scope, $rootScope, $stateParams, B
     };
 
 
+    
+    RepoFactory.getRepoMilestones($stateParams).then(getFeatures, rejected);
+    
     function getFeatures(repoMilestones) {
       repoMilestones.data.forEach(function(milestone) {
         var featureName = milestone.title.split(" - ");
@@ -84,8 +88,6 @@ app.controller('SprintController', function ($scope, $rootScope, $stateParams, B
       });
       RepoFactory.getRepoLabels($stateParams).then(getPhases, rejected);
     }
-
-    RepoFactory.getRepoMilestones($stateParams).then(getFeatures, rejected);
 
     function getPhases(repoLabels) {
       repoLabels.data.forEach(function(label) {
@@ -135,14 +137,12 @@ app.controller('SprintController', function ($scope, $rootScope, $stateParams, B
           "column_color": color});
     }
 
-    function pushToFeature(feature, i){
-      feature.phases.push({'name': sprint.columns[i].name,
-        'cards': []});
-    }
-
     function addPhasesToFeatures() {
       for (var i = sprint.numberOfColumns; i <= sprint.columns.length-1; i++) { //2, 4
-        sprint.features.forEach(pushToFeature);
+        sprint.features.forEach(function(feature){
+          feature.phases.push({"name": sprint.columns[i].name, //Status Open
+              "cards": []});
+          });
          }
       }
 
@@ -202,9 +202,9 @@ app.controller('SprintController', function ($scope, $rootScope, $stateParams, B
               }
             }
           }
-      
+
       $scope.sprintBoard = BoardService.sprintBoard(sprint); 
-      
+
       ProgressFactory.updateBar($scope.sprintBoard);
 
       $rootScope.otherCardsCount = otherCardsCount; //gives navbar.html cards count number
@@ -235,5 +235,4 @@ app.controller('SprintController', function ($scope, $rootScope, $stateParams, B
       });
 
     }
-
 });

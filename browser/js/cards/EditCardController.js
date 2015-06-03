@@ -2,8 +2,6 @@ app.controller('EditCardController', function($scope, $modal, BoardService, Boar
 	   
 	   $scope.editCard = function(board, featureName, cardStatus, card){
       
-      console.log('CARD: ', card);
-
         $scope.modalEdit = $modal.open({
         templateUrl: '/js/cards/editCard.html',
         backdrop: 'static',
@@ -51,8 +49,6 @@ app.controller('EditCardController', function($scope, $modal, BoardService, Boar
           if(currentCard.comments){
             $scope.editedCard.comments = currentCard.comments;
           }
-
-          console.log('INITIAL COMMENTS', $scope.editedCard.comments);
 
           function err(error){
             console.log(error);
