@@ -128,12 +128,10 @@ app.controller('GitHubProfileController', function($scope, $rootScope, GitHubPro
 	$scope.getAssignments = function(profileRepo, user){
 		$scope.repoName = profileRepo.name;
 		$scope.repoOwner = profileRepo.owner;
-		console.log('REPONAME', $scope.repoName);
 		var profileRepoURL = profileRepo.url;
 		$scope.assignments = [];
 		$scope.url = profileRepoURL.split("https://github.com")[1];
 		$scope.username = user;
-		console.log('USER', $scope.username);
 		GitHubProfileFactory.getRepoIssues($scope.url).then(getIssueAssignments, rejected);
 	};
 	
@@ -145,10 +143,8 @@ app.controller('GitHubProfileController', function($scope, $rootScope, GitHubPro
 		$scope.feature = [];
 		
 		angular.forEach(assignment.labels, function(label){
-						console.log('LABEL', label);
 						if(label.name.split('-')[0]==='Feature '){
 							$scope.feature.push(label.name);
-							console.log('FEATURE', $scope.feature);
 						}
 				});
 			

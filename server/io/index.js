@@ -8,24 +8,24 @@ module.exports = function (server) {
 
     io = socketio(server);
 
-    io.on("connection", function (socket) {
-    	console.log("INSIDE SOCKET!");
-        socket.on('join', function(username){
-            socket.username = username;
-        });
+    // io.on("connection", function (socket) {
+    // 	console.log("INSIDE SOCKET!");
+    //     socket.on('join', function(username){
+    //         socket.username = username;
+    //     });
     	
-        socket.on("messages", function(data){
-            console.log("MESSAGE", data);
-            var username = socket.username;
+    //     socket.on("messages", function(data){
+    //         console.log("MESSAGE", data);
+    //         var username = socket.username;
 
-            socket.broadcast.emit("messages", data);
+    //         socket.broadcast.emit("messages", data);
 
-            socket.emit("messages", data);
-    	});
+    //         socket.emit("messages", data);
+    // 	});
     	
-        // socket.emit('messages', { hello: "world" });
-        // Now have access to socket, wowzers!
-    });
+    //     // socket.emit('messages', { hello: "world" });
+    //     // Now have access to socket, wowzers!
+    // });
     
     return io;
 

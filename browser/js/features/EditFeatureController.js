@@ -14,7 +14,6 @@ app.controller('EditFeatureController', function($scope, $modal, BoardService, B
           }
         },
         controller: function($scope, $modalInstance, sprintBoard, currentFeature, $stateParams){
-          console.log('current feature: ', currentFeature);
           $scope.board = sprintBoard;
           $scope.close = function(){
             $modalInstance.close();
@@ -31,7 +30,6 @@ app.controller('EditFeatureController', function($scope, $modal, BoardService, B
             $scope.oldLabel = 'Feature - '+currentFeature;
 
             BoardManipulator.editFeature($scope.board, currentFeature, $scope.newFeatureTitle);
-            console.log('currentlabel: ', $scope.oldLabel);
             RepoFactory.editRepoLabel($stateParams, $scope.oldLabel, $scope.editedFeature);
             $modalInstance.close();
           };

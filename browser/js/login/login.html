@@ -4,6 +4,10 @@
             <div class="col s12" style='color: white'><h1>Git Organized.</h1></div>
         </div>
     </div>
+    <div id="video-demo" class="row">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/IcyUKVLsyNM" frameborder="0" allowfullscreen></iframe>
+    </div>
+    
 
     <div class="row footDiv">
         <div class='blackDiv'>
@@ -74,6 +78,16 @@
     height: 100%;
 }
 
+#video-demo {
+    position: relative;
+    margin-left: 30px;
+    margin-top: -415px;
+}
+
+#video-demo iframe {
+    /*border: solid white;*/
+} 
+
 #cardboard-highlights {
     text-align: center;
     font-size: 25px;
@@ -138,6 +152,33 @@ i {
     text-align: center;
     padding: 20px;
     vertical-align: middle;
+}
+
+@media (max-width: 1830px) {
+  #video-demo iframe {
+    width: 450px;
+  }
+}
+
+@media (max-width: 1490px) {
+  #video-demo iframe {
+    width: 400px;
+    height: 250px;
+  }
+}
+
+@media (max-width: 1350px) {
+  #video-demo iframe {
+    width: 350px;
+    height: 220px;
+  }
+}
+
+@media (max-width: 1350px) {
+  #video-demo iframe {
+    width: 300px;
+    height: 200px;
+  }
 }
 
 </style>

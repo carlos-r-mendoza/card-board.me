@@ -25,10 +25,11 @@
 */    }
 .as-sortable-item {
     border: 0px;
-    margin: 0px;
+    margin: 0 0 0 -5px;
     margin-bottom: -15px;
     background-color: transparent;
     border-radius: 0px;
+    width: 250px;
 }
 .cursor-pointer {
     cursor: default;
@@ -54,6 +55,11 @@
     margin-left: 15px;
     max-width: 250px;
 }
+
+#issueCard {
+    position: absolute;
+}
+
 .progressDiv{
     text-align: center;
     margin: 0 auto;
@@ -232,6 +238,7 @@ progressbar{
     background-color: #424242;
     color: white;
  }
+
 
 
 // .as-sortable-placeholder {

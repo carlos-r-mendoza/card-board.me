@@ -56,10 +56,7 @@ app.factory('RepoFactory', function($http){
 			});
 		},
 		createRepoIssue: function (repoInfo, issue) {
-			console.log('REPO INFO: ', repoInfo);
 			return $http.post('api/repo/' + repoInfo.owner + "/" + repoInfo.name + "/create-repo-issue", issue).then(function(createdRepoIssue){
-				console.log("Inside angular post", createdRepoIssue);
-				console.log('ISSUE: ', issue);
 				return createdRepoIssue;
 			});
 		},
@@ -76,7 +73,6 @@ app.factory('RepoFactory', function($http){
 			});
 		},
 		editRepoLabel: function (repoInfo, oldlabel, label) {
-			console.log('old', oldlabel);
 			return $http.post('api/repo/' + repoInfo.owner + "/" + repoInfo.name + "/labels/"+ oldlabel, label).then(function(editedRepoLabel){
 				return editedRepoLabel;
 			});
@@ -145,7 +141,6 @@ app.controller('RepoController', function($scope, $stateParams, RepoFactory){
 	$scope.editIssue = function(issue) {
 
 			for (var obj in issue.tempLabels) {
-				console.log("obj", issue.tempLabels[obj]);
 				for (var label in issue.tempLabels[obj]) {
 					for (var i = 0; i <= issue.labels.length-1; i++) {
 						if(label === issue.labels[i].name) {
@@ -182,7 +177,6 @@ app.controller('RepoController', function($scope, $stateParams, RepoFactory){
 	};
 
 	function issueComments(issueNumber) {
-		console.log("GERE", issueNumber);
 		return RepoFactory.getIssueComments($stateParams, issueNumber).then(issueCommentsFulfilled, rejected);
 	}
 

@@ -23,7 +23,6 @@ app.controller('CalendarController', function($scope, $stateParams, $compile, Re
     			end: new Date(milestone.due_on).toDateString()
     		});
     	});
-    	console.log('EVENTS', $scope.eventSource);
     }, err);
 
     $scope.uiConfig = {

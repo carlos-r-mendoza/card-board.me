@@ -87,7 +87,7 @@
                     <div ng-repeat="card in phase.cards" as-sortable-item>
                          <div as-sortable-item-handle>
                             <div class="row">
-                                <div class="card note">
+                                <div id="issue-card" class="card note">
                                     <div class="card-content black-text">
                                         <span class="cursor-pointer">
                                             <a ng-click="removeCard(sprintBoard, feature.name, phase.name, card)" ><i class="mdi-action-highlight-remove right" popover-placement='left' popover='Remove Card' popover-trigger="mouseenter"></i></a>
