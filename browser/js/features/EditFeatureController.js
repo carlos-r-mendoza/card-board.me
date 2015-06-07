@@ -1,7 +1,7 @@
 app.controller('EditFeatureController', function($scope, $modal, BoardService, BoardManipulator, $rootScope, RepoFactory, $stateParams, ProgressFactory){
 	   
-	   $scope.editingFeature = function(board, currentFeature){
-	   
+	   $scope.editFeature = function(board, currentFeature){
+	     console.log("CF", currentFeature);
         $scope.modalEdit = $modal.open({
         templateUrl: '/js/features/editFeature.html',
         backdrop: 'static',
@@ -15,6 +15,12 @@ app.controller('EditFeatureController', function($scope, $modal, BoardService, B
         },
         controller: function($scope, $modalInstance, sprintBoard, currentFeature, $stateParams){
           $scope.board = sprintBoard;
+          $scope.editedFeature={
+            title: currentFeature.title,
+            description: currentFeature.description,
+            dueDate: new Date (currentFeature.due_date),
+          };
+          console.log("EF", $scope.editFeature);
           $scope.close = function(){
             $modalInstance.close();
           };
