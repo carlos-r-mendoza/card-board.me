@@ -303,7 +303,7 @@ router.post('/:repoOwner/:repoName/create-repo-label/:labelName', function (req,
 });
 
 /***EDIT REPO LABEL***/
-router.post('/:repoOwner/:repoName/labels', function (req, res,next) {
+router.post('/:repoOwner/:repoName/labels/', function (req, res,next) {
 
 	var userToken = req.user.github.token;
 
@@ -315,7 +315,7 @@ router.post('/:repoOwner/:repoName/labels', function (req, res,next) {
 	github.issues.updateLabel({
 		user: req.params.repoOwner,
 		repo: req.params.repoName,
-		name: req.body.old,
+		name: req.body.name,
 		color: req.body.color
 	}, function(err, name) {
 		if(err) { errGitHub(err); }		
@@ -383,6 +383,31 @@ router.get('/:repoOwner/:repoName/delete-repo-milestone/:milestoneNumber', funct
 	}, function(err, deletedMilestone) {
 		if(err) { errGitHub(err); }		
 		res.json(deletedMilestone);
+	});
+});
+/***UPDATES A MILESTONE***/
+router.post('/:repoOwner/:repoName/update-repo-milestone/:milestoneNumber', function (req, res) {
+	console.log("MN", req.params.milestoneNumber);
+	var userToken = req.user.github.token;
+	var milestoneTitle = req.body.title;
+	var milestoneDescription = req.body.description;
+	var milestoneDueDate = req.body.dueDate;
+
+	github.authenticate({
+	    type: "oauth",
+	    token: req.user.github.token
+	});
+
+	github.issues.updateMilestone({
+		user: req.params.repoOwner,
+		repo: req.params.repoName,
+		title: milestoneTitle,
+		number: req.params.milestoneNumber,
+		description: milestoneDescription,
+		due_on: milestoneDueDate
+	}, function(err, updatedMilestone) {
+		if(err) { errGitHub(err); }		
+		res.json(updatedMilestone);
 	});
 });
 

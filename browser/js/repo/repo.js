@@ -106,6 +106,13 @@ app.factory('RepoFactory', function($http){
 				return deletedMilestone;
 			});			
 		},
+		updateRepoMilestone: function(repoInfo, milestoneInfo) {
+			console.log("MI", milestoneInfo);
+			//milestoneInfo.dueDate=milestoneInfo.dueDate.toISOString();
+			return $http.post('api/repo/'+ repoInfo.owner+"/" + repoInfo.name + '/update-repo-milestone/'+ milestoneInfo.number, milestoneInfo).then(function(updatedMilestone){
+				return updatedMilestone;
+			});			
+		},
 		createComment: function(repoInfo, issueNum, comment){
 			return $http.post('api/repo/' + repoInfo.owner+ "/" + repoInfo.name + '/issues/'+ issueNum + "/comments", comment).then(function(createdComment){
 				return createdComment;
