@@ -22,6 +22,17 @@
                 </textarea>
             </div>
         </div>
+        <div class="form-group">
+            <label class="control-label" for="newFeatureColor">Color<small>(optional)</small></label>
+        </div>
+        <div class='input-field col s6'>
+                <select ng-controller='ColorPicker' class="browser-default" ng-model="editedFeature.color">
+                    <option value='' disabled selected>Select Color</option>
+                    <option ng-repeat="color in colors" value='{{color.hex}}' style="background-color: #{{color.hex}}">
+                        {{color.name}}
+                    </option>
+                </select>
+        </div>
 
         <div class='form-group'>
             <label class="control-label" for="newCardDetails">Due Date</label>

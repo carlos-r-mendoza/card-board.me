@@ -47,11 +47,13 @@ app.controller('EditFeatureController', function($scope, $modal, BoardService, B
                     card.feature=$scope.editedFeature.title.split(" - ")[1];
                     console.log("CL",card.labels);
                     card.labels.forEach(function(label){
-                      console.log(label.name)
-                      if (label.name.split(" - ")[1]===label){
+                      console.log("label",label);
+                      if (label.name.split(" - ")[0]==="Feature"){
                         console.log("label",label);
-                        RepoFactory.editRepoLabel($stateParams,label.name,{name:$scope.editedFeature.title});
+                        //RepoFactory.editRepoLabel($stateParams,label.name,{name:$scope.editedFeature.title});
+                        RepoFactory.deleteRepoLabel($stateParams,{name:label.name});
                         label.name=$scope.editedFeature.title;
+                        RepoFactory.createRepoLabel($stateParams,{name:label.name, color:$scope.editedFeature.color});
                         //RepoFactory.editRepoLabel($stateParams,)
                       }
 
