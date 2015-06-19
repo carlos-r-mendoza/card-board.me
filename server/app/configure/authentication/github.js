@@ -24,10 +24,19 @@ module.exports = function (app) {
 		UserModel.findOne({ 'github.id': profile.id }, function (err, user) {
 			if(err) return done(err);
 
-			if (user) {
-                user.github.token = accessToken;
-				done(null, user);
-			} else {
+			// if (user) {
+   //              //console.log("at",accessToken);
+   //              //user.github.token = accessToken;
+   //      UserModel.update({'github.id':profile.id},{'github.token':accessToken},function(err,user){
+   //        //if(err) console.log(err);
+   //        //console.log("sdfsad",user);
+   //        return user;
+   //     });
+   //      // .then(function(user){
+   //      //   done(null, user);
+   //      // })
+			// 	//done(null, user);
+			// } else {
                 UserModel.create({
                     github: {
                         id: profile.id,
@@ -44,11 +53,11 @@ module.exports = function (app) {
                     done(err);
                 });
             }
+)};
 
+		//});
 
-		});
-
-	};
+	//};
 
 
 passport.use(new GitHubStrategy(gitHubCredentials, verifyCallback));

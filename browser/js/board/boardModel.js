@@ -158,6 +158,7 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams,
               board.columns.forEach(function(column){
                 feature.phases.push({name: column.name, cards: []});
               });
+              console.log("fc",featureCreated);
               board.features.push(new BoardModel.Feature(featureCreated.data, feature.color, featureTitle, feature.phases));
       });      
     },
