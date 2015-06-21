@@ -29,40 +29,45 @@ app.controller('EditFeatureController', function($scope, $modal, BoardService, B
           };
 
           $scope.ok = function(editedFeature){
-            $scope.editedFeature.title = "Feature - " +$scope.editedFeature.title;
+            console.log("EF",$scope.editedFeature);
+            console.log("CF",currentFeature);
+            $scope.editedFeature.title = "Feature - "+$scope.editedFeature.title;
             RepoFactory.updateRepoMilestone($stateParams,$scope.editedFeature);
+            RepoFactory.deleteRepoLabel($stateParams,{name:"Feature - "+currentFeature.name});
+            RepoFactory.createRepoLabel($stateParams, $scope.editedFeature);
+            //TODO: Remove old label, add new one
             console.log(board);
             board.features.forEach(function(feature){
               //console.log("FN",feature.name);
               //console.log("CFI",currentFeature);
               //console.log("EF", $scope.editedFeature.title.split(" - ")[1]);
-              if (feature.name===currentFeature.name){
-                console.log("before", feature);
-                feature.title=$scope.editedFeature.title.split(" - ")[1];
-                feature.due_on=$scope.editedFeature.dueDate;
-                feature.description=$scope.editedFeature.description;
-                feature.phases.forEach(function(phase){
-                  phase.cards.forEach(function(card){
-                    //console.log("before", card)
-                    card.feature=$scope.editedFeature.title.split(" - ")[1];
-                    console.log("CL",card.labels);
-                    card.labels.forEach(function(label){
-                      console.log("label",label);
-                      if (label.name.split(" - ")[0]==="Feature"){
-                        console.log("label",label);
-                        //RepoFactory.editRepoLabel($stateParams,label.name,{name:$scope.editedFeature.title});
-                        RepoFactory.deleteRepoLabel($stateParams,{name:label.name});
-                        label.name=$scope.editedFeature.title;
-                        RepoFactory.createRepoLabel($stateParams,{name:label.name, color:$scope.editedFeature.color});
-                        //RepoFactory.editRepoLabel($stateParams,)
-                      }
+              // if (feature.name===currentFeature.name){
+              //   console.log("before", feature);
+              //   feature.title=$scope.editedFeature.title.split(" - ")[1];
+              //   feature.due_on=$scope.editedFeature.dueDate;
+              //   feature.description=$scope.editedFeature.description;
+              //   feature.phases.forEach(function(phase){
+              //     phase.cards.forEach(function(card){
+              //       //console.log("before", card)
+              //       card.feature=$scope.editedFeature.title.split(" - ")[1];
+              //       console.log("CL",card.labels);
+              //       card.labels.forEach(function(label){
+              //         console.log("label",label);
+              //         if (label.name.split(" - ")[0]==="Feature"){
+              //           console.log("label",label);
+              //           //RepoFactory.editRepoLabel($stateParams,label.name,{name:$scope.editedFeature.title});
+              //           //RepoFactory.deleteRepoLabel($stateParams,{name:label.name});
+              //           label.name=$scope.editedFeature.title;
+              //           //RepoFactory.createRepoLabel($stateParams,{name:label.name, color:$scope.editedFeature.color});
+              //           //RepoFactory.editRepoLabel($stateParams,)
+              //         }
 
-                    })
+              //       })
 
 
-                  })
-                })
-              }
+              //     })
+              //   })
+              // }
             }) 
             //$scope.newFeatureTitle = editFeature.title;
             //$scope.oldLabel = 'Feature - '+currentFeature;

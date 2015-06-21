@@ -335,6 +335,7 @@ router.post('/:repoOwner/:repoName/delete-repo-label/', function (req, res) {
 		user: req.params.repoOwner,
 		repo: req.params.repoName,
 		name: req.body.name
+		//number:req.body.number
 	}, function(err, deletedLabel) {
 		if(err) { errGitHub(err); }		
 		res.json(deletedLabel);

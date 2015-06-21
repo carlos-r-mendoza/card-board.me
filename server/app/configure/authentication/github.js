@@ -23,6 +23,7 @@ module.exports = function (app) {
 
 		UserModel.findOne({ 'github.id': profile.id }, function (err, user) {
 			if(err) return done(err);
+      console.log("user");
 
 			// if (user) {
    //              //console.log("at",accessToken);
