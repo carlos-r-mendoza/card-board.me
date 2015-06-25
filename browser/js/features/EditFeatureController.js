@@ -37,8 +37,13 @@ app.controller('EditFeatureController', function($scope, $modal, BoardService, B
                     name: "Feature - " + currentFeature.name
                 })
                 //console.log("editedfeature", $scope.editedFeature);
+                //console.dir(RepoFactory.deleteRepoLabel);
 
-                .then(RepoFactory.createRepoLabel($stateParams, $scope.editedFeature));
+                
+                setTimeout(function(){
+                    RepoFactory.createRepoLabel($stateParams, $scope.editedFeature);
+                },3000);
+              
                 //TODO: Add new label to issue
                 console.log("board", board);
                 board.features.forEach(function(feature) {
