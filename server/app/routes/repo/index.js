@@ -282,7 +282,7 @@ router.post('/:repoOwner/:repoName/edit-repo-issue/:issueNumber', function (req,
 
 /***CREATES/POSTS A REPO LABEL***/
 router.post('/:repoOwner/:repoName/create-repo-label/:labelName', function (req, res) {
-
+	console.log("inside create label");
 	var color;
 	if(req.body.color) { color = req.body.color; } else { color = "ffffff"; }	
 
@@ -304,8 +304,10 @@ router.post('/:repoOwner/:repoName/create-repo-label/:labelName', function (req,
 
 /***EDIT REPO LABEL***/
 router.post('/:repoOwner/:repoName/labels/', function (req, res,next) {
-
+	console.log("inside server-req.body", req.body);
 	var userToken = req.user.github.token;
+	var color;
+	if(req.body.color) { color = req.body.color; } else { color = "ffffff"; }	
 
 	github.authenticate({
 	    type: "oauth",
@@ -315,8 +317,8 @@ router.post('/:repoOwner/:repoName/labels/', function (req, res,next) {
 	github.issues.updateLabel({
 		user: req.params.repoOwner,
 		repo: req.params.repoName,
-		name: req.body.name,
-		color: req.body.color
+		name: req.body.title,
+		color: color
 	}, function(err, name) {
 		if(err) { errGitHub(err); }		
 		res.json(name);

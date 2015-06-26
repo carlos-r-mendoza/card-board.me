@@ -72,8 +72,9 @@ app.factory('RepoFactory', function($http){
 				return createdLabel;
 			});
 		},
-		editRepoLabel: function (repoInfo, oldlabel, label) {
-			return $http.post('api/repo/' + repoInfo.owner + "/" + repoInfo.name + "/labels/"+ oldlabel, label).then(function(editedRepoLabel){
+		editRepoLabel: function (repoInfo, label) {
+			console.log("inside editrepolabel-label", label);
+			return $http.post('api/repo/' + repoInfo.owner + "/" + repoInfo.name + "/labels/", label).then(function(editedRepoLabel){
 				return editedRepoLabel;
 			});
 			
