@@ -282,7 +282,7 @@ router.post('/:repoOwner/:repoName/edit-repo-issue/:issueNumber', function (req,
 
 /***CREATES/POSTS A REPO LABEL***/
 router.post('/:repoOwner/:repoName/create-repo-label/:labelName', function (req, res) {
-
+	console.log("inside create label");
 	var color;
 	if(req.body.color) { color = req.body.color; } else { color = "ffffff"; }	
 
@@ -303,9 +303,11 @@ router.post('/:repoOwner/:repoName/create-repo-label/:labelName', function (req,
 });
 
 /***EDIT REPO LABEL***/
-router.post('/:repoOwner/:repoName/labels', function (req, res,next) {
-
+router.post('/:repoOwner/:repoName/labels/', function (req, res,next) {
+	console.log("inside server-req.body", req.body);
 	var userToken = req.user.github.token;
+	var color;
+	if(req.body.color) { color = req.body.color; } else { color = "ffffff"; }	
 
 	github.authenticate({
 	    type: "oauth",
@@ -315,8 +317,8 @@ router.post('/:repoOwner/:repoName/labels', function (req, res,next) {
 	github.issues.updateLabel({
 		user: req.params.repoOwner,
 		repo: req.params.repoName,
-		name: req.body.old,
-		color: req.body.color
+		name: req.body.title,
+		color: color
 	}, function(err, name) {
 		if(err) { errGitHub(err); }		
 		res.json(name);
@@ -324,7 +326,7 @@ router.post('/:repoOwner/:repoName/labels', function (req, res,next) {
 });
 
 /***DELETE A LABEL FROM REPO***/
-router.post('/:repoOwner/:repoName/delete-repo-label', function (req, res) {
+router.post('/:repoOwner/:repoName/delete-repo-label/', function (req, res) {
 	console.log("reqbody",req.body);
 	github.authenticate({
 	    type: "oauth",
@@ -335,6 +337,7 @@ router.post('/:repoOwner/:repoName/delete-repo-label', function (req, res) {
 		user: req.params.repoOwner,
 		repo: req.params.repoName,
 		name: req.body.name
+		//number:req.body.number
 	}, function(err, deletedLabel) {
 		if(err) { errGitHub(err); }		
 		res.json(deletedLabel);
@@ -383,6 +386,31 @@ router.get('/:repoOwner/:repoName/delete-repo-milestone/:milestoneNumber', funct
 	}, function(err, deletedMilestone) {
 		if(err) { errGitHub(err); }		
 		res.json(deletedMilestone);
+	});
+});
+/***UPDATES A MILESTONE***/
+router.post('/:repoOwner/:repoName/update-repo-milestone/:milestoneNumber', function (req, res) {
+	console.log("MN", req.params.milestoneNumber);
+	var userToken = req.user.github.token;
+	var milestoneTitle = req.body.title;
+	var milestoneDescription = req.body.description;
+	var milestoneDueDate = req.body.dueDate;
+
+	github.authenticate({
+	    type: "oauth",
+	    token: req.user.github.token
+	});
+
+	github.issues.updateMilestone({
+		user: req.params.repoOwner,
+		repo: req.params.repoName,
+		title: milestoneTitle,
+		number: req.params.milestoneNumber,
+		description: milestoneDescription,
+		due_on: milestoneDueDate
+	}, function(err, updatedMilestone) {
+		if(err) { errGitHub(err); }		
+		res.json(updatedMilestone);
 	});
 });
 

@@ -158,6 +158,7 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams,
               board.columns.forEach(function(column){
                 feature.phases.push({name: column.name, cards: []});
               });
+              console.log("fc",featureCreated);
               board.features.push(new BoardModel.Feature(featureCreated.data, feature.color, featureTitle, feature.phases));
       });      
     },
@@ -202,13 +203,6 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams,
       ProgressFactory.updateBar(board);
     },
     removePhase: function(board,phase){
-      board.features.forEach(function(feature){
-        feature.phases.forEach(function(myphase){
-          if (myphase.name===phase.name){
-            myphase.cards.forEach(function(card){
-            });
-          }
-        });
       
       board.columns=board.columns.filter(function(column){
         return column.name!==phase.name;
@@ -234,18 +228,17 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams,
         feature.phases=feature.phases.filter(function(myphase){
           return myphase.name!==phase.name;
         });
-      });
+      }); 
       board.features.forEach(function(feature){
         feature.phases.forEach(function(newphase){
           if (newphase.name==="Closed"){
             newphase=newphase.cards.concat(transferphase);
           }
         });
-      });
+      }); 
       phase.name="Phase - "+phase.name;
       RepoFactory.deleteRepoLabel($stateParams,phase);
       ProgressFactory.updateBar(board);
-    });
   }
 };
 });

@@ -7,7 +7,6 @@
         <progressbar animate="false" max='100' value='percent' type="success">
             <b style="color:black;">{{$root.percent | number:0}}% </b>
         </progressbar>
-        <!-- <b style="color:black;">{{$root.xclosed}}/{{$root.xtotal}} Cards Completed</b> -->
     </div>
     <div class="col-sm-4"><h2 class='left'>{{$root.xclosed}}/{{$root.xtotal}} Completed</h2></div>
 
@@ -51,7 +50,7 @@
         </thead>
             <tbody ng-repeat="feature in sprintBoard.features">
             <tr>
-                <th class="black-text collapsableRow" ng-click='isCollapsed=!isCollapsed' ng-style="{'background-color': '#{{feature.color}}'}">
+                <th class="black-text collapsableRow" ng-click='isCollapsed=!isCollapsed' ng-style="{'background-color': '#'+feature.color}">
                     
                     <span ng-show="isCollapsed" class="spaceLeft">{{feature.title}}</span>
                     <div class='arrow'>
@@ -59,21 +58,23 @@
                     <a ng-show="isCollapsed"><i class="mdi-hardware-keyboard-arrow-down left white-text" popover-placement='right' popover='Expand Row' popover-trigger="mouseenter"></i></a>
                     </div>
                     
-                <td ng-style="{'background-color': '#{{feature.color}}'}"></td>
-                <td ng-repeat='column in sprintBoard.columns' ng-style="{'background-color': '#{{feature.color}}'}"></td>
-                <td ng-style="{'background-color': '#{{feature.color}}'}"></td>
+                <td ng-style="{'background-color': '#'+feature.color}"></td>
+                <td ng-repeat='column in sprintBoard.columns' ng-style="{'background-color': '#'+feature.color}"></td>
+                <td ng-style="{'background-color': '#'+feature.color}"></td>
             </tr>
             <tr collapse='isCollapsed'>
                 <th> <!-- features width -->
                     <div class="row">
-                        <div class="card" id="featuresCard" ng-style="{'background-color': '#{{feature.color}}'}">
+                        <div class="card" id="featuresCard" ng-style="{'background-color': '#'+feature.color}">
                             <div class="card-content">
                                     <span ng-controller="EditFeatureController">
-                                    <a ng-click="removeFeature(feature, sprintBoard)"><i class="mdi-action-highlight-remove right red-text" popover-placement='left' popover='Delete Feature' popover-trigger="mouseenter"></i></a></span>
+                                    <a ng-click="removeFeature(feature, sprintBoard)"><i class="mdi-action-highlight-remove right red-text" popover-placement='left' popover='Delete Feature' popover-trigger="mouseenter"></i></a>
+                                    <a ng-click="editFeature(sprintBoard, feature)"><i class="small mdi-editor-mode-edit right top" popover-placement='left' popover='Edit Feature' popover-trigger="mouseenter"></i></a>
+                                </span>
                                         <h2 class="card-title black-text">{{feature.title}}</h2>
                                         <div style='font-weight: normal'>
                                             <p><strong>Due Date: </strong>{{(feature.due_date | date : 'fullDate') || 'N/A'}}</p>
-                                            <p><strong>Details: </strong> <span ng-style="{'background-color': '#feature.color'};">{{feature.description || 'N/A'}}</span></p>    
+                                            <p><strong>Details: </strong> <span ng-style="{'background-color': '#'+feature.color}">{{feature.description || 'N/A'}}</span></p>    
                                         </div>
                             </div>
                         </div>

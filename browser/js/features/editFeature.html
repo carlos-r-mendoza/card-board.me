@@ -1,14 +1,14 @@
 <form class="noMargin" name="editFeatureForm" ng-controller="EditFeatureController">
     <div class="modal-header">
         <button type="button" class="close" ng-click="close()">&times;</button>
-        <h4 class="modal-title" ng-model="editFeature.title">Edit Feature</h4>
+        <h4 class="modal-title" ng-model="currentFeature.title">Edit Feature</h4>
     </div>
     <div class="modal-body">
         <div class="form-group">
             <label class="control-label" for="editFeatureTitle">Feature Title</label>
 
             <div>
-                <input type="text" id="editFeatureTitle" placeholder="Feature title" ng-model="editFeature.title" required
+                <input type="text" id="editFeatureTitle" placeholder="Feature title" ng-model="editedFeature.title" required
                        focus-me class="cardInputs form-control"/>
             </div>
         </div>
@@ -18,15 +18,26 @@
             </label>
 
             <div>
-                <textarea id="editFeatureDetails" ng-model="editFeature.details" class="cardInputs form-control" rows="7">
+                <textarea id="editFeatureDetails" ng-model="editedFeature.description" class="cardInputs form-control" rows="7">
                 </textarea>
             </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="newFeatureColor">Color<small>(optional)</small></label>
+        </div>
+        <div class='input-field col s6'>
+                <select ng-controller='ColorPicker' class="browser-default" ng-model="editedFeature.color">
+                    <option value='' disabled selected>Select Color</option>
+                    <option ng-repeat="color in colors" value='{{color.hex}}' style="background-color: #{{color.hex}}">
+                        {{color.name}}
+                    </option>
+                </select>
         </div>
 
         <div class='form-group'>
             <label class="control-label" for="newCardDetails">Due Date</label>
             <div>
-             <input for="editFeatureDetails" type="date" class='form-control' ng-model='editFeature.dueDate'/>
+             <input for="editFeatureDetails" type="date" class='form-control' ng-model='editedFeature.dueDate'/>
             </div>
         </div>
 

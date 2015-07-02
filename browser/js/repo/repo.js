@@ -72,8 +72,9 @@ app.factory('RepoFactory', function($http){
 				return createdLabel;
 			});
 		},
-		editRepoLabel: function (repoInfo, oldlabel, label) {
-			return $http.post('api/repo/' + repoInfo.owner + "/" + repoInfo.name + "/labels/"+ oldlabel, label).then(function(editedRepoLabel){
+		editRepoLabel: function (repoInfo, label) {
+			console.log("inside editrepolabel-label", label);
+			return $http.post('api/repo/' + repoInfo.owner + "/" + repoInfo.name + "/labels/", label).then(function(editedRepoLabel){
 				return editedRepoLabel;
 			});
 			
@@ -104,6 +105,13 @@ app.factory('RepoFactory', function($http){
 		deleteRepoMilestone: function(repoInfo, milestoneNumber) {
 			return $http.get('api/repo/'+ repoInfo.owner+"/" + repoInfo.name + '/delete-repo-milestone/'+ milestoneNumber).then(function(deletedMilestone){
 				return deletedMilestone;
+			});			
+		},
+		updateRepoMilestone: function(repoInfo, milestoneInfo) {
+			console.log("MI", milestoneInfo);
+			//milestoneInfo.dueDate=milestoneInfo.dueDate.toISOString();
+			return $http.post('api/repo/'+ repoInfo.owner+"/" + repoInfo.name + '/update-repo-milestone/'+ milestoneInfo.number, milestoneInfo).then(function(updatedMilestone){
+				return updatedMilestone;
 			});			
 		},
 		createComment: function(repoInfo, issueNum, comment){
