@@ -7,7 +7,6 @@
         <progressbar animate="false" max='100' value='percent' type="success">
             <b style="color:black;">{{$root.percent | number:0}}% </b>
         </progressbar>
-        <!-- <b style="color:black;">{{$root.xclosed}}/{{$root.xtotal}} Cards Completed</b> -->
     </div>
     <div class="col-sm-4"><h2 class='left'>{{$root.xclosed}}/{{$root.xtotal}} Completed</h2></div>
 
@@ -69,7 +68,6 @@
                         <div class="card" id="featuresCard" ng-style="{'background-color': '#'+feature.color}">
                             <div class="card-content">
                                     <span ng-controller="EditFeatureController">
-                                        <!-- <a ng-click="editFeature(feature, sprintBoard)"><i class="mdi-editor-mode-edit right" popover-placement='left' popover='Edit Feature' popover-trigger="mouseenter"></i></a> -->
                                     <a ng-click="removeFeature(feature, sprintBoard)"><i class="mdi-action-highlight-remove right red-text" popover-placement='left' popover='Delete Feature' popover-trigger="mouseenter"></i></a>
                                     <a ng-click="editFeature(sprintBoard, feature)"><i class="small mdi-editor-mode-edit right top" popover-placement='left' popover='Edit Feature' popover-trigger="mouseenter"></i></a>
                                 </span>

@@ -203,13 +203,6 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams,
       ProgressFactory.updateBar(board);
     },
     removePhase: function(board,phase){
-      //board.features.forEach(function(feature){
-        // feature.phases.forEach(function(myphase){
-        //   if (myphase.name===phase.name){
-        //     myphase.cards.forEach(function(card){
-        //     });
-        //   }
-        // }); //end from line 207
       
       board.columns=board.columns.filter(function(column){
         return column.name!==phase.name;
@@ -235,19 +228,17 @@ app.factory('BoardManipulator', function (BoardModel, RepoFactory, $stateParams,
         feature.phases=feature.phases.filter(function(myphase){
           return myphase.name!==phase.name;
         });
-      }); //end from line 218
+      }); 
       board.features.forEach(function(feature){
         feature.phases.forEach(function(newphase){
           if (newphase.name==="Closed"){
             newphase=newphase.cards.concat(transferphase);
           }
         });
-      }); //end from line 239
+      }); 
       phase.name="Phase - "+phase.name;
-      //console.log("phase",phase);
       RepoFactory.deleteRepoLabel($stateParams,phase);
       ProgressFactory.updateBar(board);
-    //});
   }
 };
 });
