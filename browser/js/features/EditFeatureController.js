@@ -60,9 +60,9 @@ app.controller('EditFeatureController', function($scope, $modal, BoardService, B
                                     });
                                     var currentLabelNames = _.pluck(card.labels, 'name');
                                     console.log("labelnames",currentLabelNames)
-                                    setTimeout(function(){
+                                    //setTimeout(function(){
                                         RepoFactory.editRepoIssue($stateParams, card.number,{labelNames:currentLabelNames});
-                                    },2000);
+                                    //},2000);
 
                                 });
                             });
