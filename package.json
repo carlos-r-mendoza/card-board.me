@@ -4,7 +4,7 @@
   "description": "A generated project at Fullstack Academy",
   "engines": {
     "node": "0.10.36"
-  }
+  },
   "main": "server/start.js",
   "scripts": {
     "start": "node server/start.js",
