@@ -2,14 +2,10 @@
   "name": "Card-Board",
   "version": "1.0.0",
   "description": "A generated project at Fullstack Academy",
-  "engines": {
-    "node": "0.10.36",
-    "npm": "2.1.2"
-  },
   "main": "server/start.js",
   "scripts": {
     "start": "node server/start.js",
-    "postinstall": "bower install && gulp build"
+    "postinstall": "./node_modules/bower/bin/bower install && gulp build"
   },
   "dependencies": {
     "babel": "^5.0.12",
