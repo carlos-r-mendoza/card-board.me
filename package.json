@@ -2,9 +2,6 @@
   "name": "Card-Board",
   "version": "1.0.0",
   "description": "A generated project at Fullstack Academy",
-  "engines": {
-    "node": "1.3.x"
-  },
   "main": "server/start.js",
   "scripts": {
     "start": "node server/start.js",
