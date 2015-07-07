@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "A generated project at Fullstack Academy",
   "engines": {
-    "node": "0.10.36"
+    "node": "0.10.36",
+    "npm": "2.1.2"
   },
   "main": "server/start.js",
   "scripts": {
