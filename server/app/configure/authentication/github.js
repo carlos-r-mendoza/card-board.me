@@ -38,7 +38,7 @@ module.exports = function (app) {
               token: accessToken
             }
           }).then(function (user) {
-            console.log("newuser",user);
+            //console.log("newuser",user);
             done(null, user);
           }, function (err) {
             console.error('Error creating user from GitHub authentication', err);
