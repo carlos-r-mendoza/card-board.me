@@ -27,12 +27,14 @@ app.controller('EditFeatureController', function($scope, $modal, BoardService, B
                 };
 
                 $scope.ok = function(editedFeature) {
+                    console.log("inside ok");
                     $scope.editedFeature.title = "Feature - " + $scope.editedFeature.title;
                     RepoFactory.updateRepoMilestone($stateParams, $scope.editedFeature);
                     if (currentFeature.name !== $scope.editedFeature.title.split(" - ")[1]) {
                         RepoFactory.deleteRepoLabel($stateParams, {
                             name: "Feature - " + currentFeature.name
                         });
+                        console.log("before create label");
                         RepoFactory.createRepoLabel($stateParams, $scope.editedFeature);
                     } else {
                         RepoFactory.editRepoLabel($stateParams, $scope.editedFeature);
@@ -59,8 +61,9 @@ app.controller('EditFeatureController', function($scope, $modal, BoardService, B
 
                                     });
                                     var currentLabelNames = _.pluck(card.labels, 'name');
-                                    console.log("labelnames",currentLabelNames)
+                                    console.log("labelnames",currentLabelNames);
                                     //setTimeout(function(){
+                                        console.log("before edit issue",currentLabelNames);
                                         RepoFactory.editRepoIssue($stateParams, card.number,{labelNames:currentLabelNames});
                                     //},2000);
 
